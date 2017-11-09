@@ -17,8 +17,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home'); //delete it!
+Route::post('/post', 'PostController@store')->name('post');
+Route::post('/assignment', 'AssignmentController@store')->name('assignment');
+Route::get('/class', 'ClassroomController@index')->name('classroom');
+Route::get('/class/create', 'ClassroomController@add')->name('classroom.create');
+Route::post('/class/create', 'ClassroomController@create');
+Route::get('/class/{classroom_id}', 'ClassroomController@view')->name('classroom.view');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/class/{classroom_id}/assignment/{assignment_id}', 'AssignmentController@view')->name('assignment.view');
