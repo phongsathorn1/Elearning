@@ -1,0 +1,36 @@
+.class-header{
+    padding: 30px 0px;
+}
+
+.page-header{
+    padding: 20px 0px;
+}
+
+.class-post-item{
+    background: #FFFFFF;
+    padding: 20px;
+    margin: 10px 0px;
+    border-radius: 3px;
+    border: 1px solid #E0E0E0;
+}
+
+.class-meta-item{
+    float: left;
+}
+
+.class-post-time{
+    font-size: 13px;
+    padding: 0px 5px;
+}
+
+.class-post-user{
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .2s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0
+}

@@ -11,6 +11,8 @@ class Classroom extends Model
         'user_id', 'name', 'description'
     ];
 
+    protected $hidden = ['assignments', 'posts'];
+
     public function posts()
     {
         return $this->hasMany('App\Post');

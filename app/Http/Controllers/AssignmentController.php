@@ -9,10 +9,10 @@ use App\Assignment;
 class AssignmentController extends Controller
 {
     //
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     public function view($classroom_id, $assignment_id)
     {

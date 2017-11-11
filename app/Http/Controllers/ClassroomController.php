@@ -3,36 +3,34 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Classroom;
+use Auth;
 
 class ClassroomController extends Controller
 {
-    //
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api');
+    // }
 
     public function index()
     {
         $classrooms = Classroom::get();
-        return view('classroom.home', ['classrooms' => $classrooms]);
+        return response()->json($classrooms);
     }
 
-    public function view(Request $request, $classroom_id)
+    public function show($classroom_id)
     {
         if(Classroom::find($classroom_id)){
-            $request->session()->put('classroom_id', $classroom_id);
             $classroom = Classroom::find($classroom_id);
-            $posts = $classroom->posts;
-            $assignments = $classroom->assignments;
-            $posts = $posts->merge($assignments);
-            $posts = $posts->sortBy(function ($post){
-                return $post->created_at;
-            });
 
-            return view('classroom.view', ['classroom' => $classroom, 'posts' => $posts]);
+            $posts = $classroom->posts->load('user');
+            $assignments = $classroom->assignments->load('user');
+            $posts = $posts->merge($assignments);
+            $posts = $posts->sortByDesc('created_at')->values()->all();
+
+            return response()->json(['classroom' => $classroom, 'posts' => $posts]);
         }
         else
         {
@@ -40,19 +38,14 @@ class ClassroomController extends Controller
         }
     }
 
-    public function add()
+    public function store(Request $request)
     {
-        return view('classroom.create');
-    }
-
-    public function create(Request $request)
-    {
-        Classroom::create([
+        $classroom = Classroom::create([
             'user_id' => Auth::id(),
-            'name' => $request->classroom_name,
-            'description' => $request->classroom_description
+            'name' => $request->name,
+            'description' => $request->description
         ]);
 
-        return redirect()->home();
+        return response()->json($classroom);
     }
 }
