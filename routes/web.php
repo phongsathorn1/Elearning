@@ -18,9 +18,10 @@ Route::get('/', function () {
 Route::group(['prefix' => 'api/'], function(){
     Route::resource('classroom', 'ClassroomController')->middleware('auth:api');
     Route::resource('post', 'PostController')->middleware('auth:api');
+    Route::resource('members', 'MemberController')->middleware('auth:api');
 });
 
-Auth::routes();
+Route::get('/#/login', 'Auth\AuthController@getLogin')->name('login');
 
 // Route::get('/home', 'HomeController@index')->name('home'); //delete it!
 // Route::post('/post', 'PostController@store')->name('post');

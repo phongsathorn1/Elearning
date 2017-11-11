@@ -42761,6 +42761,12 @@ var routes = [{
     meta: {
         forAuth: true
     }
+}, {
+    path: '/classroom/:id/members',
+    component: __webpack_require__(81),
+    meta: {
+        forAuth: true
+    }
 }];
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     routes: routes
@@ -46864,6 +46870,199 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-4c9e90f0", module.exports)
+  }
+}
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(82)
+/* template */
+var __vue_template__ = __webpack_require__(83)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\ClassroomMembers.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-60077886", Component.options)
+  } else {
+    hotAPI.reload("data-v-60077886", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 82 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            members: [],
+            classroom: null
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        var classroom_id = this.$route.params.id;
+        var token = this.$auth.getToken();
+
+        axios.get('api/classroom/' + classroom_id, {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        }).then(function (response) {
+            _this.classroom = response.data.classroom;
+        });
+
+        axios.get('api/members/' + classroom_id, {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        }).then(function (response) {
+            console.log(response);
+            _this.members = response.data;
+        });
+    }
+});
+
+/***/ }),
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("transition", { attrs: { name: "fade" } }, [
+    _c("div", { attrs: { id: "members" } }, [
+      _c("div", { staticClass: "page-header" }, [
+        _c(
+          "div",
+          { staticClass: "container" },
+          [
+            _c("h1", [
+              _vm._v(_vm._s(_vm.classroom.name) + " "),
+              _c("small", [_vm._v("Members")])
+            ]),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "btn btn-default",
+                attrs: { to: _vm.classroom.id + "/members/add" }
+              },
+              [_vm._v("Add member")]
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "container" }, [
+        _c(
+          "div",
+          { staticClass: "member-list" },
+          _vm._l(_vm.members, function(member) {
+            return _c("div", { staticClass: "member-list-item" }, [
+              _c("div", { staticClass: "col-xs-6" }, [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(member.name) +
+                    "\n                    "
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-xs-3" }, [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(member.role.name) +
+                    "\n                    "
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-xs-3" }, [
+                _vm._v("\n                        Delete\n                    ")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "clearfix" })
+            ])
+          })
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-60077886", module.exports)
   }
 }
 

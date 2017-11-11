@@ -23,7 +23,7 @@ class Classroom extends Model
         return $this->hasMany('App\Assignment');
     }
 
-    public function user()
+    public function members()
     {
         return $this->belongsToMany('App\User');
     }

@@ -42,6 +42,13 @@ const routes = [
         meta: {
             forAuth: true
         }
+    },
+    {
+        path: '/classroom/:id/members',
+        component: require('./components/ClassroomMembers.vue'),
+        meta: {
+            forAuth: true
+        }
     }
 ]
 const router = new VueRouter({

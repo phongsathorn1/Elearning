@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Post');
     }
+
+    public function classroom()
+    {
+        return $this->belongsToMany('App\Classroom');
+    }
 }

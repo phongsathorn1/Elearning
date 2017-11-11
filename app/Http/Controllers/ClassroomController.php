@@ -46,6 +46,8 @@ class ClassroomController extends Controller
             'description' => $request->description
         ]);
 
+        $classroom->members()->attach(Auth::id());
+
         return response()->json($classroom);
     }
 }
