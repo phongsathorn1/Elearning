@@ -20,7 +20,17 @@ router.beforeEach(
             }else{
                 return next()
             }
-        }else{
+        }
+        else if(to.matched.some(record => record.meta.forAuth)){
+            if (!Vue.auth.isAuth()) {
+                next({
+                    path: '/login'
+                })
+            } else {
+                return next()
+            }
+        }
+        else{
             return next()
         }
     }

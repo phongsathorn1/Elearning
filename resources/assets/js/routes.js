@@ -44,12 +44,19 @@ const routes = [
         }
     },
     {
+        path: '/classroom/:id/members/add',
+        component: require('./components/ClassroomMemberAdd.vue'),
+        meta: {
+            forAuth: true
+        }
+    },
+    {
         path: '/classroom/:id/members',
         component: require('./components/ClassroomMembers.vue'),
         meta: {
             forAuth: true
         }
-    }
+    },
 ]
 const router = new VueRouter({
     routes

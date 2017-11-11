@@ -4,7 +4,7 @@
             <div class="page-header">
                 <div class="container">
                     <h1>{{ classroom.name }} <small>Members</small></h1>
-                    <router-link :to="classroom.id + '/members/add'" class="btn btn-default">Add member</router-link>
+                    <router-link :to="'members/add'" class="btn btn-default">Add member</router-link>
                 </div>
             </div>
             <div class="container">
