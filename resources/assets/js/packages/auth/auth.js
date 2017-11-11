@@ -7,6 +7,10 @@ export default function(Vue) {
             localStorage.setItem('expire', expire)
         },
 
+        setPersonalData (data) {
+            localStorage.setItem('personal', JSON.stringify(data))
+        },
+
         getToken () {
             var token = localStorage.getItem('token')
             var expire = localStorage.getItem('expire')
@@ -23,10 +27,21 @@ export default function(Vue) {
             return token
         },
 
+        getPersonalData(){
+            var data = localStorage.getItem('personal')
+
+            if(!data){
+                return null
+            }
+
+            return JSON.parse(data)
+        },
+
         revokeToken () {
             if(this.isAuth()){
                 localStorage.removeItem('token')
                 localStorage.removeItem('expire')
+                localStorage.removeItem('personal')
 
                 console.log('logout completed')
             }

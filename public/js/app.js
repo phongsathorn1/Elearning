@@ -11733,7 +11733,27 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_4__pac
 __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.baseURL = 'http://localhost/elearning/public';
 
 __WEBPACK_IMPORTED_MODULE_1__routes_js__["a" /* default */].beforeEach(function (to, from, next) {
-    if (to.matched.some(function (record) {
+    if (typeof to.meta.role !== 'undefined') {
+        if (__WEBPACK_IMPORTED_MODULE_0_vue___default.a.auth.isAuth()) {
+            __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('api/me', {
+                headers: {
+                    Authorization: 'Bearer ' + __WEBPACK_IMPORTED_MODULE_0_vue___default.a.auth.getToken()
+                }
+            }).then(function (response) {
+                if (response.data.role.actions != to.meta.role) {
+                    next({
+                        path: '/'
+                    });
+                } else {
+                    next();
+                }
+            });
+        } else {
+            next({
+                path: '/'
+            });
+        }
+    } else if (to.matched.some(function (record) {
         return record.meta.forVisitors;
     })) {
         if (__WEBPACK_IMPORTED_MODULE_0_vue___default.a.auth.isAuth()) {
@@ -42740,7 +42760,10 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 var routes = [{
     path: '/',
-    component: __webpack_require__(41)
+    component: __webpack_require__(41),
+    meta: {
+        forAuth: true
+    }
 }, {
     path: '/login',
     component: __webpack_require__(44),
@@ -42757,7 +42780,8 @@ var routes = [{
     path: '/classroom/create',
     component: __webpack_require__(50),
     meta: {
-        forAuth: true
+        forAuth: true,
+        role: 'is_teacher'
     }
 }, {
     path: '/classroom/:id',
@@ -42772,16 +42796,25 @@ var routes = [{
         forAuth: true
     }
 }, {
+    path: '/classroom/:id/post/assignment',
+    component: __webpack_require__(83),
+    meta: {
+        forAuth: true,
+        role: 'is_teacher'
+    }
+}, {
     path: '/classroom/:id/members/add',
     component: __webpack_require__(62),
     meta: {
-        forAuth: true
+        forAuth: true,
+        role: 'is_teacher'
     }
 }, {
     path: '/classroom/:id/members',
     component: __webpack_require__(59),
     meta: {
-        forAuth: true
+        forAuth: true,
+        role: 'is_teacher'
     }
 }];
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
@@ -45671,13 +45704,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             };
 
             axios.post('oauth/token', data).then(function (response) {
-                console.log(response);
-
                 _this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now());
-
                 _this.$router.push('/');
+                _this.setData();
             }).catch(function (response) {
                 console.log(response);
+            });
+        },
+        setData: function setData() {
+            var _this2 = this;
+
+            axios.get('api/me', {
+                headers: {
+                    Authorization: 'Bearer ' + this.$auth.getToken()
+                }
+            }).then(function (response) {
+                console.log(response);
+                _this2.$auth.setPersonalData(response.data);
             });
         }
     }
@@ -45692,7 +45735,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("transition", { attrs: { name: "fade" } }, [
-    _c("div", [
+    _c("div", { staticClass: "container" }, [
       _c("div", { staticClass: "form-group" }, [
         _c("label", { attrs: { for: "username" } }, [_vm._v("Username")]),
         _vm._v(" "),
@@ -46139,28 +46182,71 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             classroom: '',
-            posts: []
+            posts: [],
+            comments: {},
+            token: ''
         };
     },
     created: function created() {
         var _this = this;
 
         var classroom_id = this.$route.params.id;
-        var token = this.$auth.getToken();
+        this.token = this.$auth.getToken();
 
         axios.get('api/classroom/' + classroom_id, {
             headers: {
-                Authorization: 'Bearer ' + token
+                Authorization: 'Bearer ' + this.token
             }
         }).then(function (response) {
             _this.classroom = response.data.classroom;
             _this.posts = response.data.posts;
         });
+    },
+
+    methods: {
+        comment: function comment(post_id) {
+            var _this2 = this;
+
+            var data = {
+                'post_id': post_id,
+                'comment': this.comments[post_id]
+            };
+
+            axios.post('api/comments', data, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then(function (response) {
+                _this2.comments[post_id] = '';
+                delete _this2.comments[post_id];
+
+                var index = _this2.posts.findIndex(function (x) {
+                    return x.id == post_id;
+                });
+                _this2.posts[index].comments.push(response.data);
+            });
+        }
     }
 });
 
@@ -46196,6 +46282,15 @@ var render = function() {
                 attrs: { to: _vm.classroom.id + "/post" }
               },
               [_vm._v("New Post")]
+            ),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "btn btn-default",
+                attrs: { to: _vm.classroom.id + "/post/assignment" }
+              },
+              [_vm._v("New Assignment")]
             ),
             _vm._v(" "),
             _c(
@@ -46245,11 +46340,79 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "clearfix" })
                   ]),
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(post.detail) +
-                      "\n            "
-                  )
+                  _vm._v(" "),
+                  _c("div", { staticClass: "class-post-main" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(post.detail) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "class-post-comments" }, [
+                    _c("div", { staticClass: "comment-box" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.comments[post.id],
+                              expression: "comments[post.id]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "comment",
+                            placeholder: "Comment..."
+                          },
+                          domProps: { value: _vm.comments[post.id] },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.comments,
+                                post.id,
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-default",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                _vm.comment(post.id)
+                              }
+                            }
+                          },
+                          [_vm._v("Comment")]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "comment-list" },
+                      _vm._l(post.comments, function(comment) {
+                        return _c("div", { staticClass: "comment-list-item" }, [
+                          _c("b", [_vm._v(_vm._s(comment.user.name) + " : ")]),
+                          _vm._v(
+                            " " +
+                              _vm._s(comment.comment) +
+                              "\n                        "
+                          )
+                        ])
+                      })
+                    )
+                  ])
                 ])
               : _vm._e(),
             _vm._v(" "),
@@ -46384,6 +46547,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -46436,41 +46601,44 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("transition", { attrs: { name: "fade" } }, [
-    _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "post" } }, [_vm._v("Post")]),
-        _vm._v(" "),
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.detail,
-              expression: "detail"
-            }
-          ],
-          attrs: { id: "detail" },
-          domProps: { value: _vm.detail },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+    _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "post" } }, [_vm._v("Post")]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.detail,
+                expression: "detail"
               }
-              _vm.detail = $event.target.value
+            ],
+            staticClass: "form-control",
+            attrs: { rows: "3", id: "detail" },
+            domProps: { value: _vm.detail },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.detail = $event.target.value
+              }
             }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-default",
-          attrs: { type: "submit" },
-          on: { click: _vm.post }
-        },
-        [_vm._v("Post")]
-      )
+          })
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-default",
+            attrs: { type: "submit" },
+            on: { click: _vm.post }
+          },
+          [_vm._v("Post")]
+        )
+      ])
     ])
   ])
 }
@@ -47030,6 +47198,9 @@ if (false) {
             localStorage.setItem('token', token);
             localStorage.setItem('expire', expire);
         },
+        setPersonalData: function setPersonalData(data) {
+            localStorage.setItem('personal', JSON.stringify(data));
+        },
         getToken: function getToken() {
             var token = localStorage.getItem('token');
             var expire = localStorage.getItem('expire');
@@ -47045,10 +47216,20 @@ if (false) {
 
             return token;
         },
+        getPersonalData: function getPersonalData() {
+            var data = localStorage.getItem('personal');
+
+            if (!data) {
+                return null;
+            }
+
+            return JSON.parse(data);
+        },
         revokeToken: function revokeToken() {
             if (this.isAuth()) {
                 localStorage.removeItem('token');
                 localStorage.removeItem('expire');
+                localStorage.removeItem('personal');
 
                 console.log('logout completed');
             }
@@ -47078,7 +47259,7 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(86)
 /* template */
 var __vue_template__ = __webpack_require__(70)
 /* template functional */
@@ -47177,7 +47358,26 @@ var render = function() {
           _vm._v(" "),
           _vm._m(2),
           _vm._v(" "),
-          _vm._m(3)
+          _c("ul", { staticClass: "nav navbar-nav navbar-right" }, [
+            _c("li", { staticClass: "dropdown" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "dropdown-toggle",
+                  attrs: {
+                    href: "#",
+                    "data-toggle": "dropdown",
+                    role: "button",
+                    "aria-haspopup": "true",
+                    "aria-expanded": "false"
+                  }
+                },
+                [_vm._v(_vm._s(_vm.name)), _c("span", { staticClass: "caret" })]
+              ),
+              _vm._v(" "),
+              _vm._m(3)
+            ])
+          ])
         ]
       )
     ])
@@ -47278,27 +47478,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "nav navbar-nav navbar-right" }, [
-      _c("li", { staticClass: "dropdown" }, [
-        _c(
-          "a",
-          {
-            staticClass: "dropdown-toggle",
-            attrs: {
-              href: "#",
-              "data-toggle": "dropdown",
-              role: "button",
-              "aria-haspopup": "true",
-              "aria-expanded": "false"
-            }
-          },
-          [_vm._v("Name"), _c("span", { staticClass: "caret" })]
-        ),
-        _vm._v(" "),
-        _c("ul", { staticClass: "dropdown-menu" }, [
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Action")])])
-        ])
-      ])
+    return _c("ul", { staticClass: "dropdown-menu" }, [
+      _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Action")])])
     ])
   }
 ]
@@ -47322,6 +47503,259 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(84)
+/* template */
+var __vue_template__ = __webpack_require__(85)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\ClassroomPostAssignment.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2999e599", Component.options)
+  } else {
+    hotAPI.reload("data-v-2999e599", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 84 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            form: {
+                title: '',
+                detail: '',
+                duetime: Date.now()
+            }
+        };
+    }
+});
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("transition", { attrs: { name: "fade" } }, [
+    _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.title,
+                expression: "form.title"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              id: "title",
+              placeholder: "Tile of assignment"
+            },
+            domProps: { value: _vm.form.title },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "title", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "detail" } }, [
+            _vm._v("Detail of this assignment")
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.detail,
+                expression: "form.detail"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { id: "detail", rows: "3" },
+            domProps: { value: _vm.form.detail },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "detail", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "btn btn-default", attrs: { type: "submit" } },
+          [_vm._v("Add assignment")]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2999e599", module.exports)
+  }
+}
+
+/***/ }),
+/* 86 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      name: ''
+    };
+  },
+  created: function created() {
+    this.name = this.$auth.getPersonalData().name.split(' ')[0];
+  }
+});
 
 /***/ })
 /******/ ]);

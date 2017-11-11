@@ -6,7 +6,10 @@ Vue.use(VueRouter);
 const routes = [
     {
         path: '/',
-        component: require('./components/ClassroomList.vue')
+        component: require('./components/ClassroomList.vue'),
+        meta:{
+            forAuth: true
+        }
     },
     {
         path: '/login',
@@ -26,7 +29,8 @@ const routes = [
         path: '/classroom/create',
         component: require('./components/ClassroomCreate.vue'),
         meta: {
-            forAuth: true
+            forAuth: true,
+            role: 'is_teacher'
         }
     },
     {
@@ -44,17 +48,27 @@ const routes = [
         }
     },
     {
+        path: '/classroom/:id/post/assignment',
+        component: require('./components/ClassroomPostAssignment.vue'),
+        meta: {
+            forAuth: true,
+            role: 'is_teacher'
+        }
+    },
+    {
         path: '/classroom/:id/members/add',
         component: require('./components/ClassroomMemberAdd.vue'),
         meta: {
-            forAuth: true
+            forAuth: true,
+            role: 'is_teacher'
         }
     },
     {
         path: '/classroom/:id/members',
         component: require('./components/ClassroomMembers.vue'),
         meta: {
-            forAuth: true
+            forAuth: true,
+            role: 'is_teacher'
         }
     },
 ]

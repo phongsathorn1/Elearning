@@ -12,7 +12,28 @@ axios.defaults.baseURL = 'http://localhost/elearning/public';
 
 router.beforeEach(
     (to, from, next) => {
-        if(to.matched.some(record => record.meta.forVisitors)){
+        if (typeof to.meta.role !== 'undefined') {
+            if (Vue.auth.isAuth()) {
+                axios.get('api/me', {
+                    headers: {
+                        Authorization: 'Bearer ' + Vue.auth.getToken()
+                    }
+                }).then(response => {
+                    if (response.data.role.actions != to.meta.role) {
+                        next({
+                            path: '/'
+                        })
+                    } else {
+                        next()
+                    }
+                })
+            } else {
+                next({
+                    path: '/'
+                })
+            }
+        }
+        else if(to.matched.some(record => record.meta.forVisitors)){
             if(Vue.auth.isAuth()){
                 next({
                     path: '/'

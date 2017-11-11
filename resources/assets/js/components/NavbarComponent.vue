@@ -38,7 +38,7 @@
       </form>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Name<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ name }}<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">Action</a></li>
           </ul>
@@ -48,3 +48,17 @@
   </div><!-- /.container-fluid -->
 </nav>
 </template>
+
+
+<script>
+  export default {
+    data () {
+      return {
+        name: ''
+      }
+    },
+    created(){
+      this.name = this.$auth.getPersonalData().name.split(' ')[0]
+    }
+  }
+</script>

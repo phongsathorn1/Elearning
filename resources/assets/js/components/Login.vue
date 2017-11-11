@@ -1,6 +1,6 @@
 <template>
     <transition name="fade">
-        <div>
+        <div class="container">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" id="username" placeholder="Username" v-model="form.username">
@@ -36,16 +36,25 @@
                 }
 
                 axios.post('oauth/token', data)
-                    .then(response => {
-                        console.log(response)
-
-                        this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now())
-
-                        this.$router.push('/')
-                    })
-                    .catch(response => {
-                        console.log(response)
-                    })
+                .then(response => {
+                    this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now())
+                    this.$router.push('/')
+                    this.setData()
+                })
+                .catch(response => {
+                    console.log(response)
+                })
+            },
+            setData () {
+                axios.get('api/me', {
+                    headers:{
+                        Authorization: 'Bearer ' + this.$auth.getToken()
+                    }
+                })
+                .then(response => {
+                    console.log(response)
+                    this.$auth.setPersonalData(response.data)
+                })
             }
         }
     }
