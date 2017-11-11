@@ -45480,7 +45480,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            classrooms: null
+            classrooms: ''
         };
     },
     created: function created() {
@@ -45940,7 +45940,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            classroom: null,
+            classroom: '',
             posts: []
         };
     },
@@ -46185,7 +46185,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            detail: null
+            detail: ''
         };
     },
 
@@ -46761,8 +46761,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             classroom: {
-                name: null,
-                description: null
+                name: '',
+                description: ''
             }
         };
     },
@@ -46961,7 +46961,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             members: [],
-            classroom: null
+            classroom: ''
         };
     },
     created: function created() {

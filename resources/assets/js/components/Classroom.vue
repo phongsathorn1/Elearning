@@ -48,7 +48,7 @@
     export default {
         data(){
             return {
-                classroom : null,
+                classroom : '',
                 posts : []
             }
         },

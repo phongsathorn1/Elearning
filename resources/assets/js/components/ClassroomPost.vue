@@ -14,7 +14,7 @@
     export default {
         data() {
             return {
-                detail: null
+                detail: ''
             }
         },
         methods: {

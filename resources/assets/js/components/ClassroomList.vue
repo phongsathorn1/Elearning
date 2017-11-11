@@ -20,7 +20,7 @@
     export default {
         data(){
             return{
-                classrooms: null
+                classrooms: ''
             }
         },
         created(){

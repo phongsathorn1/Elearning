@@ -32,7 +32,7 @@
         data(){
             return {
                 members: [],
-                classroom: null
+                classroom: ''
             }
         },
         created(){

@@ -19,8 +19,8 @@
         data(){
             return {
                 classroom : {
-                    name : null,
-                    description: null
+                    name : '',
+                    description: ''
                 }
             }
         },
