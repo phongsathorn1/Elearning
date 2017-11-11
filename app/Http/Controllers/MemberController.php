@@ -22,7 +22,7 @@ class MemberController extends Controller
 
     public function add(Request $request){
         $classroom = Classroom::findOrFail($request->classroom_id);
-        if(! $classroom->members->contains($request->user_id))
+        if(!$classroom->members->contains($request->user_id))
         {
             $classroom->members()->attach($request->user_id);
             return response()->json($classroom);

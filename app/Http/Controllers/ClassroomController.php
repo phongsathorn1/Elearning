@@ -8,15 +8,11 @@ use Auth;
 
 class ClassroomController extends Controller
 {
-
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:api');
-    // }
-
     public function index()
     {
-        $classrooms = Classroom::get();
+        $classrooms = Classroom::whereHas('members', function($query){
+            $query->where('user_id', '=', Auth::id());
+        })->get();
         return response()->json($classrooms);
     }
 
@@ -25,7 +21,7 @@ class ClassroomController extends Controller
         if(Classroom::find($classroom_id)){
             $classroom = Classroom::find($classroom_id);
 
-            $posts = $classroom->posts->load('user');
+            $posts = $classroom->posts->load('user', 'comments', 'comments.user');
             $assignments = $classroom->assignments->load('user');
             $posts = $posts->merge($assignments);
             $posts = $posts->sortByDesc('created_at')->values()->all();

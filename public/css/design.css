@@ -32,14 +32,27 @@
   background: #FFFFFF;
 }
 
+.card {
+  background: #FFFFFF;
+  padding: 10px 20px;
+  border: 1px solid #e0e0e0;
+}
+
 .fade-enter-active,
 .fade-leave-active {
-  -webkit-transition: opacity .2s;
-  transition: opacity .2s;
+  -webkit-transition-property: opacity;
+  transition-property: opacity;
+  -webkit-transition-duration: .10s;
+          transition-duration: .10s;
+}
+
+.fade-enter-active {
+  -webkit-transition-delay: .25s;
+          transition-delay: .25s;
 }
 
 .fade-enter,
-.fade-leave-to {
+.fade-leave-active {
   opacity: 0;
 }
 
