@@ -38,13 +38,11 @@ export default function(Vue) {
         },
 
         revokeToken () {
-            if(this.isAuth()){
-                localStorage.removeItem('token')
-                localStorage.removeItem('expire')
-                localStorage.removeItem('personal')
+            localStorage.removeItem('token')
+            localStorage.removeItem('expire')
+            localStorage.removeItem('personal')
 
-                console.log('logout completed')
-            }
+            console.log('logout completed')
         },
 
         isAuth () {
