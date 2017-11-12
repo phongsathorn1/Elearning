@@ -1,5 +1,5 @@
 <template>
-    <transition name="fade">
+    <transition name="fade" mode="out-in">
     <div id="classroom">
         <div class="page-header">
             <div class="container">
@@ -23,7 +23,7 @@
                 classrooms: ''
             }
         },
-        created(){
+        mounted(){
             var token = this.$auth.getToken()
 
             axios.get('api/classroom', {

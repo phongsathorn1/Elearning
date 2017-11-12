@@ -1,5 +1,5 @@
 <template>
-    <transition name="fade">
+    <transition name="fade" mode="out-in">
     <div class="classroom">
         <div class="class-header">
             <div class="container">
@@ -70,7 +70,7 @@
                 token : '',
             }
         },
-        created(){
+        mounted(){
             var classroom_id = this.$route.params.id
             this.token = this.$auth.getToken()
 

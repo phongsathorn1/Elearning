@@ -1,5 +1,5 @@
 <template>
-    <transition name="fade">
+    <transition name="fade" mode="out-in">
         <div id="adduser">
             <div class="page-header">
                 <div class="container">

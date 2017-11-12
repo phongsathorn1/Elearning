@@ -19,6 +19,7 @@ Route::group(['prefix' => 'api/'], function(){
     Route::group(['middleware' => 'auth:api'], function(){
         Route::resource('classroom', 'ClassroomController');
         Route::resource('post', 'PostController');
+        Route::resource('classroom/{classroom_id}/assignment', 'AssignmentController');
         Route::resource('comments', 'CommentController');
         Route::resource('members', 'MemberController')->middleware('role:is_teacher');
         Route::post('members/add', 'MemberController@add')->middleware('role:is_teacher');

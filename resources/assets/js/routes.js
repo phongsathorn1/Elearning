@@ -71,6 +71,13 @@ const routes = [
             role: 'is_teacher'
         }
     },
+    {
+        path: '/classroom/:id/assignment/:assignment_id',
+        component: require('./components/ClassroomAssignment.vue'),
+        meta: {
+            forAuth: true
+        }
+    }
 ]
 const router = new VueRouter({
     routes

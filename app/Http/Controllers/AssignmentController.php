@@ -3,32 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Auth;
+use App\Classroom;
 use App\Assignment;
 
 class AssignmentController extends Controller
 {
-    //
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    public function show($classroom_id, $id)
+    {
+        $classroom = Classroom::findOrFail($classroom_id);
+        $assignment = Assignment::findOrFail($id)->load('user');
 
-    public function view($classroom_id, $assignment_id)
-    {
-        return $assignment_id;
+        return response()->json($assignment);
     }
-    public function store(Request $request)
+
+    public function store(Request $request, $classroom_id)
     {
-        $classroom_id = $request->session()->get('classroom_id');
+        $classroom = Classroom::findOrFail($request->classroom_id);
         Assignment::create([
             'user_id' => Auth::id(),
             'classroom_id' => $classroom_id,
             'title' => $request->title,
             'detail' => $request->detail,
-            'due_time' => null
+            'due_time' => $request->duetime
         ]);
 
-        return back();
+        return response()->json(['sucessful' => true]);
     }
 }

@@ -58748,6 +58748,12 @@ var routes = [{
         forAuth: true,
         role: 'is_teacher'
     }
+}, {
+    path: '/classroom/:id/assignment/:assignment_id',
+    component: __webpack_require__(211),
+    meta: {
+        forAuth: true
+    }
 }];
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     routes: routes
@@ -61464,7 +61470,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             classrooms: ''
         };
     },
-    created: function created() {
+    mounted: function mounted() {
         var _this = this;
 
         var token = this.$auth.getToken();
@@ -61487,7 +61493,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("transition", { attrs: { name: "fade" } }, [
+  return _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
     _c("div", { attrs: { id: "classroom" } }, [
       _c("div", { staticClass: "page-header" }, [
         _c(
@@ -62140,7 +62146,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             token: ''
         };
     },
-    created: function created() {
+    mounted: function mounted() {
         var _this = this;
 
         var classroom_id = this.$route.params.id;
@@ -62190,7 +62196,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("transition", { attrs: { name: "fade" } }, [
+  return _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
     _c("div", { staticClass: "classroom" }, [
       _c("div", { staticClass: "class-header" }, [
         _c(
@@ -62684,18 +62690,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 detail: '',
                 duedate: '',
                 duetime: ''
-            }
+            },
+            config: {
+                altFormat: "F j, Y",
+                altInput: true,
+                dateFormat: "Y-m-d"
+            },
+            classroom_id: this.$route.params.id,
+            token: this.$auth.getToken()
         };
     },
 
     methods: {
         timecheck: function timecheck() {
-            if (!__WEBPACK_IMPORTED_MODULE_2_moment___default()(this.form.duetime, "HH:mm", true).isValid()) {
+            if (!__WEBPACK_IMPORTED_MODULE_2_moment___default()(this.form.duetime, "HH:mm", true).isValid() && !this.form.duetime == '') {
                 this.form.duetime = __WEBPACK_IMPORTED_MODULE_2_moment___default()().format("HH:mm");
             }
         },
         add: function add() {
-            var data = {};
+            var _this = this;
+
+            var data = {
+                title: this.form.title,
+                detail: this.form.detail,
+                duetime: this.form.duedate + ' ' + this.form.duetime,
+                classroom_id: this.classroom_id
+            };
+
+            axios.post('api/classroom/' + this.classroom_id + '/assignment', data, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then(function (response) {
+                _this.$router.go(-1);
+            });
         }
     },
     components: {
@@ -65764,7 +65792,7 @@ var render = function() {
               _c("label", { attrs: { for: "duedate" } }, [_vm._v("Date")]),
               _vm._v(" "),
               _c("flat-pickr", {
-                attrs: { id: "duedate" },
+                attrs: { id: "duedate", config: _vm.config },
                 model: {
                   value: _vm.form.duedate,
                   callback: function($$v) {
@@ -65999,7 +66027,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("transition", { attrs: { name: "fade" } }, [
+  return _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
     _c("div", { attrs: { id: "adduser" } }, [
       _c("div", { staticClass: "page-header" }, [
         _c("div", { staticClass: "container" }, [
@@ -66740,6 +66768,158 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(212)
+/* template */
+var __vue_template__ = __webpack_require__(213)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\ClassroomAssignment.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-ab399a4e", Component.options)
+  } else {
+    hotAPI.reload("data-v-ab399a4e", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 212 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            assignment_post: '',
+            classroom_id: this.$route.params.id,
+            assignment_id: this.$route.params.assignment_id,
+            token: this.$auth.getToken()
+        };
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        axios.get('api/classroom/' + this.classroom_id + '/assignment/' + this.assignment_id, {
+            headers: {
+                Authorization: 'Bearer ' + this.token
+            }
+        }).then(function (response) {
+            _this.assignment_post = response.data;
+        });
+    }
+});
+
+/***/ }),
+/* 213 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
+    _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "class-post-item" }, [
+        _c("div", { staticClass: "class-meta" }, [
+          _c("div", { staticClass: "class-post-user class-meta-item" }, [
+            _vm._v(
+              "\n                    " +
+                _vm._s(_vm.assignment_post.user.name) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "class-post-time class-meta-item" }, [
+            _vm._v(
+              "\n                    " +
+                _vm._s(_vm.assignment_post.created_at) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "clearfix" })
+        ]),
+        _vm._v(" "),
+        _c("h3", [_vm._v(_vm._s(_vm.assignment_post.title))]),
+        _vm._v(" "),
+        _c("p", [_vm._v(_vm._s(_vm.assignment_post.detail))])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-ab399a4e", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
