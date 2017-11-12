@@ -47,9 +47,14 @@
                 {{ this.$role }}
             </div>
 
-            <div class="assignment-dont-box" v-else>
-                <div class="assignment-dont-list" v-for="done in all_done">
+            <div class="assignment-done-box" v-else>
+                <div class="assignment-done-list" v-for="done in all_done" @click="activeId(done.id)">
                     {{ done.user.name }}, score {{ done.score }}, {{ done.files.length }} files
+                    <div class="assignment-done-files" v-if="done.id == active_id">
+                        <div class="assignment-done-item" v-for="file in done.files">
+                            {{ file.name }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -68,6 +73,7 @@
                 token: this.$auth.getToken(),
                 uploaded_files: [],
                 all_done: [],
+                active_id: '',
                 options: {
                     url: `api/classroom/${this.$route.params.id}/assignment/${this.$route.params.assignment_id}/upload`,
                     paramName: 'file',
@@ -123,6 +129,14 @@
                 }).then(response => {
                     this.$router.push(`/classroom/${this.classroom_id}`)
                 })
+            },
+            activeId(id){
+                if(this.active_id == id){
+                    this.active_id = 0
+                }else{
+                    this.active_id = id
+                }
+                
             }
         }
     }
