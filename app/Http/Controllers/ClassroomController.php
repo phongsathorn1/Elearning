@@ -19,14 +19,23 @@ class ClassroomController extends Controller
     public function show($classroom_id)
     {
         if(Classroom::find($classroom_id)){
-            $classroom = Classroom::find($classroom_id);
+            $classroom = Classroom::findOrFail($classroom_id);
 
             $posts = $classroom->posts->load('user', 'comments', 'comments.user');
             $assignments = $classroom->assignments->load('user');
-            $posts = $posts->merge($assignments);
-            $posts = $posts->sortByDesc('created_at')->values()->all();
 
-            return response()->json(['classroom' => $classroom, 'posts' => $posts]);
+            $all = collect();
+            foreach ($posts as $post){
+                $all->push($post);
+            }
+
+            foreach ($assignments as $assignment){
+                $all->push($assignment);
+            }
+            // $posts = $posts->merge($assignments);
+            $all = $all->sortByDesc('created_at')->values()->all();
+
+            return response()->json(['classroom' => $classroom, 'posts' => $all]);
         }
         else
         {

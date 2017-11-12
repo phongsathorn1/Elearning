@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <router-link to="/" class="navbar-brand">Elearning</router-link>
+      <router-link to="/" class="navbar-brand">{{ this.$role }}</router-link>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->

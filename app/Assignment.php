@@ -22,4 +22,9 @@ class Assignment extends Model
     {
         return 'assignment';
     }
+
+    public function file()
+    {
+        return $this->hasMany('App\AssignmentFile');
+    }
 }

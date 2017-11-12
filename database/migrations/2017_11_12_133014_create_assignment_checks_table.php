@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAssignmentsTable extends Migration
+class CreateAssignmentChecksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateAssignmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('assignments', function (Blueprint $table) {
+        Schema::create('assignment_checks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('classroom_id')->unsigned();
-            $table->string('title');
-            $table->longtext('detail');
-            $table->time('due_time')->nullable();
+            $table->integer('assignment_id')->unsigned();
             $table->float('score')->unsigned();
+            $table->boolean('returned');
+            $table->longtext('comment')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateAssignmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assignments');
+        Schema::dropIfExists('assignment_checks');
     }
 }

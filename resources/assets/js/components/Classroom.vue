@@ -1,6 +1,5 @@
 <template>
-    <transition name="fade" mode="out-in">
-    <div class="classroom">
+    <div class="classroom" style="min-height: 500px">
         <div class="class-header">
             <div class="container">
                 <h1>{{ classroom.name }}</h1>
@@ -57,7 +56,6 @@
             </div>
         </div>
     </div>
-    </transition>
 </template>
 
 <script>
@@ -67,10 +65,10 @@
                 classroom : '',
                 posts : [],
                 comments : {},
-                token : '',
+                token : ''
             }
         },
-        mounted(){
+        created(){
             var classroom_id = this.$route.params.id
             this.token = this.$auth.getToken()
 

@@ -1,6 +1,5 @@
 <template>
-    <transition name="fade" mode="out-in">
-    <div id="classroom">
+    <div id="classroom" style="min-height: 500px">
         <div class="page-header">
             <div class="container">
                 <h1>Your Classroom</h1>
@@ -13,14 +12,14 @@
             </div>
         </div>
     </div>
-    </transition>
 </template>
 
 <script>
     export default {
         data(){
             return{
-                classrooms: ''
+                classrooms: '',
+                status: false
             }
         },
         mounted(){
