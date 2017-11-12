@@ -5,10 +5,15 @@ import router from './routes.js'
 import App from './App.vue'
 import axios from 'axios'
 import Auth from './packages/auth/auth.js'
+import VueClip from 'vue-clip'
 
 Vue.use(Auth)
+Vue.use(VueClip)
 
 axios.defaults.baseURL = 'http://localhost/elearning/public';
+
+Vue.prototype.$appName = "Elearning";
+Vue.prototype.$role = "";
 
 router.beforeEach(
     (to, from, next) => {
@@ -56,6 +61,14 @@ router.beforeEach(
         }
     }
 )
+
+axios.get('api/me', {
+    headers: {
+        Authorization: 'Bearer ' + Vue.auth.getToken()
+    }
+}).then(response => {
+    Vue.prototype.$role = response.data.role.actions
+})
 
 Vue.component('navbar', require('./components/NavbarComponent.vue'));
 

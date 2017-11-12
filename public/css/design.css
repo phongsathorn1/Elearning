@@ -42,8 +42,8 @@
 .fade-leave-active {
   -webkit-transition-property: opacity;
   transition-property: opacity;
-  -webkit-transition-duration: .10s;
-          transition-duration: .10s;
+  -webkit-transition-duration: .25s;
+          transition-duration: .25s;
 }
 
 .fade-enter-active {
