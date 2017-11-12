@@ -20,8 +20,12 @@ class AssignmentController extends Controller
             ['user_id', Auth::id()],
             ['assignment_id', $id]
         ])->get();
+        $is_done = AssignmentCheck::where([
+            ['user_id', Auth::id()],
+            ['assignment_id', $id]
+        ])->exists();
 
-        return response()->json(['assignment' => $assignment, 'uploaded_files' => $files]);
+        return response()->json(['assignment' => $assignment, 'uploaded_files' => $files, 'is_done' => $is_done]);
     }
 
     public function store(Request $request, $classroom_id)

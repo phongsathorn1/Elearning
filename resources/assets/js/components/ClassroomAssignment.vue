@@ -20,6 +20,7 @@
                 <vue-clip ref="vc" 
                 :options="options"
                 :on-complete="uploadComplete"
+                v-if="!is_done"
                 >
                     <template slot="clip-uploader-action">
                         <div>
@@ -41,13 +42,13 @@
                     </template>
                 </vue-clip>
                 <div v-for="file in uploaded_files">
-                    <div @click="removeFile(file)">{{ file.name }} success</div>
+                    <div @click="removeFile(file)">{{ file.name }}</div>
                 </div>
-                <button type="button" class="btn btn-success" @click="confirm">Send</button>
+                <button type="button" class="btn btn-success" @click="confirm" v-if="!is_done">Send</button>
                 {{ this.$role }}
             </div>
 
-            <div class="assignment-done-box" v-else>
+            <div class="assignment-done-box" v-if="this.$role != 'is_student'">
                 <div class="assignment-done-list" v-for="done in all_done" @click="activeId(done.id)">
                     {{ done.user.name }}, score {{ done.score }}, {{ done.files.length }} files
                     <div class="assignment-done-files" v-if="done.id == active_id">
@@ -72,6 +73,7 @@
                 assignment_id: this.$route.params.assignment_id,
                 token: this.$auth.getToken(),
                 uploaded_files: [],
+                is_done: '',
                 all_done: [],
                 active_id: '',
                 options: {
@@ -92,6 +94,7 @@
             .then(response => {
                 this.assignment_post = response.data.assignment
                 this.uploaded_files = response.data.uploaded_files
+                this.is_done = response.data.is_done
             })
 
             axios.get(`api/classroom/${this.classroom_id}/assignment/${this.assignment_id}/done`, {
@@ -106,6 +109,9 @@
         methods:{
             removeFile(file){
                 // this.$refs.vc.removeFile(file)
+                if(this.is_done){
+                    return false
+                }
                 var index = this.uploaded_files.findIndex(x => x.id == file.id)
                 var data = {
                     'file_id': file.id
