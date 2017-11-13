@@ -27745,13 +27745,15 @@ __WEBPACK_IMPORTED_MODULE_1__routes_js__["a" /* default */].beforeEach(function 
     }
 });
 
-__WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('api/me', {
-    headers: {
-        Authorization: 'Bearer ' + __WEBPACK_IMPORTED_MODULE_0_vue___default.a.auth.getToken()
-    }
-}).then(function (response) {
-    __WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.$role = response.data.role.actions;
-});
+if (__WEBPACK_IMPORTED_MODULE_0_vue___default.a.auth.isAuth()) {
+    __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('api/me', {
+        headers: {
+            Authorization: 'Bearer ' + __WEBPACK_IMPORTED_MODULE_0_vue___default.a.auth.getToken()
+        }
+    }).then(function (response) {
+        __WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.$role = response.data.role.actions;
+    });
+}
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('navbar', __webpack_require__(203));
 
@@ -66376,38 +66378,10 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__AssignmentUpload_vue__ = __webpack_require__(218);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__AssignmentUpload_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__AssignmentUpload_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AssignmentDone_vue__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AssignmentDone_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__AssignmentDone_vue__);
 //
 //
 //
@@ -66441,6 +66415,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
@@ -66449,19 +66426,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             classroom_id: this.$route.params.id,
             assignment_id: this.$route.params.assignment_id,
-            token: this.$auth.getToken(),
-            uploaded_files: [],
-            is_done: '',
-            all_done: [],
-            active_id: '',
-            options: {
-                url: 'api/classroom/' + this.$route.params.id + '/assignment/' + this.$route.params.assignment_id + '/upload',
-                paramName: 'file',
-                headers: {
-                    Authorization: 'Bearer ' + this.$auth.getToken()
-                }
-            }
+            token: this.$auth.getToken()
         };
+    },
+
+    components: {
+        'assignmentUpload': __WEBPACK_IMPORTED_MODULE_0__AssignmentUpload_vue___default.a,
+        'assignmentDone': __WEBPACK_IMPORTED_MODULE_1__AssignmentDone_vue___default.a
     },
     created: function created() {
         var _this = this;
@@ -66472,62 +66443,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         }).then(function (response) {
             _this.assignment_post = response.data.assignment;
-            _this.uploaded_files = response.data.uploaded_files;
-            _this.is_done = response.data.is_done;
         });
-
-        axios.get('api/classroom/' + this.classroom_id + '/assignment/' + this.assignment_id + '/done', {
-            headers: {
-                Authorization: 'Bearer ' + this.token
-            }
-        }).then(function (response) {
-            _this.all_done = response.data;
-        });
-    },
-
-    methods: {
-        removeFile: function removeFile(file) {
-            var _this2 = this;
-
-            // this.$refs.vc.removeFile(file)
-            if (this.is_done) {
-                return false;
-            }
-            var index = this.uploaded_files.findIndex(function (x) {
-                return x.id == file.id;
-            });
-            var data = {
-                'file_id': file.id
-            };
-            axios.post('api/classroom/' + this.classroom_id + '/assignment/' + this.assignment_id + '/remove', data, {
-                headers: {
-                    Authorization: 'Bearer ' + this.token
-                }
-            }).then(function (response) {
-                _this2.uploaded_files.splice(index, 1);
-            });
-        },
-        uploadComplete: function uploadComplete(file, status, xhr) {
-            this.uploaded_files.push(JSON.parse(xhr.response));
-        },
-        confirm: function confirm() {
-            var _this3 = this;
-
-            axios.get('api/classroom/' + this.classroom_id + '/assignment/' + this.assignment_id + '/confirm', {
-                headers: {
-                    Authorization: 'Bearer ' + this.token
-                }
-            }).then(function (response) {
-                _this3.$router.push('/classroom/' + _this3.classroom_id);
-            });
-        },
-        activeId: function activeId(id) {
-            if (this.active_id == id) {
-                this.active_id = 0;
-            } else {
-                this.active_id = id;
-            }
-        }
     }
 });
 
@@ -66540,211 +66456,58 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
-    _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "class-post-item" }, [
-        _c("div", { staticClass: "class-meta" }, [
-          _vm.assignment_post.user.name
-            ? _c("div", { staticClass: "class-post-user class-meta-item" }, [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.assignment_post.user.name) +
-                    "\n                "
-                )
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "class-post-time class-meta-item" }, [
-            _vm._v(
-              "\n                    " +
-                _vm._s(_vm.assignment_post.created_at) +
-                "\n                "
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "clearfix" })
-        ]),
-        _vm._v(" "),
-        _c("h3", [_vm._v(_vm._s(_vm.assignment_post.title))]),
-        _vm._v(" "),
-        _c("p", [_vm._v(_vm._s(_vm.assignment_post.detail))])
-      ]),
-      _vm._v(" "),
-      this.$role == "is_student"
-        ? _c(
-            "div",
-            { staticClass: "assignment-upload-box" },
-            [
-              !_vm.is_done
-                ? _c(
-                    "vue-clip",
-                    {
-                      ref: "vc",
-                      attrs: {
-                        options: _vm.options,
-                        "on-complete": _vm.uploadComplete
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "clip-uploader-body",
-                          fn: function(props) {
-                            return _vm._l(props.files, function(file) {
-                              return file.status != "success"
-                                ? _c("div", [
-                                    _c(
-                                      "div",
-                                      {
-                                        on: {
-                                          click: function($event) {
-                                            _vm.removeFile(file)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                            " +
-                                            _vm._s(file.name) +
-                                            " " +
-                                            _vm._s(file.status) +
-                                            "\n                            "
-                                        ),
-                                        _c("div", { staticClass: "progress" }, [
-                                          _c(
-                                            "div",
-                                            {
-                                              staticClass: "progress-bar",
-                                              style: {
-                                                width: file.progress + "%"
-                                              },
-                                              attrs: {
-                                                role: "progressbar",
-                                                "aria-valuenow": file.progress,
-                                                "aria-valuemin": "0",
-                                                "aria-valuemax": "100"
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "span",
-                                                { staticClass: "sr-only" },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s(file.progress) +
-                                                      " Complete"
-                                                  )
-                                                ]
-                                              )
-                                            ]
-                                          )
-                                        ])
-                                      ]
-                                    )
-                                  ])
-                                : _vm._e()
-                            })
-                          }
-                        }
-                      ])
-                    },
-                    [
-                      _c("template", { slot: "clip-uploader-action" }, [
-                        _c("div", [
-                          _c("div", { staticClass: "dz-message" }, [
-                            _c("h2", [
-                              _vm._v(
-                                " Click or Drag and Drop files here upload "
-                              )
-                            ])
-                          ])
-                        ])
-                      ])
-                    ],
-                    2
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm._l(_vm.uploaded_files, function(file) {
-                return _c("div", [
-                  _c(
-                    "div",
-                    {
-                      on: {
-                        click: function($event) {
-                          _vm.removeFile(file)
-                        }
-                      }
-                    },
-                    [_vm._v(_vm._s(file.name))]
+    _c(
+      "div",
+      { staticClass: "container" },
+      [
+        _c("div", { staticClass: "class-post-item" }, [
+          _c("div", { staticClass: "class-meta" }, [
+            _vm.assignment_post.user.name
+              ? _c("div", { staticClass: "class-post-user class-meta-item" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.assignment_post.user.name) +
+                      "\n                "
                   )
                 ])
-              }),
-              _vm._v(" "),
-              !_vm.is_done
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success",
-                      attrs: { type: "button" },
-                      on: { click: _vm.confirm }
-                    },
-                    [_vm._v("Send")]
-                  )
-                : _vm._e(),
-              _vm._v("\n            " + _vm._s(this.$role) + "\n        ")
-            ],
-            2
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      this.$role != "is_student"
-        ? _c(
-            "div",
-            { staticClass: "assignment-done-box" },
-            _vm._l(_vm.all_done, function(done) {
-              return _c(
-                "div",
-                {
-                  staticClass: "assignment-done-list",
-                  on: {
-                    click: function($event) {
-                      _vm.activeId(done.id)
-                    }
-                  }
-                },
-                [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(done.user.name) +
-                      ", score " +
-                      _vm._s(done.score) +
-                      ", " +
-                      _vm._s(done.files.length) +
-                      " files\n                "
-                  ),
-                  done.id == _vm.active_id
-                    ? _c(
-                        "div",
-                        { staticClass: "assignment-done-files" },
-                        _vm._l(done.files, function(file) {
-                          return _c(
-                            "div",
-                            { staticClass: "assignment-done-item" },
-                            [
-                              _vm._v(
-                                "\n                        " +
-                                  _vm._s(file.name) +
-                                  "\n                    "
-                              )
-                            ]
-                          )
-                        })
-                      )
-                    : _vm._e()
-                ]
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "class-post-time class-meta-item" }, [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.assignment_post.created_at) +
+                  "\n                "
               )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "clearfix" })
+          ]),
+          _vm._v(" "),
+          _c("h3", [_vm._v(_vm._s(_vm.assignment_post.title))]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(_vm.assignment_post.detail))])
+        ]),
+        _vm._v(" "),
+        this.$role == "is_student"
+          ? _c("assignment-upload", {
+              attrs: {
+                "classroom-id": _vm.classroom_id,
+                "assignment-id": _vm.assignment_id
+              }
             })
-          )
-        : _vm._e()
-    ])
+          : _vm._e(),
+        _vm._v(" "),
+        this.$role != "is_student"
+          ? _c("assignment-done", {
+              attrs: {
+                "classroom-id": _vm.classroom_id,
+                "assignment-id": _vm.assignment_id
+              }
+            })
+          : _vm._e()
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -72545,6 +72308,476 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(216)
+/* template */
+var __vue_template__ = __webpack_require__(217)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\AssignmentDone.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-019438b4", Component.options)
+  } else {
+    hotAPI.reload("data-v-019438b4", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 216 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['classroomId', 'assignmentId'],
+    data: function data() {
+        return {
+            active_id: '',
+            all_done: [],
+            classroom_id: this.classroomId,
+            assignment_id: this.assignmentId,
+            token: this.$auth.getToken()
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('api/classroom/' + this.classroom_id + '/assignment/' + this.assignment_id + '/done', {
+            headers: {
+                Authorization: 'Bearer ' + this.token
+            }
+        }).then(function (response) {
+            _this.all_done = response.data;
+        });
+    },
+
+    methods: {
+        activeId: function activeId(id) {
+            if (this.active_id == id) {
+                this.active_id = 0;
+            } else {
+                this.active_id = id;
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 217 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return this.$role != "is_student"
+    ? _c(
+        "div",
+        { staticClass: "assignment-done-box" },
+        _vm._l(_vm.all_done, function(done) {
+          return _c("div", { staticClass: "assignment-done-list" }, [
+            _c(
+              "div",
+              {
+                staticClass: "assignment-done-meta",
+                on: {
+                  click: function($event) {
+                    _vm.activeId(done.id)
+                  }
+                }
+              },
+              [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(done.user.name) +
+                    ", score " +
+                    _vm._s(done.score) +
+                    ", " +
+                    _vm._s(done.files.length) +
+                    " files\n        "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            done.id == _vm.active_id
+              ? _c(
+                  "div",
+                  { staticClass: "assignment-done-files" },
+                  _vm._l(done.files, function(file) {
+                    return _c("div", { staticClass: "assignment-done-item" }, [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(file.name) +
+                          "\n            "
+                      )
+                    ])
+                  })
+                )
+              : _vm._e()
+          ])
+        })
+      )
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-019438b4", module.exports)
+  }
+}
+
+/***/ }),
+/* 218 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(219)
+/* template */
+var __vue_template__ = __webpack_require__(220)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\AssignmentUpload.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6d9603a5", Component.options)
+  } else {
+    hotAPI.reload("data-v-6d9603a5", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 219 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['classroomId', 'assignmentId'],
+    data: function data() {
+        return {
+            uploaded_files: [],
+            is_done: '',
+            classroom_id: this.classroomId,
+            assignment_id: this.assignmentId,
+            token: this.$auth.getToken(),
+            options: {
+                url: 'api/classroom/' + this.$route.params.id + '/assignment/' + this.$route.params.assignment_id + '/upload',
+                paramName: 'file',
+                headers: {
+                    Authorization: 'Bearer ' + this.$auth.getToken()
+                }
+            }
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('api/classroom/' + this.classroom_id + '/assignment/' + this.assignment_id, {
+            headers: {
+                Authorization: 'Bearer ' + this.token
+            }
+        }).then(function (response) {
+            _this.uploaded_files = response.data.uploaded_files;
+            _this.is_done = response.data.is_done;
+        });
+    },
+
+    methods: {
+        removeFile: function removeFile(file) {
+            var _this2 = this;
+
+            if (this.is_done) {
+                return false;
+            }
+            var index = this.uploaded_files.findIndex(function (x) {
+                return x.id == file.id;
+            });
+            var data = {
+                'file_id': file.id
+            };
+            axios.post('api/classroom/' + this.classroom_id + '/assignment/' + this.assignment_id + '/remove', data, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then(function (response) {
+                _this2.uploaded_files.splice(index, 1);
+            });
+        },
+        uploadComplete: function uploadComplete(file, status, xhr) {
+            this.uploaded_files.push(JSON.parse(xhr.response));
+        },
+        confirm: function confirm() {
+            var _this3 = this;
+
+            axios.get('api/classroom/' + this.classroom_id + '/assignment/' + this.assignment_id + '/confirm', {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then(function (response) {
+                _this3.$router.push('/classroom/' + _this3.classroom_id);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 220 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "assignment-upload-box" },
+    [
+      !_vm.is_done
+        ? _c(
+            "vue-clip",
+            {
+              ref: "vc",
+              attrs: {
+                options: _vm.options,
+                "on-complete": _vm.uploadComplete
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "clip-uploader-body",
+                  fn: function(props) {
+                    return _vm._l(props.files, function(file) {
+                      return file.status != "success"
+                        ? _c("div", [
+                            _c(
+                              "div",
+                              {
+                                on: {
+                                  click: function($event) {
+                                    _vm.removeFile(file)
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                    " +
+                                    _vm._s(file.name) +
+                                    " " +
+                                    _vm._s(file.status) +
+                                    "\n                    "
+                                ),
+                                _c("div", { staticClass: "progress" }, [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "progress-bar",
+                                      style: { width: file.progress + "%" },
+                                      attrs: {
+                                        role: "progressbar",
+                                        "aria-valuenow": file.progress,
+                                        "aria-valuemin": "0",
+                                        "aria-valuemax": "100"
+                                      }
+                                    },
+                                    [
+                                      _c("span", { staticClass: "sr-only" }, [
+                                        _vm._v(
+                                          _vm._s(file.progress) + " Complete"
+                                        )
+                                      ])
+                                    ]
+                                  )
+                                ])
+                              ]
+                            )
+                          ])
+                        : _vm._e()
+                    })
+                  }
+                }
+              ])
+            },
+            [
+              _c("template", { slot: "clip-uploader-action" }, [
+                _c("div", [
+                  _c("div", { staticClass: "dz-message" }, [
+                    _c("h2", [
+                      _vm._v(" Click or Drag and Drop files here upload ")
+                    ])
+                  ])
+                ])
+              ])
+            ],
+            2
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.uploaded_files, function(file) {
+        return _c("div", [
+          _c(
+            "div",
+            {
+              on: {
+                click: function($event) {
+                  _vm.removeFile(file)
+                }
+              }
+            },
+            [_vm._v(_vm._s(file.name))]
+          )
+        ])
+      }),
+      _vm._v(" "),
+      !_vm.is_done
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-success",
+              attrs: { type: "button" },
+              on: { click: _vm.confirm }
+            },
+            [_vm._v("Send")]
+          )
+        : _vm._e(),
+      _vm._v("\n    " + _vm._s(this.$role) + "\n")
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6d9603a5", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

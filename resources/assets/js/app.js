@@ -62,13 +62,16 @@ router.beforeEach(
     }
 )
 
-axios.get('api/me', {
-    headers: {
-        Authorization: 'Bearer ' + Vue.auth.getToken()
-    }
-}).then(response => {
-    Vue.prototype.$role = response.data.role.actions
-})
+if(Vue.auth.isAuth())
+{
+    axios.get('api/me', {
+        headers: {
+            Authorization: 'Bearer ' + Vue.auth.getToken()
+        }
+    }).then(response => {
+        Vue.prototype.$role = response.data.role.actions
+    })
+}
 
 Vue.component('navbar', require('./components/NavbarComponent.vue'));
 
