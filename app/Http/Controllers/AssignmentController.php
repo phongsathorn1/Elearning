@@ -20,12 +20,18 @@ class AssignmentController extends Controller
             ['user_id', Auth::id()],
             ['assignment_id', $id]
         ])->get();
-        $is_done = AssignmentCheck::where([
+        $status = AssignmentCheck::where([
             ['user_id', Auth::id()],
             ['assignment_id', $id]
-        ])->exists();
+        ]);
+        $is_done = $status->exists();
 
-        return response()->json(['assignment' => $assignment, 'uploaded_files' => $files, 'is_done' => $is_done]);
+        return response()->json([
+            'assignment' => $assignment,
+            'uploaded_files' => $files,
+            'is_done' => $is_done,
+            'status' => $status->first()
+        ]);
     }
 
     public function store(Request $request, $classroom_id)
@@ -36,7 +42,8 @@ class AssignmentController extends Controller
             'classroom_id' => $classroom_id,
             'title' => $request->title,
             'detail' => $request->detail,
-            'due_time' => $request->duetime
+            'due_time' => $request->duetime,
+            'score' => $request->score
         ]);
 
         return response()->json(['sucessful' => true]);
@@ -100,5 +107,20 @@ class AssignmentController extends Controller
         $all = AssignmentCheck::where('assignment_id', $id)->get()->load('files', 'user');
 
         return response()->json($all);
+    }
+
+    //for teacher give them score
+    public function update(Request $request, $classroom_id, $id)
+    {
+        Classroom::findOrFail($classroom_id);
+        $assignment = AssignmentCheck::where([
+            ['assignment_id', $id],
+            ['user_id', $request->user_id]
+        ])->first();
+        $assignment->returned = true;
+        $assignment->comment = $request->comment;
+        $assignment->save();
+
+        return response()->json(['successful' => true]);
     }
 }

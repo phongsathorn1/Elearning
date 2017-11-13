@@ -24,6 +24,7 @@
             <assignment-done 
                 v-bind:classroom-id="classroom_id"
                 v-bind:assignment-id="assignment_id"
+                v-bind:max-score="assignment_post.score"
                 v-if="this.$role != 'is_student'"
             ></assignment-done>
         </div>

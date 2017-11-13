@@ -8,7 +8,7 @@ class Assignment extends Model
 {
     //
     protected $fillable = [
-        'user_id', 'classroom_id', 'title', 'detail', 'due_time'
+        'user_id', 'classroom_id', 'title', 'detail', 'due_time', 'score'
     ];
 
     protected $appends = ['type'];

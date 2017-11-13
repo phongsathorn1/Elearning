@@ -10,6 +10,10 @@
                     <textarea class="form-control" id="detail" rows="3" v-model="form.detail"></textarea>
                 </div>
                 <div class="form-group">
+                    <label for="score">Score</label>
+                    <input type="text" class="form-control" id="score" placeholder="Score" v-model="form.score">
+                </div>
+                <div class="form-group">
                     <div class="col-md-6">
                         <label for="duedate">Date</label>
                         <flat-pickr id="duedate" v-model="form.duedate" :config="config"></flat-pickr>
@@ -37,7 +41,8 @@
                     title: '',
                     detail: '',
                     duedate: '',
-                    duetime: ''
+                    duetime: '',
+                    score: 0
                 },
                 config: {
                     altFormat: "F j, Y",
@@ -59,7 +64,8 @@
                     title: this.form.title,
                     detail: this.form.detail,
                     duetime: this.form.duedate + ' ' + this.form.duetime,
-                    classroom_id: this.classroom_id
+                    classroom_id: this.classroom_id,
+                    score: this.form.score
                 }
 
                 axios.post(`api/classroom/${this.classroom_id}/assignment`, data, {

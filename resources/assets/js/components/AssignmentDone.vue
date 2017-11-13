@@ -1,6 +1,6 @@
 <template>
     <div class="assignment-done-box" v-if="this.$role != 'is_student'">
-        <div class="assignment-done-list" v-for="done in all_done   ">
+        <div class="assignment-done-list" v-for="done in all_done">
             <div class="assignment-done-meta" @click="activeId(done.id)">
                 {{ done.user.name }}, score {{ done.score }}, {{ done.files.length }} files
             </div>
@@ -8,6 +8,10 @@
                 <div class="assignment-done-item" v-for="file in done.files">
                     {{ file.name }}
                 </div>
+                <input type="text" name="score" v-model="done.score"> / {{ maxScore }}
+                <textarea class="form-control" rows="3" v-model="done.comment"></textarea>
+                <button type="button" class="btn btn-primary"@click="returnWork(done.id)" v-if="!done.returned">Return</button>
+                <button type="button" class="btn btn-success" @click="returnWork(done.id)" v-if="done.returned">Update</button>
             </div>
         </div>
     </div>
@@ -15,7 +19,7 @@
 
 <script>
 export default {
-    props: ['classroomId', 'assignmentId'],
+    props: ['classroomId', 'assignmentId', 'maxScore'],
     data(){
         return {
             active_id: '',
@@ -42,6 +46,23 @@ export default {
             }else{
                 this.active_id = id
             }
+        },
+        returnWork(id){
+            var index = this.all_done.findIndex(x => x.id == id)
+            var data = {
+                'comment': this.all_done[index].comment,
+                'user_id': this.all_done[index].user_id,
+                'score': this.all_done[index].score
+            }
+            axios.put(`api/classroom/${this.classroom_id}/assignment/${this.assignment_id}`, data, {
+                headers:{
+                    Authorization: 'Bearer ' + this.token
+                }
+            })
+            .then(response => {
+                this.all_done[index].returned = 1
+                this.active_id = 0
+            })
         }
     }
 }

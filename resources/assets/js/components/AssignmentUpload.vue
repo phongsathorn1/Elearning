@@ -1,6 +1,12 @@
 <template>
     <div class="assignment-upload-box">
-
+        <div v-if="status.returned">
+            Returned
+        </div>
+        <div v-else>
+            In progress
+        </div>
+        {{ status.comment }}
         <vue-clip ref="vc" 
             :options="options"
             :on-complete="uploadComplete"
@@ -40,6 +46,7 @@ export default {
         return {
             uploaded_files: [],
             is_done: '',
+            status: {},
             classroom_id: this.classroomId,
             assignment_id: this.assignmentId,
             token: this.$auth.getToken(),
@@ -61,6 +68,7 @@ export default {
         .then(response => {
             this.uploaded_files = response.data.uploaded_files
             this.is_done = response.data.is_done
+            this.status = response.data.status
         })
     },
     methods:{
