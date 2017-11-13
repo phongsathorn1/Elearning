@@ -66575,12 +66575,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['classroomId', 'assignmentId'],
     data: function data() {
         return {
             uploaded_files: [],
+            loaded: false,
             is_done: '',
             status: {},
             classroom_id: this.classroomId,
@@ -66606,6 +66608,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.uploaded_files = response.data.uploaded_files;
             _this.is_done = response.data.is_done;
             _this.status = response.data.status;
+            _this.loaded = true;
         });
     },
 
@@ -66643,6 +66646,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (response) {
                 _this3.$router.push('/classroom/' + _this3.classroom_id);
             });
+        },
+        download: function download(file) {
+            axios.get('api/assignment/download/' + file.id, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then(function (response) {
+                window.open(response.data.download_url, "_blank");
+            });
         }
     }
 });
@@ -66655,124 +66667,146 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "assignment-upload-box" },
-    [
-      _vm.status.returned
-        ? _c("div", [_vm._v("\n        Returned\n    ")])
-        : _c("div", [_vm._v("\n        In progress\n    ")]),
-      _vm._v("\n    " + _vm._s(_vm.status.comment) + "\n    "),
-      !_vm.is_done
-        ? _c(
-            "vue-clip",
-            {
-              ref: "vc",
-              attrs: {
-                options: _vm.options,
-                "on-complete": _vm.uploadComplete
-              },
-              scopedSlots: _vm._u([
+  return _vm.loaded
+    ? _c(
+        "div",
+        { staticClass: "assignment-upload-box" },
+        [
+          _vm.status.returned
+            ? _c("div", [_vm._v("\n        Returned\n    ")])
+            : _c("div", [_vm._v("\n        In progress\n    ")]),
+          _vm._v(" "),
+          _c("b", [_vm._v("Comment from teacher: ")]),
+          _vm._v(_vm._s(_vm.status.comment) + "\n    "),
+          _c("b", [_vm._v("Score: ")]),
+          _vm._v(_vm._s(_vm.status.score) + "\n    "),
+          !_vm.is_done
+            ? _c(
+                "vue-clip",
                 {
-                  key: "clip-uploader-body",
-                  fn: function(props) {
-                    return _vm._l(props.files, function(file) {
-                      return file.status != "success"
-                        ? _c("div", [
-                            _c(
-                              "div",
-                              {
-                                on: {
-                                  click: function($event) {
-                                    _vm.removeFile(file)
-                                  }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                    " +
-                                    _vm._s(file.name) +
-                                    " " +
-                                    _vm._s(file.status) +
-                                    "\n                    "
-                                ),
-                                _c("div", { staticClass: "progress" }, [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass: "progress-bar",
-                                      style: { width: file.progress + "%" },
-                                      attrs: {
-                                        role: "progressbar",
-                                        "aria-valuenow": file.progress,
-                                        "aria-valuemin": "0",
-                                        "aria-valuemax": "100"
+                  ref: "vc",
+                  attrs: {
+                    options: _vm.options,
+                    "on-complete": _vm.uploadComplete
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "clip-uploader-body",
+                      fn: function(props) {
+                        return _vm._l(props.files, function(file) {
+                          return file.status != "success"
+                            ? _c("div", [
+                                _c(
+                                  "div",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        _vm.removeFile(file)
                                       }
-                                    },
-                                    [
-                                      _c("span", { staticClass: "sr-only" }, [
-                                        _vm._v(
-                                          _vm._s(file.progress) + " Complete"
-                                        )
-                                      ])
-                                    ]
-                                  )
-                                ])
-                              ]
-                            )
-                          ])
-                        : _vm._e()
-                    })
-                  }
-                }
-              ])
-            },
-            [
-              _c("template", { slot: "clip-uploader-action" }, [
-                _c("div", [
-                  _c("div", { staticClass: "dz-message" }, [
-                    _c("h2", [
-                      _vm._v(" Click or Drag and Drop files here upload ")
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                    " +
+                                        _vm._s(file.name) +
+                                        " " +
+                                        _vm._s(file.status) +
+                                        "\n                    "
+                                    ),
+                                    _c("div", { staticClass: "progress" }, [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "progress-bar",
+                                          style: { width: file.progress + "%" },
+                                          attrs: {
+                                            role: "progressbar",
+                                            "aria-valuenow": file.progress,
+                                            "aria-valuemin": "0",
+                                            "aria-valuemax": "100"
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "span",
+                                            { staticClass: "sr-only" },
+                                            [
+                                              _vm._v(
+                                                _vm._s(file.progress) +
+                                                  " Complete"
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  ]
+                                )
+                              ])
+                            : _vm._e()
+                        })
+                      }
+                    }
+                  ])
+                },
+                [
+                  _c("template", { slot: "clip-uploader-action" }, [
+                    _c("div", [
+                      _c("div", { staticClass: "dz-message" }, [
+                        _c("h2", [
+                          _vm._v(" Click or Drag and Drop files here upload ")
+                        ])
+                      ])
                     ])
                   ])
-                ])
-              ])
-            ],
-            2
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm._l(_vm.uploaded_files, function(file) {
-        return _c("div", [
-          _c(
-            "div",
-            {
-              on: {
-                click: function($event) {
-                  _vm.removeFile(file)
-                }
-              }
-            },
-            [_vm._v(_vm._s(file.name))]
-          )
-        ])
-      }),
-      _vm._v(" "),
-      !_vm.is_done
-        ? _c(
-            "button",
-            {
-              staticClass: "btn btn-success",
-              attrs: { type: "button" },
-              on: { click: _vm.confirm }
-            },
-            [_vm._v("Send")]
-          )
-        : _vm._e(),
-      _vm._v("\n    " + _vm._s(this.$role) + "\n")
-    ],
-    2
-  )
+                ],
+                2
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._l(_vm.uploaded_files, function(file) {
+            return _c("div", [
+              _c(
+                "div",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.download(file)
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(file.name))]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.removeFile(file)
+                    }
+                  }
+                },
+                [_vm._v("delete")]
+              )
+            ])
+          }),
+          _vm._v(" "),
+          !_vm.is_done
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  attrs: { type: "button" },
+                  on: { click: _vm.confirm }
+                },
+                [_vm._v("Send")]
+              )
+            : _vm._e()
+        ],
+        2
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -66920,136 +66954,130 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return this.$role != "is_student"
-    ? _c(
-        "div",
-        { staticClass: "assignment-done-box" },
-        _vm._l(_vm.all_done, function(done) {
-          return _c("div", { staticClass: "assignment-done-list" }, [
-            _c(
+  return _c(
+    "div",
+    { staticClass: "assignment-done-box" },
+    _vm._l(_vm.all_done, function(done) {
+      return _c("div", { staticClass: "assignment-done-list" }, [
+        _c(
+          "div",
+          {
+            staticClass: "assignment-done-meta",
+            on: {
+              click: function($event) {
+                _vm.activeId(done.id)
+              }
+            }
+          },
+          [
+            _vm._v(
+              "\n            " +
+                _vm._s(done.user.name) +
+                ", score " +
+                _vm._s(done.score) +
+                ", " +
+                _vm._s(done.files.length) +
+                " files\n        "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        done.id == _vm.active_id
+          ? _c(
               "div",
-              {
-                staticClass: "assignment-done-meta",
-                on: {
-                  click: function($event) {
-                    _vm.activeId(done.id)
-                  }
-                }
-              },
+              { staticClass: "assignment-done-files" },
               [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(done.user.name) +
-                    ", score " +
-                    _vm._s(done.score) +
-                    ", " +
-                    _vm._s(done.files.length) +
-                    " files\n        "
-                )
-              ]
-            ),
-            _vm._v(" "),
-            done.id == _vm.active_id
-              ? _c(
-                  "div",
-                  { staticClass: "assignment-done-files" },
-                  [
-                    _vm._l(done.files, function(file) {
-                      return _c(
-                        "div",
-                        { staticClass: "assignment-done-item" },
-                        [
-                          _vm._v(
-                            "\n                " +
-                              _vm._s(file.name) +
-                              "\n            "
-                          )
-                        ]
-                      )
-                    }),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: done.score,
-                          expression: "done.score"
-                        }
-                      ],
-                      attrs: { type: "text", name: "score" },
-                      domProps: { value: done.score },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(done, "score", $event.target.value)
-                        }
-                      }
-                    }),
-                    _vm._v(" / " + _vm._s(_vm.maxScore) + "\n            "),
-                    _c("textarea", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: done.comment,
-                          expression: "done.comment"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { rows: "3" },
-                      domProps: { value: done.comment },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(done, "comment", $event.target.value)
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    !done.returned
-                      ? _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                _vm.returnWork(done.id)
-                              }
-                            }
-                          },
-                          [_vm._v("Return")]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    done.returned
-                      ? _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-success",
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                _vm.returnWork(done.id)
-                              }
-                            }
-                          },
-                          [_vm._v("Update")]
-                        )
-                      : _vm._e()
+                _vm._l(done.files, function(file) {
+                  return _c("div", { staticClass: "assignment-done-item" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(file.name) +
+                        "\n            "
+                    )
+                  ])
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: done.score,
+                      expression: "done.score"
+                    }
                   ],
-                  2
-                )
-              : _vm._e()
-          ])
-        })
-      )
-    : _vm._e()
+                  attrs: { type: "text", name: "score" },
+                  domProps: { value: done.score },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(done, "score", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" / " + _vm._s(_vm.maxScore) + "\n            "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: done.comment,
+                      expression: "done.comment"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { rows: "3" },
+                  domProps: { value: done.comment },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(done, "comment", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                !done.returned
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.returnWork(done.id)
+                          }
+                        }
+                      },
+                      [_vm._v("Return")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                done.returned
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.returnWork(done.id)
+                          }
+                        }
+                      },
+                      [_vm._v("Update")]
+                    )
+                  : _vm._e()
+              ],
+              2
+            )
+          : _vm._e()
+      ])
+    })
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

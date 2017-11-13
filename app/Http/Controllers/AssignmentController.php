@@ -119,6 +119,7 @@ class AssignmentController extends Controller
         ])->first();
         $assignment->returned = true;
         $assignment->comment = $request->comment;
+        $assignment->score = $request->score;
         $assignment->save();
 
         return response()->json(['successful' => true]);

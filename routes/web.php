@@ -15,16 +15,9 @@ Route::get('/', function () {
     return view('app');
 });
 
-// Route::group(['prefix' => 'api/'], function(){
-//     Route::group(['middleware' => 'auth:api'], function(){
-//         Route::resource('classroom', 'ClassroomController');
-//         Route::resource('post', 'PostController');
-//         Route::resource('classroom/{classroom_id}/assignment', 'AssignmentController');
-//         Route::post('classroom/{classroom_id}/assignment/{id}/upload', 'AssignmentController@upload');
-//         Route::resource('comments', 'CommentController');
-//         Route::resource('members', 'MemberController')->middleware('role:is_teacher');
-//         Route::post('members/add', 'MemberController@add')->middleware('role:is_teacher');
-//         Route::post('members/remove', 'MemberController@remove')->middleware('role:is_teacher');
-//         Route::get('me', 'UserController@index');
-//     });
-// });
+Route::get('/login', function() {
+    return redirect()->home();
+})->name('login');
+
+Route::get('download/file/{filepath}/', 'FileController@download');
+Route::get('download/assignment/{assignment_id}/{filepath}/', 'FileController@downloadAssignment');

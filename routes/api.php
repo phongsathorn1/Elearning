@@ -25,10 +25,10 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('classroom/{classroom_id}/assignment/{id}/remove', 'AssignmentController@removeFile');
     Route::get('classroom/{classroom_id}/assignment/{id}/confirm', 'AssignmentController@confirm');
     Route::get('classroom/{classroom_id}/assignment/{id}/done', 'AssignmentController@alldone');
-    // Route::get('classroom/{classroom_id}/assignment/{id}')
     Route::resource('comments', 'CommentController');
     Route::resource('members', 'MemberController')->middleware('role:is_teacher');
     Route::post('members/add', 'MemberController@add')->middleware('role:is_teacher');
     Route::post('members/remove', 'MemberController@remove')->middleware('role:is_teacher');
     Route::get('me', 'UserController@index');
+    Route::get('assignment/download/{file_id}', 'FileController@assignment');
 });
