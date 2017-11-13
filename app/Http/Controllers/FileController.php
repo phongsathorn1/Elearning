@@ -32,12 +32,24 @@ class FileController extends Controller
 
     public function download($filepath)
     {
-        return response()->download(storage_path('app/public/'.$filepath))->deleteFileAfterSend(true);
+        if(Storage::exists('public/'.$filepath))
+        {
+            return response()->download(storage_path('app/public/'.$filepath))->deleteFileAfterSend(true);
+        }
+        else {
+            return response()->json(['error' => 'File not found.'], 404);
+        }
     }
 
     public function downloadAssignment($assignment_id, $filepath)
     {
         $filename = AssignmentFile::findOrFail($assignment_id)->name;
-        return response()->download(storage_path('app/public/'.$filepath), e($filename))->deleteFileAfterSend(true);
+        if(Storage::exists('public/'.$filepath))
+        {
+            return response()->download(storage_path('app/public/'.$filepath), e($filename))->deleteFileAfterSend(true);
+        }
+        else {
+            return response()->json(['error' => 'File not found.'], 404);
+        }
     }
 }

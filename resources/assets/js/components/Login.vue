@@ -54,6 +54,7 @@
                 .then(response => {
                     console.log(response)
                     this.$auth.setPersonalData(response.data)
+                    this.$store.commit('storeUser', response.data)
                 })
             }
         }

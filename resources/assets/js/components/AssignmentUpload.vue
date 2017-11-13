@@ -109,7 +109,7 @@ export default {
                     Authorization: 'Bearer ' + this.token
                 }
             }).then(response => {
-                window.open(response.data.download_url, "_blank")
+                window.open(response.data.download_url, "_self")
             })
         }
     }

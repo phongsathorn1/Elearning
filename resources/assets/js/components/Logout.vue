@@ -6,6 +6,7 @@
         created () {
             this.$auth.revokeToken()
             this.$router.push('/')
+            this.$store.commit('removePersonal')
         }
     }
 </script>

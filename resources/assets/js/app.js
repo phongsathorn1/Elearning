@@ -1,11 +1,13 @@
 require('./bootstrap');
 
 import Vue from 'vue'
+import axios from 'axios'
+import VueClip from 'vue-clip'
+
 import router from './routes.js'
 import App from './App.vue'
-import axios from 'axios'
 import Auth from './packages/auth/auth.js'
-import VueClip from 'vue-clip'
+import { store } from './store'
 
 Vue.use(Auth)
 Vue.use(VueClip)
@@ -17,6 +19,15 @@ Vue.prototype.$role = "";
 
 router.beforeEach(
     (to, from, next) => {
+        if (Vue.auth.isAuth()){
+            axios.get('api/me', {
+                headers: {
+                    Authorization: 'Bearer ' + Vue.auth.getToken()
+                }
+            }).then(response => {
+                Vue.prototype.$role = response.data.role.actions
+            })
+        }
         if (typeof to.meta.role !== 'undefined') {
             if (Vue.auth.isAuth()) {
                 axios.get('api/me', {
@@ -62,21 +73,9 @@ router.beforeEach(
     }
 )
 
-if(Vue.auth.isAuth())
-{
-    axios.get('api/me', {
-        headers: {
-            Authorization: 'Bearer ' + Vue.auth.getToken()
-        }
-    }).then(response => {
-        Vue.prototype.$role = response.data.role.actions
-    })
-}
-
-Vue.component('navbar', require('./components/NavbarComponent.vue'));
-
 const app = new Vue({
     el: '#app',
     router,
+    store,
     render: h => h(App)
 });
