@@ -1,15 +1,17 @@
 <template>
     <transition name="fade">
         <div class="container">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" placeholder="Username" v-model="form.username">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password" v-model="form.password">
-            </div>
-            <button type="submit" @click="login" class="btn btn-default">Login</button>
+            <form v-on:submit.prevent="login">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" placeholder="Username" v-model="form.username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password" v-model="form.password">
+                </div>
+                <button type="submit" class="btn btn-default">Login</button>
+            </form>
         </div>
     </transition>
 </template>

@@ -66956,6 +66956,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -67014,66 +67016,79 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("transition", { attrs: { name: "fade" } }, [
     _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "username" } }, [_vm._v("Username")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.username,
-              expression: "form.username"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", id: "username", placeholder: "Username" },
-          domProps: { value: _vm.form.username },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.form, "username", $event.target.value)
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "password" } }, [_vm._v("Password")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.password,
-              expression: "form.password"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "password", id: "password", placeholder: "Password" },
-          domProps: { value: _vm.form.password },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.form, "password", $event.target.value)
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
       _c(
-        "button",
+        "form",
         {
-          staticClass: "btn btn-default",
-          attrs: { type: "submit" },
-          on: { click: _vm.login }
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              _vm.login($event)
+            }
+          }
         },
-        [_vm._v("Login")]
+        [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "username" } }, [_vm._v("Username")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.username,
+                  expression: "form.username"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "username", placeholder: "Username" },
+              domProps: { value: _vm.form.username },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "username", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "password" } }, [_vm._v("Password")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.password,
+                  expression: "form.password"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "password",
+                id: "password",
+                placeholder: "Password"
+              },
+              domProps: { value: _vm.form.password },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "password", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            { staticClass: "btn btn-default", attrs: { type: "submit" } },
+            [_vm._v("Login")]
+          )
+        ]
       )
     ])
   ])
