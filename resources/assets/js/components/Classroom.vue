@@ -27,7 +27,18 @@
                         <div class="class-post-time class-meta-item">
                             {{ parseTime(post.created_at) }}
                         </div>
-                        <router-link :to="`/classroom/${classroom.id}/post/${post.id}/edit`" class="btn btn-default">Edit</router-link>
+
+                        <router-link
+                            :to="`/classroom/${classroom.id}/post/${post.id}/edit`"
+                            class="btn btn-default"
+                            v-if="checkUserPost(post.user.id)"
+                        >Edit</router-link>
+
+                        <button class="btn btn-default"
+                            @click="removePost(post.id)"
+                            v-if="checkUserPost(post.user.id)"
+                        >Delete</button>
+
                         <div class="clearfix"></div>
                     </div>
                     <div class="class-post-main" v-html="renderHTML(post.detail)">
@@ -57,7 +68,17 @@
                         <div class="class-post-time class-meta-item">
                             {{ parseTime(post.created_at) }}
                         </div>
-                        <router-link :to="`/classroom/${classroom.id}/assignment/${post.id}/edit`" class="btn btn-default">Edit</router-link>
+
+                        <router-link
+                            :to="`/classroom/${classroom.id}/assignment/${post.id}/edit`"
+                            class="btn btn-default"
+                            v-if="checkUserPost(post.user.id)"
+                        >Edit</router-link>
+
+                        <button class="btn btn-default"
+                            @click="removeAssignment(post.id)"
+                            v-if="checkUserPost(post.user.id)"
+                        >Delete</button>
                         <div class="clearfix"></div>
                     </div>
                     <h3><router-link :to="classroom.id +'/assignment/' + post.id">{{ post.title }}</router-link></h3>
@@ -71,6 +92,8 @@
 
 <script>
     import moment from 'moment'
+    import swal from 'sweetalert2'
+    import 'sweetalert2/dist/sweetalert2.min.css';
     import { mapGetters } from 'vuex'
 
     export default {
@@ -79,7 +102,16 @@
                 classroom : '',
                 posts : [],
                 comments : {},
-                token : ''
+                token : '',
+                swal_config: {
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }
             }
         },
         created(){
@@ -98,9 +130,9 @@
         },
         computed: {
             ...mapGetters([
+                'getUserId',
                 'isTeacher'
             ]),
-            
         },
         methods:{
             comment(post_id){
@@ -122,8 +154,15 @@
                     this.posts[index].comments.push(response.data)
                 })
             },
+            checkUserPost(user_id){
+                return this.getUserId == user_id
+            },
             renderHTML(text){
-                return text.replace(/(\r\n|\n)/g, "<br/>")
+                if(text){
+                    return text.replace(/(\r\n|\n)/g, "<br/>")
+                }else{
+                    return text
+                }
             },
             timeCheck(due_time){
                 return moment().isSameOrAfter(due_time, "YYYY-MM-DD HH-mm-ss");
@@ -131,6 +170,36 @@
             parseTime(dateTime){
                 var displayTime = moment(dateTime, "YYYY-MM-DD HH-mm-ss").format("dddd, MMMM Do YYYY, h:mm:ss a");
                 return `Post on ${displayTime}`
+            },
+            removeAssignment(post_id){
+                var self = this
+                swal(this.swal_config).then(() => {
+                    axios.delete(`api/classroom/${self.classroom.id}/assignment/${post_id}`, {
+                        headers:{
+                            Authorization: 'Bearer ' + self.token
+                        }
+                    }).then(response => {
+                        var index = self.posts.findIndex(x => x.id == post_id && x.type == "assignment")
+                        self.posts.splice(index, 1)
+
+                        console.log('remove success')
+                    })
+                })
+            },
+            removePost(post_id){
+                var self = this
+                swal(this.swal_config).then(() => {
+                    axios.delete(`api/post/${post_id}`, {
+                        headers:{
+                            Authorization: 'Bearer ' + self.token
+                        }
+                    }).then(response => {
+                        var index = self.posts.findIndex(x => x.id == post_id && x.type == "post")
+                        self.posts.splice(index, 1)
+
+                        console.log('remove success')
+                    })
+                })
             }
         }
     }

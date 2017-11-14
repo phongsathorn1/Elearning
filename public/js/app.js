@@ -68477,7 +68477,11 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sweetalert2__ = __webpack_require__(230);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sweetalert2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_sweetalert2__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_sweetalert2_dist_sweetalert2_min_css__ = __webpack_require__(231);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_sweetalert2_dist_sweetalert2_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_sweetalert2_dist_sweetalert2_min_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(132);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -68551,6 +68555,29 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
@@ -68561,7 +68588,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             classroom: '',
             posts: [],
             comments: {},
-            token: ''
+            token: '',
+            swal_config: {
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }
         };
     },
     created: function created() {
@@ -68580,7 +68616,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         });
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])(['isTeacher'])),
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapGetters */])(['getUserId', 'isTeacher'])),
     methods: {
         comment: function comment(post_id) {
             var _this2 = this;
@@ -68604,8 +68640,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 _this2.posts[index].comments.push(response.data);
             });
         },
+        checkUserPost: function checkUserPost(user_id) {
+            return this.getUserId == user_id;
+        },
         renderHTML: function renderHTML(text) {
-            return text.replace(/(\r\n|\n)/g, "<br/>");
+            if (text) {
+                return text.replace(/(\r\n|\n)/g, "<br/>");
+            } else {
+                return text;
+            }
         },
         timeCheck: function timeCheck(due_time) {
             return __WEBPACK_IMPORTED_MODULE_0_moment___default()().isSameOrAfter(due_time, "YYYY-MM-DD HH-mm-ss");
@@ -68613,6 +68656,40 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         parseTime: function parseTime(dateTime) {
             var displayTime = __WEBPACK_IMPORTED_MODULE_0_moment___default()(dateTime, "YYYY-MM-DD HH-mm-ss").format("dddd, MMMM Do YYYY, h:mm:ss a");
             return 'Post on ' + displayTime;
+        },
+        removeAssignment: function removeAssignment(post_id) {
+            var self = this;
+            __WEBPACK_IMPORTED_MODULE_1_sweetalert2___default()(this.swal_config).then(function () {
+                axios.delete('api/classroom/' + self.classroom.id + '/assignment/' + post_id, {
+                    headers: {
+                        Authorization: 'Bearer ' + self.token
+                    }
+                }).then(function (response) {
+                    var index = self.posts.findIndex(function (x) {
+                        return x.id == post_id && x.type == "assignment";
+                    });
+                    self.posts.splice(index, 1);
+
+                    console.log('remove success');
+                });
+            });
+        },
+        removePost: function removePost(post_id) {
+            var self = this;
+            __WEBPACK_IMPORTED_MODULE_1_sweetalert2___default()(this.swal_config).then(function () {
+                axios.delete('api/post/' + post_id, {
+                    headers: {
+                        Authorization: 'Bearer ' + self.token
+                    }
+                }).then(function (response) {
+                    var index = self.posts.findIndex(function (x) {
+                        return x.id == post_id && x.type == "post";
+                    });
+                    self.posts.splice(index, 1);
+
+                    console.log('remove success');
+                });
+            });
         }
     }
 });
@@ -68972,21 +69049,38 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-default",
-                          attrs: {
-                            to:
-                              "/classroom/" +
-                              _vm.classroom.id +
-                              "/post/" +
-                              post.id +
-                              "/edit"
-                          }
-                        },
-                        [_vm._v("Edit")]
-                      ),
+                      _vm.checkUserPost(post.user.id)
+                        ? _c(
+                            "router-link",
+                            {
+                              staticClass: "btn btn-default",
+                              attrs: {
+                                to:
+                                  "/classroom/" +
+                                  _vm.classroom.id +
+                                  "/post/" +
+                                  post.id +
+                                  "/edit"
+                              }
+                            },
+                            [_vm._v("Edit")]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.checkUserPost(post.user.id)
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-default",
+                              on: {
+                                click: function($event) {
+                                  _vm.removePost(post.id)
+                                }
+                              }
+                            },
+                            [_vm._v("Delete")]
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
                       _c("div", { staticClass: "clearfix" })
                     ],
@@ -69103,21 +69197,38 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-default",
-                          attrs: {
-                            to:
-                              "/classroom/" +
-                              _vm.classroom.id +
-                              "/assignment/" +
-                              post.id +
-                              "/edit"
-                          }
-                        },
-                        [_vm._v("Edit")]
-                      ),
+                      _vm.checkUserPost(post.user.id)
+                        ? _c(
+                            "router-link",
+                            {
+                              staticClass: "btn btn-default",
+                              attrs: {
+                                to:
+                                  "/classroom/" +
+                                  _vm.classroom.id +
+                                  "/assignment/" +
+                                  post.id +
+                                  "/edit"
+                              }
+                            },
+                            [_vm._v("Edit")]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.checkUserPost(post.user.id)
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-default",
+                              on: {
+                                click: function($event) {
+                                  _vm.removeAssignment(post.id)
+                                }
+                              }
+                            },
+                            [_vm._v("Delete")]
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
                       _c("div", { staticClass: "clearfix" })
                     ],
@@ -74212,6 +74323,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         }
     },
     getters: {
+        getUserId: function getUserId(state) {
+            return state.user.id;
+        },
         getRole: function getRole(state) {
             return state.user.role.actions;
         },

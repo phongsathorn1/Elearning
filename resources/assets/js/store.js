@@ -29,6 +29,9 @@ export const store = new Vuex.Store({
         }
     },
     getters:{
+        getUserId: state => {
+            return state.user.id
+        },
         getRole : state => {
             return state.user.role.actions
         },

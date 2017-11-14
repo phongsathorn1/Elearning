@@ -12,7 +12,7 @@ class PostController extends Controller
     public function show($post_id)
     {
         $post = Post::findOrFail($post_id);
-        if(Auth::user()->classroom->find($post->classroom_id)->exists())
+        if(Auth::user()->classroom->find($post->classroom_id))
         {
             return response()->json($post);
         }
@@ -41,6 +41,20 @@ class PostController extends Controller
         {
             $post->detail = $request->post;
             $post->save();
+
+            return response()->json(['success' => true]);
+        }
+        else{
+            return response()->json(['success' => false], 403);
+        }
+    }
+
+    public function destroy($post_id)
+    {
+        $post = Post::findOrFail($post_id);
+        if(Auth::user()->post->find($post_id))
+        {
+            $post->delete();
 
             return response()->json(['success' => true]);
         }
