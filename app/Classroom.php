@@ -8,7 +8,7 @@ class Classroom extends Model
 {
     //
     protected $fillable = [
-        'user_id', 'name', 'description'
+        'user_id', 'name', 'description', 'join_code'
     ];
 
     protected $hidden = ['assignments', 'posts'];

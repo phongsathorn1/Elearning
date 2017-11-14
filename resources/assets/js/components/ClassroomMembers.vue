@@ -5,6 +5,7 @@
                 <div class="container">
                     <h1>{{ classroom.name }} <small>Members</small></h1>
                     <router-link :to="'members/add'" class="btn btn-default">Add member</router-link>
+                    <span>Join code: <span style="padding:10px;border:1px solid #e0e0e0">{{ classroom.join_code }}</span></span>
                 </div>
             </div>
             <div class="container">

@@ -72570,6 +72570,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -72627,7 +72628,18 @@ var render = function() {
               "router-link",
               { staticClass: "btn btn-default", attrs: { to: "members/add" } },
               [_vm._v("Add member")]
-            )
+            ),
+            _vm._v(" "),
+            _c("span", [
+              _vm._v("Join code: "),
+              _c(
+                "span",
+                {
+                  staticStyle: { padding: "10px", border: "1px solid #e0e0e0" }
+                },
+                [_vm._v(_vm._s(_vm.classroom.join_code))]
+              )
+            ])
           ],
           1
         )
@@ -72771,6 +72783,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -72807,6 +72820,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         timeCheck: function timeCheck() {
             return __WEBPACK_IMPORTED_MODULE_2_moment___default()().isSameOrAfter(this.assignment_post.due_time, "YYYY-MM-DD HH-mm-ss");
+        },
+        back: function back() {
+            this.$router.go(-1);
         }
     }
 });
@@ -73428,63 +73444,73 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
-    _c(
-      "div",
-      { staticClass: "container" },
-      [
-        _c("div", { staticClass: "class-post-item card" }, [
-          _c("div", { staticClass: "class-meta" }, [
-            _vm.assignment_post.user.name
-              ? _c("div", { staticClass: "class-post-user class-meta-item" }, [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(_vm.assignment_post.user.name) +
-                      "\n                "
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "class-post-time class-meta-item" }, [
-              _vm._v(
-                "\n                    " +
-                  _vm._s(_vm.assignment_post.created_at) +
-                  "\n                "
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "clearfix" })
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("div", { staticClass: "control-area" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-link",
+            attrs: { type: "button" },
+            on: { click: _vm.back }
+          },
+          [_vm._v("< Back")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "class-post-item card" }, [
+        _c("div", { staticClass: "class-meta" }, [
+          _vm.assignment_post.user.name
+            ? _c("div", { staticClass: "class-post-user class-meta-item" }, [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.assignment_post.user.name) +
+                    "\n            "
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "class-post-time class-meta-item" }, [
+            _vm._v(
+              "\n                " +
+                _vm._s(_vm.assignment_post.created_at) +
+                "\n            "
+            )
           ]),
           _vm._v(" "),
-          _c("h3", [_vm._v(_vm._s(_vm.assignment_post.title))]),
-          _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(_vm.assignment_post.detail))]),
-          _vm._v(" "),
-          _vm.timeCheck() ? _c("p", [_vm._v("Time up!")]) : _vm._e()
+          _c("div", { staticClass: "clearfix" })
         ]),
         _vm._v(" "),
-        this.$role == "is_student"
-          ? _c("assignment-upload", {
-              attrs: {
-                "classroom-id": _vm.classroom_id,
-                "assignment-id": _vm.assignment_id
-              }
-            })
-          : _vm._e(),
+        _c("h3", [_vm._v(_vm._s(_vm.assignment_post.title))]),
         _vm._v(" "),
-        this.$role != "is_student"
-          ? _c("assignment-done", {
-              attrs: {
-                "classroom-id": _vm.classroom_id,
-                "assignment-id": _vm.assignment_id,
-                "max-score": _vm.assignment_post.score
-              }
-            })
-          : _vm._e()
-      ],
-      1
-    )
-  ])
+        _c("p", [_vm._v(_vm._s(_vm.assignment_post.detail))]),
+        _vm._v(" "),
+        _vm.timeCheck() ? _c("p", [_vm._v("Time up!")]) : _vm._e()
+      ]),
+      _vm._v(" "),
+      this.$role == "is_student"
+        ? _c("assignment-upload", {
+            attrs: {
+              "classroom-id": _vm.classroom_id,
+              "assignment-id": _vm.assignment_id
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      this.$role != "is_student"
+        ? _c("assignment-done", {
+            attrs: {
+              "classroom-id": _vm.classroom_id,
+              "assignment-id": _vm.assignment_id,
+              "max-score": _vm.assignment_post.score
+            }
+          })
+        : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

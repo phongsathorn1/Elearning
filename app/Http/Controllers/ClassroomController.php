@@ -45,10 +45,13 @@ class ClassroomController extends Controller
 
     public function store(Request $request)
     {
+        $join_code = str_random(6);
+
         $classroom = Classroom::create([
             'user_id' => Auth::id(),
             'name' => $request->name,
-            'description' => $request->description
+            'description' => $request->description,
+            'join_code' => $join_code
         ]);
 
         $classroom->members()->attach(Auth::id());

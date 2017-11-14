@@ -1,35 +1,36 @@
 <template>
-    <transition name="fade" mode="out-in">
-        <div class="container">
-            <div class="class-post-item card">
-                <div class="class-meta">
-                    <div class="class-post-user class-meta-item" v-if="assignment_post.user.name">
-                        {{ assignment_post.user.name }}
-                    </div>
-                    <div class="class-post-time class-meta-item">
-                        {{ assignment_post.created_at }}
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <h3>{{ assignment_post.title }}</h3>
-                <p>{{ assignment_post.detail }}</p>
-                <p v-if="timeCheck()">Time up!</p>
-            </div>
-
-            <assignment-upload
-                v-bind:classroom-id="classroom_id"
-                v-bind:assignment-id="assignment_id"
-                v-if="this.$role == 'is_student'"
-            ></assignment-upload>
-
-            <assignment-done 
-                v-bind:classroom-id="classroom_id"
-                v-bind:assignment-id="assignment_id"
-                v-bind:max-score="assignment_post.score"
-                v-if="this.$role != 'is_student'"
-            ></assignment-done>
+    <div class="container">
+        <div class="control-area">
+            <button type="button" class="btn btn-link" @click="back">&lt; Back</button>
         </div>
-    </transition>
+        <div class="class-post-item card">
+            <div class="class-meta">
+                <div class="class-post-user class-meta-item" v-if="assignment_post.user.name">
+                    {{ assignment_post.user.name }}
+                </div>
+                <div class="class-post-time class-meta-item">
+                    {{ assignment_post.created_at }}
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <h3>{{ assignment_post.title }}</h3>
+            <p>{{ assignment_post.detail }}</p>
+            <p v-if="timeCheck()">Time up!</p>
+        </div>
+
+        <assignment-upload
+            v-bind:classroom-id="classroom_id"
+            v-bind:assignment-id="assignment_id"
+            v-if="this.$role == 'is_student'"
+        ></assignment-upload>
+
+        <assignment-done 
+            v-bind:classroom-id="classroom_id"
+            v-bind:assignment-id="assignment_id"
+            v-bind:max-score="assignment_post.score"
+            v-if="this.$role != 'is_student'"
+        ></assignment-done>
+    </div>
 </template>
 
 <script>
@@ -65,6 +66,9 @@
         methods:{
             timeCheck(){
                 return moment().isSameOrAfter(this.assignment_post.due_time, "YYYY-MM-DD HH-mm-ss");
+            },
+            back(){
+                this.$router.go(-1)
             }
         }
     }
