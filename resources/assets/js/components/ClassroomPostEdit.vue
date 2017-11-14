@@ -25,9 +25,6 @@
                 }
             }).then(response => {
                 this.detail = response.data.detail
-                response.data.detail.forEach(function(test, index){
-                    console.log(test)
-                })
             })
         },
         methods:{

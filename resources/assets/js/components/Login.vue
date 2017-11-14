@@ -42,7 +42,6 @@
                 axios.post('oauth/token', data)
                 .then(response => {
                     this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now())
-                    this.$router.push('/')
                     this.setData()
                 })
                 .catch(response => {
@@ -58,6 +57,7 @@
                 .then(response => {
                     this.$auth.setPersonalData(response.data)
                     this.$store.commit('storeUser', response.data)
+                    this.$router.push('/')
                 })
             }
         }

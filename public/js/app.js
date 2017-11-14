@@ -68022,7 +68022,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.post('oauth/token', data).then(function (response) {
                 _this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now());
-                _this.$router.push('/');
                 _this.setData();
             }).catch(function (response) {
                 _this.login_error = true;
@@ -68038,6 +68037,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (response) {
                 _this2.$auth.setPersonalData(response.data);
                 _this2.$store.commit('storeUser', response.data);
+                _this2.$router.push('/');
             });
         }
     }
@@ -74205,7 +74205,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
             state.user = data;
         },
         removePersonal: function removePersonal(state) {
-            state.user = null;
+            state.user = {
+                role: {}
+            };
             state.isLoggedIn = false;
         }
     },
@@ -76375,9 +76377,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         }).then(function (response) {
             _this.detail = response.data.detail;
-            response.data.detail.forEach(function (test, index) {
-                console.log(test);
-            });
         });
     },
 

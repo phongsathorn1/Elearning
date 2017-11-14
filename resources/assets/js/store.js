@@ -22,7 +22,9 @@ export const store = new Vuex.Store({
             state.user = data
         },
         removePersonal(state){
-            state.user = null
+            state.user = {
+                role: {}
+            }
             state.isLoggedIn = false
         }
     },
