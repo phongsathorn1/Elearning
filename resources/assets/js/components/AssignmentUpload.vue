@@ -1,13 +1,15 @@
 <template>
     <div class="assignment-upload-box" v-if="loaded">
-        <div v-if="status.returned">
-            Returned
+        <div v-if="status">
+            <div v-if="status.returned">
+                Returned
+            </div>
+            <div v-else>
+                In progress
+            </div>
+            <b>Comment from teacher: </b>{{ status.comment }}
+            <b>Score: </b>{{ status.score }}
         </div>
-        <div v-else>
-            In progress
-        </div>
-        <b>Comment from teacher: </b>{{ status.comment }}
-        <b>Score: </b>{{ status.score }}
         <vue-clip ref="vc" 
             :options="options"
             :on-complete="uploadComplete"

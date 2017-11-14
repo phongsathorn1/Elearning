@@ -58,4 +58,17 @@ class ClassroomController extends Controller
 
         return response()->json($classroom);
     }
+
+    public function join(Request $request)
+    {
+        $classroom = Classroom::where('join_code', $request->code)->first();
+        if($classroom->exists())
+        {
+            $classroom->members()->attach(Auth::id());
+            return response()->json(['success' => true, 'classroom_id' => $classroom->id]);
+        }
+        else {
+            return response()->json(['success' => false], 404);
+        }
+    }
 }

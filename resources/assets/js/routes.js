@@ -68,7 +68,6 @@ const routes = [
         component: require('./components/ClassroomMembers.vue'),
         meta: {
             forAuth: true,
-            role: 'is_teacher'
         }
     },
     {

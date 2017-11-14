@@ -4,8 +4,10 @@
             <div class="container">
                 <h1>Your Classroom</h1>
                 <router-link to="classroom/create" class="btn btn-default">Create class</router-link>
+                <button class="btn btn-default" @click="showJoin">Join class</button>
             </div>
         </div>
+        <classroom-join v-if="show_join"></classroom-join>
         <div class="container">
             <div class="classroom-list col-md-4" v-for="classroom in classrooms">
                 <div class="card">
@@ -22,11 +24,51 @@
 </template>
 
 <script>
+    import swal from 'sweetalert2'
+    import 'sweetalert2/dist/sweetalert2.min.css';
+
     export default {
         data(){
             return{
                 classrooms: '',
-                status: false
+                status: false,
+                show_join: false
+            }
+        },
+        methods:{
+            showJoin(){
+                var self = this
+                swal({
+                    title: 'Enter code to join class',
+                    input: 'text',
+                    inputPlaceholder: 'Enter code',
+                    showCancelButton: true,
+                    inputValidator: function (value) {
+                        return new Promise(function (resolve, reject) {
+                            if (value) {
+                                resolve()
+                            } else {
+                                reject('Please enter the code.')
+                            }
+                        })
+                    }
+                })
+                .then(function (code) {
+                    self.requestJoin(code)
+                })
+            },
+            requestJoin(code){
+                var token = this.$auth.getToken()
+                var data = {
+                    'code': code,
+                }
+                axios.post('api/classroom/join', data, {
+                    headers:{
+                        Authorization: 'Bearer '+ token
+                    }
+                }).then(response => {
+                    this.$router.push('classroom/' + response.data.classroom_id);
+                })
             }
         },
         mounted(){
@@ -34,7 +76,7 @@
 
             axios.get('api/classroom', {
                 headers:{
-                    Authorization: 'Bearer '+token
+                    Authorization: 'Bearer '+ token
                 }
             }).then(response => {
                 this.classrooms = response.data
