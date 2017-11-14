@@ -6,20 +6,22 @@
                 <div class="class-description">
                     {{ classroom.description }}
                 </div>
-                <router-link :to="classroom.id + '/post'" class="btn btn-default">New Post</router-link>
-                <router-link :to="classroom.id + '/post/assignment'" class="btn btn-default">New Assignment</router-link>
-                <router-link :to="classroom.id + '/members'" class="btn btn-default">Members</router-link>
+                <div class="class-action">
+                    <router-link :to="classroom.id + '/post'" class="btn btn-default">New Post</router-link>
+                    <router-link :to="classroom.id + '/post/assignment'" class="btn btn-default">New Assignment</router-link>
+                    <router-link :to="classroom.id + '/members'" class="btn btn-default">Members</router-link>
+                </div>
             </div>
         </div>
         <div class="container">
             <div class="class-posts" v-for="post in posts">
-                <div class="class-post-item" v-if="post.type === 'post'">
+                <div class="class-post-item card" v-if="post.type === 'post'">
                     <div class="class-meta">
                         <div class="class-post-user class-meta-item">
                             {{ post.user.name }}
                         </div>
                         <div class="class-post-time class-meta-item">
-                            {{ post.created_at }}
+                            {{ parseTime(post.created_at) }}
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -40,18 +42,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="class-post-item" v-if="post.type === 'assignment'">
+                <div class="class-post-item card" v-if="post.type === 'assignment'">
                     <div class="class-meta">
                         <div class="class-post-user class-meta-item">
                             {{ post.user.name }}
                         </div>
                         <div class="class-post-time class-meta-item">
-                            {{ post.created_at }}
+                            {{ parseTime(post.created_at) }}
                         </div>
                         <div class="clearfix"></div>
                     </div>
                     <h3><router-link :to="classroom.id +'/assignment/' + post.id">{{ post.title }}</router-link></h3>
                     <p>{{ post.detail }}</p>
+                    <p v-if="timeCheck(post.due_time)">Time up!</p>
                 </div>
             </div>
         </div>
@@ -59,6 +62,8 @@
 </template>
 
 <script>
+    import moment from 'moment'
+
     export default {
         data(){
             return {
@@ -101,6 +106,13 @@
                     var index = this.posts.findIndex(x => x.id == post_id)
                     this.posts[index].comments.push(response.data)
                 })
+            },
+            timeCheck(due_time){
+                return moment().isSameOrAfter(due_time, "YYYY-MM-DD HH-mm-ss");
+            },
+            parseTime(dateTime){
+                var displayTime = moment(dateTime, "YYYY-MM-DD HH-mm-ss").format("dddd, MMMM Do YYYY, h:mm:ss a");
+                return `Post on ${displayTime}`
             }
         }
     }

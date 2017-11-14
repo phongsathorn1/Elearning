@@ -7,8 +7,15 @@
             </div>
         </div>
         <div class="container">
-            <div class="classroom-list" v-for="classroom in classrooms">
-                <div><router-link :to="'/classroom/'+classroom.id">{{ classroom.name }}</router-link></div>
+            <div class="classroom-list col-md-4" v-for="classroom in classrooms">
+                <div class="card">
+                    <div class="classroom-list-head">
+                        <router-link :to="'/classroom/'+classroom.id">{{ classroom.name }}</router-link>
+                    </div>
+                    <div class="classroom-description">
+                        {{ classroom.description }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

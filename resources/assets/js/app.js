@@ -12,7 +12,7 @@ import { store } from './store'
 Vue.use(Auth)
 Vue.use(VueClip)
 
-axios.defaults.baseURL = 'http://localhost/elearning/public';
+axios.defaults.baseURL = 'http://localhost:8000';
 
 Vue.prototype.$appName = "Elearning";
 Vue.prototype.$role = "";

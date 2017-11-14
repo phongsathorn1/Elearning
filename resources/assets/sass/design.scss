@@ -1,41 +1,116 @@
-.class-header{
-    padding: 30px 0px;
+// $primary-color: #7051de;
+// $dark-primary-color: #6046bf;
+// $navbar-menu-color: #FFFFFF;
+
+$primary-color: #7051de;
+$dark-primary-color: #6046bf;
+
+body{
+    font-family: 'Nunito', sans-serif;
+    background: #F0F0F0;
 }
 
-.page-header{
-    padding: 20px 0px;
+a{
+    color: $primary-color
 }
 
-.class-post-item{
+a:hover{
+    color: $dark-primary-color
+}
+
+.navbar-default {
+    background-color: $primary-color;
+    padding: 10px 0px;
+    border: none;
+    border-radius: 0px;
+    margin-bottom: 0px;
+}
+
+.navbar-default .navbar-brand {
+    color: #FFFFFF;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #E0E0E0;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #FFFFFF;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+    color: #E0E0E0;
+}
+
+.page-header {
+    padding: 40px 0px;
+    margin: 0px;
+    margin-bottom: 10px;
     background: #FFFFFF;
-    padding: 20px;
-    margin: 10px 0px;
-    border-radius: 3px;
-    border: 1px solid #E0E0E0;
 }
 
-.class-meta-item{
-    float: left;
+.class-header {
+    padding: 50px 0px;
+    background: $primary-color;
+    color: #FFFFFF;
+}
+
+.class-header h1{
+    margin: 0px;
+}
+
+.class-header .btn-default{
+    background-color: transparent;
+    color: #FFFFFF;
+    border-color: #FFF;
+}
+
+.class-header .btn-default:hover{
+    background-color: #FFFFFF;
+    color: $primary-color;
+    border-color: #FFF;
+}
+
+.class-description{
+    font-size: 16px;
+}
+
+.class-action{
+    padding: 10px 0px;
+}
+
+.classroom-list .card{
+    height: 150px;
+}
+
+.classroom-list-head{
+    font-size: 20px;
+}
+
+.class-meta{
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
 }
 
 .class-post-time{
-    font-size: 13px;
-    padding: 0px 5px;
+    font-size: 12px;
 }
 
 .class-post-user{
     font-size: 18px;
-    margin-bottom: 10px;
 }
 
 .member-list{
     background: #FFFFFF;
 }
 
-.card{
+.card {
     background: #FFFFFF;
-    padding: 10px 20px;
-    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0px;
 }
 
 .fade-enter-active, .fade-leave-active {

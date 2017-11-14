@@ -9,6 +9,7 @@ use App\Classroom;
 use App\Assignment;
 use App\AssignmentFile;
 use App\AssignmentCheck;
+use Carbon\Carbon;
 
 class AssignmentController extends Controller
 {
@@ -52,6 +53,14 @@ class AssignmentController extends Controller
     public function upload(Request $request, $classroom_id, $id)
     {
         Classroom::findOrFail($classroom_id);
+        
+        $assignment = Assignment::findOrFail($id);
+        $now = Carbon::now();
+        $due = Carbon::createFromFormat("Y-m-d H:i:s", $assignment->due_time);
+        if($due->lte($now)){
+            return response()->json(['error' => 'This assignment time up!'], 403);
+        }
+
         $original_name = $request->file->getClientOriginalName();
         $file = $request->file('file')->store('file');
 
@@ -68,6 +77,14 @@ class AssignmentController extends Controller
     public function removeFile(Request $request, $classroom_id, $id)
     {
         Classroom::findOrFail($classroom_id);
+
+        $assignment = Assignment::findOrFail($id);
+        $now = Carbon::now();
+        $due = Carbon::createFromFormat("Y-m-d H:i:s", $assignment->due_time);
+        if($due->lte($now)){
+            return response()->json(['error' => 'This assignment time up!'], 403);
+        }
+
         $file = AssignmentFile::findOrFail($request->file_id);
         if($file->user_id == Auth::id()){
             Storage::delete($file->location);
@@ -83,6 +100,14 @@ class AssignmentController extends Controller
 
     public function confirm(Request $request, $classroom_id, $id){
         Classroom::findOrFail($classroom_id);
+
+        $assignment = Assignment::findOrFail($id);
+        $now = Carbon::now();
+        $due = Carbon::createFromFormat("Y-m-d H:i:s", $assignment->due_time);
+        if($due->lte($now)){
+            return response()->json(['error' => 'This assignment time up!'], 403);
+        }
+
         if(AssignmentCheck::where([
             ['user_id', Auth::id()],
             ['assignment_id', $id]

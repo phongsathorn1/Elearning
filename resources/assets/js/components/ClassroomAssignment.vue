@@ -1,7 +1,7 @@
 <template>
     <transition name="fade" mode="out-in">
         <div class="container">
-            <div class="class-post-item">
+            <div class="class-post-item card">
                 <div class="class-meta">
                     <div class="class-post-user class-meta-item" v-if="assignment_post.user.name">
                         {{ assignment_post.user.name }}
@@ -13,6 +13,7 @@
                 </div>
                 <h3>{{ assignment_post.title }}</h3>
                 <p>{{ assignment_post.detail }}</p>
+                <p v-if="timeCheck()">Time up!</p>
             </div>
 
             <assignment-upload
@@ -34,6 +35,7 @@
 <script>
     import AssignmentUpload from './AssignmentUpload.vue'
     import AssignmentDone from './AssignmentDone.vue'
+    import moment from 'moment';
 
     export default {
         data(){
@@ -59,6 +61,11 @@
             .then(response => {
                 this.assignment_post = response.data.assignment
             })
+        },
+        methods:{
+            timeCheck(){
+                return moment().isSameOrAfter(this.assignment_post.due_time, "YYYY-MM-DD HH-mm-ss");
+            }
         }
     }
 </script>
