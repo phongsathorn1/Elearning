@@ -18,6 +18,11 @@ class CreateRolesTable extends Migration
             $table->string('name');
             $table->longText('actions');
         });
+
+        DB::table('roles')->insert([
+            ['name' => 'Teacher', 'actions' => 'is_teacher'],
+            ['name' => 'Student', 'actions' => 'is_student']
+        ])
     }
 
     /**
