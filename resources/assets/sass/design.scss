@@ -5,8 +5,10 @@
 $primary-color: #7051de;
 $dark-primary-color: #6046bf;
 
+$font: "Nunito", sans-serif;
+
 body{
-    font-family: 'Nunito', sans-serif;
+    font-family: $font;
     background: #F0F0F0;
 }
 
@@ -114,7 +116,10 @@ a:hover{
 }
 
 //popup
-
+.swal-modal {
+    border-radius: 0px;
+    font-family: "Nunito", sans-serif;
+}
 
 //fade transition
 .fade-enter-active, .fade-leave-active {

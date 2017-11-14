@@ -65026,6 +65026,19 @@ var routes = [{
     meta: {
         forAuth: true
     }
+}, {
+    path: '/classroom/:id/assignment/:post_id/edit',
+    component: __webpack_require__(241),
+    meta: {
+        forAuth: true,
+        role: 'is_teacher'
+    }
+}, {
+    path: '/classroom/:id/post/:post_id/edit',
+    component: __webpack_require__(238),
+    meta: {
+        forAuth: true
+    }
 }];
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     routes: routes
@@ -67668,6 +67681,10 @@ if (inBrowser && window.Vue) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(233)
+}
 var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(163)
@@ -67676,7 +67693,7 @@ var __vue_template__ = __webpack_require__(164)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -67721,6 +67738,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_sweetalert2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_sweetalert2__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sweetalert2_dist_sweetalert2_min_css__ = __webpack_require__(231);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sweetalert2_dist_sweetalert2_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_sweetalert2_dist_sweetalert2_min_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(132);
 //
 //
 //
@@ -67746,6 +67764,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
@@ -67759,6 +67782,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
+    computed: Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapGetters */])(['isTeacher']),
     methods: {
         showJoin: function showJoin() {
             var self = this;
@@ -67766,6 +67790,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 title: 'Enter code to join class',
                 input: 'text',
                 inputPlaceholder: 'Enter code',
+                customClass: 'test',
                 showCancelButton: true,
                 inputValidator: function inputValidator(value) {
                     return new Promise(function (resolve, reject) {
@@ -67830,14 +67855,16 @@ var render = function() {
           [
             _c("h1", [_vm._v("Your Classroom")]),
             _vm._v(" "),
-            _c(
-              "router-link",
-              {
-                staticClass: "btn btn-default",
-                attrs: { to: "classroom/create" }
-              },
-              [_vm._v("Create class")]
-            ),
+            _vm.isTeacher
+              ? _c(
+                  "router-link",
+                  {
+                    staticClass: "btn btn-default",
+                    attrs: { to: "classroom/create" }
+                  },
+                  [_vm._v("Create class")]
+                )
+              : _vm._e(),
             _vm._v(" "),
             _c(
               "button",
@@ -68451,6 +68478,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(132);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
 //
 //
 //
@@ -68549,7 +68580,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
     },
 
-    computed: Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])(['isTeacher']),
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])(['isTeacher'])),
     methods: {
         comment: function comment(post_id) {
             var _this2 = this;
@@ -68572,6 +68603,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
                 _this2.posts[index].comments.push(response.data);
             });
+        },
+        renderHTML: function renderHTML(text) {
+            return text.replace(/(\r\n|\n)/g, "<br/>");
         },
         timeCheck: function timeCheck(due_time) {
             return __WEBPACK_IMPORTED_MODULE_0_moment___default()().isSameOrAfter(due_time, "YYYY-MM-DD HH-mm-ss");
@@ -68910,41 +68944,59 @@ var render = function() {
           return _c("div", { staticClass: "class-posts" }, [
             post.type === "post"
               ? _c("div", { staticClass: "class-post-item card" }, [
-                  _c("div", { staticClass: "class-meta" }, [
-                    _c(
-                      "div",
-                      { staticClass: "class-post-user class-meta-item" },
-                      [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(post.user.name) +
-                            "\n                    "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "class-post-time class-meta-item" },
-                      [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(_vm.parseTime(post.created_at)) +
-                            "\n                    "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "clearfix" })
-                  ]),
+                  _c(
+                    "div",
+                    { staticClass: "class-meta" },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "class-post-user class-meta-item" },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(post.user.name) +
+                              "\n                    "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "class-post-time class-meta-item" },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(_vm.parseTime(post.created_at)) +
+                              "\n                    "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-default",
+                          attrs: {
+                            to:
+                              "/classroom/" +
+                              _vm.classroom.id +
+                              "/post/" +
+                              post.id +
+                              "/edit"
+                          }
+                        },
+                        [_vm._v("Edit")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "clearfix" })
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
-                  _c("div", { staticClass: "class-post-main" }, [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(post.detail) +
-                        "\n                "
-                    )
-                  ]),
+                  _c("div", {
+                    staticClass: "class-post-main",
+                    domProps: { innerHTML: _vm._s(_vm.renderHTML(post.detail)) }
+                  }),
                   _vm._v(" "),
                   _c("div", { staticClass: "class-post-comments" }, [
                     _c("div", { staticClass: "comment-box" }, [
@@ -69023,33 +69075,54 @@ var render = function() {
             _vm._v(" "),
             post.type === "assignment"
               ? _c("div", { staticClass: "class-post-item card" }, [
-                  _c("div", { staticClass: "class-meta" }, [
-                    _c(
-                      "div",
-                      { staticClass: "class-post-user class-meta-item" },
-                      [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(post.user.name) +
-                            "\n                    "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "class-post-time class-meta-item" },
-                      [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(_vm.parseTime(post.created_at)) +
-                            "\n                    "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "clearfix" })
-                  ]),
+                  _c(
+                    "div",
+                    { staticClass: "class-meta" },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "class-post-user class-meta-item" },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(post.user.name) +
+                              "\n                    "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "class-post-time class-meta-item" },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(_vm.parseTime(post.created_at)) +
+                              "\n                    "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-default",
+                          attrs: {
+                            to:
+                              "/classroom/" +
+                              _vm.classroom.id +
+                              "/assignment/" +
+                              post.id +
+                              "/edit"
+                          }
+                        },
+                        [_vm._v("Edit")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "clearfix" })
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c(
                     "h3",
@@ -69067,7 +69140,9 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c("p", [_vm._v(_vm._s(post.detail))]),
+                  _c("p", {
+                    domProps: { innerHTML: _vm._s(_vm.renderHTML(post.detail)) }
+                  }),
                   _vm._v(" "),
                   _vm.timeCheck(post.due_time)
                     ? _c("p", [_vm._v("Time up!")])
@@ -69156,8 +69231,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -69209,45 +69282,43 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("transition", { attrs: { name: "fade" } }, [
-    _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "post" } }, [_vm._v("Post")]),
-          _vm._v(" "),
-          _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.detail,
-                expression: "detail"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { rows: "3", id: "detail" },
-            domProps: { value: _vm.detail },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.detail = $event.target.value
-              }
-            }
-          })
-        ]),
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "post" } }, [_vm._v("Post")]),
         _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-default",
-            attrs: { type: "submit" },
-            on: { click: _vm.post }
-          },
-          [_vm._v("Post")]
-        )
-      ])
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.detail,
+              expression: "detail"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { rows: "3", id: "detail" },
+          domProps: { value: _vm.detail },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.detail = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default",
+          attrs: { type: "submit" },
+          on: { click: _vm.post }
+        },
+        [_vm._v("Post")]
+      )
     ])
   ])
 }
@@ -69321,8 +69392,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_flatpickr_dist_flatpickr_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_flatpickr_dist_flatpickr_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
-//
-//
 //
 //
 //
@@ -72140,158 +72209,148 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "transition",
-    { staticClass: "container", attrs: { name: "fade" } },
-    [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.title,
-                expression: "form.title"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              id: "title",
-              placeholder: "Tile of assignment"
-            },
-            domProps: { value: _vm.form.title },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.form, "title", $event.target.value)
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "detail" } }, [
-            _vm._v("Detail of this assignment")
-          ]),
-          _vm._v(" "),
-          _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.detail,
-                expression: "form.detail"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { id: "detail", rows: "3" },
-            domProps: { value: _vm.form.detail },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.form, "detail", $event.target.value)
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "score" } }, [_vm._v("Score")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.score,
-                expression: "form.score"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", id: "score", placeholder: "Score" },
-            domProps: { value: _vm.form.score },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.form, "score", $event.target.value)
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c(
-            "div",
-            { staticClass: "col-md-6" },
-            [
-              _c("label", { attrs: { for: "duedate" } }, [_vm._v("Date")]),
-              _vm._v(" "),
-              _c("flat-pickr", {
-                attrs: { id: "duedate", config: _vm.config },
-                model: {
-                  value: _vm.form.duedate,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form, "duedate", $$v)
-                  },
-                  expression: "form.duedate"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6" }, [
-            _c("label", { attrs: { for: "duetime" } }, [_vm._v("Time")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.duetime,
-                  expression: "form.duetime"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", id: "duetime" },
-              domProps: { value: _vm.form.duetime },
-              on: {
-                blur: _vm.timecheck,
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.form, "duetime", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "clearfix" })
-        ]),
-        _vm._v(" "),
-        _c(
-          "button",
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
           {
-            staticClass: "btn btn-default",
-            attrs: { type: "submit" },
-            on: { click: _vm.add }
-          },
-          [_vm._v("Add assignment")]
-        )
-      ])
-    ]
-  )
+            name: "model",
+            rawName: "v-model",
+            value: _vm.form.title,
+            expression: "form.title"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", id: "title", placeholder: "Tile of assignment" },
+        domProps: { value: _vm.form.title },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.form, "title", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "detail" } }, [
+        _vm._v("Detail of this assignment")
+      ]),
+      _vm._v(" "),
+      _c("textarea", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.form.detail,
+            expression: "form.detail"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { id: "detail", rows: "3" },
+        domProps: { value: _vm.form.detail },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.form, "detail", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "score" } }, [_vm._v("Score")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.form.score,
+            expression: "form.score"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", id: "score", placeholder: "Score" },
+        domProps: { value: _vm.form.score },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.form, "score", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-6" },
+        [
+          _c("label", { attrs: { for: "duedate" } }, [_vm._v("Date")]),
+          _vm._v(" "),
+          _c("flat-pickr", {
+            attrs: { id: "duedate", config: _vm.config },
+            model: {
+              value: _vm.form.duedate,
+              callback: function($$v) {
+                _vm.$set(_vm.form, "duedate", $$v)
+              },
+              expression: "form.duedate"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("label", { attrs: { for: "duetime" } }, [_vm._v("Time")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.duetime,
+              expression: "form.duetime"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", id: "duetime" },
+          domProps: { value: _vm.form.duetime },
+          on: {
+            blur: _vm.timecheck,
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.form, "duetime", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" })
+    ]),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-default",
+        attrs: { type: "submit" },
+        on: { click: _vm.add }
+      },
+      [_vm._v("Add assignment")]
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -72615,6 +72674,9 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(132);
+//
+//
 //
 //
 //
@@ -72646,6 +72708,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
@@ -72653,6 +72717,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             classroom: ''
         };
     },
+
+    computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])(['isTeacher']),
     created: function created() {
         var _this = this;
 
@@ -72688,44 +72754,44 @@ var render = function() {
   return _c("transition", { attrs: { name: "fade" } }, [
     _c("div", { attrs: { id: "members" } }, [
       _c("div", { staticClass: "page-header" }, [
-        _c(
-          "div",
-          { staticClass: "container" },
-          [
-            _c("h1", [
-              _vm._v(_vm._s(_vm.classroom.name) + " "),
-              _c("small", [_vm._v("Members")])
-            ]),
-            _vm._v(" "),
-            this.$role != "is_student"
-              ? _c(
-                  "router-link",
-                  {
-                    staticClass: "btn btn-default",
-                    attrs: { to: "members/add" }
-                  },
-                  [_vm._v("Add member")]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            this.$role != "is_student"
-              ? _c("span", [
-                  _vm._v("Join code: "),
+        _c("div", { staticClass: "container" }, [
+          _c("h1", [
+            _vm._v(_vm._s(_vm.classroom.name) + " "),
+            _c("small", [_vm._v("Members")])
+          ]),
+          _vm._v(" "),
+          _vm.isTeacher
+            ? _c(
+                "div",
+                { staticClass: "control-area" },
+                [
                   _c(
-                    "span",
+                    "router-link",
                     {
-                      staticStyle: {
-                        padding: "10px",
-                        border: "1px solid #e0e0e0"
-                      }
+                      staticClass: "btn btn-default",
+                      attrs: { to: "members/add" }
                     },
-                    [_vm._v(_vm._s(_vm.classroom.join_code))]
-                  )
-                ])
-              : _vm._e()
-          ],
-          1
-        )
+                    [_vm._v("Add member")]
+                  ),
+                  _vm._v(" "),
+                  _c("span", [
+                    _vm._v("Join code: "),
+                    _c(
+                      "span",
+                      {
+                        staticStyle: {
+                          padding: "10px",
+                          border: "1px solid #e0e0e0"
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.classroom.join_code))]
+                    )
+                  ])
+                ],
+                1
+              )
+            : _vm._e()
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "container" }, [
@@ -72833,6 +72899,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(132);
+//
 //
 //
 //
@@ -73574,27 +73641,48 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "class-post-item card" }, [
-        _c("div", { staticClass: "class-meta" }, [
-          _vm.assignment_post.user.name
-            ? _c("div", { staticClass: "class-post-user class-meta-item" }, [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(_vm.assignment_post.user.name) +
-                    "\n            "
-                )
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "class-post-time class-meta-item" }, [
-            _vm._v(
-              "\n                " +
-                _vm._s(_vm.assignment_post.created_at) +
-                "\n            "
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "clearfix" })
-        ]),
+        _c(
+          "div",
+          { staticClass: "class-meta" },
+          [
+            _vm.assignment_post.user.name
+              ? _c("div", { staticClass: "class-post-user class-meta-item" }, [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.assignment_post.user.name) +
+                      "\n            "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "class-post-time class-meta-item" }, [
+              _vm._v(
+                "\n                " +
+                  _vm._s(_vm.assignment_post.created_at) +
+                  "\n            "
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "btn btn-default",
+                attrs: {
+                  to:
+                    "/classroom/" +
+                    _vm.classroom_id +
+                    "/assignment/" +
+                    _vm.assignment_post.id +
+                    "/edit"
+                }
+              },
+              [_vm._v("Edit")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "clearfix" })
+          ],
+          1
+        ),
         _vm._v(" "),
         _c("h3", [_vm._v(_vm._s(_vm.assignment_post.title))]),
         _vm._v(" "),
@@ -74176,8 +74264,260 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 /* 223 */,
 /* 224 */,
 /* 225 */,
-/* 226 */,
-/* 227 */,
+/* 226 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(227)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction) {
+  isProduction = _isProduction
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 227 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
 /* 228 */,
 /* 229 */,
 /* 230 */
@@ -75908,6 +76248,535 @@ exports.push([module.i, "body.swal2-shown{overflow-y:hidden}body.swal2-iosfix{po
 
 // exports
 
+
+/***/ }),
+/* 233 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(234);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(226)("1f59e644", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-30d9132a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./ClassroomList.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-30d9132a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./ClassroomList.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 234 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(187)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.test {\n    border-radius: 0px;\n    font-family: \"Nunito\", sans-serif;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(239)
+/* template */
+var __vue_template__ = __webpack_require__(240)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\ClassroomPostEdit.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5004fd56", Component.options)
+  } else {
+    hotAPI.reload("data-v-5004fd56", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 239 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            detail: '',
+            token: this.$auth.getToken()
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('api/post/' + this.$route.params.post_id, {
+            headers: {
+                Authorization: 'Bearer ' + this.token
+            }
+        }).then(function (response) {
+            _this.detail = response.data.detail;
+            response.data.detail.forEach(function (test, index) {
+                console.log(test);
+            });
+        });
+    },
+
+    methods: {
+        post: function post() {
+            var _this2 = this;
+
+            var data = {
+                'post': this.detail
+            };
+            axios.patch('/api/post/' + this.$route.params.post_id, data, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then(function (response) {
+                _this2.$router.push('/classroom/' + _this2.$route.params.id);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 240 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "post" } }, [_vm._v("Post")]),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.detail,
+              expression: "detail"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { rows: "3", id: "detail" },
+          domProps: { value: _vm.detail },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.detail = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default",
+          attrs: { type: "submit" },
+          on: { click: _vm.post }
+        },
+        [_vm._v("Post")]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5004fd56", module.exports)
+  }
+}
+
+/***/ }),
+/* 241 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(242)
+/* template */
+var __vue_template__ = __webpack_require__(243)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\ClassroomAssignmentEdit.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-16e6e783", Component.options)
+  } else {
+    hotAPI.reload("data-v-16e6e783", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 242 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_flatpickr_component__ = __webpack_require__(183);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_flatpickr_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_flatpickr_component__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_flatpickr_dist_flatpickr_css__ = __webpack_require__(185);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_flatpickr_dist_flatpickr_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_flatpickr_dist_flatpickr_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            form: {
+                title: '',
+                detail: '',
+                duedate: '',
+                duetime: '',
+                score: 0
+            },
+            config: {
+                altFormat: "F j, Y",
+                altInput: true,
+                dateFormat: "Y-m-d"
+            },
+            classroom_id: this.$route.params.id,
+            token: this.$auth.getToken(),
+            post_id: this.$route.params.post_id
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('api/classroom/' + this.classroom_id + '/assignment/' + this.post_id + '/post', {
+            headers: {
+                Authorization: 'Bearer ' + this.token
+            }
+        }).then(function (response) {
+            _this.form.title = response.data.title;
+            _this.form.detail = response.data.detail;
+            _this.form.duedate = response.data.due_time.split(' ')[0];
+            _this.form.duetime = response.data.due_time.split(' ')[1].substring(0, 5);
+            _this.form.score = response.data.score;
+        });
+    },
+
+    methods: {
+        timecheck: function timecheck() {
+            if (!__WEBPACK_IMPORTED_MODULE_2_moment___default()(this.form.duetime, "HH:mm", true).isValid() && !this.form.duetime == '') {
+                this.form.duetime = __WEBPACK_IMPORTED_MODULE_2_moment___default()().format("HH:mm");
+            }
+        },
+        edit: function edit() {
+            var _this2 = this;
+
+            var data = {
+                title: this.form.title,
+                detail: this.form.detail,
+                due_time: this.form.duedate + ' ' + this.form.duetime,
+                score: this.form.score
+            };
+
+            axios.patch('api/classroom/' + this.classroom_id + '/assignment/' + this.post_id + '/post', data, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then(function (response) {
+                _this2.$router.go(-1);
+            });
+        }
+    },
+    components: {
+        flatPickr: __WEBPACK_IMPORTED_MODULE_0_vue_flatpickr_component___default.a
+    }
+});
+
+/***/ }),
+/* 243 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.form.title,
+            expression: "form.title"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", id: "title", placeholder: "Tile of assignment" },
+        domProps: { value: _vm.form.title },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.form, "title", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "detail" } }, [
+        _vm._v("Detail of this assignment")
+      ]),
+      _vm._v(" "),
+      _c("textarea", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.form.detail,
+            expression: "form.detail"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { id: "detail", rows: "3" },
+        domProps: { value: _vm.form.detail },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.form, "detail", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "score" } }, [_vm._v("Score")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.form.score,
+            expression: "form.score"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", id: "score", placeholder: "Score" },
+        domProps: { value: _vm.form.score },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.form, "score", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-6" },
+        [
+          _c("label", { attrs: { for: "duedate" } }, [_vm._v("Date")]),
+          _vm._v(" "),
+          _c("flat-pickr", {
+            attrs: { id: "duedate", config: _vm.config },
+            model: {
+              value: _vm.form.duedate,
+              callback: function($$v) {
+                _vm.$set(_vm.form, "duedate", $$v)
+              },
+              expression: "form.duedate"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("label", { attrs: { for: "duetime" } }, [_vm._v("Time")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.duetime,
+              expression: "form.duetime"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", id: "duetime" },
+          domProps: { value: _vm.form.duetime },
+          on: {
+            blur: _vm.timecheck,
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.form, "duetime", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" })
+    ]),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-default",
+        attrs: { type: "submit" },
+        on: { click: _vm.edit }
+      },
+      [_vm._v("Update assignment")]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-16e6e783", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

@@ -3,7 +3,11 @@
         <div class="page-header">
             <div class="container">
                 <h1>Your Classroom</h1>
-                <router-link to="classroom/create" class="btn btn-default">Create class</router-link>
+                <router-link
+                    to="classroom/create"
+                    class="btn btn-default"
+                    v-if="isTeacher"
+                >Create class</router-link>
                 <button class="btn btn-default" @click="showJoin">Join class</button>
             </div>
         </div>
@@ -26,6 +30,7 @@
 <script>
     import swal from 'sweetalert2'
     import 'sweetalert2/dist/sweetalert2.min.css';
+    import { mapGetters } from 'vuex'
 
     export default {
         data(){
@@ -35,6 +40,9 @@
                 show_join: false
             }
         },
+        computed: mapGetters([
+            'isTeacher'
+        ]),
         methods:{
             showJoin(){
                 var self = this
@@ -42,6 +50,7 @@
                     title: 'Enter code to join class',
                     input: 'text',
                     inputPlaceholder: 'Enter code',
+                    customClass: 'test',
                     showCancelButton: true,
                     inputValidator: function (value) {
                         return new Promise(function (resolve, reject) {
@@ -84,3 +93,10 @@
         }
     }
 </script>
+
+<style>
+    .test {
+        border-radius: 0px;
+        font-family: "Nunito", sans-serif;
+    }
+</style>

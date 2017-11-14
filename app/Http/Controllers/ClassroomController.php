@@ -21,6 +21,10 @@ class ClassroomController extends Controller
         if(Classroom::find($classroom_id)){
             $classroom = Classroom::findOrFail($classroom_id);
 
+            if(Auth::user()->role->actions == "is_student"){
+                $classroom = $classroom->makeHidden('join_code');
+            }
+
             $posts = $classroom->posts->load('user', 'comments', 'comments.user');
             $assignments = $classroom->assignments->load('user');
 
@@ -32,7 +36,7 @@ class ClassroomController extends Controller
             foreach ($assignments as $assignment){
                 $all->push($assignment);
             }
-            // $posts = $posts->merge($assignments);
+
             $all = $all->sortByDesc('created_at')->values()->all();
 
             return response()->json(['classroom' => $classroom, 'posts' => $all]);
@@ -64,7 +68,9 @@ class ClassroomController extends Controller
         $classroom = Classroom::where('join_code', $request->code)->first();
         if($classroom->exists())
         {
-            $classroom->members()->attach(Auth::id());
+            if(!$classroom->members()->find(1)->exists()){
+                $classroom->members()->attach(Auth::id());
+            }
             return response()->json(['success' => true, 'classroom_id' => $classroom->id]);
         }
         else {

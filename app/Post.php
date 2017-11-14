@@ -19,4 +19,9 @@ class Post extends Model
     {
         return $this->hasMany('App\Comment');
     }
+
+    public function classroom()
+    {
+        return $this->belongsTo('App\Classroom');
+    }
 }

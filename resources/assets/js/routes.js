@@ -76,6 +76,21 @@ const routes = [
         meta: {
             forAuth: true
         }
+    },
+    {
+        path: '/classroom/:id/assignment/:post_id/edit',
+        component: require('./components/ClassroomAssignmentEdit.vue'),
+        meta: {
+            forAuth: true,
+            role: 'is_teacher'
+        }
+    },
+    {
+        path: '/classroom/:id/post/:post_id/edit',
+        component: require('./components/ClassroomPostEdit.vue'),
+        meta: {
+            forAuth: true
+        }
     }
 ]
 const router = new VueRouter({

@@ -1,5 +1,5 @@
 body {
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   background: #F0F0F0;
 }
 
@@ -104,6 +104,11 @@ a:hover {
   padding: 20px;
   border-radius: 10px;
   margin: 20px 0px;
+}
+
+.swal-modal {
+  border-radius: 0px;
+  font-family: "Nunito", sans-serif;
 }
 
 .fade-enter-active,

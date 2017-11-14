@@ -149,4 +149,35 @@ class AssignmentController extends Controller
 
         return response()->json(['successful' => true]);
     }
+
+    //for edit assignment post. only teacher can use
+    public function editPost(Request $request, $classroom_id, $id){
+        Classroom::findOrFail($classroom_id);
+        $post = Assignment::findOrFail($id);
+        if(Auth::user()->classroom->find($classroom_id)->exists() && Auth::user()->role->actions != 'is_student')
+        {
+            $post->title = $request->title;
+            $post->detail = $request->detail;
+            $post->due_time = $request->due_time;
+            $post->score = $request->score;
+            $post->save();
+
+            return response()->json(['success' => true]);
+        }
+        else {
+            return response()->json(['success' => false], 403);
+        }
+    }
+
+    public function getPost($classroom_id, $id){
+        Classroom::findOrFail($classroom_id);
+        if(Auth::user()->classroom->find($classroom_id)->exists())
+        {
+            $post = Assignment::findOrFail($id);
+            return response()->json($post);
+        }
+        else {
+            return response()->json(['success' => false], 403);
+        }
+    }
 }

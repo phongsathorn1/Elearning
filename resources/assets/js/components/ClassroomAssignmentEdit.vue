@@ -23,7 +23,7 @@
             </div>
             <div class="clearfix"></div>
         </div>
-        <button type="submit" class="btn btn-default" @click="add">Add assignment</button>
+        <button type="submit" class="btn btn-default" @click="edit">Update assignment</button>
     </div>
 </template>
 
@@ -48,8 +48,22 @@
                     dateFormat: "Y-m-d",
                 },
                 classroom_id: this.$route.params.id,
-                token: this.$auth.getToken()
+                token: this.$auth.getToken(),
+                post_id: this.$route.params.post_id
             }
+        },
+        created(){
+            axios.get(`api/classroom/${this.classroom_id}/assignment/${this.post_id}/post`, {
+                headers:{
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then(response => {
+                this.form.title = response.data.title
+                this.form.detail = response.data.detail
+                this.form.duedate = response.data.due_time.split(' ')[0]
+                this.form.duetime = response.data.due_time.split(' ')[1].substring(0, 5)
+                this.form.score = response.data.score
+            })
         },
         methods:{
             timecheck(){
@@ -57,16 +71,15 @@
                     this.form.duetime = moment().format("HH:mm")
                 }
             },
-            add(){
+            edit(){
                 var data = {
                     title: this.form.title,
                     detail: this.form.detail,
-                    duetime: this.form.duedate + ' ' + this.form.duetime,
-                    classroom_id: this.classroom_id,
+                    due_time: this.form.duedate + ' ' + this.form.duetime,
                     score: this.form.score
                 }
 
-                axios.post(`api/classroom/${this.classroom_id}/assignment`, data, {
+                axios.patch(`api/classroom/${this.classroom_id}/assignment/${this.post_id}/post`, data, {
                     headers:{
                         Authorization: 'Bearer ' + this.token
                     }
@@ -81,4 +94,3 @@
         }
     }
 </script>
-

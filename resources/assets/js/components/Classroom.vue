@@ -27,10 +27,11 @@
                         <div class="class-post-time class-meta-item">
                             {{ parseTime(post.created_at) }}
                         </div>
+                        <router-link :to="`/classroom/${classroom.id}/post/${post.id}/edit`" class="btn btn-default">Edit</router-link>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="class-post-main">
-                        {{ post.detail }}
+                    <div class="class-post-main" v-html="renderHTML(post.detail)">
+
                     </div>
                     <div class="class-post-comments">
                         <div class="comment-box">
@@ -56,10 +57,11 @@
                         <div class="class-post-time class-meta-item">
                             {{ parseTime(post.created_at) }}
                         </div>
+                        <router-link :to="`/classroom/${classroom.id}/assignment/${post.id}/edit`" class="btn btn-default">Edit</router-link>
                         <div class="clearfix"></div>
                     </div>
                     <h3><router-link :to="classroom.id +'/assignment/' + post.id">{{ post.title }}</router-link></h3>
-                    <p>{{ post.detail }}</p>
+                    <p v-html="renderHTML(post.detail)"></p>
                     <p v-if="timeCheck(post.due_time)">Time up!</p>
                 </div>
             </div>
@@ -94,9 +96,12 @@
                 this.posts = response.data.posts
             })
         },
-        computed: mapGetters([
-            'isTeacher'
-        ]),
+        computed: {
+            ...mapGetters([
+                'isTeacher'
+            ]),
+            
+        },
         methods:{
             comment(post_id){
                 var data = {
@@ -116,6 +121,9 @@
                     var index = this.posts.findIndex(x => x.id == post_id)
                     this.posts[index].comments.push(response.data)
                 })
+            },
+            renderHTML(text){
+                return text.replace(/(\r\n|\n)/g, "<br/>")
             },
             timeCheck(due_time){
                 return moment().isSameOrAfter(due_time, "YYYY-MM-DD HH-mm-ss");

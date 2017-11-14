@@ -4,8 +4,10 @@
             <div class="page-header">
                 <div class="container">
                     <h1>{{ classroom.name }} <small>Members</small></h1>
-                    <router-link v-if="this.$role != 'is_student'" :to="'members/add'" class="btn btn-default">Add member</router-link>
-                    <span v-if="this.$role != 'is_student'">Join code: <span style="padding:10px;border:1px solid #e0e0e0">{{ classroom.join_code }}</span></span>
+                    <div class="control-area" v-if="isTeacher">
+                        <router-link :to="'members/add'" class="btn btn-default">Add member</router-link>
+                        <span>Join code: <span style="padding:10px;border:1px solid #e0e0e0">{{ classroom.join_code }}</span></span>
+                    </div>
                 </div>
             </div>
             <div class="container">
@@ -29,6 +31,8 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
+
     export default {
         data(){
             return {
@@ -36,6 +40,9 @@
                 classroom: ''
             }
         },
+        computed: mapGetters([
+            'isTeacher'
+        ]),
         created(){
             var classroom_id = this.$route.params.id
             var token = this.$auth.getToken()
