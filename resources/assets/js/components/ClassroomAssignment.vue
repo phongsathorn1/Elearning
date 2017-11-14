@@ -21,14 +21,14 @@
         <assignment-upload
             v-bind:classroom-id="classroom_id"
             v-bind:assignment-id="assignment_id"
-            v-if="this.$role == 'is_student'"
+            v-if="getRole == 'is_student'"
         ></assignment-upload>
 
         <assignment-done 
             v-bind:classroom-id="classroom_id"
             v-bind:assignment-id="assignment_id"
             v-bind:max-score="assignment_post.score"
-            v-if="this.$role != 'is_student'"
+            v-if="getRole != 'is_student'"
         ></assignment-done>
     </div>
 </template>
@@ -37,6 +37,7 @@
     import AssignmentUpload from './AssignmentUpload.vue'
     import AssignmentDone from './AssignmentDone.vue'
     import moment from 'moment';
+    import { mapGetters } from 'vuex'
 
     export default {
         data(){
@@ -49,6 +50,9 @@
                 token: this.$auth.getToken(),
             }
         },
+        computed: mapGetters([
+            'getRole'
+        ]),
         components: {
             'assignmentUpload': AssignmentUpload,
             'assignmentDone': AssignmentDone

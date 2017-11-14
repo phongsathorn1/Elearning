@@ -27664,9 +27664,9 @@ return zhTw;
 "use strict";
 /* unused harmony export Store */
 /* unused harmony export install */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return mapState; });
 /* unused harmony export mapMutations */
-/* unused harmony export mapGetters */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapGetters; });
 /* unused harmony export mapActions */
 /* unused harmony export createNamespacedHelpers */
 /**
@@ -28645,18 +28645,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vue_
 __WEBPACK_IMPORTED_MODULE_1_axios___default.a.defaults.baseURL = 'http://localhost:8000';
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.$appName = "Elearning";
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.$role = "";
 
 __WEBPACK_IMPORTED_MODULE_3__routes_js__["a" /* default */].beforeEach(function (to, from, next) {
-    if (__WEBPACK_IMPORTED_MODULE_0_vue___default.a.auth.isAuth()) {
-        __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('api/me', {
-            headers: {
-                Authorization: 'Bearer ' + __WEBPACK_IMPORTED_MODULE_0_vue___default.a.auth.getToken()
-            }
-        }).then(function (response) {
-            __WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.$role = response.data.role.actions;
-        });
-    }
     if (typeof to.meta.role !== 'undefined') {
         if (__WEBPACK_IMPORTED_MODULE_0_vue___default.a.auth.isAuth()) {
             __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('api/me', {
@@ -67977,6 +67967,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -67984,7 +67975,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             form: {
                 username: '',
                 password: ''
-            }
+            },
+            login_error: false
         };
     },
 
@@ -68006,7 +67998,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.$router.push('/');
                 _this.setData();
             }).catch(function (response) {
-                console.log(response);
+                _this.login_error = true;
             });
         },
         setData: function setData() {
@@ -68017,7 +68009,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     Authorization: 'Bearer ' + this.$auth.getToken()
                 }
             }).then(function (response) {
-                console.log(response);
                 _this2.$auth.setPersonalData(response.data);
                 _this2.$store.commit('storeUser', response.data);
             });
@@ -68106,7 +68097,15 @@ var render = function() {
             "button",
             { staticClass: "btn btn-default", attrs: { type: "submit" } },
             [_vm._v("Login")]
-          )
+          ),
+          _vm._v(" "),
+          _vm.login_error
+            ? _c(
+                "div",
+                { staticClass: "alert alert-danger", attrs: { role: "alert" } },
+                [_vm._v("The username or password is incorrect.")]
+              )
+            : _vm._e()
         ]
       )
     ])
@@ -68451,6 +68450,7 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(132);
 //
 //
 //
@@ -68514,6 +68514,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -68542,6 +68549,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
     },
 
+    computed: Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])(['isTeacher']),
     methods: {
         comment: function comment(post_id) {
             var _this2 = this;
@@ -68870,14 +68878,16 @@ var render = function() {
                 [_vm._v("New Post")]
               ),
               _vm._v(" "),
-              _c(
-                "router-link",
-                {
-                  staticClass: "btn btn-default",
-                  attrs: { to: _vm.classroom.id + "/post/assignment" }
-                },
-                [_vm._v("New Assignment")]
-              ),
+              _vm.isTeacher
+                ? _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-default",
+                      attrs: { to: _vm.classroom.id + "/post/assignment" }
+                    },
+                    [_vm._v("New Assignment")]
+                  )
+                : _vm._e(),
               _vm._v(" "),
               _c(
                 "router-link",
@@ -68938,51 +68948,59 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "class-post-comments" }, [
                     _c("div", { staticClass: "comment-box" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.comments[post.id],
-                              expression: "comments[post.id]"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            id: "comment",
-                            placeholder: "Comment..."
-                          },
-                          domProps: { value: _vm.comments[post.id] },
+                      _c(
+                        "form",
+                        {
                           on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.comments,
-                                post.id,
-                                $event.target.value
-                              )
+                            submit: function($event) {
+                              $event.preventDefault()
+                              _vm.comment(post.id)
                             }
                           }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-default",
-                            attrs: { type: "submit" },
-                            on: {
-                              click: function($event) {
-                                _vm.comment(post.id)
+                        },
+                        [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.comments[post.id],
+                                  expression: "comments[post.id]"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                id: "comment",
+                                placeholder: "Comment..."
+                              },
+                              domProps: { value: _vm.comments[post.id] },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.comments,
+                                    post.id,
+                                    $event.target.value
+                                  )
+                                }
                               }
-                            }
-                          },
-                          [_vm._v("Comment")]
-                        )
-                      ])
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-default",
+                                attrs: { type: "submit" }
+                              },
+                              [_vm._v("Comment")]
+                            )
+                          ])
+                        ]
+                      )
                     ]),
                     _vm._v(" "),
                     _c(
@@ -72814,6 +72832,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AssignmentDone_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__AssignmentDone_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(132);
 //
 //
 //
@@ -72849,6 +72868,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
@@ -72866,6 +72886,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
+    computed: Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapGetters */])(['getRole']),
     components: {
         'assignmentUpload': __WEBPACK_IMPORTED_MODULE_0__AssignmentUpload_vue___default.a,
         'assignmentDone': __WEBPACK_IMPORTED_MODULE_1__AssignmentDone_vue___default.a
@@ -73361,6 +73382,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.all_done[index].returned = 1;
                 _this2.active_id = 0;
             });
+        },
+        download: function download(file) {
+            axios.get('api/assignment/download/' + file.id, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then(function (response) {
+                window.open(response.data.download_url, "_self");
+            });
         }
     }
 });
@@ -73407,13 +73437,24 @@ var render = function() {
               { staticClass: "assignment-done-files" },
               [
                 _vm._l(done.files, function(file) {
-                  return _c("div", { staticClass: "assignment-done-item" }, [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(file.name) +
-                        "\n            "
-                    )
-                  ])
+                  return _c(
+                    "div",
+                    {
+                      staticClass: "assignment-done-item",
+                      on: {
+                        click: function($event) {
+                          _vm.download(file)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(file.name) +
+                          "\n            "
+                      )
+                    ]
+                  )
                 }),
                 _vm._v(" "),
                 _c("input", {
@@ -73562,7 +73603,7 @@ var render = function() {
         _vm.timeCheck() ? _c("p", [_vm._v("Time up!")]) : _vm._e()
       ]),
       _vm._v(" "),
-      this.$role == "is_student"
+      _vm.getRole == "is_student"
         ? _c("assignment-upload", {
             attrs: {
               "classroom-id": _vm.classroom_id,
@@ -73571,7 +73612,7 @@ var render = function() {
           })
         : _vm._e(),
       _vm._v(" "),
-      this.$role != "is_student"
+      _vm.getRole != "is_student"
         ? _c("assignment-done", {
             attrs: {
               "classroom-id": _vm.classroom_id,
@@ -73723,6 +73764,8 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(132);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -73772,9 +73815,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapState */])(['isLoggedIn', 'user']),
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])(['isLoggedIn']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])(['getOnlyName', 'getName'])),
   created: function created() {
-    this.$store.commit('getPersonal');
+    this.$store.dispatch('getPersonal');
   }
 });
 
@@ -73840,7 +73883,7 @@ var render = function() {
                       }
                     },
                     [
-                      _vm._v(_vm._s(_vm.user.name)),
+                      _vm._v(_vm._s(_vm.getName)),
                       _c("span", { staticClass: "caret" })
                     ]
                   ),
@@ -74047,27 +74090,65 @@ if (false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__packages_auth_auth_js__ = __webpack_require__(212);
+
+
 
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3__packages_auth_auth_js__["a" /* default */]);
 
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     state: {
         isLoggedIn: !!localStorage.getItem("token"),
-        user: {}
+        user: {
+            role: {}
+        }
     },
     mutations: {
         storeUser: function storeUser(state, data) {
             state.user = data;
             state.isLoggedIn = true;
         },
-        getPersonal: function getPersonal(state) {
-            state.user = JSON.parse(localStorage.getItem('personal'));
+        getPersonal: function getPersonal(state, data) {
+            state.user = data;
         },
         removePersonal: function removePersonal(state) {
             state.user = null;
             state.isLoggedIn = false;
+        }
+    },
+    getters: {
+        getRole: function getRole(state) {
+            return state.user.role.actions;
+        },
+        isTeacher: function isTeacher(state) {
+            return state.user.role.actions == "is_teacher";
+        },
+        isStudent: function isStudent(state) {
+            return state.user.role.actions == "is_student";
+        },
+        getName: function getName(state) {
+            return state.user.name;
+        }
+    },
+    actions: {
+        getPersonal: function getPersonal(_ref) {
+            var commit = _ref.commit,
+                state = _ref.state;
+
+            if (state.isLoggedIn) {
+                __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('api/me', {
+                    headers: {
+                        Authorization: 'Bearer ' + __WEBPACK_IMPORTED_MODULE_0_vue___default.a.auth.getToken()
+                    }
+                }).then(function (response) {
+                    commit('getPersonal', response.data);
+                });
+            }
         }
     }
 });

@@ -8,7 +8,11 @@
                 </div>
                 <div class="class-action">
                     <router-link :to="classroom.id + '/post'" class="btn btn-default">New Post</router-link>
-                    <router-link :to="classroom.id + '/post/assignment'" class="btn btn-default">New Assignment</router-link>
+                    <router-link
+                        :to="classroom.id + '/post/assignment'"
+                        v-if="isTeacher"
+                        class="btn btn-default"
+                    >New Assignment</router-link>
                     <router-link :to="classroom.id + '/members'" class="btn btn-default">Members</router-link>
                 </div>
             </div>
@@ -30,10 +34,12 @@
                     </div>
                     <div class="class-post-comments">
                         <div class="comment-box">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="comment" placeholder="Comment..." v-model="comments[post.id]">
-                                <button type="submit" class="btn btn-default" @click="comment(post.id)">Comment</button>
-                            </div>
+                            <form v-on:submit.prevent="comment(post.id)">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="comment" placeholder="Comment..." v-model="comments[post.id]">
+                                    <button type="submit" class="btn btn-default">Comment</button>
+                                </div>
+                            </form>
                         </div>
                         <div class="comment-list">
                             <div class="comment-list-item" v-for="comment in post.comments">
@@ -63,6 +69,7 @@
 
 <script>
     import moment from 'moment'
+    import { mapGetters } from 'vuex'
 
     export default {
         data(){
@@ -87,6 +94,9 @@
                 this.posts = response.data.posts
             })
         },
+        computed: mapGetters([
+            'isTeacher'
+        ]),
         methods:{
             comment(post_id){
                 var data = {

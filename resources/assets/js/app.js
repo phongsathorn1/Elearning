@@ -15,19 +15,9 @@ Vue.use(VueClip)
 axios.defaults.baseURL = 'http://localhost:8000';
 
 Vue.prototype.$appName = "Elearning";
-Vue.prototype.$role = "";
 
 router.beforeEach(
     (to, from, next) => {
-        if (Vue.auth.isAuth()){
-            axios.get('api/me', {
-                headers: {
-                    Authorization: 'Bearer ' + Vue.auth.getToken()
-                }
-            }).then(response => {
-                Vue.prototype.$role = response.data.role.actions
-            })
-        }
         if (typeof to.meta.role !== 'undefined') {
             if (Vue.auth.isAuth()) {
                 axios.get('api/me', {

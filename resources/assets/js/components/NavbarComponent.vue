@@ -31,7 +31,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right" v-if="isLoggedIn">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user.name }}<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ getName }}<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><router-link to="/logout">Logout</router-link></li>
           </ul>
@@ -44,15 +44,20 @@
 
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState, mapGetters } from 'vuex'
 
   export default {
-    computed: mapState([
-      'isLoggedIn',
-      'user'
-    ]),
+    computed: {
+      ...mapState([
+        'isLoggedIn'
+      ]),
+      ...mapGetters([
+        'getOnlyName',
+        'getName'
+      ])
+    },
     created(){
-      this.$store.commit('getPersonal')
+      this.$store.dispatch('getPersonal')
     }
   }
 </script>

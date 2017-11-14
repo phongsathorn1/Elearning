@@ -5,7 +5,7 @@
                 {{ done.user.name }}, score {{ done.score }}, {{ done.files.length }} files
             </div>
             <div class="assignment-done-files" v-if="done.id == active_id">
-                <div class="assignment-done-item" v-for="file in done.files">
+                <div class="assignment-done-item" v-for="file in done.files" @click="download(file)">
                     {{ file.name }}
                 </div>
                 <input type="text" name="score" v-model="done.score"> / {{ maxScore }}
@@ -62,6 +62,15 @@ export default {
             .then(response => {
                 this.all_done[index].returned = 1
                 this.active_id = 0
+            })
+        },
+        download(file){
+            axios.get(`api/assignment/download/${file.id}`, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then(response => {
+                window.open(response.data.download_url, "_self")
             })
         }
     }

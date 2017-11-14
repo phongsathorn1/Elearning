@@ -11,6 +11,7 @@
                     <input type="password" class="form-control" id="password" placeholder="Password" v-model="form.password">
                 </div>
                 <button type="submit" class="btn btn-default">Login</button>
+                <div class="alert alert-danger" role="alert" v-if="login_error">The username or password is incorrect.</div>
             </form>
         </div>
     </transition>
@@ -23,7 +24,8 @@
                 form:{
                     username: '',
                     password: ''
-                }
+                },
+                login_error: false
             }
         },
 
@@ -44,7 +46,7 @@
                     this.setData()
                 })
                 .catch(response => {
-                    console.log(response)
+                    this.login_error = true
                 })
             },
             setData () {
@@ -54,7 +56,6 @@
                     }
                 })
                 .then(response => {
-                    console.log(response)
                     this.$auth.setPersonalData(response.data)
                     this.$store.commit('storeUser', response.data)
                 })
