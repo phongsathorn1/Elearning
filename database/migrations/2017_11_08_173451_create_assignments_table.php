@@ -18,7 +18,7 @@ class CreateAssignmentsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('classroom_id')->unsigned();
             $table->string('title');
-            $table->longtext('detail');
+            $table->longtext('detail')->nullable();
             $table->time('due_time')->nullable();
             $table->float('score')->unsigned();
             $table->timestamps();
