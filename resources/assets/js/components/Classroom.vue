@@ -7,6 +7,7 @@
                     {{ classroom.description }}
                 </div>
                 <div class="class-action">
+
                     <router-link :to="classroom.id + '/post'" class="btn btn-default">New Post</router-link>
                     <router-link
                         :to="classroom.id + '/post/assignment'"
@@ -14,6 +15,16 @@
                         class="btn btn-default"
                     >New Assignment</router-link>
                     <router-link :to="classroom.id + '/members'" class="btn btn-default">Members</router-link>
+                    <router-link
+                        :to="`/classroom/${classroom.id}/edit`"
+                        v-if="isTeacher"
+                        class="btn btn-default"
+                    >Edit this classroom</router-link>
+                    <button class="btn btn-default"
+                        v-if="isTeacher"
+                        @click="deleteClass"
+                    >Delete classroom</button>
+
                 </div>
             </div>
         </div>
@@ -198,6 +209,19 @@
                         self.posts.splice(index, 1)
 
                         console.log('remove success')
+                    })
+                })
+            },
+            deleteClass(){
+                var self = this
+                swal(this.swal_config).then(() => {
+                    axios.delete(`api/classroom/${self.classroom.id}`, {
+                        headers:{
+                            Authorization: 'Bearer ' + self.token
+                        }
+                    }).then(response => {
+                        console.log('remove class success')
+                        self.$router.push('/')
                     })
                 })
             }

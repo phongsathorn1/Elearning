@@ -41,6 +41,16 @@ const routes = [
         }
     },
     {
+        path: '/classroom/:id/edit',
+        component: require('./components/ClassroomEdit.vue'),
+        meta: {
+            forAuth: true,
+            meta: {
+                role: 'is_teacher'
+            }
+        }
+    },
+    {
         path: '/classroom/:id/post',
         component: require('./components/ClassroomPost.vue'),
         meta: {

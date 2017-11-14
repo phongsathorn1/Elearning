@@ -77,4 +77,38 @@ class ClassroomController extends Controller
             return response()->json(['success' => false], 404);
         }
     }
+
+    public function destroy($classroom_id)
+    {
+        if(Auth::user()->classroom()->findOrFail($classroom_id) && Auth::user()->role->actions != 'student')
+        {
+            Classroom::findOrFail($classroom_id)->delete();
+            return response()->json(['success' => true]);
+        }
+        else {
+            return response()->json(['success' => false], 403);
+        }
+    }
+
+    public function update(Request $request, $classroom_id)
+    {
+        if(Auth::user()->classroom()->findOrFail($classroom_id) && Auth::user()->role->actions != 'student')
+        {
+            $classroom = Classroom::findOrFail($classroom_id);
+            $classroom->name = $request->name;
+            $classroom->description = $request->description;
+            $classroom->save();
+
+            return response()->json(['success' => true]);
+        }
+        else {
+            return response()->json(['success' => false], 403);
+        }
+    }
+
+    public function getClassroom($classroom_id)
+    {
+        $classroom = Auth::user()->classroom()->findOrFail($classroom_id);
+        return response()->json($classroom);
+    }
 }

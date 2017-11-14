@@ -8,7 +8,7 @@
             <label for="description">description</label>
             <textarea class="form-control" id="description" rows="3" v-model="classroom.description"></textarea>
         </div>
-        <button type="submit" class="btn btn-default" @click="create">Submit</button>
+        <button type="submit" class="btn btn-default" @click="update">Update</button>
     </div>
 </template>
 
@@ -17,29 +17,34 @@
         data(){
             return {
                 classroom : {
+                    id: this.$route.params.id,
                     name : '',
                     description: ''
-                }
+                },
+                token: this.$auth.getToken()
             }
         },
-        methods : {
-            create(){
-                var token = this.$auth.getToken()
-                var data = {
-                    'name': this.classroom.name,
-                    'description': this.classroom.description
+        created(){
+            axios.get(`api/classroom/${this.classroom.id}/get`, {
+                headers:{
+                    Authorization: 'Bearer ' + this.token
                 }
-
-                axios.post('api/classroom', data, {
+            }).then(response => {
+                this.classroom = response.data
+            })
+        },
+        methods:{
+            update(){
+                var data = this.classroom
+                axios.patch(`api/classroom/${this.classroom.id}`, data, {
                     headers:{
-                        Authorization: 'Bearer ' + token
+                        Authorization: 'Bearer ' + this.token
                     }
-                })
-                .then(response=>{
-                    var classroom_id = response.data.id
-                    this.$router.push('/classroom/' + classroom_id)
+                }).then(response => {
+                    this.$router.push(`/classroom/${this.classroom.id}`)
                 })
             }
         }
     }
 </script>
+

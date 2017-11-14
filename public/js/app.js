@@ -64995,6 +64995,15 @@ var routes = [{
         forAuth: true
     }
 }, {
+    path: '/classroom/:id/edit',
+    component: __webpack_require__(244),
+    meta: {
+        forAuth: true,
+        meta: {
+            role: 'is_teacher'
+        }
+    }
+}, {
     path: '/classroom/:id/post',
     component: __webpack_require__(178),
     meta: {
@@ -68302,8 +68311,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -68345,70 +68352,68 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("transition", { attrs: { name: "fade" } }, [
-    _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "name" } }, [_vm._v("Classroom name")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.classroom.name,
-              expression: "classroom.name"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", id: "name", placeholder: "Classroom name" },
-          domProps: { value: _vm.classroom.name },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.classroom, "name", $event.target.value)
-            }
-          }
-        })
-      ]),
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "name" } }, [_vm._v("Classroom name")]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "description" } }, [_vm._v("description")]),
-        _vm._v(" "),
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.classroom.description,
-              expression: "classroom.description"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { id: "description", rows: "3" },
-          domProps: { value: _vm.classroom.description },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.classroom, "description", $event.target.value)
-            }
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.classroom.name,
+            expression: "classroom.name"
           }
-        })
-      ]),
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", id: "name", placeholder: "Classroom name" },
+        domProps: { value: _vm.classroom.name },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.classroom, "name", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "description" } }, [_vm._v("description")]),
       _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-default",
-          attrs: { type: "submit" },
-          on: { click: _vm.create }
-        },
-        [_vm._v("Submit")]
-      )
-    ])
+      _c("textarea", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.classroom.description,
+            expression: "classroom.description"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { id: "description", rows: "3" },
+        domProps: { value: _vm.classroom.description },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.classroom, "description", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-default",
+        attrs: { type: "submit" },
+        on: { click: _vm.create }
+      },
+      [_vm._v("Submit")]
+    )
   ])
 }
 var staticRenderFns = []
@@ -68484,6 +68489,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(132);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -68688,6 +68704,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     self.posts.splice(index, 1);
 
                     console.log('remove success');
+                });
+            });
+        },
+        deleteClass: function deleteClass() {
+            var self = this;
+            __WEBPACK_IMPORTED_MODULE_1_sweetalert2___default()(this.swal_config).then(function () {
+                axios.delete('api/classroom/' + self.classroom.id, {
+                    headers: {
+                        Authorization: 'Bearer ' + self.token
+                    }
+                }).then(function (response) {
+                    console.log('remove class success');
+                    self.$router.push('/');
                 });
             });
         }
@@ -69007,7 +69036,29 @@ var render = function() {
                   attrs: { to: _vm.classroom.id + "/members" }
                 },
                 [_vm._v("Members")]
-              )
+              ),
+              _vm._v(" "),
+              _vm.isTeacher
+                ? _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-default",
+                      attrs: { to: "/classroom/" + _vm.classroom.id + "/edit" }
+                    },
+                    [_vm._v("Edit this classroom")]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.isTeacher
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-default",
+                      on: { click: _vm.deleteClass }
+                    },
+                    [_vm._v("Delete classroom")]
+                  )
+                : _vm._e()
             ],
             1
           )
@@ -76888,6 +76939,196 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-16e6e783", module.exports)
+  }
+}
+
+/***/ }),
+/* 244 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(245)
+/* template */
+var __vue_template__ = __webpack_require__(246)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\ClassroomEdit.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-40213a96", Component.options)
+  } else {
+    hotAPI.reload("data-v-40213a96", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 245 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            classroom: {
+                id: this.$route.params.id,
+                name: '',
+                description: ''
+            },
+            token: this.$auth.getToken()
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('api/classroom/' + this.classroom.id + '/get', {
+            headers: {
+                Authorization: 'Bearer ' + this.token
+            }
+        }).then(function (response) {
+            _this.classroom = response.data;
+        });
+    },
+
+    methods: {
+        update: function update() {
+            var _this2 = this;
+
+            var data = this.classroom;
+            axios.patch('api/classroom/' + this.classroom.id, data, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then(function (response) {
+                _this2.$router.push('/classroom/' + _this2.classroom.id);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 246 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "name" } }, [_vm._v("Classroom name")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.classroom.name,
+            expression: "classroom.name"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", id: "name", placeholder: "Classroom name" },
+        domProps: { value: _vm.classroom.name },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.classroom, "name", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "description" } }, [_vm._v("description")]),
+      _vm._v(" "),
+      _c("textarea", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.classroom.description,
+            expression: "classroom.description"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { id: "description", rows: "3" },
+        domProps: { value: _vm.classroom.description },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.classroom, "description", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-default",
+        attrs: { type: "submit" },
+        on: { click: _vm.update }
+      },
+      [_vm._v("Update")]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-40213a96", module.exports)
   }
 }
 
