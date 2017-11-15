@@ -30,7 +30,7 @@ export const store = new Vuex.Store({
         },
         hideNavbar(state){
             state.showNav = false
-        }
+        },
         showNavbar(state) {
             state.showNav = true
         }
