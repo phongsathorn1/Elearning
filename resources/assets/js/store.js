@@ -11,7 +11,8 @@ export const store = new Vuex.Store({
         isLoggedIn: !!localStorage.getItem("token"),
         user: {
             role: {}
-        }
+        },
+        showNav: true
     },
     mutations:{
         storeUser(state, data){
@@ -26,6 +27,12 @@ export const store = new Vuex.Store({
                 role: {}
             }
             state.isLoggedIn = false
+        },
+        hideNavbar(state){
+            state.showNav = false
+        }
+        showNavbar(state) {
+            state.showNav = true
         }
     },
     getters:{

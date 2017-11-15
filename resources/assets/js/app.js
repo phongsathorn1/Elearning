@@ -9,10 +9,27 @@ import App from './App.vue'
 import Auth from './packages/auth/auth.js'
 import { store } from './store'
 
+import swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 Vue.use(Auth)
 Vue.use(VueClip)
 
 Vue.prototype.$appName = "Elearning";
+
+axios.interceptors.response.use(function (response) {
+    return response;
+}, function (error) {
+    if(router.history.current.path != '/login')
+    {
+        swal(
+            'Oops...',
+            'Something went wrong!',
+            'error'
+        )
+    }
+    return Promise.reject(error);
+});
 
 router.beforeEach(
     (to, from, next) => {

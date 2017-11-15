@@ -5010,9 +5010,9 @@ module.exports = {
 "use strict";
 /* unused harmony export Store */
 /* unused harmony export install */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return mapState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapState; });
 /* unused harmony export mapMutations */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapGetters; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return mapGetters; });
 /* unused harmony export mapActions */
 /* unused harmony export createNamespacedHelpers */
 /**
@@ -5945,7 +5945,7 @@ var index_esm = {
 };
 
 
-/* harmony default export */ __webpack_exports__["a"] = (index_esm);
+/* unused harmony default export */ var _unused_webpack_default_export = (index_esm);
 
 
 /***/ }),
@@ -30885,7 +30885,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__App_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__packages_auth_auth_js__ = __webpack_require__(139);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__store__ = __webpack_require__(229);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__store___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__store__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_sweetalert2__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_sweetalert2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_sweetalert2__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_sweetalert2_dist_sweetalert2_min_css__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_sweetalert2_dist_sweetalert2_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_sweetalert2_dist_sweetalert2_min_css__);
 __webpack_require__(142);
+
+
+
 
 
 
@@ -30900,6 +30908,15 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_5__pac
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vue_clip___default.a);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.$appName = "Elearning";
+
+__WEBPACK_IMPORTED_MODULE_1_axios___default.a.interceptors.response.use(function (response) {
+    return response;
+}, function (error) {
+    if (__WEBPACK_IMPORTED_MODULE_3__routes_js__["a" /* default */].history.current.path != '/login') {
+        __WEBPACK_IMPORTED_MODULE_7_sweetalert2___default()('Oops...', 'Something went wrong!', 'error');
+    }
+    return Promise.reject(error);
+});
 
 __WEBPACK_IMPORTED_MODULE_3__routes_js__["a" /* default */].beforeEach(function (to, from, next) {
     if (typeof to.meta.role !== 'undefined') {
@@ -30950,7 +30967,7 @@ __WEBPACK_IMPORTED_MODULE_3__routes_js__["a" /* default */].beforeEach(function 
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     el: '#app',
     router: __WEBPACK_IMPORTED_MODULE_3__routes_js__["a" /* default */],
-    store: __WEBPACK_IMPORTED_MODULE_6__store__["a" /* store */],
+    store: __WEBPACK_IMPORTED_MODULE_6__store__["store"],
     render: function render(h) {
         return h(__WEBPACK_IMPORTED_MODULE_4__App_vue___default.a);
     }
@@ -70392,7 +70409,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             login_error: false
         };
     },
-
+    created: function created() {
+        this.$store.commit('hideNavbar');
+    },
 
     methods: {
         login: function login() {
@@ -70423,6 +70442,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (response) {
                 _this2.$auth.setPersonalData(response.data);
                 _this2.$store.commit('storeUser', response.data);
+                _this2.$store.commit('showNavbar');
                 _this2.$router.push('/');
             });
         }
@@ -73245,7 +73265,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])(['isLoggedIn']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])(['getOnlyName', 'getName'])),
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapState */])(['isLoggedIn']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* mapGetters */])(['getOnlyName', 'getName'])),
   created: function created() {
     this.$store.dispatch('getPersonal');
   }
@@ -73450,80 +73470,10 @@ if (false) {
 
 /***/ }),
 /* 229 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, __webpack_exports__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__packages_auth_auth_js__ = __webpack_require__(139);
-
-
-
-
-
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3__packages_auth_auth_js__["a" /* default */]);
-
-var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
-    state: {
-        isLoggedIn: !!localStorage.getItem("token"),
-        user: {
-            role: {}
-        }
-    },
-    mutations: {
-        storeUser: function storeUser(state, data) {
-            state.user = data;
-            state.isLoggedIn = true;
-        },
-        getPersonal: function getPersonal(state, data) {
-            state.user = data;
-        },
-        removePersonal: function removePersonal(state) {
-            state.user = {
-                role: {}
-            };
-            state.isLoggedIn = false;
-        }
-    },
-    getters: {
-        getUserId: function getUserId(state) {
-            return state.user.id;
-        },
-        getRole: function getRole(state) {
-            return state.user.role.actions;
-        },
-        isTeacher: function isTeacher(state) {
-            return state.user.role.actions == "is_teacher";
-        },
-        isStudent: function isStudent(state) {
-            return state.user.role.actions == "is_student";
-        },
-        getName: function getName(state) {
-            return state.user.name;
-        }
-    },
-    actions: {
-        getPersonal: function getPersonal(_ref) {
-            var commit = _ref.commit,
-                state = _ref.state;
-
-            if (state.isLoggedIn) {
-                __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('api/me', {
-                    headers: {
-                        Authorization: 'Bearer ' + __WEBPACK_IMPORTED_MODULE_0_vue___default.a.auth.getToken()
-                    }
-                }).then(function (response) {
-                    commit('getPersonal', response.data);
-                });
-            }
-        }
-    }
-});
+throw new Error("Module build failed: SyntaxError: E:/Project/elearning/resources/assets/js/store.js: Unexpected token, expected , (34:8)\n\n\u001b[0m \u001b[90m 32 | \u001b[39m            state\u001b[33m.\u001b[39mshowNav \u001b[33m=\u001b[39m \u001b[36mfalse\u001b[39m\n \u001b[90m 33 | \u001b[39m        }\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 34 | \u001b[39m        showNavbar(state) {\n \u001b[90m    | \u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 35 | \u001b[39m            state\u001b[33m.\u001b[39mshowNav \u001b[33m=\u001b[39m \u001b[36mtrue\u001b[39m\n \u001b[90m 36 | \u001b[39m        }\n \u001b[90m 37 | \u001b[39m    }\u001b[33m,\u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 230 */
@@ -74295,7 +74245,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
-    computed: Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapGetters */])(['getRole']),
+    computed: Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["a" /* mapGetters */])(['getRole']),
     components: {
         'assignmentUpload': __WEBPACK_IMPORTED_MODULE_0__AssignmentUpload_vue___default.a,
         'assignmentDone': __WEBPACK_IMPORTED_MODULE_1__AssignmentDone_vue___default.a
@@ -75531,7 +75481,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
-    computed: Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapGetters */])(['isTeacher']),
+    computed: Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["a" /* mapGetters */])(['isTeacher']),
     methods: {
         showJoin: function showJoin() {
             var self = this;
@@ -76060,7 +76010,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         });
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapGetters */])(['getUserId', 'isTeacher'])),
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["a" /* mapGetters */])(['getUserId', 'isTeacher'])),
     methods: {
         comment: function comment(post_id) {
             var _this2 = this;
@@ -77048,7 +76998,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
-    computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])(['isTeacher']),
+    computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* mapGetters */])(['isTeacher']),
     created: function created() {
         var _this = this;
 
