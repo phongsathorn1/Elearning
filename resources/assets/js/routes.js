@@ -67,7 +67,7 @@ const routes = [
     },
     {
         path: '/classroom/:id/members/add',
-        component: require('./components/ClassroomMemberAdd.vue'),
+        component: require('./components/member/Add.vue'),
         meta: {
             forAuth: true,
             role: 'is_teacher'
@@ -75,7 +75,7 @@ const routes = [
     },
     {
         path: '/classroom/:id/members',
-        component: require('./components/ClassroomMembers.vue'),
+        component: require('./components/member/View.vue'),
         meta: {
             forAuth: true,
         }

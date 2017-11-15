@@ -67273,14 +67273,14 @@ var routes = [{
     }
 }, {
     path: '/classroom/:id/members/add',
-    component: __webpack_require__(202),
+    component: __webpack_require__(274),
     meta: {
         forAuth: true,
         role: 'is_teacher'
     }
 }, {
     path: '/classroom/:id/members',
-    component: __webpack_require__(205),
+    component: __webpack_require__(277),
     meta: {
         forAuth: true
     }
@@ -73045,482 +73045,12 @@ exports.push([module.i, ".flatpickr-calendar {\n  background: transparent;\n  ov
 
 /***/ }),
 /* 201 */,
-/* 202 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(203)
-/* template */
-var __vue_template__ = __webpack_require__(204)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\ClassroomMemberAdd.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6fea6f6a", Component.options)
-  } else {
-    hotAPI.reload("data-v-6fea6f6a", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 203 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            users: [],
-            classroom: '',
-            added_users: [],
-            classroom_id: this.$route.params.id,
-            token: this.$auth.getToken()
-        };
-    },
-    created: function created() {
-        var _this = this;
-
-        axios.get('api/classroom/' + this.classroom_id, {
-            headers: {
-                Authorization: 'Bearer ' + this.token
-            }
-        }).then(function (response) {
-            _this.classroom = response.data.classroom;
-        });
-
-        axios.get('api/members', {
-            headers: {
-                Authorization: 'Bearer ' + this.token
-            }
-        }).then(function (response) {
-            _this.users = response.data;
-        });
-
-        axios.get('api/members/' + this.classroom_id, {
-            headers: {
-                Authorization: 'Bearer ' + this.token
-            }
-        }).then(function (response) {
-            _this.added_users = response.data.map(function (data) {
-                return data.id;
-            });
-        });
-    },
-
-    methods: {
-        add: function add(user_id) {
-            if (this.added_users.indexOf(user_id) <= -1) {
-                this.added_users.push(user_id);
-            }
-
-            var data = {
-                'classroom_id': this.classroom_id,
-                'user_id': user_id
-            };
-            axios.post('api/members/add', data, {
-                headers: {
-                    Authorization: 'Bearer ' + this.token
-                }
-            });
-        },
-        remove: function remove(user_id) {
-            var index = this.added_users.indexOf(user_id);
-            if (index > -1) {
-                this.added_users.splice(index, 1);
-            }
-
-            var data = {
-                'classroom_id': this.classroom_id,
-                'user_id': user_id
-            };
-            axios.post('api/members/remove', data, {
-                headers: {
-                    Authorization: 'Bearer ' + this.token
-                }
-            });
-        }
-    }
-});
-
-/***/ }),
-/* 204 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
-    _c("div", { attrs: { id: "adduser" } }, [
-      _c("div", { staticClass: "page-header" }, [
-        _c("div", { staticClass: "container" }, [
-          _c("h1", [
-            _vm._v(_vm._s(_vm.classroom.name) + " "),
-            _c("small", [_vm._v("Add member")])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "container" }, [
-        _c(
-          "div",
-          { staticClass: "member-list" },
-          _vm._l(_vm.users, function(user) {
-            return _c("div", { staticClass: "member-list-item" }, [
-              _c(
-                "div",
-                { class: { active: _vm.added_users.indexOf(user.id) > -1 } },
-                [
-                  _c("div", { staticClass: "col-xs-6" }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(user.name) +
-                        "\n                        "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-xs-3" }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(user.role.name) +
-                        "\n                        "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-xs-3" }, [
-                    _vm.added_users.indexOf(user.id) <= -1
-                      ? _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-default",
-                            on: {
-                              click: function($event) {
-                                _vm.add(user.id)
-                              }
-                            }
-                          },
-                          [_vm._v("Add")]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.added_users.indexOf(user.id) > -1
-                      ? _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-default",
-                            on: {
-                              click: function($event) {
-                                _vm.remove(user.id)
-                              }
-                            }
-                          },
-                          [_vm._v("Remove")]
-                        )
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "clearfix" })
-                ]
-              )
-            ])
-          })
-        )
-      ])
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6fea6f6a", module.exports)
-  }
-}
-
-/***/ }),
-/* 205 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(206)
-/* template */
-var __vue_template__ = __webpack_require__(207)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\ClassroomMembers.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-60077886", Component.options)
-  } else {
-    hotAPI.reload("data-v-60077886", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 206 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            members: [],
-            classroom: ''
-        };
-    },
-
-    computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])(['isTeacher']),
-    created: function created() {
-        var _this = this;
-
-        var classroom_id = this.$route.params.id;
-        var token = this.$auth.getToken();
-
-        axios.get('api/classroom/' + classroom_id, {
-            headers: {
-                Authorization: 'Bearer ' + token
-            }
-        }).then(function (response) {
-            _this.classroom = response.data.classroom;
-        });
-
-        axios.get('api/members/' + classroom_id, {
-            headers: {
-                Authorization: 'Bearer ' + token
-            }
-        }).then(function (response) {
-            _this.members = response.data;
-        });
-    }
-});
-
-/***/ }),
-/* 207 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("transition", { attrs: { name: "fade" } }, [
-    _c("div", { attrs: { id: "members" } }, [
-      _c("div", { staticClass: "page-header" }, [
-        _c("div", { staticClass: "container" }, [
-          _c("h1", [
-            _vm._v(_vm._s(_vm.classroom.name) + " "),
-            _c("small", [_vm._v("Members")])
-          ]),
-          _vm._v(" "),
-          _vm.isTeacher
-            ? _c(
-                "div",
-                { staticClass: "control-area" },
-                [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "btn btn-default",
-                      attrs: { to: "members/add" }
-                    },
-                    [_vm._v("Add member")]
-                  ),
-                  _vm._v(" "),
-                  _c("span", [
-                    _vm._v("Join code: "),
-                    _c(
-                      "span",
-                      {
-                        staticStyle: {
-                          padding: "10px",
-                          border: "1px solid #e0e0e0"
-                        }
-                      },
-                      [_vm._v(_vm._s(_vm.classroom.join_code))]
-                    )
-                  ])
-                ],
-                1
-              )
-            : _vm._e()
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "container" }, [
-        _c(
-          "div",
-          { staticClass: "member-list" },
-          _vm._l(_vm.members, function(member) {
-            return _c("div", { staticClass: "member-list-item" }, [
-              _c("div", { staticClass: "col-xs-6" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(member.name) +
-                    "\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-xs-3" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(member.role.name) +
-                    "\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-xs-3" }, [
-                _vm._v("\n                        Delete\n                    ")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "clearfix" })
-            ])
-          })
-        )
-      ])
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-60077886", module.exports)
-  }
-}
-
-/***/ }),
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
 /* 208 */,
 /* 209 */,
 /* 210 */,
@@ -77159,6 +76689,482 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-06cdb0ac", module.exports)
+  }
+}
+
+/***/ }),
+/* 274 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(275)
+/* template */
+var __vue_template__ = __webpack_require__(276)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\member\\Add.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4e462756", Component.options)
+  } else {
+    hotAPI.reload("data-v-4e462756", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 275 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            users: [],
+            classroom: '',
+            added_users: [],
+            classroom_id: this.$route.params.id,
+            token: this.$auth.getToken()
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('api/classroom/' + this.classroom_id, {
+            headers: {
+                Authorization: 'Bearer ' + this.token
+            }
+        }).then(function (response) {
+            _this.classroom = response.data.classroom;
+        });
+
+        axios.get('api/members', {
+            headers: {
+                Authorization: 'Bearer ' + this.token
+            }
+        }).then(function (response) {
+            _this.users = response.data;
+        });
+
+        axios.get('api/members/' + this.classroom_id, {
+            headers: {
+                Authorization: 'Bearer ' + this.token
+            }
+        }).then(function (response) {
+            _this.added_users = response.data.map(function (data) {
+                return data.id;
+            });
+        });
+    },
+
+    methods: {
+        add: function add(user_id) {
+            if (this.added_users.indexOf(user_id) <= -1) {
+                this.added_users.push(user_id);
+            }
+
+            var data = {
+                'classroom_id': this.classroom_id,
+                'user_id': user_id
+            };
+            axios.post('api/members/add', data, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            });
+        },
+        remove: function remove(user_id) {
+            var index = this.added_users.indexOf(user_id);
+            if (index > -1) {
+                this.added_users.splice(index, 1);
+            }
+
+            var data = {
+                'classroom_id': this.classroom_id,
+                'user_id': user_id
+            };
+            axios.post('api/members/remove', data, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 276 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
+    _c("div", { attrs: { id: "adduser" } }, [
+      _c("div", { staticClass: "page-header" }, [
+        _c("div", { staticClass: "container" }, [
+          _c("h1", [
+            _vm._v(_vm._s(_vm.classroom.name) + " "),
+            _c("small", [_vm._v("Add member")])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "container" }, [
+        _c(
+          "div",
+          { staticClass: "member-list" },
+          _vm._l(_vm.users, function(user) {
+            return _c("div", { staticClass: "member-list-item" }, [
+              _c(
+                "div",
+                { class: { active: _vm.added_users.indexOf(user.id) > -1 } },
+                [
+                  _c("div", { staticClass: "col-xs-6" }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(user.name) +
+                        "\n                        "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-xs-3" }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(user.role.name) +
+                        "\n                        "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-xs-3" }, [
+                    _vm.added_users.indexOf(user.id) <= -1
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-default",
+                            on: {
+                              click: function($event) {
+                                _vm.add(user.id)
+                              }
+                            }
+                          },
+                          [_vm._v("Add")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.added_users.indexOf(user.id) > -1
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-default",
+                            on: {
+                              click: function($event) {
+                                _vm.remove(user.id)
+                              }
+                            }
+                          },
+                          [_vm._v("Remove")]
+                        )
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" })
+                ]
+              )
+            ])
+          })
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4e462756", module.exports)
+  }
+}
+
+/***/ }),
+/* 277 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(278)
+/* template */
+var __vue_template__ = __webpack_require__(279)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\member\\View.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0e0f71c0", Component.options)
+  } else {
+    hotAPI.reload("data-v-0e0f71c0", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 278 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            members: [],
+            classroom: ''
+        };
+    },
+
+    computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])(['isTeacher']),
+    created: function created() {
+        var _this = this;
+
+        var classroom_id = this.$route.params.id;
+        var token = this.$auth.getToken();
+
+        axios.get('api/classroom/' + classroom_id, {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        }).then(function (response) {
+            _this.classroom = response.data.classroom;
+        });
+
+        axios.get('api/members/' + classroom_id, {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        }).then(function (response) {
+            _this.members = response.data;
+        });
+    }
+});
+
+/***/ }),
+/* 279 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("transition", { attrs: { name: "fade" } }, [
+    _c("div", { attrs: { id: "members" } }, [
+      _c("div", { staticClass: "page-header" }, [
+        _c("div", { staticClass: "container" }, [
+          _c("h1", [
+            _vm._v(_vm._s(_vm.classroom.name) + " "),
+            _c("small", [_vm._v("Members")])
+          ]),
+          _vm._v(" "),
+          _vm.isTeacher
+            ? _c(
+                "div",
+                { staticClass: "control-area" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-default",
+                      attrs: { to: "members/add" }
+                    },
+                    [_vm._v("Add member")]
+                  ),
+                  _vm._v(" "),
+                  _c("span", [
+                    _vm._v("Join code: "),
+                    _c(
+                      "span",
+                      {
+                        staticStyle: {
+                          padding: "10px",
+                          border: "1px solid #e0e0e0"
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.classroom.join_code))]
+                    )
+                  ])
+                ],
+                1
+              )
+            : _vm._e()
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "container" }, [
+        _c(
+          "div",
+          { staticClass: "member-list" },
+          _vm._l(_vm.members, function(member) {
+            return _c("div", { staticClass: "member-list-item" }, [
+              _c("div", { staticClass: "col-xs-6" }, [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(member.name) +
+                    "\n                    "
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-xs-3" }, [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(member.role.name) +
+                    "\n                    "
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-xs-3" }, [
+                _vm._v("\n                        Delete\n                    ")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "clearfix" })
+            ])
+          })
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0e0f71c0", module.exports)
   }
 }
 
