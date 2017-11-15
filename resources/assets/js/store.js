@@ -50,6 +50,9 @@ export const store = new Vuex.Store({
         },
         getName: state => {
             return state.user.name
+        },
+        showNavbar: state => {
+            return state.showNav
         }
     },
     actions:{
