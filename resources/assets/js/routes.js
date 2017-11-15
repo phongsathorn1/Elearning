@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 const routes = [
     {
         path: '/',
-        component: require('./components/ClassroomList.vue'),
+        component: require('./components/classroom/List.vue'),
         meta:{
             forAuth: true
         }
@@ -27,7 +27,7 @@ const routes = [
     },
     {
         path: '/classroom/create',
-        component: require('./components/ClassroomCreate.vue'),
+        component: require('./components/classroom/Create.vue'),
         meta: {
             forAuth: true,
             role: 'is_teacher'
@@ -35,14 +35,14 @@ const routes = [
     },
     {
         path: '/classroom/:id',
-        component: require('./components/Classroom.vue'),
+        component: require('./components/classroom/View.vue'),
         meta: {
             forAuth: true
         }
     },
     {
         path: '/classroom/:id/edit',
-        component: require('./components/ClassroomEdit.vue'),
+        component: require('./components/classroom/Edit.vue'),
         meta: {
             forAuth: true,
             meta: {
@@ -52,14 +52,14 @@ const routes = [
     },
     {
         path: '/classroom/:id/post',
-        component: require('./components/ClassroomPost.vue'),
+        component: require('./components/post/Post.vue'),
         meta: {
             forAuth: true
         }
     },
     {
         path: '/classroom/:id/post/assignment',
-        component: require('./components/ClassroomPostAssignment.vue'),
+        component: require('./components/assignment/Post.vue'),
         meta: {
             forAuth: true,
             role: 'is_teacher'
@@ -82,14 +82,14 @@ const routes = [
     },
     {
         path: '/classroom/:id/assignment/:assignment_id',
-        component: require('./components/ClassroomAssignment.vue'),
+        component: require('./components/assignment/View.vue'),
         meta: {
             forAuth: true
         }
     },
     {
         path: '/classroom/:id/assignment/:post_id/edit',
-        component: require('./components/ClassroomAssignmentEdit.vue'),
+        component: require('./components/assignment/Edit.vue'),
         meta: {
             forAuth: true,
             role: 'is_teacher'
@@ -97,7 +97,7 @@ const routes = [
     },
     {
         path: '/classroom/:id/post/:post_id/edit',
-        component: require('./components/ClassroomPostEdit.vue'),
+        component: require('./components/post/Edit.vue'),
         meta: {
             forAuth: true
         }

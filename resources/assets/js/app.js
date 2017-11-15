@@ -12,8 +12,6 @@ import { store } from './store'
 Vue.use(Auth)
 Vue.use(VueClip)
 
-axios.defaults.baseURL = 'http://localhost:8000';
-
 Vue.prototype.$appName = "Elearning";
 
 router.beforeEach(
