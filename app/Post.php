@@ -24,4 +24,13 @@ class Post extends Model
     {
         return $this->belongsTo('App\Classroom');
     }
+
+    public function assignment()
+    {
+        $collection = $this->hasOne('App\Assignment');
+        if($collection)
+        {
+            return $collection;
+        }
+    }
 }

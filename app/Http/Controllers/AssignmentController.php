@@ -9,6 +9,7 @@ use App\Classroom;
 use App\Assignment;
 use App\AssignmentFile;
 use App\AssignmentCheck;
+use App\Post;
 use Carbon\Carbon;
 
 class AssignmentController extends Controller
@@ -38,15 +39,22 @@ class AssignmentController extends Controller
     public function store(Request $request, $classroom_id)
     {
         $classroom = Classroom::findOrFail($classroom_id);
+
+        $post = Post::create([
+            'user_id' => Auth::id(),
+            'classroom_id' => $classroom_id,
+            'type' => 'assignment',
+        ]);
+
         Assignment::create([
             'user_id' => Auth::id(),
             'classroom_id' => $classroom_id,
+            'post_id' => $post->id,
             'title' => $request->title,
             'detail' => $request->detail,
             'due_time' => $request->duetime,
             'score' => $request->score
         ]);
-
         return response()->json(['sucessful' => true]);
     }
 

@@ -81,7 +81,7 @@
                         </div>
 
                         <router-link
-                            :to="`/classroom/${classroom.id}/assignment/${post.id}/edit`"
+                            :to="`/classroom/${classroom.id}/assignment/${post.assignment.id}/edit`"
                             class="btn btn-default"
                             v-if="checkUserPost(post.user.id)"
                         >Edit</router-link>
@@ -92,9 +92,9 @@
                         >Delete</button>
                         <div class="clearfix"></div>
                     </div>
-                    <h3><router-link :to="classroom.id +'/assignment/' + post.id">{{ post.title }}</router-link></h3>
-                    <p v-html="renderHTML(post.detail)"></p>
-                    <p v-if="timeCheck(post.due_time)">Time up!</p>
+                    <h3><router-link :to="classroom.id +'/assignment/' + post.assignment.id">{{ post.assignment.title }}</router-link></h3>
+                    <p v-html="renderHTML(post.assignment.detail)"></p>
+                    <p v-if="timeCheck(post.assignment.due_time)">Time up!</p>
                 </div>
             </div>
         </div>

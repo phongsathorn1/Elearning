@@ -18,33 +18,13 @@ class ClassroomController extends Controller
 
     public function show($classroom_id)
     {
-        if(Classroom::find($classroom_id)){
-            $classroom = Classroom::findOrFail($classroom_id);
-
-            if(Auth::user()->role->actions == "is_student"){
-                $classroom = $classroom->makeHidden('join_code');
-            }
-
-            $posts = $classroom->posts->load('user', 'comments', 'comments.user');
-            $assignments = $classroom->assignments->load('user');
-
-            $all = collect();
-            foreach ($posts as $post){
-                $all->push($post);
-            }
-
-            foreach ($assignments as $assignment){
-                $all->push($assignment);
-            }
-
-            $all = $all->sortByDesc('created_at')->values()->all();
-
-            return response()->json(['classroom' => $classroom, 'posts' => $all]);
+        $classroom = Classroom::findOrFail($classroom_id);
+        if(Auth::user()->role->actions == "is_student"){
+            $classroom = $classroom->makeHidden('join_code');
         }
-        else
-        {
-            abort(404);
-        }
+        $posts = $classroom->posts->load('user', 'comments', 'comments.user', 'assignment');
+
+        return response()->json(['classroom' => $classroom, 'posts' => $posts]);
     }
 
     public function store(Request $request)
