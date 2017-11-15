@@ -1,18 +1,26 @@
 <template>
     <transition name="fade">
+        <div class='login-bg'>
         <div class="container">
-            <form v-on:submit.prevent="login">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" placeholder="Username" v-model="form.username">
+            <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8">
+                <div class="jumbotron login">
+                    <form v-on:submit.prevent="login">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" placeholder="Username" v-model="form.username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Password" v-model="form.password">
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-default">Login</button>
+                            <div class="alert alert-danger" role="alert" v-if="login_error">The username or password is incorrect.</div>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password" v-model="form.password">
-                </div>
-                <button type="submit" class="btn btn-default">Login</button>
-                <div class="alert alert-danger" role="alert" v-if="login_error">The username or password is incorrect.</div>
-            </form>
+            </div>
+        </div>
         </div>
     </transition>
 </template>
@@ -36,7 +44,7 @@
                 var data = {
                     'grant_type': 'password',
                     'client_id': 2,
-                    'client_secret': '8jjUbNiwZdb8egKf4J4TSMyRUe6kfbLHXejBcC2h',
+                    'client_secret': 'FbwNBsSJbJhS1cwv9RfPeY8gOieb0Ck0jQ2YFZJQ',
                     'username': this.form.username,
                     'password': this.form.password
                 }

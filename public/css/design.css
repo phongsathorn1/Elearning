@@ -1,6 +1,7 @@
 body {
   font-family: "Nunito", sans-serif;
   background: #F0F0F0;
+  max-height: 100vh;
 }
 
 a {
@@ -17,6 +18,8 @@ a:hover {
   border: none;
   border-radius: 0px;
   margin-bottom: 0px;
+  position: absolute;
+  width: 100%;
 }
 
 .navbar-default .navbar-brand {
@@ -127,5 +130,23 @@ a:hover {
 .fade-enter,
 .fade-leave-active {
   opacity: 0;
+}
+
+.login-bg {
+  height: 100vh;
+  max-height: 100vh;
+  background-image: url("http://www.sepeb.com/giraffe-background/giraffe-background-002.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login {
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 15rem 0 0 0;
+}
+
+.login .btn {
+  width: 80%;
 }
 
