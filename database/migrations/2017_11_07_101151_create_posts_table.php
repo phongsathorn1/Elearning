@@ -18,7 +18,7 @@ class CreatePostsTable extends Migration
             $table->integer('classroom_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->string('type');
-            $table->longText('detail');
+            $table->longText('detail')->nullable();
             $table->timestamps();
         });
     }
