@@ -22,7 +22,7 @@ class CreateRolesTable extends Migration
         DB::table('roles')->insert([
             ['name' => 'Teacher', 'actions' => 'is_teacher'],
             ['name' => 'Student', 'actions' => 'is_student']
-        ])
+        ]);
     }
 
     /**
