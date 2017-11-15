@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <navbar></navbar>
+        <navbar v-if="showNavbar"></navbar>
         <transition name="fade">
             <router-view></router-view>
         </transition>
@@ -9,10 +9,14 @@
 
 <script>
     import navbar from './components/NavbarComponent.vue'
+    import { mapGetters } from 'vuex'
 
     export default {
         components : {
             'navbar': navbar
-        }
+        },
+        computed: mapGetters([
+            'showNavbar'
+        ])
     }
 </script>

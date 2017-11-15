@@ -73140,6 +73140,7 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_NavbarComponent_vue__ = __webpack_require__(225);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_NavbarComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_NavbarComponent_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(3);
 //
 //
 //
@@ -73149,13 +73150,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
         'navbar': __WEBPACK_IMPORTED_MODULE_0__components_NavbarComponent_vue___default.a
-    }
+    },
+    computed: Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])(['showNavbar'])
 });
 
 /***/ }),
@@ -73450,7 +73453,7 @@ var render = function() {
     "div",
     { attrs: { id: "app" } },
     [
-      _c("navbar"),
+      _vm.showNavbar ? _c("navbar") : _vm._e(),
       _vm._v(" "),
       _c("transition", { attrs: { name: "fade" } }, [_c("router-view")], 1)
     ],
@@ -73531,6 +73534,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         },
         getName: function getName(state) {
             return state.user.name;
+        },
+        showNavbar: function showNavbar(state) {
+            return state.showNav;
         }
     },
     actions: {
