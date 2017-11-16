@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Post;
 use App\User;
+use App\FilesAttachment;
 
 class PostController extends Controller
 {
@@ -22,12 +23,16 @@ class PostController extends Controller
     }
     public function store(Request $request)
     {
-        Post::create([
+        $post = Post::create([
             'user_id' => Auth::id(),
             'classroom_id' => $request->classroom_id,
             'type' => 'post',
             'detail' => $request->post
         ]);
+
+        foreach($request->get('files') as $file){
+            FilesAttachment::where('filepath', $file['filename'])->first()->posts()->attach($post->id);
+        }
 
         return response()->json([
             'successful' => true

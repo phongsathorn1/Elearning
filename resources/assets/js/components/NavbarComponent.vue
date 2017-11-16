@@ -1,5 +1,5 @@
 <template>
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" v-if="!hide" v-bind:class="{transparent: transparent}">
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -47,17 +47,39 @@
   import { mapState, mapGetters } from 'vuex'
 
   export default {
+    data(){
+      return {
+        transparent: false,
+        hide: false
+      }
+    },
     computed: {
       ...mapState([
         'isLoggedIn'
       ]),
-      ...mapGetters([
-        'getOnlyName',
+      ...mapGetters([,
         'getName'
       ])
     },
     created(){
       this.$store.dispatch('getPersonal')
+      this.setStyle(this.$route)
+      this.$watch('$route', this.setStyle)
+    },
+    methods:{
+      setStyle(route){
+        this.transparent = false
+        this.hide = false
+        if(route.meta.navstyle){
+          if(route.meta.navstyle.transparent){
+            this.transparent = route.meta.navstyle.transparent
+          }
+
+          if(route.meta.navstyle.hide){
+            this.hide = route.meta.navstyle.hide
+          }
+        }
+      }
     }
   }
 </script>

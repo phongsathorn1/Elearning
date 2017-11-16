@@ -12,7 +12,8 @@ export const store = new Vuex.Store({
         user: {
             role: {}
         },
-        showNav: true
+        showNav: true,
+        navbarTransparent: false,
     },
     mutations:{
         storeUser(state, data){
@@ -33,6 +34,9 @@ export const store = new Vuex.Store({
         },
         showNavbar(state) {
             state.showNav = true
+        },
+        transparentNavbar(state, data) {
+            state.navbarTransparent = data
         }
     },
     getters:{
@@ -53,6 +57,9 @@ export const store = new Vuex.Store({
         },
         showNavbar: state => {
             return state.showNav
+        },
+        transparentNavbar: state => {
+            return state.navbarTransparent
         }
     },
     actions:{

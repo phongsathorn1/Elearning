@@ -38,9 +38,6 @@
                 login_error: false
             }
         },
-        created(){
-            this.$store.commit('hideNavbar')
-        },
         methods: {
             login () {
                 var data = {
@@ -69,7 +66,6 @@
                 .then(response => {
                     this.$auth.setPersonalData(response.data)
                     this.$store.commit('storeUser', response.data)
-                    this.$store.commit('showNavbar')
                     this.$router.push('/')
                 })
             }

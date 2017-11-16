@@ -33,4 +33,9 @@ class Post extends Model
             return $collection;
         }
     }
+
+    public function attachments()
+    {
+        return $this->belongsToMany('App\FilesAttachment');
+    }
 }

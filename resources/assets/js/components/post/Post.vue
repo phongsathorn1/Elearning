@@ -11,7 +11,6 @@
             <vue-clip ref="vc" 
                 :options="options"
                 :on-complete="uploadComplete"
-                v-if="!is_done"
             >
                 <template slot="clip-uploader-action">
                     <div>
@@ -32,6 +31,10 @@
                     </div>
                 </template>
             </vue-clip>
+            <div v-for="file in uploaded_files">
+                <div @click="download(file)">{{ file.name }}</div>
+                <div @click="removeFile(file)">delete</div>
+            </div>
         </div>
     </div>
 </template>
@@ -43,7 +46,7 @@
                 detail: '',
                 uploaded_files: [],
                 options: {
-                    url: `api/classroom/${this.$route.params.id}/assignment/${this.$route.params.assignment_id}/upload`,
+                    url: 'api/attachment/upload',
                     paramName: 'file',
                     headers: {
                         Authorization: 'Bearer ' + this.$auth.getToken()
@@ -55,10 +58,10 @@
             store(token, classroom_id){
                 var data = {
                     'post' : this.detail,
-                    'classroom_id': classroom_id
+                    'classroom_id': classroom_id,
+                    'files' : this.uploaded_files
                 }
 
-                console.log(token)
                 axios.post('api/post', data, {
                     headers:{
                         Authorization: 'Bearer ' + token
@@ -80,20 +83,8 @@
                 })
             },
             removeFile(file){
-                if(this.is_done){
-                    return false
-                }
                 var index = this.uploaded_files.findIndex(x => x.id == file.id)
-                var data = {
-                    'file_id': file.id
-                }
-                axios.post(`api/classroom/${this.classroom_id}/assignment/${this.assignment_id}/remove`, data, {
-                    headers: {
-                        Authorization: 'Bearer ' + this.token
-                    }
-                }).then(response => {
-                    this.uploaded_files.splice(index, 1)
-                })
+                this.uploaded_files.splice(index, 1)
             },
             uploadComplete(file, status, xhr){
                 this.uploaded_files.push(JSON.parse(xhr.response))
