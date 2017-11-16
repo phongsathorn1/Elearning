@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <navbar v-if="showNavbar"></navbar>
+        <navbar></navbar>
         <transition name="fade">
             <router-view></router-view>
         </transition>
@@ -12,6 +12,11 @@
     import { mapGetters } from 'vuex'
 
     export default {
+        data(){
+            return {
+                transparent : false
+            }
+        },
         components : {
             'navbar': navbar
         },

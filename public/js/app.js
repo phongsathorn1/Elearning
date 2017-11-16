@@ -67244,7 +67244,10 @@ var routes = [{
     path: '/login',
     component: __webpack_require__(178),
     meta: {
-        forVisitors: true
+        forVisitors: true,
+        navstyle: {
+            hide: true
+        }
     }
 }, {
     path: '/logout',
@@ -67263,7 +67266,10 @@ var routes = [{
     path: '/classroom/:id',
     component: __webpack_require__(188),
     meta: {
-        forAuth: true
+        forAuth: true,
+        navstyle: {
+            transparent: true
+        }
     }
 }, {
     path: '/classroom/:id/edit',
@@ -70700,9 +70706,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             login_error: false
         };
     },
-    created: function created() {
-        this.$store.commit('hideNavbar');
-    },
 
     methods: {
         login: function login() {
@@ -70733,7 +70736,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (response) {
                 _this2.$auth.setPersonalData(response.data);
                 _this2.$store.commit('storeUser', response.data);
-                _this2.$store.commit('showNavbar');
                 _this2.$router.push('/');
             });
         }
@@ -72356,6 +72358,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -72363,7 +72368,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             detail: '',
             uploaded_files: [],
             options: {
-                url: 'api/classroom/' + this.$route.params.id + '/assignment/' + this.$route.params.assignment_id + '/upload',
+                url: 'api/attachment/upload',
                 paramName: 'file',
                 headers: {
                     Authorization: 'Bearer ' + this.$auth.getToken()
@@ -72378,10 +72383,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var data = {
                 'post': this.detail,
-                'classroom_id': classroom_id
+                'classroom_id': classroom_id,
+                'files': this.uploaded_files
             };
 
-            console.log(token);
             axios.post('api/post', data, {
                 headers: {
                     Authorization: 'Bearer ' + token
@@ -72405,24 +72410,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         removeFile: function removeFile(file) {
-            var _this3 = this;
-
-            if (this.is_done) {
-                return false;
-            }
             var index = this.uploaded_files.findIndex(function (x) {
                 return x.id == file.id;
             });
-            var data = {
-                'file_id': file.id
-            };
-            axios.post('api/classroom/' + this.classroom_id + '/assignment/' + this.assignment_id + '/remove', data, {
-                headers: {
-                    Authorization: 'Bearer ' + this.token
-                }
-            }).then(function (response) {
-                _this3.uploaded_files.splice(index, 1);
-            });
+            this.uploaded_files.splice(index, 1);
         },
         uploadComplete: function uploadComplete(file, status, xhr) {
             this.uploaded_files.push(JSON.parse(xhr.response));
@@ -72481,86 +72472,109 @@ var render = function() {
       "div",
       { staticClass: "card" },
       [
-        !_vm.is_done
-          ? _c(
-              "vue-clip",
+        _c(
+          "vue-clip",
+          {
+            ref: "vc",
+            attrs: { options: _vm.options, "on-complete": _vm.uploadComplete },
+            scopedSlots: _vm._u([
               {
-                ref: "vc",
-                attrs: {
-                  options: _vm.options,
-                  "on-complete": _vm.uploadComplete
-                },
-                scopedSlots: _vm._u([
-                  {
-                    key: "clip-uploader-body",
-                    fn: function(props) {
-                      return _vm._l(props.files, function(file) {
-                        return file.status != "success"
-                          ? _c("div", [
-                              _c(
-                                "div",
-                                {
-                                  on: {
-                                    click: function($event) {
-                                      _vm.removeFile(file)
+                key: "clip-uploader-body",
+                fn: function(props) {
+                  return _vm._l(props.files, function(file) {
+                    return file.status != "success"
+                      ? _c("div", [
+                          _c(
+                            "div",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.removeFile(file)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(file.name) +
+                                  " " +
+                                  _vm._s(file.status) +
+                                  "\n                        "
+                              ),
+                              _c("div", { staticClass: "progress" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "progress-bar",
+                                    style: { width: file.progress + "%" },
+                                    attrs: {
+                                      role: "progressbar",
+                                      "aria-valuenow": file.progress,
+                                      "aria-valuemin": "0",
+                                      "aria-valuemax": "100"
                                     }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                        " +
-                                      _vm._s(file.name) +
-                                      " " +
-                                      _vm._s(file.status) +
-                                      "\n                        "
-                                  ),
-                                  _c("div", { staticClass: "progress" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass: "progress-bar",
-                                        style: { width: file.progress + "%" },
-                                        attrs: {
-                                          role: "progressbar",
-                                          "aria-valuenow": file.progress,
-                                          "aria-valuemin": "0",
-                                          "aria-valuemax": "100"
-                                        }
-                                      },
-                                      [
-                                        _c("span", { staticClass: "sr-only" }, [
-                                          _vm._v(
-                                            _vm._s(file.progress) + " Complete"
-                                          )
-                                        ])
-                                      ]
-                                    )
-                                  ])
-                                ]
-                              )
-                            ])
-                          : _vm._e()
-                      })
-                    }
-                  }
-                ])
-              },
-              [
-                _c("template", { slot: "clip-uploader-action" }, [
-                  _c("div", [
-                    _c("div", { staticClass: "dz-message" }, [
-                      _c("h2", [
-                        _vm._v(" Click or Drag and Drop files here upload ")
-                      ])
-                    ])
+                                  },
+                                  [
+                                    _c("span", { staticClass: "sr-only" }, [
+                                      _vm._v(
+                                        _vm._s(file.progress) + " Complete"
+                                      )
+                                    ])
+                                  ]
+                                )
+                              ])
+                            ]
+                          )
+                        ])
+                      : _vm._e()
+                  })
+                }
+              }
+            ])
+          },
+          [
+            _c("template", { slot: "clip-uploader-action" }, [
+              _c("div", [
+                _c("div", { staticClass: "dz-message" }, [
+                  _c("h2", [
+                    _vm._v(" Click or Drag and Drop files here upload ")
                   ])
                 ])
-              ],
-              2
+              ])
+            ])
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _vm._l(_vm.uploaded_files, function(file) {
+          return _c("div", [
+            _c(
+              "div",
+              {
+                on: {
+                  click: function($event) {
+                    _vm.download(file)
+                  }
+                }
+              },
+              [_vm._v(_vm._s(file.name))]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                on: {
+                  click: function($event) {
+                    _vm.removeFile(file)
+                  }
+                }
+              },
+              [_vm._v("delete")]
             )
-          : _vm._e()
+          ])
+        })
       ],
-      1
+      2
     )
   ])
 }
@@ -76952,6 +76966,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            transparent: false
+        };
+    },
+
     components: {
         'navbar': __WEBPACK_IMPORTED_MODULE_0__components_NavbarComponent_vue___default.a
     },
@@ -77064,9 +77084,34 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])(['isLoggedIn']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])(['getOnlyName', 'getName'])),
+  data: function data() {
+    return {
+      transparent: false,
+      hide: false
+    };
+  },
+
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])(['isLoggedIn']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])([, 'getName'])),
   created: function created() {
     this.$store.dispatch('getPersonal');
+    this.setStyle(this.$route);
+    this.$watch('$route', this.setStyle);
+  },
+
+  methods: {
+    setStyle: function setStyle(route) {
+      this.transparent = false;
+      this.hide = false;
+      if (route.meta.navstyle) {
+        if (route.meta.navstyle.transparent) {
+          this.transparent = route.meta.navstyle.transparent;
+        }
+
+        if (route.meta.navstyle.hide) {
+          this.hide = route.meta.navstyle.hide;
+        }
+      }
+    }
   }
 });
 
@@ -77078,83 +77123,92 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("nav", { staticClass: "navbar navbar-default" }, [
-    _c("div", { staticClass: "container" }, [
-      _c(
-        "div",
-        { staticClass: "navbar-header" },
-        [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "router-link",
-            { staticClass: "navbar-brand", attrs: { to: "/" } },
-            [_vm._v(_vm._s(this.$appName))]
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
+  return !_vm.hide
+    ? _c(
+        "nav",
         {
-          staticClass: "collapse navbar-collapse",
-          attrs: { id: "bs-example-navbar-collapse-1" }
+          staticClass: "navbar navbar-default",
+          class: { transparent: _vm.transparent }
         },
         [
-          _c("ul", { staticClass: "nav navbar-nav" }, [
+          _c("div", { staticClass: "container" }, [
             _c(
-              "li",
+              "div",
+              { staticClass: "navbar-header" },
               [
-                _c("router-link", { attrs: { to: "/login" } }, [
-                  _vm._v("Login")
-                ])
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { staticClass: "navbar-brand", attrs: { to: "/" } },
+                  [_vm._v(_vm._s(this.$appName))]
+                )
               ],
               1
             ),
             _vm._v(" "),
-            _vm._m(1)
-          ]),
-          _vm._v(" "),
-          _vm.isLoggedIn
-            ? _c("ul", { staticClass: "nav navbar-nav navbar-right" }, [
-                _c("li", { staticClass: "dropdown" }, [
+            _c(
+              "div",
+              {
+                staticClass: "collapse navbar-collapse",
+                attrs: { id: "bs-example-navbar-collapse-1" }
+              },
+              [
+                _c("ul", { staticClass: "nav navbar-nav" }, [
                   _c(
-                    "a",
-                    {
-                      staticClass: "dropdown-toggle",
-                      attrs: {
-                        href: "#",
-                        "data-toggle": "dropdown",
-                        role: "button",
-                        "aria-haspopup": "true",
-                        "aria-expanded": "false"
-                      }
-                    },
+                    "li",
                     [
-                      _vm._v(_vm._s(_vm.getName)),
-                      _c("span", { staticClass: "caret" })
-                    ]
+                      _c("router-link", { attrs: { to: "/login" } }, [
+                        _vm._v("Login")
+                      ])
+                    ],
+                    1
                   ),
                   _vm._v(" "),
-                  _c("ul", { staticClass: "dropdown-menu" }, [
-                    _c(
-                      "li",
-                      [
-                        _c("router-link", { attrs: { to: "/logout" } }, [
-                          _vm._v("Logout")
+                  _vm._m(1)
+                ]),
+                _vm._v(" "),
+                _vm.isLoggedIn
+                  ? _c("ul", { staticClass: "nav navbar-nav navbar-right" }, [
+                      _c("li", { staticClass: "dropdown" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "dropdown-toggle",
+                            attrs: {
+                              href: "#",
+                              "data-toggle": "dropdown",
+                              role: "button",
+                              "aria-haspopup": "true",
+                              "aria-expanded": "false"
+                            }
+                          },
+                          [
+                            _vm._v(_vm._s(_vm.getName)),
+                            _c("span", { staticClass: "caret" })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("ul", { staticClass: "dropdown-menu" }, [
+                          _c(
+                            "li",
+                            [
+                              _c("router-link", { attrs: { to: "/logout" } }, [
+                                _vm._v("Logout")
+                              ])
+                            ],
+                            1
+                          )
                         ])
-                      ],
-                      1
-                    )
-                  ])
-                ])
-              ])
-            : _vm._e()
+                      ])
+                    ])
+                  : _vm._e()
+              ]
+            )
+          ])
         ]
       )
-    ])
-  ])
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {
@@ -77250,7 +77304,7 @@ var render = function() {
     "div",
     { attrs: { id: "app" } },
     [
-      _vm.showNavbar ? _c("navbar") : _vm._e(),
+      _c("navbar"),
       _vm._v(" "),
       _c("transition", { attrs: { name: "fade" } }, [_c("router-view")], 1)
     ],
@@ -77293,7 +77347,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         user: {
             role: {}
         },
-        showNav: true
+        showNav: true,
+        navbarTransparent: false
     },
     mutations: {
         storeUser: function storeUser(state, data) {
@@ -77314,6 +77369,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         },
         showNavbar: function showNavbar(state) {
             state.showNav = true;
+        },
+        transparentNavbar: function transparentNavbar(state, data) {
+            state.navbarTransparent = data;
         }
     },
     getters: {
@@ -77334,6 +77392,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         },
         showNavbar: function showNavbar(state) {
             return state.showNav;
+        },
+        transparentNavbar: function transparentNavbar(state) {
+            return state.navbarTransparent;
         }
     },
     actions: {
@@ -77364,7 +77425,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 /* 232 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+throw new Error("Module build failed: ModuleBuildError: Module build failed: \n    margin-bottom: 0px;\n                       ^\n      Invalid CSS after \"...in-bottom: 0px;\": expected \"}\", was \"<<<<<<< HEAD\"\n      in /home/jusmistic/elearning/resources/assets/sass/design.scss (line 29, column 25)\n    at runLoaders (/home/jusmistic/elearning/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/jusmistic/elearning/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/jusmistic/elearning/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/home/jusmistic/elearning/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at Object.asyncSassJobQueue.push [as callback] (/home/jusmistic/elearning/node_modules/sass-loader/lib/loader.js:55:13)\n    at Object.<anonymous> (/home/jusmistic/elearning/node_modules/async/dist/async.js:2257:31)\n    at Object.callback (/home/jusmistic/elearning/node_modules/async/dist/async.js:958:16)\n    at options.error (/home/jusmistic/elearning/node_modules/node-sass/lib/index.js:294:32)");
 
 /***/ })
 /******/ ]);

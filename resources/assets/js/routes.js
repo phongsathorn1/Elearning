@@ -15,7 +15,10 @@ const routes = [
         path: '/login',
         component: require('./components/Login.vue'),
         meta: {
-            forVisitors: true
+            forVisitors: true,
+            navstyle: {
+                hide: true
+            }
         }
     },
     {
@@ -37,7 +40,10 @@ const routes = [
         path: '/classroom/:id',
         component: require('./components/classroom/View.vue'),
         meta: {
-            forAuth: true
+            forAuth: true,
+            navstyle: {
+                transparent: true
+            }
         }
     },
     {
