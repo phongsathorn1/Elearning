@@ -2,29 +2,30 @@
     <div class="classroom" style="min-height: 500px">
         <div class="class-header">
             <div class="container">
-                <h1>{{ classroom.name }}</h1>
-                <div class="class-description">
-                    {{ classroom.description }}
-                </div>
-                <div class="class-action">
+                    <div class="col-md-offset-1 col-md-10 col-sm-offset-2 col-sm--8">
+                    <h1>{{ classroom.name }}</h1>
+                    <div class="class-description">
+                        {{ classroom.description }}
+                    </div>
+                    <div class="class-action">
 
-                    <router-link :to="classroom.id + '/post'" class="btn btn-default">New Post</router-link>
-                    <router-link
-                        :to="classroom.id + '/post/assignment'"
-                        v-if="isTeacher"
-                        class="btn btn-default"
-                    >New Assignment</router-link>
-                    <router-link :to="classroom.id + '/members'" class="btn btn-default">Members</router-link>
-                    <router-link
-                        :to="`/classroom/${classroom.id}/edit`"
-                        v-if="isTeacher"
-                        class="btn btn-default"
-                    >Edit this classroom</router-link>
-                    <button class="btn btn-default"
-                        v-if="isTeacher"
-                        @click="deleteClass"
-                    >Delete classroom</button>
-
+                        <router-link :to="classroom.id + '/post'" class="btn btn-default">New Post</router-link>
+                        <router-link
+                            :to="classroom.id + '/post/assignment'"
+                            v-if="isTeacher"
+                            class="btn btn-default"
+                        >New Assignment</router-link>
+                        <router-link :to="classroom.id + '/members'" class="btn btn-default">Members</router-link>
+                        <router-link
+                            :to="`/classroom/${classroom.id}/edit`"
+                            v-if="isTeacher"
+                            class="btn btn-default"
+                        >Edit this classroom</router-link>
+                        <button class="btn btn-default"
+                            v-if="isTeacher"
+                            @click="deleteClass"
+                        >Delete classroom</button>
+                    </div>
                 </div>
             </div>
         </div>
