@@ -26,6 +26,7 @@
 </template>
 
 <script>
+    import config from '../config.js'
     export default {
         data (){
             return{
@@ -42,9 +43,9 @@
         methods: {
             login () {
                 var data = {
-                    'grant_type': 'password',
-                    'client_id': 2,
-                    'client_secret': 'FbwNBsSJbJhS1cwv9RfPeY8gOieb0Ck0jQ2YFZJQ',
+                    'grant_type': config.grant_type,
+                    'client_id': config.client_id,
+                    'client_secret': config.client_secret,
                     'username': this.form.username,
                     'password': this.form.password
                 }
