@@ -18,6 +18,8 @@ a:hover {
   border: none;
   border-radius: 0px;
   margin-bottom: 0px;
+  position: absolute;
+  width: 100%;
 }
 
 .navbar-default .navbar-brand {
