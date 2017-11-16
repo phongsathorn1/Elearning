@@ -15,7 +15,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 Vue.use(Auth)
 Vue.use(VueClip)
 
-Vue.prototype.$appName = "Elearning";
+Vue.prototype.$appName = "<e>learning";
 
 axios.interceptors.response.use(function (response) {
     return response;

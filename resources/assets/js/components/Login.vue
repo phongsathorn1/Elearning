@@ -6,6 +6,7 @@
                 <div class="jumbotron login">
                     <form v-on:submit.prevent="login">
                         <div class="form-group">
+                            <h2 class="text-center">Elearning</h2>
                             <label for="username">Username</label>
                             <input type="text" class="form-control" id="username" placeholder="Username" v-model="form.username">
                         </div>
