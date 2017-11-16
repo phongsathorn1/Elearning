@@ -28,9 +28,9 @@
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="class-posts" v-for="post in posts">
-                <div class="class-post-item card" v-if="post.type === 'post'">
+        <div class="container" v-if="posts">
+            <div class="class-posts card" v-for="post in posts">
+                <div class="class-post-item" v-if="post.type === 'post'">
                     <div class="class-meta">
                         <div class="class-post-user class-meta-item">
                             {{ post.user.name }}
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="class-post-item card" v-if="post.type === 'assignment'">
+                <div class="class-post-item" v-if="post.type == 'assignment' && post.assignment">
                     <div class="class-meta">
                         <div class="class-post-user class-meta-item">
                             {{ post.user.name }}
@@ -87,7 +87,7 @@
                         >Edit</router-link>
 
                         <button class="btn btn-default"
-                            @click="removeAssignment(post.id)"
+                            @click="removeAssignment(post.assignment.id)"
                             v-if="checkUserPost(post.user.id)"
                         >Delete</button>
                         <div class="clearfix"></div>
@@ -96,6 +96,7 @@
                     <p v-html="renderHTML(post.assignment.detail)"></p>
                     <p v-if="timeCheck(post.assignment.due_time)">Time up!</p>
                 </div>
+                <attachments :files="post.attachments"></attachments>
             </div>
         </div>
     </div>
@@ -106,6 +107,7 @@
     import swal from 'sweetalert2'
     import 'sweetalert2/dist/sweetalert2.min.css';
     import { mapGetters } from 'vuex'
+    import attachments from '../block/attachment.vue'
 
     export default {
         data(){
@@ -138,6 +140,9 @@
                 this.classroom = response.data.classroom
                 this.posts = response.data.posts
             })
+        },
+        components:{
+            attachments
         },
         computed: {
             ...mapGetters([

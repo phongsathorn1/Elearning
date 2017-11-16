@@ -9,6 +9,7 @@ use App\Classroom;
 use App\Assignment;
 use App\AssignmentFile;
 use App\AssignmentCheck;
+use App\FilesAttachment;
 use App\Post;
 use Carbon\Carbon;
 
@@ -18,6 +19,7 @@ class AssignmentController extends Controller
     {
         $classroom = Classroom::findOrFail($classroom_id);
         $assignment = Assignment::findOrFail($id)->load('user');
+        $attachment = $assignment->post->attachments;
         $files = AssignmentFile::where([
             ['user_id', Auth::id()],
             ['assignment_id', $id]
@@ -30,6 +32,7 @@ class AssignmentController extends Controller
 
         return response()->json([
             'assignment' => $assignment,
+            'attachment' => $attachment,
             'uploaded_files' => $files,
             'is_done' => $is_done,
             'status' => $status->first()
@@ -55,6 +58,11 @@ class AssignmentController extends Controller
             'due_time' => $request->duetime,
             'score' => $request->score
         ]);
+
+        foreach($request->get('files') as $file){
+            FilesAttachment::where('filepath', $file['filename'])->first()->posts()->attach($post->id);
+        }
+
         return response()->json(['sucessful' => true]);
     }
 
@@ -195,6 +203,7 @@ class AssignmentController extends Controller
         if(Auth::user()->assignments->find($id))
         {
             $post = Assignment::findOrFail($id);
+            $post->post->delete();
             $post->delete();
 
             return response()->json(['success' => true]);

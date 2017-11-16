@@ -16,6 +16,7 @@
             </div>
             <h3>{{ assignment_post.title }}</h3>
             <p>{{ assignment_post.detail }}</p>
+            <attachment :files="attachment"></attachment>
             <p v-if="timeCheck()">Time up!</p>
         </div>
 
@@ -37,6 +38,7 @@
 <script>
     import AssignmentUpload from './AssignmentUpload.vue'
     import AssignmentDone from './AssignmentDone.vue'
+    import attachment from '../block/attachment.vue'
     import moment from 'moment';
     import { mapGetters } from 'vuex'
 
@@ -46,6 +48,7 @@
                 assignment_post: {
                     user: {}
                 },
+                attachment: [],
                 classroom_id: this.$route.params.id,
                 assignment_id: this.$route.params.assignment_id,
                 token: this.$auth.getToken(),
@@ -56,7 +59,8 @@
         ]),
         components: {
             'assignmentUpload': AssignmentUpload,
-            'assignmentDone': AssignmentDone
+            'assignmentDone': AssignmentDone,
+            'attachment': attachment
         },
         created(){
             axios.get(`api/classroom/${this.classroom_id}/assignment/${this.assignment_id}`, {
@@ -66,6 +70,7 @@
             })
             .then(response => {
                 this.assignment_post = response.data.assignment
+                this.attachment = response.data.attachment
             })
         },
         methods:{

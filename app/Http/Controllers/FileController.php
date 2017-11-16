@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\AssignmentFile;
+use App\FilesAttachment;
 use Auth;
 
 class FileController extends Controller
@@ -30,11 +31,24 @@ class FileController extends Controller
         return response()->json(['download_url' => url('download/assignment/'.$file->id.'/'.$new_filepath)]);
     }
 
+    public function attachment($filepath)
+    {
+        $file = FilesAttachment::where('filepath', $filepath)->first();
+        if($file->user_id !== Auth::id())
+        {
+            return response()->json(['successful' => false], 403);
+        }
+        $new_filename = md5($file->filepath . microtime()).'.'.$file->type;
+        Storage::copy("attachment/".$file->filepath, 'public/'.$new_filename);
+
+        return response()->json(['download_url' => url('download/file/'.$new_filename)]);
+    }
+
     public function download($filepath)
     {
         if(Storage::exists('public/'.$filepath))
         {
-            return response()->download(storage_path('app/public/'.$filepath))->deleteFileAfterSend(true);
+            return response()->file(storage_path('app/public/'.$filepath))->deleteFileAfterSend(true);
         }
         else {
             return response()->json(['error' => 'File not found.'], 404);
@@ -47,6 +61,18 @@ class FileController extends Controller
         if(Storage::exists('public/'.$filepath))
         {
             return response()->download(storage_path('app/public/'.$filepath), e($filename))->deleteFileAfterSend(true);
+        }
+        else {
+            return response()->json(['error' => 'File not found.'], 404);
+        }
+    }
+
+    public function downloadAttachment($attachment_id, $filepath)
+    {
+        $filename = FilesAttachment::findOrFail($attachment_id)->name;
+        if(Storage::exists('public/'.$filepath))
+        {
+            return response()->file(storage_path('app/public/'.$filepath))->deleteFileAfterSend(true);
         }
         else {
             return response()->json(['error' => 'File not found.'], 404);

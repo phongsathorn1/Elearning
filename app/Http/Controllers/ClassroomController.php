@@ -22,7 +22,18 @@ class ClassroomController extends Controller
         if(Auth::user()->role->actions == "is_student"){
             $classroom = $classroom->makeHidden('join_code');
         }
-        $posts = $classroom->posts->load('user', 'comments', 'comments.user', 'assignment');
+        $posts = $classroom->posts->load('user', 'comments', 'attachments', 'comments.user', 'assignment');
+        $posts = $posts->each(function ($item, $key){
+            if(!$item->assignment){
+                $item->makeHidden('assignment');
+            }
+            if(!$item->attachments->count()){
+                $item->makeHidden('attachments');
+            }
+        });
+
+        $posts = $posts->sortByDesc('created_at');
+        $posts = array_values($posts->toArray());
 
         return response()->json(['classroom' => $classroom, 'posts' => $posts]);
     }

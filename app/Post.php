@@ -27,11 +27,7 @@ class Post extends Model
 
     public function assignment()
     {
-        $collection = $this->hasOne('App\Assignment');
-        if($collection)
-        {
-            return $collection;
-        }
+        return $this->hasOne('App\Assignment');
     }
 
     public function attachments()

@@ -19,7 +19,7 @@ class FilesAttachmentController extends Controller
             'user_id' => Auth::id(),
             'name' => $original_name,
             'type' => $extension,
-            'filepath' => $file
+            'filepath' => basename($file)
         ]);
 
         return response()->json(['filename' => $file->filepath, 'name' => $original_name]);

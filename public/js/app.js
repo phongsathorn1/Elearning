@@ -74360,9 +74360,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__AssignmentUpload_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__AssignmentUpload_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AssignmentDone_vue__ = __webpack_require__(242);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AssignmentDone_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__AssignmentDone_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__block_attachment_vue__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__block_attachment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__block_attachment_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex__ = __webpack_require__(3);
 //
 //
 //
@@ -74399,6 +74401,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+
 
 
 
@@ -74411,16 +74415,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             assignment_post: {
                 user: {}
             },
+            attachment: [],
             classroom_id: this.$route.params.id,
             assignment_id: this.$route.params.assignment_id,
             token: this.$auth.getToken()
         };
     },
 
-    computed: Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapGetters */])(['getRole']),
+    computed: Object(__WEBPACK_IMPORTED_MODULE_4_vuex__["b" /* mapGetters */])(['getRole']),
     components: {
         'assignmentUpload': __WEBPACK_IMPORTED_MODULE_0__AssignmentUpload_vue___default.a,
-        'assignmentDone': __WEBPACK_IMPORTED_MODULE_1__AssignmentDone_vue___default.a
+        'assignmentDone': __WEBPACK_IMPORTED_MODULE_1__AssignmentDone_vue___default.a,
+        'attachment': __WEBPACK_IMPORTED_MODULE_2__block_attachment_vue___default.a
     },
     created: function created() {
         var _this = this;
@@ -74431,12 +74437,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         }).then(function (response) {
             _this.assignment_post = response.data.assignment;
+            _this.attachment = response.data.attachment;
         });
     },
 
     methods: {
         timeCheck: function timeCheck() {
-            return __WEBPACK_IMPORTED_MODULE_2_moment___default()().isSameOrAfter(this.assignment_post.due_time, "YYYY-MM-DD HH-mm-ss");
+            return __WEBPACK_IMPORTED_MODULE_3_moment___default()().isSameOrAfter(this.assignment_post.due_time, "YYYY-MM-DD HH-mm-ss");
         },
         back: function back() {
             this.$router.go(-1);
@@ -74468,56 +74475,67 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "class-post-item card" }, [
-        _c(
-          "div",
-          { staticClass: "class-meta" },
-          [
-            _vm.assignment_post.user.name
-              ? _c("div", { staticClass: "class-post-user class-meta-item" }, [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.assignment_post.user.name) +
-                      "\n            "
+      _c(
+        "div",
+        { staticClass: "class-post-item card" },
+        [
+          _c(
+            "div",
+            { staticClass: "class-meta" },
+            [
+              _vm.assignment_post.user.name
+                ? _c(
+                    "div",
+                    { staticClass: "class-post-user class-meta-item" },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.assignment_post.user.name) +
+                          "\n            "
+                      )
+                    ]
                   )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "class-post-time class-meta-item" }, [
-              _vm._v(
-                "\n                " +
-                  _vm._s(_vm.assignment_post.created_at) +
-                  "\n            "
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "router-link",
-              {
-                staticClass: "btn btn-default",
-                attrs: {
-                  to:
-                    "/classroom/" +
-                    _vm.classroom_id +
-                    "/assignment/" +
-                    _vm.assignment_post.id +
-                    "/edit"
-                }
-              },
-              [_vm._v("Edit")]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "clearfix" })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("h3", [_vm._v(_vm._s(_vm.assignment_post.title))]),
-        _vm._v(" "),
-        _c("p", [_vm._v(_vm._s(_vm.assignment_post.detail))]),
-        _vm._v(" "),
-        _vm.timeCheck() ? _c("p", [_vm._v("Time up!")]) : _vm._e()
-      ]),
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "class-post-time class-meta-item" }, [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.assignment_post.created_at) +
+                    "\n            "
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-default",
+                  attrs: {
+                    to:
+                      "/classroom/" +
+                      _vm.classroom_id +
+                      "/assignment/" +
+                      _vm.assignment_post.id +
+                      "/edit"
+                  }
+                },
+                [_vm._v("Edit")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "clearfix" })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("h3", [_vm._v(_vm._s(_vm.assignment_post.title))]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(_vm.assignment_post.detail))]),
+          _vm._v(" "),
+          _c("attachment", { attrs: { files: _vm.attachment } }),
+          _vm._v(" "),
+          _vm.timeCheck() ? _c("p", [_vm._v("Time up!")]) : _vm._e()
+        ],
+        1
+      ),
       _vm._v(" "),
       _vm.getRole == "is_student"
         ? _c("assignment-upload", {
@@ -74961,6 +74979,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -74982,7 +75031,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 dateFormat: "Y-m-d"
             },
             classroom_id: this.$route.params.id,
-            token: this.$auth.getToken()
+            token: this.$auth.getToken(),
+            uploaded_files: [],
+            options: {
+                url: 'api/attachment/upload',
+                paramName: 'file',
+                headers: {
+                    Authorization: 'Bearer ' + this.$auth.getToken()
+                }
+            }
         };
     },
 
@@ -75000,7 +75057,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 detail: this.form.detail,
                 duetime: this.form.duedate + ' ' + this.form.duetime,
                 classroom_id: this.classroom_id,
-                score: this.form.score
+                score: this.form.score,
+                files: this.uploaded_files
             };
 
             axios.post('api/classroom/' + this.classroom_id + '/assignment', data, {
@@ -75010,6 +75068,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (response) {
                 _this.$router.go(-1);
             });
+        },
+        removeFile: function removeFile(file) {
+            var index = this.uploaded_files.findIndex(function (x) {
+                return x.id == file.id;
+            });
+            this.uploaded_files.splice(index, 1);
+        },
+        uploadComplete: function uploadComplete(file, status, xhr) {
+            this.uploaded_files.push(JSON.parse(xhr.response));
         }
     },
     components: {
@@ -75025,146 +75092,261 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.form.title,
-            expression: "form.title"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { type: "text", id: "title", placeholder: "Tile of assignment" },
-        domProps: { value: _vm.form.title },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.form, "title", $event.target.value)
-          }
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "detail" } }, [
-        _vm._v("Detail of this assignment")
-      ]),
-      _vm._v(" "),
-      _c("textarea", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.form.detail,
-            expression: "form.detail"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { id: "detail", rows: "3" },
-        domProps: { value: _vm.form.detail },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.form, "detail", $event.target.value)
-          }
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "score" } }, [_vm._v("Score")]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.form.score,
-            expression: "form.score"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { type: "text", id: "score", placeholder: "Score" },
-        domProps: { value: _vm.form.score },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.form, "score", $event.target.value)
-          }
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-6" },
-        [
-          _c("label", { attrs: { for: "duedate" } }, [_vm._v("Date")]),
-          _vm._v(" "),
-          _c("flat-pickr", {
-            attrs: { id: "duedate", config: _vm.config },
-            model: {
-              value: _vm.form.duedate,
-              callback: function($$v) {
-                _vm.$set(_vm.form, "duedate", $$v)
-              },
-              expression: "form.duedate"
-            }
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("label", { attrs: { for: "duetime" } }, [_vm._v("Time")]),
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
         _vm._v(" "),
         _c("input", {
           directives: [
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.form.duetime,
-              expression: "form.duetime"
+              value: _vm.form.title,
+              expression: "form.title"
             }
           ],
           staticClass: "form-control",
-          attrs: { type: "text", id: "duetime" },
-          domProps: { value: _vm.form.duetime },
+          attrs: {
+            type: "text",
+            id: "title",
+            placeholder: "Tile of assignment"
+          },
+          domProps: { value: _vm.form.title },
           on: {
-            blur: _vm.timecheck,
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.$set(_vm.form, "duetime", $event.target.value)
+              _vm.$set(_vm.form, "title", $event.target.value)
             }
           }
         })
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "clearfix" })
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "detail" } }, [
+          _vm._v("Detail of this assignment")
+        ]),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.detail,
+              expression: "form.detail"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "detail", rows: "3" },
+          domProps: { value: _vm.form.detail },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.form, "detail", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "score" } }, [_vm._v("Score")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.score,
+              expression: "form.score"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", id: "score", placeholder: "Score" },
+          domProps: { value: _vm.form.score },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.form, "score", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-6" },
+          [
+            _c("label", { attrs: { for: "duedate" } }, [_vm._v("Date")]),
+            _vm._v(" "),
+            _c("flat-pickr", {
+              attrs: { id: "duedate", config: _vm.config },
+              model: {
+                value: _vm.form.duedate,
+                callback: function($$v) {
+                  _vm.$set(_vm.form, "duedate", $$v)
+                },
+                expression: "form.duedate"
+              }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("label", { attrs: { for: "duetime" } }, [_vm._v("Time")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.duetime,
+                expression: "form.duetime"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", id: "duetime" },
+            domProps: { value: _vm.form.duetime },
+            on: {
+              blur: _vm.timecheck,
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "duetime", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "clearfix" })
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default",
+          attrs: { type: "submit" },
+          on: { click: _vm.add }
+        },
+        [_vm._v("Add assignment")]
+      )
     ]),
     _vm._v(" "),
     _c(
-      "button",
-      {
-        staticClass: "btn btn-default",
-        attrs: { type: "submit" },
-        on: { click: _vm.add }
-      },
-      [_vm._v("Add assignment")]
+      "div",
+      { staticClass: "card" },
+      [
+        _c(
+          "vue-clip",
+          {
+            ref: "vc",
+            attrs: { options: _vm.options, "on-complete": _vm.uploadComplete },
+            scopedSlots: _vm._u([
+              {
+                key: "clip-uploader-body",
+                fn: function(props) {
+                  return _vm._l(props.files, function(file) {
+                    return file.status != "success"
+                      ? _c("div", [
+                          _c(
+                            "div",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.removeFile(file)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(file.name) +
+                                  " " +
+                                  _vm._s(file.status) +
+                                  "\n                        "
+                              ),
+                              _c("div", { staticClass: "progress" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "progress-bar",
+                                    style: { width: file.progress + "%" },
+                                    attrs: {
+                                      role: "progressbar",
+                                      "aria-valuenow": file.progress,
+                                      "aria-valuemin": "0",
+                                      "aria-valuemax": "100"
+                                    }
+                                  },
+                                  [
+                                    _c("span", { staticClass: "sr-only" }, [
+                                      _vm._v(
+                                        _vm._s(file.progress) + " Complete"
+                                      )
+                                    ])
+                                  ]
+                                )
+                              ])
+                            ]
+                          )
+                        ])
+                      : _vm._e()
+                  })
+                }
+              }
+            ])
+          },
+          [
+            _c("template", { slot: "clip-uploader-action" }, [
+              _c("div", [
+                _c("div", { staticClass: "dz-message" }, [
+                  _c("h2", [
+                    _vm._v(" Click or Drag and Drop files here upload ")
+                  ])
+                ])
+              ])
+            ])
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _vm._l(_vm.uploaded_files, function(file) {
+          return _c("div", [
+            _c(
+              "div",
+              {
+                on: {
+                  click: function($event) {
+                    _vm.download(file)
+                  }
+                }
+              },
+              [_vm._v(_vm._s(file.name))]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                on: {
+                  click: function($event) {
+                    _vm.removeFile(file)
+                  }
+                }
+              },
+              [_vm._v("delete")]
+            )
+          ])
+        })
+      ],
+      2
     )
   ])
 }
@@ -76192,6 +76374,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_sweetalert2_dist_sweetalert2_min_css__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_sweetalert2_dist_sweetalert2_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_sweetalert2_dist_sweetalert2_min_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__block_attachment_vue__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__block_attachment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__block_attachment_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -76297,6 +76481,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+
 
 
 
@@ -76337,6 +76523,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         });
     },
 
+    components: {
+        attachments: __WEBPACK_IMPORTED_MODULE_4__block_attachment_vue___default.a
+    },
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapGetters */])(['getUserId', 'isTeacher'])),
     methods: {
         comment: function comment(post_id) {
@@ -76512,260 +76701,287 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "container" },
-        _vm._l(_vm.posts, function(post) {
-          return _c("div", { staticClass: "class-posts" }, [
-            post.type === "post"
-              ? _c("div", { staticClass: "class-post-item card" }, [
-                  _c(
-                    "div",
-                    { staticClass: "class-meta" },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "class-post-user class-meta-item" },
-                        [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(post.user.name) +
-                              "\n                    "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "class-post-time class-meta-item" },
-                        [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(_vm.parseTime(post.created_at)) +
-                              "\n                    "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm.checkUserPost(post.user.id)
-                        ? _c(
-                            "router-link",
-                            {
-                              staticClass: "btn btn-default",
-                              attrs: {
-                                to:
-                                  "/classroom/" +
-                                  _vm.classroom.id +
-                                  "/post/" +
-                                  post.id +
-                                  "/edit"
-                              }
-                            },
-                            [_vm._v("Edit")]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.checkUserPost(post.user.id)
-                        ? _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-default",
-                              on: {
-                                click: function($event) {
-                                  _vm.removePost(post.id)
-                                }
-                              }
-                            },
-                            [_vm._v("Delete")]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "clearfix" })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("div", {
-                    staticClass: "class-post-main",
-                    domProps: { innerHTML: _vm._s(_vm.renderHTML(post.detail)) }
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "class-post-comments" }, [
-                    _c("div", { staticClass: "comment-box" }, [
-                      _c(
-                        "form",
-                        {
-                          on: {
-                            submit: function($event) {
-                              $event.preventDefault()
-                              _vm.comment(post.id)
-                            }
-                          }
-                        },
-                        [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.comments[post.id],
-                                  expression: "comments[post.id]"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                id: "comment",
-                                placeholder: "Comment..."
+      _vm.posts
+        ? _c(
+            "div",
+            { staticClass: "container" },
+            _vm._l(_vm.posts, function(post) {
+              return _c(
+                "div",
+                { staticClass: "class-posts card" },
+                [
+                  post.type === "post"
+                    ? _c("div", { staticClass: "class-post-item" }, [
+                        _c(
+                          "div",
+                          { staticClass: "class-meta" },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "class-post-user class-meta-item"
                               },
-                              domProps: { value: _vm.comments[post.id] },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.comments,
-                                    post.id,
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
+                              [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(post.user.name) +
+                                    "\n                    "
+                                )
+                              ]
+                            ),
                             _vm._v(" "),
                             _c(
-                              "button",
+                              "div",
                               {
-                                staticClass: "btn btn-default",
-                                attrs: { type: "submit" }
+                                staticClass: "class-post-time class-meta-item"
                               },
-                              [_vm._v("Comment")]
+                              [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(_vm.parseTime(post.created_at)) +
+                                    "\n                    "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm.checkUserPost(post.user.id)
+                              ? _c(
+                                  "router-link",
+                                  {
+                                    staticClass: "btn btn-default",
+                                    attrs: {
+                                      to:
+                                        "/classroom/" +
+                                        _vm.classroom.id +
+                                        "/post/" +
+                                        post.id +
+                                        "/edit"
+                                    }
+                                  },
+                                  [_vm._v("Edit")]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.checkUserPost(post.user.id)
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-default",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.removePost(post.id)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Delete")]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "clearfix" })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("div", {
+                          staticClass: "class-post-main",
+                          domProps: {
+                            innerHTML: _vm._s(_vm.renderHTML(post.detail))
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "class-post-comments" }, [
+                          _c("div", { staticClass: "comment-box" }, [
+                            _c(
+                              "form",
+                              {
+                                on: {
+                                  submit: function($event) {
+                                    $event.preventDefault()
+                                    _vm.comment(post.id)
+                                  }
+                                }
+                              },
+                              [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.comments[post.id],
+                                        expression: "comments[post.id]"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "text",
+                                      id: "comment",
+                                      placeholder: "Comment..."
+                                    },
+                                    domProps: { value: _vm.comments[post.id] },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.comments,
+                                          post.id,
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-default",
+                                      attrs: { type: "submit" }
+                                    },
+                                    [_vm._v("Comment")]
+                                  )
+                                ])
+                              ]
                             )
-                          ])
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "comment-list" },
-                      _vm._l(post.comments, function(comment) {
-                        return _c("div", { staticClass: "comment-list-item" }, [
-                          _c("b", [_vm._v(_vm._s(comment.user.name) + " : ")]),
-                          _vm._v(
-                            " " +
-                              _vm._s(comment.comment) +
-                              "\n                        "
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "comment-list" },
+                            _vm._l(post.comments, function(comment) {
+                              return _c(
+                                "div",
+                                { staticClass: "comment-list-item" },
+                                [
+                                  _c("b", [
+                                    _vm._v(_vm._s(comment.user.name) + " : ")
+                                  ]),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(comment.comment) +
+                                      "\n                        "
+                                  )
+                                ]
+                              )
+                            })
                           )
                         ])
-                      })
-                    )
-                  ])
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            post.type === "assignment"
-              ? _c("div", { staticClass: "class-post-item card" }, [
-                  _c(
-                    "div",
-                    { staticClass: "class-meta" },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "class-post-user class-meta-item" },
-                        [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(post.user.name) +
-                              "\n                    "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "class-post-time class-meta-item" },
-                        [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(_vm.parseTime(post.created_at)) +
-                              "\n                    "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm.checkUserPost(post.user.id)
-                        ? _c(
-                            "router-link",
-                            {
-                              staticClass: "btn btn-default",
-                              attrs: {
-                                to:
-                                  "/classroom/" +
-                                  _vm.classroom.id +
-                                  "/assignment/" +
-                                  post.assignment.id +
-                                  "/edit"
-                              }
-                            },
-                            [_vm._v("Edit")]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.checkUserPost(post.user.id)
-                        ? _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-default",
-                              on: {
-                                click: function($event) {
-                                  _vm.removeAssignment(post.id)
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  post.type == "assignment" && post.assignment
+                    ? _c("div", { staticClass: "class-post-item" }, [
+                        _c(
+                          "div",
+                          { staticClass: "class-meta" },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "class-post-user class-meta-item"
+                              },
+                              [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(post.user.name) +
+                                    "\n                    "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "class-post-time class-meta-item"
+                              },
+                              [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(_vm.parseTime(post.created_at)) +
+                                    "\n                    "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm.checkUserPost(post.user.id)
+                              ? _c(
+                                  "router-link",
+                                  {
+                                    staticClass: "btn btn-default",
+                                    attrs: {
+                                      to:
+                                        "/classroom/" +
+                                        _vm.classroom.id +
+                                        "/assignment/" +
+                                        post.assignment.id +
+                                        "/edit"
+                                    }
+                                  },
+                                  [_vm._v("Edit")]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.checkUserPost(post.user.id)
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-default",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.removeAssignment(post.assignment.id)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Delete")]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "clearfix" })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "h3",
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                attrs: {
+                                  to:
+                                    _vm.classroom.id +
+                                    "/assignment/" +
+                                    post.assignment.id
                                 }
-                              }
-                            },
-                            [_vm._v("Delete")]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "clearfix" })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "h3",
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          attrs: {
-                            to:
-                              _vm.classroom.id +
-                              "/assignment/" +
-                              post.assignment.id
+                              },
+                              [_vm._v(_vm._s(post.assignment.title))]
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("p", {
+                          domProps: {
+                            innerHTML: _vm._s(
+                              _vm.renderHTML(post.assignment.detail)
+                            )
                           }
-                        },
-                        [_vm._v(_vm._s(post.assignment.title))]
-                      )
-                    ],
-                    1
-                  ),
+                        }),
+                        _vm._v(" "),
+                        _vm.timeCheck(post.assignment.due_time)
+                          ? _c("p", [_vm._v("Time up!")])
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c("p", {
-                    domProps: {
-                      innerHTML: _vm._s(_vm.renderHTML(post.assignment.detail))
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.timeCheck(post.assignment.due_time)
-                    ? _c("p", [_vm._v("Time up!")])
-                    : _vm._e()
-                ])
-              : _vm._e()
-          ])
-        })
-      )
+                  _c("attachments", { attrs: { files: post.attachments } })
+                ],
+                1
+              )
+            })
+          )
+        : _vm._e()
     ]
   )
 }
@@ -77457,6 +77673,129 @@ var options = {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (options);
+
+/***/ }),
+/* 281 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(282)
+/* template */
+var __vue_template__ = __webpack_require__(283)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\block\\attachment.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-d6a45bae", Component.options)
+  } else {
+    hotAPI.reload("data-v-d6a45bae", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 282 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['files'],
+    data: function data() {
+        return {
+            token: this.$auth.getToken()
+        };
+    },
+
+    methods: {
+        download: function download(file) {
+            axios.get('api/attachment/download/' + file.filepath, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then(function (response) {
+                window.open(response.data.download_url, "_blank");
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 283 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.files
+    ? _c("div", { staticClass: "attachment" }, [
+        _c(
+          "ul",
+          _vm._l(_vm.files, function(file) {
+            return _c(
+              "li",
+              {
+                on: {
+                  click: function($event) {
+                    _vm.download(file)
+                  }
+                }
+              },
+              [_vm._v(_vm._s(file.name))]
+            )
+          })
+        )
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-d6a45bae", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

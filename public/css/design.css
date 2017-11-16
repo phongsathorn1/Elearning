@@ -107,6 +107,11 @@ a:hover {
   margin: 20px 0px;
 }
 
+.attachment {
+  background: #F5F5F5;
+  padding: 15px;
+}
+
 .swal-modal {
   border-radius: 0px;
   font-family: "Nunito", sans-serif;
