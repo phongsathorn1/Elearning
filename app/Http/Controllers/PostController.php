@@ -15,6 +15,15 @@ class PostController extends Controller
         $post = Post::findOrFail($post_id);
         if(Auth::user()->classroom->find($post->classroom_id))
         {
+            $post = $post->load('user', 'comments', 'attachments', 'comments.user', 'assignment');
+
+            if(!$post->assignment){
+                $post->makeHidden('assignment');
+            }
+            if(!$post->attachments->count()){
+                $post->makeHidden('attachments');
+            }
+
             return response()->json($post);
         }
         else{

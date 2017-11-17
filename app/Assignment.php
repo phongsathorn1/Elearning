@@ -23,6 +23,11 @@ class Assignment extends Model
         return 'assignment';
     }
 
+    public function post()
+    {
+        return $this->belongsTo('App\Post');
+    }
+
     public function file()
     {
         return $this->hasMany('App\AssignmentFile');

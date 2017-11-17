@@ -10,6 +10,10 @@ class FilesAttachment extends Model
         'name', 'filepath', 'type', 'user_id'
     ];
 
+    protected $hidden = [
+        'id', 'user_id'
+    ];
+
     public function posts()
     {
         return $this->belongsToMany('App\Post');

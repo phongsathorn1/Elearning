@@ -12,8 +12,7 @@ export const store = new Vuex.Store({
         user: {
             role: {}
         },
-        showNav: true,
-        navbarTransparent: false,
+        baseUrl: Laravel.baseUrl
     },
     mutations:{
         storeUser(state, data){
@@ -28,15 +27,6 @@ export const store = new Vuex.Store({
                 role: {}
             }
             state.isLoggedIn = false
-        },
-        hideNavbar(state){
-            state.showNav = false
-        },
-        showNavbar(state) {
-            state.showNav = true
-        },
-        transparentNavbar(state, data) {
-            state.navbarTransparent = data
         }
     },
     getters:{
@@ -55,11 +45,8 @@ export const store = new Vuex.Store({
         getName: state => {
             return state.user.name
         },
-        showNavbar: state => {
-            return state.showNav
-        },
-        transparentNavbar: state => {
-            return state.navbarTransparent
+        baseUrl: state => {
+            return state.baseUrl
         }
     },
     actions:{

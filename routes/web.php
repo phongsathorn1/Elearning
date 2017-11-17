@@ -21,3 +21,4 @@ Route::get('/login', function() {
 
 Route::get('download/file/{filepath}/', 'FileController@download');
 Route::get('download/assignment/{assignment_id}/{filepath}/', 'FileController@downloadAssignment');
+Route::get('thumbnail/file/{filepath}', 'FileController@downloadImage');

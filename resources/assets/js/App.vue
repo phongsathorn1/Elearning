@@ -9,7 +9,6 @@
 
 <script>
     import navbar from './components/NavbarComponent.vue'
-    import { mapGetters } from 'vuex'
 
     export default {
         data(){
@@ -19,9 +18,6 @@
         },
         components : {
             'navbar': navbar
-        },
-        computed: mapGetters([
-            'showNavbar'
-        ])
+        }
     }
 </script>

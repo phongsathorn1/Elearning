@@ -27,10 +27,7 @@ a:hover{
     border: none;
     border-radius: 0px;
     margin-bottom: 0px;
-    width: 100%;
     background-color: rgba(255, 210, 0, 1);
-    
-
 }
 
 .navbar-default .navbar-brand {
@@ -127,6 +124,68 @@ a:hover{
     padding: 20px;
     border-radius: 10px;
     margin: 20px 0px;
+}
+
+//attachment
+.attachment{
+    padding: 10px;
+}
+
+.attachment-item{
+    background: #FFFFFF;
+    padding: 3px;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.attachment-item:hover{
+    background: #F0F0F0;
+}
+
+.attachment-item .thumbnail{
+    margin: 0px;
+    border: 0px;
+    background: #FFFFFF;
+}
+
+.attachment-thumbnail{
+    height: 150px;
+    background-size: cover;
+}
+
+.attachment-filename{
+    padding: 5px 0px;
+    word-wrap: break-word;
+}
+
+//thumbnail file type
+.attachment-thumbnail{
+    background: #999999;
+}
+.attachment-image{
+    background-size: cover;
+}
+.attachment-thumbnail .file-icon{
+    background-image: url(/images/file-icon.png);
+    background-repeat: no-repeat;
+    background-position: -100px 0px;
+    height: 100px;
+    width: 100px;
+    position: relative;
+    top: 25px;
+    margin: auto;
+}
+.attachment-thumbnail.file-pptx{
+    background: #F4511E;
+}
+.attachment-thumbnail.file-pptx .file-icon{
+    background-position: 0px 0px;
+}
+.attachment-thumbnail.file-pdf{
+    background: #e74c3c;
+}
+.attachment-thumbnail.file-pdf .file-icon{
+    background-position: 0px -300px;
 }
 
 //popup
