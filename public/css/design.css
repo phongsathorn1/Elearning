@@ -14,11 +14,18 @@ a:hover {
 
 .navbar-default {
   background-color: #7051de;
-  padding: 10px 0px;
   border: none;
   border-radius: 0px;
   margin-bottom: 0px;
   background-color: #ffd200;
+}
+
+.transparent {
+  background-color: transparent;
+}
+
+.transparent .container {
+  margin-top: 20px;
 }
 
 .navbar-default .navbar-brand {
@@ -57,7 +64,7 @@ a:hover {
 }
 
 .class-header {
-  margin-top: -5rem;
+  margin-top: -7rem;
   min-width: 100vp;
   max-width: 100%;
   max-height: 300px;
