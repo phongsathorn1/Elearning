@@ -120,9 +120,13 @@ a:hover {
 
 .attachment-item {
   background: #FFFFFF;
-  padding: 0px;
+  padding: 3px;
   margin: 2px;
   cursor: pointer;
+}
+
+.attachment-item:hover {
+  background: #F0F0F0;
 }
 
 .attachment-item .thumbnail {
@@ -141,8 +145,39 @@ a:hover {
   word-wrap: break-word;
 }
 
+.attachment-thumbnail {
+  background: #999999;
+}
+
+.attachment-image {
+  background-size: cover;
+}
+
+.attachment-thumbnail .file-icon {
+  background-image: url(/images/file-icon.png);
+  background-repeat: no-repeat;
+  background-position: -100px 0px;
+  height: 100px;
+  width: 100px;
+  position: relative;
+  top: 25px;
+  margin: auto;
+}
+
 .attachment-thumbnail.file-pptx {
   background: #F4511E;
+}
+
+.attachment-thumbnail.file-pptx .file-icon {
+  background-position: 0px 0px;
+}
+
+.attachment-thumbnail.file-pdf {
+  background: #e74c3c;
+}
+
+.attachment-thumbnail.file-pdf .file-icon {
+  background-position: 0px -300px;
 }
 
 .swal-modal {

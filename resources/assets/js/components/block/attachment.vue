@@ -3,14 +3,16 @@
         <strong>{{ files.length }} Attachments</strong>
             <div class="attachment-block">
                 <div class="attachment-item col-xs-6 col-md-2" v-for="file in files" @click="download(file)">
-                    <div class="attachment-thumbnail"
+                    <div class="attachment-thumbnail attachment-image"
                         :style="`background-image: url('${baseUrl}/thumbnail/file/${file.filepath}')`"
                         v-if="image_extension.includes(file.type)"
                     ></div>
                     <div class="attachment-thumbnail"
                         :class="`file-${file.type}`"
                         v-else
-                    ></div>
+                    >
+                        <div class="file-icon"></div>
+                    </div>
                     <div class="attachment-filename">
                         <span>{{ file.name }}</span>
                     </div>

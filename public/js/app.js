@@ -71914,6 +71914,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['files'],
@@ -71969,7 +71971,7 @@ var render = function() {
                 [
                   _vm.image_extension.includes(file.type)
                     ? _c("div", {
-                        staticClass: "attachment-thumbnail",
+                        staticClass: "attachment-thumbnail attachment-image",
                         style:
                           "background-image: url('" +
                           _vm.baseUrl +
@@ -71977,10 +71979,14 @@ var render = function() {
                           file.filepath +
                           "')"
                       })
-                    : _c("div", {
-                        staticClass: "attachment-thumbnail",
-                        class: "file-" + file.type
-                      }),
+                    : _c(
+                        "div",
+                        {
+                          staticClass: "attachment-thumbnail",
+                          class: "file-" + file.type
+                        },
+                        [_c("div", { staticClass: "file-icon" })]
+                      ),
                   _vm._v(" "),
                   _c("div", { staticClass: "attachment-filename" }, [
                     _c("span", [_vm._v(_vm._s(file.name))])
