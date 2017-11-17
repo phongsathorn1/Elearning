@@ -72479,6 +72479,8 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_upload_vue__ = __webpack_require__(243);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_upload_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__block_upload_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__block_post_vue__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__block_post_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__block_post_vue__);
 //
 //
 //
@@ -72493,31 +72495,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            detail: '',
+            form: {
+                detail: ''
+            },
             uploaded_files: []
         };
     },
 
     components: {
-        upload: __WEBPACK_IMPORTED_MODULE_0__block_upload_vue___default.a
+        upload: __WEBPACK_IMPORTED_MODULE_0__block_upload_vue___default.a,
+        post: __WEBPACK_IMPORTED_MODULE_1__block_post_vue___default.a
     },
     methods: {
-        store: function store(token, classroom_id) {
+        store: function store(token, classroom_id, form) {
             var _this = this;
 
             var data = {
-                'post': this.detail,
+                'post': form.detail,
                 'classroom_id': classroom_id,
                 'files': this.uploaded_files
             };
@@ -72530,7 +72531,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.$router.push('/classroom/' + classroom_id);
             });
         },
-        post: function post() {
+        post: function post(form) {
             var _this2 = this;
 
             var classroom_id = this.$route.params.id;
@@ -72541,7 +72542,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     Authorization: 'Bearer ' + token
                 }
             }).then(function (response) {
-                _this2.store(token, classroom_id);
+                _this2.store(token, classroom_id, form);
             });
         },
         uploadedFile: function uploadedFile(file) {
@@ -72561,57 +72562,19 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "post" } }, [_vm._v("Post")]),
-        _vm._v(" "),
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.detail,
-              expression: "detail"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { rows: "3", id: "detail" },
-          domProps: { value: _vm.detail },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.detail = $event.target.value
-            }
-          }
-        })
-      ]),
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("post", { attrs: { detail: _vm.form }, on: { post: _vm.post } }),
       _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-default",
-          attrs: { type: "submit" },
-          on: { click: _vm.post }
-        },
-        [_vm._v("Post")]
-      )
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "card" },
-      [
-        _c("upload", {
-          attrs: { callback: "api/attachment/upload" },
-          on: { complete: _vm.uploadedFile, remove: _vm.removeFile }
-        })
-      ],
-      1
-    )
-  ])
+      _c("upload", {
+        attrs: { callback: "api/attachment/upload" },
+        on: { complete: _vm.uploadedFile, remove: _vm.removeFile }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -76869,9 +76832,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_post_vue__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_post_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__block_post_vue__);
 //
 //
 //
@@ -76882,12 +76844,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            detail: '',
+            form: {
+                detail: ''
+            },
             token: this.$auth.getToken()
         };
+    },
+
+    components: {
+        post: __WEBPACK_IMPORTED_MODULE_0__block_post_vue___default.a
     },
     created: function created() {
         var _this = this;
@@ -76897,16 +76867,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 Authorization: 'Bearer ' + this.token
             }
         }).then(function (response) {
-            _this.detail = response.data.detail;
+            _this.form.detail = response.data.detail;
         });
     },
 
     methods: {
-        post: function post() {
+        post: function post(form) {
             var _this2 = this;
 
             var data = {
-                'post': this.detail
+                'post': form.detail
             };
             axios.patch('/api/post/' + this.$route.params.post_id, data, {
                 headers: {
@@ -76927,45 +76897,12 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "post" } }, [_vm._v("Post")]),
-        _vm._v(" "),
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.detail,
-              expression: "detail"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { rows: "3", id: "detail" },
-          domProps: { value: _vm.detail },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.detail = $event.target.value
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-default",
-          attrs: { type: "submit" },
-          on: { click: _vm.post }
-        },
-        [_vm._v("Post")]
-      )
-    ])
-  ])
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [_c("post", { attrs: { detail: _vm.form }, on: { post: _vm.post } })],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -77753,6 +77690,142 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-c72be1f2", module.exports)
+  }
+}
+
+/***/ }),
+/* 246 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(247)
+/* template */
+var __vue_template__ = __webpack_require__(248)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\block\\post.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-78e315a6", Component.options)
+  } else {
+    hotAPI.reload("data-v-78e315a6", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 247 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ["detail"],
+    data: function data() {
+        return {
+            form: this.detail
+        };
+    },
+
+    methods: {
+        post: function post() {
+            this.$emit('post', this.form);
+        }
+    }
+});
+
+/***/ }),
+/* 248 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "post" } }, [_vm._v("Post")]),
+      _vm._v(" "),
+      _c("textarea", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.form.detail,
+            expression: "form.detail"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { rows: "3", id: "detail" },
+        domProps: { value: _vm.form.detail },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.form, "detail", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-default",
+        attrs: { type: "submit" },
+        on: { click: _vm.post }
+      },
+      [_vm._v("Post")]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-78e315a6", module.exports)
   }
 }
 

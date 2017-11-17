@@ -1,39 +1,38 @@
 <template>
     <div class="container">
-        <div class="card">
-            <div class="form-group">
-                <label for="post">Post</label>
-                <textarea class="form-control" rows="3" id="detail" v-model="detail"></textarea>
-            </div>
-            <button type="submit" class="btn btn-default" @click="post">Post</button>
-        </div>
-        <div class="card">
-            <upload
-                :callback="'api/attachment/upload'"
-                v-on:complete="uploadedFile"
-                v-on:remove="removeFile"
-            ></upload>
-        </div>
+        <post
+            :detail="form"
+            v-on:post="post"
+        ></post>
+        <upload
+            :callback="'api/attachment/upload'"
+            v-on:complete="uploadedFile"
+            v-on:remove="removeFile"
+        ></upload>
     </div>
 </template>
 
 <script>
     import upload from '../block/upload.vue'
+    import post from '../block/post.vue'
 
     export default {
         data() {
             return {
-                detail: '',
+                form:{
+                    detail: ''
+                },
                 uploaded_files: []
             }
         },
         components:{
-            upload
+            upload,
+            post
         },
         methods: {
-            store(token, classroom_id){
+            store(token, classroom_id, form){
                 var data = {
-                    'post' : this.detail,
+                    'post' : form.detail,
                     'classroom_id': classroom_id,
                     'files' : this.uploaded_files
                 }
@@ -46,7 +45,7 @@
                     this.$router.push('/classroom/' + classroom_id)
                 })
             },
-            post(){
+            post(form){
                 var classroom_id = this.$route.params.id
                 var token = this.$auth.getToken()
 
@@ -55,7 +54,7 @@
                         Authorization: 'Bearer ' + token
                     }
                 }).then(response => {
-                    this.store(token, classroom_id)
+                    this.store(token, classroom_id, form)
                 })
             },
             uploadedFile(file){
