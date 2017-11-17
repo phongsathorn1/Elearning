@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <router-link to="/" class="navbar-brand">{{ this.$appName }}</router-link>
+      <router-link to="/" class="navbar-brand"><img src="images/Med_logo.png"/></router-link>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->

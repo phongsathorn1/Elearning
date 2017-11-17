@@ -33,6 +33,15 @@ a:hover{
 .navbar-default .navbar-brand {
     color: #464646;
 }
+.navbar-brand{
+    padding: 0px 0px;
+}
+.navbar-brand img{
+    display: block;
+    margin-left: 10px;
+    width: 100%;
+    height: 100%;
+}
 
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
@@ -220,6 +229,11 @@ a:hover{
     background-color: rgba(255, 255, 255,0.8);
     margin: 15rem 0 0 0;
     
+}
+@media(max-width: 450px){
+    .login{
+        margin: 10rem 0 0 0;
+    }
 }
 .login img{
     // logo

@@ -77557,7 +77557,7 @@ var render = function() {
                 _c(
                   "router-link",
                   { staticClass: "navbar-brand", attrs: { to: "/" } },
-                  [_vm._v(_vm._s(this.$appName))]
+                  [_c("img", { attrs: { src: "images/Med_logo.png" } })]
                 )
               ],
               1
