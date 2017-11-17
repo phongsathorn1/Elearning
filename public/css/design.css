@@ -217,6 +217,16 @@ a:hover {
   margin: 15rem 0 0 0;
 }
 
+.login img {
+  display: block;
+  width: 100%;
+  max-height: 200px;
+  max-width: 300px;
+  -webkit-filter: invert(80%);
+          filter: invert(80%);
+  margin: auto;
+}
+
 .login .btn {
   color: #1a1a1a;
   width: 80%;

@@ -4,9 +4,9 @@
         <div class="container">
             <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8">
                 <div class="jumbotron login">
+                <img src="images/Med_logo.png"/>
                     <form v-on:submit.prevent="login">
                         <div class="form-group">
-                            <h2 class="text-center">Elearning</h2>
                             <label for="username">Username</label>
                             <input type="text" class="form-control" id="username" placeholder="Username" v-model="form.username">
                         </div>
