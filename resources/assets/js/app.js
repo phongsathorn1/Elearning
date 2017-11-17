@@ -82,5 +82,10 @@ const app = new Vue({
     el: '#app',
     router,
     store,
+    data(){
+        return {
+            baseUrl: Laravel.baseUrl
+        }
+    },
     render: h => h(App)
 });

@@ -1,0 +1,61 @@
+<template>
+    <div class="card">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" placeholder="Tile of assignment" v-model="form.title">
+        </div>
+        <div class="form-group">
+            <label for="detail">Detail of this assignment</label>
+            <textarea class="form-control" id="detail" rows="3" v-model="form.detail"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="score">Score</label>
+            <input type="text" class="form-control" id="score" placeholder="Score" v-model="form.score">
+        </div>
+        <div class="form-group">
+            <div class="col-md-6">
+                <label for="duedate">Date</label>
+                <flat-pickr id="duedate" v-model="form.duedate" :config="config"></flat-pickr>
+            </div>
+            <div class="col-md-6">
+                <label for="duetime">Time</label>
+                <input type="text" id="duetime" class="form-control" @blur="timecheck" v-model="form.duetime">
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <button type="submit" class="btn btn-default" @click="submit">Add assignment</button>
+    </div>
+</template>
+
+<script>
+    import flatPickr from 'vue-flatpickr-component';
+    import 'flatpickr/dist/flatpickr.css';
+    import moment from 'moment';
+
+    export default {
+        props: ['detail'],
+        data(){
+            return {
+                form: this.detail,
+                config: {
+                    altFormat: "F j, Y",
+                    altInput: true,
+                    dateFormat: "Y-m-d",
+                }
+            }
+        },
+        methods:{
+            timecheck(){
+                if(!moment(this.form.duetime, "HH:mm", true).isValid() && !this.form.duetime == ''){
+                    this.form.duetime = moment().format("HH:mm")
+                }
+            },
+            submit(){
+                this.$emit('submit', this.form)
+            }
+        },
+        components:{
+            flatPickr
+        }
+    }
+</script>

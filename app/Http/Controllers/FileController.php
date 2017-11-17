@@ -55,6 +55,17 @@ class FileController extends Controller
         }
     }
 
+    public function downloadImage($filepath)
+    {
+        if(Storage::exists('attachment/'.$filepath))
+        {
+            return response()->file(storage_path('app/attachment/'.$filepath));
+        }
+        else {
+            return abort(404);
+        }
+    }
+
     public function downloadAssignment($assignment_id, $filepath)
     {
         $filename = AssignmentFile::findOrFail($assignment_id)->name;

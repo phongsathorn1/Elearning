@@ -14,10 +14,14 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/design.css') }}" rel="stylesheet">
+    <script>
+        window.Laravel = {
+            'baseUrl': "{{ url('/') }}"
+        }
+    </script>
 </head>
 <body>
     <div id="app">
-        <router-view></router-view>
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

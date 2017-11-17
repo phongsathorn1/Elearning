@@ -53,9 +53,10 @@
 
                         <div class="clearfix"></div>
                     </div>
-                    <div class="class-post-main" v-html="renderHTML(post.detail)">
+                    <div class="class-post-main" v-html="renderHTML(post.detail)"></div>
 
-                    </div>
+                    <attachments :files="post.attachments"></attachments>
+
                     <div class="class-post-comments">
                         <div class="comment-box">
                             <form v-on:submit.prevent="comment(post.id)">
@@ -96,8 +97,9 @@
                     <h3><router-link :to="classroom.id +'/assignment/' + post.assignment.id">{{ post.assignment.title }}</router-link></h3>
                     <p v-html="renderHTML(post.assignment.detail)"></p>
                     <p v-if="timeCheck(post.assignment.due_time)">Time up!</p>
+
+                    <attachments :files="post.attachments"></attachments>
                 </div>
-                <attachments :files="post.attachments"></attachments>
             </div>
         </div>
     </div>
