@@ -18,10 +18,11 @@ a:hover {
   border: none;
   border-radius: 0px;
   margin-bottom: 0px;
+  background-color: #ffd200;
 }
 
 .navbar-default .navbar-brand {
-  color: #FFFFFF;
+  color: #464646;
 }
 
 .navbar-default .navbar-brand:hover,
@@ -30,11 +31,11 @@ a:hover {
 }
 
 .navbar-default .navbar-nav > li > a {
-  color: #FFFFFF;
+  color: #464646;
 }
 
 .navbar-default .navbar-nav > li > a:hover {
-  color: #E0E0E0;
+  color: #464646;
 }
 
 .page-header {
@@ -45,8 +46,14 @@ a:hover {
 }
 
 .class-header {
-  padding: 50px 0px;
-  background: #7051de;
+  margin-top: -5rem;
+  min-width: 100vp;
+  max-width: 100%;
+  max-height: 300px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 150px 0px 100px 0px;
+  background-image: url(https://pbs.twimg.com/media/CvWl3-yUkAAG0ih.jpg);
   color: #FFFFFF;
 }
 
@@ -150,6 +157,8 @@ a:hover {
 }
 
 .login .btn {
+  color: #1a1a1a;
   width: 80%;
+  background-color: #ffd200;
 }
 
