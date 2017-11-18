@@ -2,7 +2,7 @@ export default function(Vue) {
     Vue.auth = {
         setToken (token, expire) {
             localStorage.setItem('token', token)
-            localStorage.setItem('expire', expire)
+            localStorage.setItem('expire', expire + Date.now())
         },
 
         setPersonalData (data) {
