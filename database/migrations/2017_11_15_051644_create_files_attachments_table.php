@@ -22,7 +22,7 @@ class CreateFilesAttachmentsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('post_files_attachment', function (Blueprint $table) {
+        Schema::create('files_attachment_post', function (Blueprint $table) {
             $table->integer('post_id');
             $table->integer('files_attachment_id');
         });

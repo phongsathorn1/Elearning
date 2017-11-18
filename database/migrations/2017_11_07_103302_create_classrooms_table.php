@@ -17,12 +17,12 @@ class CreateClassroomsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('name');
+            $table->string('join_code');
             $table->longText('description');
             $table->timestamps();
         });
 
         Schema::create('classroom_user', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer('classroom_id');
             $table->integer('user_id');
         });
