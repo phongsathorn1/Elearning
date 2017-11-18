@@ -145,11 +145,19 @@ a:hover{
     padding: 10px;
 }
 
+.attachment strong{
+    margin: 5px;
+}
+
 .attachment-item{
     background: #FFFFFF;
-    padding: 3px;
-    margin: 2px;
     cursor: pointer;
+    float: left;
+    padding: 5px;
+}
+
+.attachment-item-inner{
+    width: 100px;
 }
 
 .attachment-item:hover{
@@ -162,29 +170,28 @@ a:hover{
     background: #FFFFFF;
 }
 
-.attachment-thumbnail{
-    height: 150px;
-    background-size: cover;
-}
-
 .attachment-filename{
     padding: 5px 0px;
     word-wrap: break-word;
+    font-size: 13px;
 }
 
 //thumbnail file type
 .attachment-thumbnail{
     background: #999999;
+    height: 100px;
+    width: 100px;
 }
 .attachment-image{
     background-size: cover;
 }
 .attachment-thumbnail .file-icon{
-    background-image: url(/images/file-icon.png);
+    background-image: url(/images/file-icon.svg);
     background-repeat: no-repeat;
     background-position: -100px 0px;
-    height: 100px;
-    width: 100px;
+    background-size: 200% auto;
+    height: 50px;
+    width: 50px;
     position: relative;
     top: 25px;
     margin: auto;
@@ -199,7 +206,7 @@ a:hover{
     background: #e74c3c;
 }
 .attachment-thumbnail.file-pdf .file-icon{
-    background-position: 0px -300px;
+    background-position: 0px -150px;
 }
 
 //popup

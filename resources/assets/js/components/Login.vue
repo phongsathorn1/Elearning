@@ -1,10 +1,9 @@
 <template>
-    <transition name="fade">
-        <div class='login-bg'>
+    <div class='login-bg'>
         <div class="container">
             <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8">
                 <div class="jumbotron login">
-                <img src="images/Med_logo.png"/>
+                    <img src="images/Med_logo.png"/>
                     <form v-on:submit.prevent="login">
                         <div class="form-group">
                             <label for="username">Username</label>
@@ -22,8 +21,7 @@
                 </div>
             </div>
         </div>
-        </div>
-    </transition>
+    </div>
 </template>
 
 <script>
