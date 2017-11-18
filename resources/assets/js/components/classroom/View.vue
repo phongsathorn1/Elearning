@@ -2,11 +2,12 @@
     <div class="classroom" style="min-height: 500px">
         <div class="class-header">
             <div class="container">
-                    <div class="col-md-offset-1 col-md-10 col-sm-offset-2 col-sm--8">
+                <div class="col-md-12">
                     <h1>{{ classroom.name }}</h1>
                     <div class="class-description">
                         {{ classroom.description }}
                     </div>
+                    
                     <div class="class-action">
 
                         <router-link :to="classroom.id + '/post'" class="btn btn-default">New Post</router-link>

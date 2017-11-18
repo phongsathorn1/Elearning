@@ -71491,6 +71491,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -72032,83 +72033,77 @@ var render = function() {
     [
       _c("div", { staticClass: "class-header" }, [
         _c("div", { staticClass: "container" }, [
-          _c(
-            "div",
-            {
-              staticClass: "col-md-offset-1 col-md-10 col-sm-offset-2 col-sm--8"
-            },
-            [
-              _c("h1", [_vm._v(_vm._s(_vm.classroom.name))]),
-              _vm._v(" "),
-              _c("div", { staticClass: "class-description" }, [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.classroom.description) +
-                    "\n                "
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "class-action" },
-                [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "btn btn-default",
-                      attrs: { to: _vm.classroom.id + "/post" }
-                    },
-                    [_vm._v("New Post")]
-                  ),
-                  _vm._v(" "),
-                  _vm.isTeacher
-                    ? _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-default",
-                          attrs: { to: _vm.classroom.id + "/post/assignment" }
-                        },
-                        [_vm._v("New Assignment")]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "btn btn-default",
-                      attrs: { to: _vm.classroom.id + "/members" }
-                    },
-                    [_vm._v("Members")]
-                  ),
-                  _vm._v(" "),
-                  _vm.isTeacher
-                    ? _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-default",
-                          attrs: {
-                            to: "/classroom/" + _vm.classroom.id + "/edit"
-                          }
-                        },
-                        [_vm._v("Edit this classroom")]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.isTeacher
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-default",
-                          on: { click: _vm.deleteClass }
-                        },
-                        [_vm._v("Delete classroom")]
-                      )
-                    : _vm._e()
-                ],
-                1
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("h1", [_vm._v(_vm._s(_vm.classroom.name))]),
+            _vm._v(" "),
+            _c("div", { staticClass: "class-description" }, [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.classroom.description) +
+                  "\n                "
               )
-            ]
-          )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "class-action" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "btn btn-default",
+                    attrs: { to: _vm.classroom.id + "/post" }
+                  },
+                  [_vm._v("New Post")]
+                ),
+                _vm._v(" "),
+                _vm.isTeacher
+                  ? _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-default",
+                        attrs: { to: _vm.classroom.id + "/post/assignment" }
+                      },
+                      [_vm._v("New Assignment")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "btn btn-default",
+                    attrs: { to: _vm.classroom.id + "/members" }
+                  },
+                  [_vm._v("Members")]
+                ),
+                _vm._v(" "),
+                _vm.isTeacher
+                  ? _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-default",
+                        attrs: {
+                          to: "/classroom/" + _vm.classroom.id + "/edit"
+                        }
+                      },
+                      [_vm._v("Edit this classroom")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.isTeacher
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-default",
+                        on: { click: _vm.deleteClass }
+                      },
+                      [_vm._v("Delete classroom")]
+                    )
+                  : _vm._e()
+              ],
+              1
+            )
+          ])
         ])
       ]),
       _vm._v(" "),

@@ -13,7 +13,6 @@ a:hover {
 }
 
 .navbar-default {
-  background-color: #7051de;
   border: none;
   border-radius: 0px;
   margin-bottom: 0px;
@@ -51,8 +50,16 @@ a:hover {
   color: #464646;
 }
 
-.navbar-default .navbar-nav > li > a:hover {
+.navbar-default.transparent .navbar-nav > li > a:hover {
   color: #464646;
+}
+
+.navbar-default.transparent .navbar-nav > li > a {
+  color: #FFFFFF;
+}
+
+.navbar-default.transparent .navbar-nav > li > a:hover {
+  color: #FFFFFF;
 }
 
 .page-header {
@@ -170,6 +177,7 @@ a:hover {
   background: #999999;
   height: 100px;
   width: 100px;
+  border-radius: 10px;
 }
 
 .attachment-image {
