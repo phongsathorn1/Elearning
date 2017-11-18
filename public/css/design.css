@@ -70,6 +70,14 @@ a:hover {
   z-index: 10;
 }
 
+#bs-example-navbar-collapse-1 {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+#bs-example-navbar-collapse-1 > ul > li > a {
+  color: #464646;
+}
+
 .page-header {
   padding: 40px 0px;
   margin: 0px;
