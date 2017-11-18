@@ -32,7 +32,7 @@
 
 <script>
 export default {
-    props: ['callback'],
+    props: ['callback', 'uploadFiles'],
     data(){
         return {
             uploaded_files: [],
@@ -45,9 +45,14 @@ export default {
             }
         }
     },
+    watch:{
+        uploadFiles: function(){
+            this.uploaded_files = this.uploadFiles
+        }
+    },
     methods:{
         removeFile(file){
-            var index = this.uploaded_files.findIndex(x => x.id == file.id)
+            var index = this.uploaded_files.findIndex(x => x.filename == file.filename)
             this.uploaded_files.splice(index, 1)
             this.$emit('remove', this.uploaded_files)
         },

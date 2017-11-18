@@ -53,6 +53,11 @@ class PostController extends Controller
         $post = Post::findOrFail($post_id);
         if($post->user_id == Auth::id())
         {
+            $post->attachments()->detach();
+            foreach($request->get('files') as $file){
+                FilesAttachment::where('filepath', $file['filename'])->first()->posts()->attach($post->id);
+            }
+
             $post->detail = $request->post;
             $post->save();
 

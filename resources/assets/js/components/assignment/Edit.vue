@@ -2,7 +2,8 @@
     <div class="container">
         <assignment-post :detail="form" v-on:submit="edit"></assignment-post>
         <upload
-            :callback="'api/attachment/upload'"
+            :callback="'/api/attachment/upload'"
+            :upload-files='attachments'
             v-on:complete="uploadedFile"
             v-on:remove="removeFile"
         ></upload>
@@ -25,7 +26,8 @@
                 },
                 classroom_id: this.$route.params.id,
                 token: this.$auth.getToken(),
-                post_id: this.$route.params.post_id
+                post_id: this.$route.params.post_id,
+                attachments: [],
             }
         },
         created(){
@@ -34,25 +36,27 @@
                     Authorization: 'Bearer ' + this.token
                 }
             }).then(response => {
-                this.form.title = response.data.title
-                this.form.detail = response.data.detail
-                this.form.duedate = response.data.due_time.split(' ')[0]
-                this.form.duetime = response.data.due_time.split(' ')[1].substring(0, 5)
-                this.form.score = response.data.score
+                this.form.title = response.data.post.title
+                this.form.detail = response.data.post.detail
+                this.form.duedate = response.data.post.due_time.split(' ')[0]
+                this.form.duetime = response.data.post.due_time.split(' ')[1].substring(0, 5)
+                this.form.score = response.data.post.score
+                for(let file of response.data.attachments){
+                    this.attachments.push({
+                        'filename' : file.filepath,
+                        'name': file.name
+                    })
+                }
             })
         },
         methods:{
-            timecheck(){
-                if(!moment(this.form.duetime, "HH:mm", true).isValid() && !this.form.duetime == ''){
-                    this.form.duetime = moment().format("HH:mm")
-                }
-            },
             edit(form){
                 var data = {
                     title: form.title,
                     detail: form.detail,
                     due_time: form.duedate + ' ' + form.duetime,
-                    score: form.score
+                    score: form.score,
+                    files: this.attachments
                 }
 
                 axios.patch(`api/classroom/${this.classroom_id}/assignment/${this.post_id}/post`, data, {
@@ -63,6 +67,12 @@
                 .then(response => {
                     this.$router.go(-1)
                 })
+            },
+            uploadedFile(file){
+                this.attachments = file
+            },
+            removeFile(file){
+                this.attachments = file
             }
         },
         components: {

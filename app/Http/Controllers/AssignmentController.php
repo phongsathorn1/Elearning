@@ -172,6 +172,12 @@ class AssignmentController extends Controller
         $post = Assignment::findOrFail($id);
         if(Auth::user()->classroom->find($classroom_id) && Auth::user()->role->actions != 'is_student')
         {
+            $post->post->attachments()->detach();
+
+            foreach($request->get('files') as $file){
+                FilesAttachment::where('filepath', $file['filename'])->first()->posts()->attach($post->post->id);
+            }
+
             $post->title = $request->title;
             $post->detail = $request->detail;
             $post->due_time = $request->due_time;
@@ -190,7 +196,8 @@ class AssignmentController extends Controller
         if(Auth::user()->classroom->find($classroom_id))
         {
             $post = Assignment::findOrFail($id);
-            return response()->json($post);
+            $attachments = $post->post->attachments;
+            return response()->json(['post' => $post, 'attachments' => $attachments]);
         }
         else {
             return response()->json(['success' => false], 403);

@@ -2,7 +2,7 @@
     <div class="container">
         <assignment-post :detail="form" v-on:submit="add"></assignment-post>
         <upload
-            :callback="'api/attachment/upload'"
+            :callback="'/api/attachment/upload'"
             v-on:complete="uploadedFile"
             v-on:remove="removeFile"
         ></upload>

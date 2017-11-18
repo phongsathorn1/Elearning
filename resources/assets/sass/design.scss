@@ -195,7 +195,7 @@ a:hover{
 .attachment-thumbnail .file-icon{
     background-image: url(/images/file-icon.svg);
     background-repeat: no-repeat;
-    background-position: -100px 0px;
+    background-position: -51px 0px;
     background-size: 200% auto;
     height: 50px;
     width: 50px;
@@ -203,12 +203,44 @@ a:hover{
     top: 25px;
     margin: auto;
 }
+//powerpoint
+.attachment-thumbnail.file-pptx,
+.attachment-thumbnail.file-ppt{
+    background: #F4511E;
+}
+.attachment-thumbnail.file-pptx .file-icon,
+.attachment-thumbnail.file-ppt .file-icon,
+{
+    background-position: 0px 0px;
+}
+//excel
+.attachment-thumbnail.file-xlsx,
+.attachment-thumbnail.file-xls{
+    background: #16a085;
+}
+.attachment-thumbnail.file-xlsx .file-icon,
+.attachment-thumbnail.file-xls .file-icon,
+{
+    background-position: 0px -100px;
+}
+//word
+.attachment-thumbnail.file-docx,
+.attachment-thumbnail.file-doc{
+    background: #446CB3;
+}
+.attachment-thumbnail.file-docx .file-icon,
+.attachment-thumbnail.file-doc .file-icon,
+{
+    background-position: 0px -50px;
+}
+
 .attachment-thumbnail.file-pptx{
     background: #F4511E;
 }
 .attachment-thumbnail.file-pptx .file-icon{
     background-position: 0px 0px;
 }
+//pdf
 .attachment-thumbnail.file-pdf{
     background: #e74c3c;
 }

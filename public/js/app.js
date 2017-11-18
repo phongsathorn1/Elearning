@@ -72773,7 +72773,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['callback'],
+    props: ['callback', 'uploadFiles'],
     data: function data() {
         return {
             uploaded_files: [],
@@ -72787,10 +72787,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
+    watch: {
+        uploadFiles: function uploadFiles() {
+            this.uploaded_files = this.uploadFiles;
+        }
+    },
     methods: {
         removeFile: function removeFile(file) {
             var index = this.uploaded_files.findIndex(function (x) {
-                return x.id == file.id;
+                return x.filename == file.filename;
             });
             this.uploaded_files.splice(index, 1);
             this.$emit('remove', this.uploaded_files);
@@ -73028,7 +73033,7 @@ var render = function() {
       _c("post", { attrs: { detail: _vm.form }, on: { post: _vm.post } }),
       _vm._v(" "),
       _c("upload", {
-        attrs: { callback: "api/attachment/upload" },
+        attrs: { callback: "/api/attachment/upload" },
         on: { complete: _vm.uploadedFile, remove: _vm.removeFile }
       })
     ],
@@ -75609,7 +75614,7 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("upload", {
-        attrs: { callback: "api/attachment/upload" },
+        attrs: { callback: "/api/attachment/upload" },
         on: { complete: _vm.uploadedFile, remove: _vm.removeFile }
       })
     ],
@@ -77074,6 +77079,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -77090,7 +77096,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             classroom_id: this.$route.params.id,
             token: this.$auth.getToken(),
-            post_id: this.$route.params.post_id
+            post_id: this.$route.params.post_id,
+            attachments: []
         };
     },
     created: function created() {
@@ -77101,20 +77108,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 Authorization: 'Bearer ' + this.token
             }
         }).then(function (response) {
-            _this.form.title = response.data.title;
-            _this.form.detail = response.data.detail;
-            _this.form.duedate = response.data.due_time.split(' ')[0];
-            _this.form.duetime = response.data.due_time.split(' ')[1].substring(0, 5);
-            _this.form.score = response.data.score;
+            _this.form.title = response.data.post.title;
+            _this.form.detail = response.data.post.detail;
+            _this.form.duedate = response.data.post.due_time.split(' ')[0];
+            _this.form.duetime = response.data.post.due_time.split(' ')[1].substring(0, 5);
+            _this.form.score = response.data.post.score;
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = response.data.attachments[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var file = _step.value;
+
+                    _this.attachments.push({
+                        'filename': file.filepath,
+                        'name': file.name
+                    });
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
         });
     },
 
     methods: {
-        timecheck: function timecheck() {
-            if (!moment(this.form.duetime, "HH:mm", true).isValid() && !this.form.duetime == '') {
-                this.form.duetime = moment().format("HH:mm");
-            }
-        },
         edit: function edit(form) {
             var _this2 = this;
 
@@ -77122,7 +77151,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 title: form.title,
                 detail: form.detail,
                 due_time: form.duedate + ' ' + form.duetime,
-                score: form.score
+                score: form.score,
+                files: this.attachments
             };
 
             axios.patch('api/classroom/' + this.classroom_id + '/assignment/' + this.post_id + '/post', data, {
@@ -77132,6 +77162,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (response) {
                 _this2.$router.go(-1);
             });
+        },
+        uploadedFile: function uploadedFile(file) {
+            this.attachments = file;
+        },
+        removeFile: function removeFile(file) {
+            this.attachments = file;
         }
     },
     components: {
@@ -77158,7 +77194,10 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("upload", {
-        attrs: { callback: "api/attachment/upload" },
+        attrs: {
+          callback: "/api/attachment/upload",
+          "upload-files": _vm.attachments
+        },
         on: { complete: _vm.uploadedFile, remove: _vm.removeFile }
       })
     ],
@@ -77231,6 +77270,8 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_post_vue__ = __webpack_require__(139);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_post_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__block_post_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__block_upload_vue__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__block_upload_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__block_upload_vue__);
 //
 //
 //
@@ -77240,6 +77281,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -77249,11 +77297,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             form: {
                 detail: ''
             },
-            token: this.$auth.getToken()
+            token: this.$auth.getToken(),
+            attachments: []
         };
     },
 
     components: {
+        upload: __WEBPACK_IMPORTED_MODULE_1__block_upload_vue___default.a,
         post: __WEBPACK_IMPORTED_MODULE_0__block_post_vue___default.a
     },
     created: function created() {
@@ -77265,6 +77315,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         }).then(function (response) {
             _this.form.detail = response.data.detail;
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = response.data.attachments[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var file = _step.value;
+
+                    _this.attachments.push({
+                        'filename': file.filepath,
+                        'name': file.name
+                    });
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
         });
     },
 
@@ -77273,7 +77350,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             var data = {
-                'post': form.detail
+                post: form.detail,
+                files: this.attachments
             };
             axios.patch('/api/post/' + this.$route.params.post_id, data, {
                 headers: {
@@ -77282,6 +77360,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (response) {
                 _this2.$router.push('/classroom/' + _this2.$route.params.id);
             });
+        },
+        uploadedFile: function uploadedFile(file) {
+            this.attachments = file;
+        },
+        removeFile: function removeFile(file) {
+            this.attachments = file;
         }
     }
 });
@@ -77297,7 +77381,17 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "container" },
-    [_c("post", { attrs: { detail: _vm.form }, on: { post: _vm.post } })],
+    [
+      _c("post", { attrs: { detail: _vm.form }, on: { post: _vm.post } }),
+      _vm._v(" "),
+      _c("upload", {
+        attrs: {
+          callback: "/api/attachment/upload",
+          "upload-files": _vm.attachments
+        },
+        on: { complete: _vm.uploadedFile, remove: _vm.removeFile }
+      })
+    ],
     1
   )
 }

@@ -5,7 +5,7 @@
             v-on:post="post"
         ></post>
         <upload
-            :callback="'api/attachment/upload'"
+            :callback="'/api/attachment/upload'"
             v-on:complete="uploadedFile"
             v-on:remove="removeFile"
         ></upload>
