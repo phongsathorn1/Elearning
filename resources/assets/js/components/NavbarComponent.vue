@@ -1,5 +1,5 @@
 <template>
-<nav class="navbar navbar-default" v-if="!hide" v-bind:class="{transparent: transparent}">
+<nav class="navbar navbar-default navbar-wrapper" v-if="!hide" v-bind:class="{transparent: transparent}">
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">

@@ -62,6 +62,14 @@ a:hover {
   color: #FFFFFF;
 }
 
+.navbar-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
 .page-header {
   padding: 40px 0px;
   margin: 0px;
