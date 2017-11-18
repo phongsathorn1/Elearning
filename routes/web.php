@@ -11,14 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('app');
-});
+// Route::get('/', function () {
+//     return view('app');
+// });
 
-Route::get('/login', function() {
-    return redirect()->home();
-})->name('login');
+// Route::get('/login', function() {
+//     return redirect()->home();
+// })->name('login');
 
 Route::get('download/file/{filepath}/', 'FileController@download');
 Route::get('download/assignment/{assignment_id}/{filepath}/', 'FileController@downloadAssignment');
 Route::get('thumbnail/file/{filepath}', 'FileController@downloadImage');
+
+Route::any('{all}', function () {
+    return view('app');
+})->where(['all' => '.*']);

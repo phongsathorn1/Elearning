@@ -31063,6 +31063,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vue_
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.$appName = "<e>learning";
 
+__WEBPACK_IMPORTED_MODULE_1_axios___default.a.defaults.baseURL = '/';
+
 __WEBPACK_IMPORTED_MODULE_1_axios___default.a.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
@@ -67387,7 +67389,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
+/* WEBPACK VAR INJECTION */(function(__dirname) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(170);
 
@@ -67488,10 +67490,13 @@ var routes = [{
     }
 }];
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
+    mode: 'history',
+    base: __dirname,
     routes: routes
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, "/"))
 
 /***/ }),
 /* 170 */
@@ -77502,7 +77507,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
   data: function data() {
     return {
       transparent: false,
-      hide: false
+      hide: false,
+      baseUrl: this.$store.getters.baseUrl
     };
   },
 
@@ -77556,7 +77562,11 @@ var render = function() {
                 _c(
                   "router-link",
                   { staticClass: "navbar-brand", attrs: { to: "/" } },
-                  [_c("img", { attrs: { src: "images/Med_logo.png" } })]
+                  [
+                    _c("img", {
+                      attrs: { src: _vm.baseUrl + "/images/Med_logo.png" }
+                    })
+                  ]
                 )
               ],
               1

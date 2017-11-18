@@ -17,6 +17,8 @@ Vue.use(VueClip)
 
 Vue.prototype.$appName = "<e>learning";
 
+axios.defaults.baseURL = '/';
+
 axios.interceptors.response.use(function (response) {
     return response;
 }, function (error) {

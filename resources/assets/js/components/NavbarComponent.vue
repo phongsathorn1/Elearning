@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <router-link to="/" class="navbar-brand"><img src="images/Med_logo.png"/></router-link>
+      <router-link to="/" class="navbar-brand"><img v-bind:src="`${baseUrl}/images/Med_logo.png`"/></router-link>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -52,7 +52,8 @@
     data(){
       return {
         transparent: false,
-        hide: false
+        hide: false,
+        baseUrl: this.$store.getters.baseUrl
       }
     },
     computed: {
