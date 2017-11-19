@@ -16,7 +16,8 @@ class CreateAssignmentFilesTable extends Migration
         Schema::create('assignment_files', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('assignment_id')->unsigned();
+            $table->integer('classroom_id')->unsigned();
+            $table->integer('post_id')->unsigned();
             $table->string('name');
             $table->string('location');
             $table->timestamps();

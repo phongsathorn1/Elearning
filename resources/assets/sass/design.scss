@@ -192,18 +192,25 @@ a:hover{
 
 //attachment
 .attachment{
-    padding: 10px;
+    margin: 0px -5px;
 }
 
 .attachment strong{
     margin: 5px;
 }
 
+.attachment-block{
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+}
+
 .attachment-item{
     background: #FFFFFF;
     cursor: pointer;
-    float: left;
+    display: inline-block;
     padding: 5px;
+    vertical-align: top;
 }
 
 .attachment-item-inner{
@@ -222,6 +229,7 @@ a:hover{
 
 .attachment-filename{
     padding: 5px 0px;
+    white-space: normal;
     word-wrap: break-word;
     font-size: 13px;
 }
@@ -343,9 +351,12 @@ a:hover{
     color: rgb(26, 26, 26);
     width: 80%;
     background-color: rgba(255, 210, 0, 1);
+<<<<<<< HEAD
+=======
 }
 
 // post page
 .margin-container{
     margin-top: 4em;
+>>>>>>> bceb44aede7fe25277814a2473bcc628b630c4d4
 }

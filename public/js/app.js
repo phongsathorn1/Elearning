@@ -71382,6 +71382,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__block_attachment_vue__ = __webpack_require__(138);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__block_attachment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__block_attachment_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__block_PostCard_vue__ = __webpack_require__(252);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__block_PostCard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__block_PostCard_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__block_AssignmentCard_vue__ = __webpack_require__(255);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__block_AssignmentCard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__block_AssignmentCard_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -71483,38 +71487,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+
 
 
 
@@ -71557,7 +71531,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     components: {
-        attachments: __WEBPACK_IMPORTED_MODULE_4__block_attachment_vue___default.a
+        attachments: __WEBPACK_IMPORTED_MODULE_4__block_attachment_vue___default.a,
+        PostCard: __WEBPACK_IMPORTED_MODULE_5__block_PostCard_vue___default.a,
+        AssignmentCard: __WEBPACK_IMPORTED_MODULE_6__block_AssignmentCard_vue___default.a
     },
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapGetters */])(['getUserId', 'isTeacher'])),
     methods: {
@@ -71585,20 +71561,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         checkUserPost: function checkUserPost(user_id) {
             return this.getUserId == user_id;
-        },
-        renderHTML: function renderHTML(text) {
-            if (text) {
-                return text.replace(/(\r\n|\n)/g, "<br/>");
-            } else {
-                return text;
-            }
-        },
-        timeCheck: function timeCheck(due_time) {
-            return __WEBPACK_IMPORTED_MODULE_0_moment___default()().isSameOrAfter(due_time, "YYYY-MM-DD HH-mm-ss");
-        },
-        parseTime: function parseTime(dateTime) {
-            var displayTime = __WEBPACK_IMPORTED_MODULE_0_moment___default()(dateTime, "YYYY-MM-DD HH-mm-ss").format("dddd, MMMM Do YYYY, h:mm:ss a");
-            return 'Post on ' + displayTime;
         },
         removeAssignment: function removeAssignment(post_id) {
             var self = this;
@@ -72193,81 +72155,13 @@ var render = function() {
                       "div",
                       { staticClass: "class-post-item" },
                       [
-                        _c(
-                          "div",
-                          { staticClass: "class-meta" },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "class-post-user class-meta-item"
-                              },
-                              [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(post.user.name) +
-                                    "\n                    "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "class-post-time class-meta-item"
-                              },
-                              [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(_vm.parseTime(post.created_at)) +
-                                    "\n                    "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _vm.checkUserPost(post.user.id)
-                              ? _c(
-                                  "router-link",
-                                  {
-                                    staticClass: "btn btn-default",
-                                    attrs: {
-                                      to:
-                                        "/classroom/" +
-                                        _vm.classroom.id +
-                                        "/post/" +
-                                        post.id +
-                                        "/edit"
-                                    }
-                                  },
-                                  [_vm._v("Edit")]
-                                )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.checkUserPost(post.user.id)
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-default",
-                                    on: {
-                                      click: function($event) {
-                                        _vm.removePost(post.id)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("Delete")]
-                                )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "clearfix" })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("div", {
-                          staticClass: "class-post-main",
-                          domProps: {
-                            innerHTML: _vm._s(_vm.renderHTML(post.detail))
-                          }
+                        _c("post-card", {
+                          attrs: {
+                            post: post,
+                            "classroom-id": _vm.classroom.id,
+                            "show-option": _vm.checkUserPost(post.user.id)
+                          },
+                          on: { removePost: _vm.removePost }
                         }),
                         _vm._v(" "),
                         _c("attachments", {
@@ -72275,6 +72169,10 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("div", { staticClass: "class-post-comments" }, [
+                          _c("strong", [
+                            _vm._v(_vm._s(post.comments.length) + " Comments")
+                          ]),
+                          _vm._v(" "),
                           _c("div", { staticClass: "comment-box" }, [
                             _c(
                               "form",
@@ -72362,106 +72260,14 @@ var render = function() {
                       "div",
                       { staticClass: "class-post-item" },
                       [
-                        _c(
-                          "div",
-                          { staticClass: "class-meta" },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "class-post-user class-meta-item"
-                              },
-                              [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(post.user.name) +
-                                    "\n                    "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "class-post-time class-meta-item"
-                              },
-                              [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(_vm.parseTime(post.created_at)) +
-                                    "\n                    "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _vm.checkUserPost(post.user.id)
-                              ? _c(
-                                  "router-link",
-                                  {
-                                    staticClass: "btn btn-default",
-                                    attrs: {
-                                      to:
-                                        "/classroom/" +
-                                        _vm.classroom.id +
-                                        "/assignment/" +
-                                        post.assignment.id +
-                                        "/edit"
-                                    }
-                                  },
-                                  [_vm._v("Edit")]
-                                )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.checkUserPost(post.user.id)
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-default",
-                                    on: {
-                                      click: function($event) {
-                                        _vm.removeAssignment(post.assignment.id)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("Delete")]
-                                )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "clearfix" })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "h3",
-                          [
-                            _c(
-                              "router-link",
-                              {
-                                attrs: {
-                                  to:
-                                    _vm.classroom.id +
-                                    "/assignment/" +
-                                    post.assignment.id
-                                }
-                              },
-                              [_vm._v(_vm._s(post.assignment.title))]
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("p", {
-                          domProps: {
-                            innerHTML: _vm._s(
-                              _vm.renderHTML(post.assignment.detail)
-                            )
-                          }
+                        _c("assignment-card", {
+                          attrs: {
+                            post: post,
+                            "classroom-id": _vm.classroom.id,
+                            "show-option": _vm.checkUserPost(post.user.id)
+                          },
+                          on: { removePost: _vm.removeAssignment }
                         }),
-                        _vm._v(" "),
-                        _vm.timeCheck(post.assignment.due_time)
-                          ? _c("p", [_vm._v("Time up!")])
-                          : _vm._e(),
                         _vm._v(" "),
                         _c("attachments", {
                           attrs: { files: post.attachments }
@@ -78021,7 +77827,409 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 /* 244 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+throw new Error("Module build failed: ModuleBuildError: Module build failed: \n    background-color: rgba(255, 210, 0, 1);\n                                          ^\n      Invalid CSS after \"...55, 210, 0, 1);\": expected \"}\", was \"<<<<<<< HEAD\"\n      in /home/jusmistic/elearning/resources/assets/sass/design.scss (line 353, column 44)\n    at runLoaders (/home/jusmistic/elearning/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/jusmistic/elearning/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/jusmistic/elearning/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/home/jusmistic/elearning/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at Object.asyncSassJobQueue.push [as callback] (/home/jusmistic/elearning/node_modules/sass-loader/lib/loader.js:55:13)\n    at Object.<anonymous> (/home/jusmistic/elearning/node_modules/async/dist/async.js:2257:31)\n    at Object.callback (/home/jusmistic/elearning/node_modules/async/dist/async.js:958:16)\n    at options.error (/home/jusmistic/elearning/node_modules/node-sass/lib/index.js:294:32)");
+
+/***/ }),
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(253)
+/* template */
+var __vue_template__ = __webpack_require__(254)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/block/PostCard.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-123a2809", Component.options)
+  } else {
+    hotAPI.reload("data-v-123a2809", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 253 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['post', 'classroomId', 'showOption'],
+    methods: {
+        renderHTML: function renderHTML(text) {
+            if (text) {
+                return text.replace(/(\r\n|\n)/g, "<br/>");
+            } else {
+                return text;
+            }
+        },
+        parseTime: function parseTime(dateTime) {
+            var displayTime = __WEBPACK_IMPORTED_MODULE_0_moment___default()(dateTime, "YYYY-MM-DD HH-mm-ss").format("dddd, MMMM Do YYYY, h:mm:ss a");
+            return 'Post on ' + displayTime;
+        },
+        removePost: function removePost(postId) {
+            this.$emit('removePost', postId);
+        }
+    }
+});
+
+/***/ }),
+/* 254 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "post-container" }, [
+    _c(
+      "div",
+      { staticClass: "class-meta" },
+      [
+        _c("div", { staticClass: "class-post-user class-meta-item" }, [
+          _vm._v("\n            " + _vm._s(_vm.post.user.name) + "\n        ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "class-post-time class-meta-item" }, [
+          _vm._v(
+            "\n            " +
+              _vm._s(_vm.parseTime(_vm.post.created_at)) +
+              "\n        "
+          )
+        ]),
+        _vm._v(" "),
+        _vm.showOption
+          ? _c(
+              "router-link",
+              {
+                staticClass: "btn btn-default",
+                attrs: {
+                  to:
+                    "/classroom/" +
+                    _vm.classroomId +
+                    "/post/" +
+                    _vm.post.id +
+                    "/edit"
+                }
+              },
+              [_vm._v("Edit")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.showOption
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-default",
+                on: {
+                  click: function($event) {
+                    _vm.removePost(_vm.post.id)
+                  }
+                }
+              },
+              [_vm._v("Delete")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "clearfix" })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", {
+      staticClass: "class-post-main",
+      domProps: { innerHTML: _vm._s(_vm.renderHTML(_vm.post.detail)) }
+    })
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-123a2809", module.exports)
+  }
+}
+
+/***/ }),
+/* 255 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(256)
+/* template */
+var __vue_template__ = __webpack_require__(257)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/block/AssignmentCard.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-cf33c714", Component.options)
+  } else {
+    hotAPI.reload("data-v-cf33c714", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 256 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['post', 'classroomId', 'showOption'],
+    methods: {
+        renderHTML: function renderHTML(text) {
+            if (text) {
+                return text.replace(/(\r\n|\n)/g, "<br/>");
+            } else {
+                return text;
+            }
+        },
+        parseTime: function parseTime(dateTime) {
+            var displayTime = __WEBPACK_IMPORTED_MODULE_0_moment___default()(dateTime, "YYYY-MM-DD HH-mm-ss").format("dddd, MMMM Do YYYY, h:mm:ss a");
+            return 'Post on ' + displayTime;
+        },
+        removePost: function removePost(postId) {
+            this.$emit('removePost', postId);
+        },
+        timeCheck: function timeCheck(due_time) {
+            return __WEBPACK_IMPORTED_MODULE_0_moment___default()().isSameOrAfter(due_time, "YYYY-MM-DD HH-mm-ss");
+        }
+    }
+});
+
+/***/ }),
+/* 257 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "post-container" }, [
+    _c(
+      "div",
+      { staticClass: "class-meta" },
+      [
+        _c("div", { staticClass: "class-post-user class-meta-item" }, [
+          _vm._v("\n            " + _vm._s(_vm.post.user.name) + "\n        ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "class-post-time class-meta-item" }, [
+          _vm._v(
+            "\n            " +
+              _vm._s(_vm.parseTime(_vm.post.created_at)) +
+              "\n        "
+          )
+        ]),
+        _vm._v(" "),
+        _vm.showOption
+          ? _c(
+              "router-link",
+              {
+                staticClass: "btn btn-default",
+                attrs: {
+                  to:
+                    "/classroom/" +
+                    _vm.classroomId +
+                    "/assignment/" +
+                    _vm.post.assignment.id +
+                    "/edit"
+                }
+              },
+              [_vm._v("Edit")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.showOption
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-default",
+                on: {
+                  click: function($event) {
+                    _vm.removeAssignment(_vm.post.assignment.id)
+                  }
+                }
+              },
+              [_vm._v("Delete")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "clearfix" })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "h3",
+      [
+        _c(
+          "router-link",
+          {
+            attrs: {
+              to: _vm.classroomId + "/assignment/" + _vm.post.assignment.id
+            }
+          },
+          [_vm._v(_vm._s(_vm.post.assignment.title))]
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("p", {
+      domProps: {
+        innerHTML: _vm._s(_vm.renderHTML(_vm.post.assignment.detail))
+      }
+    }),
+    _vm._v(" "),
+    _vm.timeCheck(_vm.post.assignment.due_time)
+      ? _c("p", [_vm._v("Time up!")])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-cf33c714", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
