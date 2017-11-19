@@ -21,10 +21,10 @@
                 </router-link>
                 </li>
                 <li>
-                <a class="btn btn-default"
+                <button class="btn btn-default"
                     @click="removePost(post.id)"
                     v-if="showOption"
-                >Delete</a>
+                >Delete</button>
                 </li>
             </ul>
             </div>
