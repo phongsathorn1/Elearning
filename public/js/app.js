@@ -72067,7 +72067,7 @@ var render = function() {
                     _c(
                       "ul",
                       {
-                        staticClass: "dropdown-menu",
+                        staticClass: "dropdown-menu dropdown-menu-right",
                         attrs: { "aria-labelledby": "dropdownMenu1" }
                       },
                       [

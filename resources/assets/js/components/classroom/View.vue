@@ -25,7 +25,7 @@
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                             <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
                                 <li>
                                     <router-link :to="classroom.id + '/members'" class="btn btn-default">Members</router-link>
                                 </li>

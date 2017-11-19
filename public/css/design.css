@@ -154,6 +154,10 @@ a:hover {
   margin-bottom: 0;
 }
 
+.class-header .btn-default:last-child {
+  color: #464646;
+}
+
 .classroom-list .card {
   height: 150px;
 }
