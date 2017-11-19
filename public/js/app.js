@@ -77923,6 +77923,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -77955,59 +77967,68 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "post-container" }, [
-    _c(
-      "div",
-      { staticClass: "class-meta" },
-      [
-        _c("div", { staticClass: "class-post-user class-meta-item" }, [
-          _vm._v("\n            " + _vm._s(_vm.post.user.name) + "\n        ")
-        ]),
+    _c("div", { staticClass: "class-meta" }, [
+      _c("div", { staticClass: "class-post-user class-meta-item" }, [
+        _vm._v("\n            " + _vm._s(_vm.post.user.name) + "\n        ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "class-post-time class-meta-item" }, [
+        _vm._v(
+          "\n            " +
+            _vm._s(_vm.parseTime(_vm.post.created_at)) +
+            "\n        "
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "btn-group" }, [
+        _vm._m(0),
         _vm._v(" "),
-        _c("div", { staticClass: "class-post-time class-meta-item" }, [
-          _vm._v(
-            "\n            " +
-              _vm._s(_vm.parseTime(_vm.post.created_at)) +
-              "\n        "
-          )
-        ]),
-        _vm._v(" "),
-        _vm.showOption
-          ? _c(
-              "router-link",
-              {
-                staticClass: "btn btn-default",
-                attrs: {
-                  to:
-                    "/classroom/" +
-                    _vm.classroomId +
-                    "/post/" +
-                    _vm.post.id +
-                    "/edit"
-                }
-              },
-              [_vm._v("Edit")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.showOption
-          ? _c(
-              "button",
-              {
-                staticClass: "btn btn-default",
-                on: {
-                  click: function($event) {
-                    _vm.removePost(_vm.post.id)
-                  }
-                }
-              },
-              [_vm._v("Delete")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _c("div", { staticClass: "clearfix" })
-      ],
-      1
-    ),
+        _c("ul", { staticClass: "dropdown-menu post-dropdown" }, [
+          _c(
+            "li",
+            [
+              _vm.showOption
+                ? _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-default",
+                      attrs: {
+                        to:
+                          "/classroom/" +
+                          _vm.classroomId +
+                          "/post/" +
+                          _vm.post.id +
+                          "/edit"
+                      }
+                    },
+                    [_vm._v("Edit\n            ")]
+                  )
+                : _vm._e()
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("li", [
+            _vm.showOption
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-default",
+                    on: {
+                      click: function($event) {
+                        _vm.removePost(_vm.post.id)
+                      }
+                    }
+                  },
+                  [_vm._v("Delete")]
+                )
+              : _vm._e()
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "clearfix" }),
     _vm._v(" "),
     _c("div", {
       staticClass: "class-post-main",
@@ -78015,7 +78036,26 @@ var render = function() {
     })
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-default dropdown-toggle",
+        attrs: {
+          type: "button",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [_c("span", { staticClass: "caret" })]
+    )
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

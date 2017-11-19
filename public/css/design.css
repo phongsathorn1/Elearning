@@ -155,7 +155,12 @@ a:hover {
 }
 
 .class-header .btn-default:last-child {
-  color: #464646;
+  text-align: center;
+  color: #7051de;
+}
+
+.dropdown-menu {
+  text-align: center;
 }
 
 .classroom-list .card {
@@ -364,5 +369,9 @@ a:hover {
 
 .margin-container {
   margin-top: 4em;
+}
+
+.post-dropdown > li > a {
+  border: 0px;
 }
 

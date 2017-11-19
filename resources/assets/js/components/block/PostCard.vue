@@ -7,20 +7,32 @@
             <div class="class-post-time class-meta-item">
                 {{ parseTime(post.created_at) }}
             </div>
-
-            <router-link
-                :to="`/classroom/${classroomId}/post/${post.id}/edit`"
-                class="btn btn-default"
-                v-if="showOption"
-            >Edit</router-link>
-
-            <button class="btn btn-default"
-                @click="removePost(post.id)"
-                v-if="showOption"
-            >Delete</button>
-
-            <div class="clearfix"></div>
+            <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu post-dropdown">
+                <li>
+                <router-link
+                    :to="`/classroom/${classroomId}/post/${post.id}/edit`"
+                    class="btn btn-default"
+                    v-if="showOption"
+                    >Edit
+                </router-link>
+                </li>
+                <li>
+                <a class="btn btn-default"
+                    @click="removePost(post.id)"
+                    v-if="showOption"
+                >Delete</a>
+                </li>
+            </ul>
+            </div>
         </div>
+
+            
+            <div class="clearfix"></div>
+        
         <div class="class-post-main" v-html="renderHTML(post.detail)"></div>
     </div>
 </template>
