@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Classroom;
 use App\User;
+use Auth;
 
 class MemberController extends Controller
 {
@@ -16,6 +17,10 @@ class MemberController extends Controller
 
     public function show($classroom_id){
         $members = Classroom::findOrFail($classroom_id)->members->load('role');
+
+        if(!$members->find(Auth::id())){
+            return response()->json(['error' => "You don't have permission to access this."], 403);
+        }
 
         return response()->json($members);
     }

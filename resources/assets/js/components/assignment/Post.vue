@@ -43,9 +43,10 @@
                     headers:{
                         Authorization: 'Bearer ' + this.token
                     }
-                })
-                .then(response => {
+                }).then(response => {
                     this.$router.go(-1)
+                }).catch(error => {
+                    this.$router.push('/')
                 })
             },
             uploadedFile(file){

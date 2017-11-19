@@ -31062,12 +31062,10 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.$appName = "<e>learning";
 
 __WEBPACK_IMPORTED_MODULE_1_axios___default.a.defaults.baseURL = '/';
 
-var path_except = ['/login', '/profile'];
-
 __WEBPACK_IMPORTED_MODULE_1_axios___default.a.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
-    if (!path_except.includes(__WEBPACK_IMPORTED_MODULE_3__routes_js__["a" /* default */].history.current.path)) {
+    if (error.response.status == 500) {
         __WEBPACK_IMPORTED_MODULE_7_sweetalert2___default()('Oops...', 'Something went wrong!', 'error');
     }
     return Promise.reject(error);
@@ -71492,6 +71490,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -71532,6 +71534,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }).then(function (response) {
             _this.classroom = response.data.classroom;
             _this.posts = response.data.posts;
+        }).catch(function (error) {
+            _this.$router.push('/');
         });
     },
 
@@ -71542,6 +71546,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapGetters */])(['getUserId', 'isTeacher'])),
     methods: {
+        teachers: function teachers() {
+            var teachers = this.classroom.members.filter(function (user) {
+                return user.role.actions === "is_teacher";
+            });
+
+            console.log(teachers);
+
+            return teachers;
+        },
         comment: function comment(post_id) {
             var _this2 = this;
 
@@ -72099,11 +72112,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -72149,18 +72157,17 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "btn-group" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("ul", { staticClass: "dropdown-menu post-dropdown" }, [
-          _c(
-            "li",
-            [
-              _vm.showOption
-                ? _c(
+      _vm.showOption
+        ? _c("div", { staticClass: "btn-group" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("ul", { staticClass: "dropdown-menu post-dropdown" }, [
+              _c(
+                "li",
+                [
+                  _c(
                     "router-link",
                     {
-                      staticClass: "btn btn-default",
                       attrs: {
                         to:
                           "/classroom/" +
@@ -72170,19 +72177,17 @@ var render = function() {
                           "/edit"
                       }
                     },
-                    [_vm._v("Edit\n            ")]
+                    [_vm._v("Edit\n                ")]
                   )
-                : _vm._e()
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("li", [
-            _vm.showOption
-              ? _c(
-                  "button",
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("li", [
+                _c(
+                  "a",
                   {
-                    staticClass: "btn btn-default",
+                    attrs: { href: "javascript:void(0)" },
                     on: {
                       click: function($event) {
                         _vm.removePost(_vm.post.id)
@@ -72191,10 +72196,10 @@ var render = function() {
                   },
                   [_vm._v("Delete")]
                 )
-              : _vm._e()
+              ])
+            ])
           ])
-        ])
-      ])
+        : _vm._e()
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "clearfix" }),
@@ -72221,7 +72226,12 @@ var staticRenderFns = [
           "aria-expanded": "false"
         }
       },
-      [_c("span", { staticClass: "caret" })]
+      [
+        _c("span", {
+          staticClass: "glyphicon glyphicon-option-horizontal",
+          attrs: { "aria-hidden": "true" }
+        })
+      ]
     )
   }
 ]
@@ -72467,6 +72477,17 @@ var render = function() {
                   _vm._s(_vm.classroom.description) +
                   "\n                "
               )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "class-teacher" }, [
+              _c("strong", [_vm._v("Teachers")]),
+              _vm._v(" "),
+              _c(
+                "ul",
+                _vm._l(_vm.teachers(), function(teacher) {
+                  return _c("li", [_vm._v(_vm._s(teacher.name))])
+                })
+              )
             ])
           ])
         ]),
@@ -72518,29 +72539,27 @@ var render = function() {
                           [
                             _c(
                               "router-link",
-                              {
-                                staticClass: "btn btn-default",
-                                attrs: { to: _vm.classroom.id + "/members" }
-                              },
+                              { attrs: { to: _vm.classroom.id + "/members" } },
                               [_vm._v("Members")]
                             )
                           ],
                           1
                         ),
                         _vm._v(" "),
-                        _c("li", {
-                          staticClass: "divider",
-                          attrs: { role: "separator" }
-                        }),
+                        _vm.isTeacher
+                          ? _c("li", {
+                              staticClass: "divider",
+                              attrs: { role: "separator" }
+                            })
+                          : _vm._e(),
                         _vm._v(" "),
-                        _c(
-                          "li",
-                          [
-                            _vm.isTeacher
-                              ? _c(
+                        _vm.isTeacher
+                          ? _c(
+                              "li",
+                              [
+                                _c(
                                   "router-link",
                                   {
-                                    staticClass: "btn btn-default",
                                     attrs: {
                                       to:
                                         "/classroom/" +
@@ -72554,17 +72573,18 @@ var render = function() {
                                     )
                                   ]
                                 )
-                              : _vm._e()
-                          ],
-                          1
-                        ),
+                              ],
+                              1
+                            )
+                          : _vm._e(),
                         _vm._v(" "),
-                        _c("li", [
-                          _vm.isTeacher
-                            ? _c(
-                                "button",
+                        _vm.isTeacher
+                          ? _c("li", [
+                              _c(
+                                "a",
                                 {
-                                  staticClass: "btn btn-default",
+                                  style: { color: "#a94442" },
+                                  attrs: { href: "javascript:void(0)" },
                                   on: { click: _vm.deleteClass }
                                 },
                                 [
@@ -72573,8 +72593,8 @@ var render = function() {
                                   )
                                 ]
                               )
-                            : _vm._e()
-                        ])
+                            ])
+                          : _vm._e()
                       ]
                     )
                   ]
@@ -73057,6 +73077,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function (response) {
                 _this.$router.push('/classroom/' + classroom_id);
+            }).catch(function (error) {
+                _this.$router.push('/');
             });
         },
         post: function post(form) {
@@ -73071,6 +73093,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function (response) {
                 _this2.store(token, classroom_id, form);
+            }).catch(function (error) {
+                _this2.$router.push('/');
             });
         },
         uploadedFile: function uploadedFile(file) {
@@ -73507,6 +73531,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function (response) {
                 _this.$router.go(-1);
+            }).catch(function (error) {
+                _this.$router.push('/');
             });
         },
         uploadedFile: function uploadedFile(file) {
@@ -76332,7 +76358,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             members: [],
-            classroom: ''
+            classroom: '',
+            classroom_id: this.$route.params.id,
+            token: this.$auth.getToken()
         };
     },
 
@@ -76340,24 +76368,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        var classroom_id = this.$route.params.id;
-        var token = this.$auth.getToken();
-
-        axios.get('api/classroom/' + classroom_id, {
+        axios.get('api/classroom/' + this.classroom_id, {
             headers: {
-                Authorization: 'Bearer ' + token
+                Authorization: 'Bearer ' + this.token
             }
         }).then(function (response) {
             _this.classroom = response.data.classroom;
+        }).catch(function (error) {
+            _this.$router.push('/');
         });
 
-        axios.get('api/members/' + classroom_id, {
+        axios.get('api/members/' + this.classroom_id, {
             headers: {
-                Authorization: 'Bearer ' + token
+                Authorization: 'Bearer ' + this.token
             }
         }).then(function (response) {
             _this.members = response.data;
+        }).catch(function (error) {
+            _this.$router.push('/');
         });
+    },
+
+    methods: {
+        remove: function remove(user_id) {
+            var _this2 = this;
+
+            var data = {
+                'classroom_id': this.classroom_id,
+                'user_id': user_id
+            };
+            axios.post('api/members/remove', data, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then(function (response) {
+                var index = _this2.members.findIndex(function (x) {
+                    return x.id == user_id;
+                });
+                _this2.members.splice(index, 1);
+            });
+        }
     }
 });
 
@@ -76435,7 +76485,18 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-xs-3" }, [
-                _vm._v("\n                        Delete\n                    ")
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default",
+                    on: {
+                      click: function($event) {
+                        _vm.remove(member.id)
+                      }
+                    }
+                  },
+                  [_vm._v("Remove")]
+                )
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "clearfix" })

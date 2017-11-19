@@ -19,12 +19,10 @@ Vue.prototype.$appName = "<e>learning";
 
 axios.defaults.baseURL = '/';
 
-var path_except = ['/login', '/profile']
-
 axios.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
-    if(!path_except.includes(router.history.current.path))
+    if(error.response.status == 500)
     {
         swal(
             'Oops...',

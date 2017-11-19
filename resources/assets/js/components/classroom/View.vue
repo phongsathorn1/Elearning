@@ -7,6 +7,12 @@
                     <div class="class-description">
                         {{ classroom.description }}
                     </div>
+                    <div class="class-teacher">
+                        <strong>Teachers</strong>
+                        <ul>
+                            <li v-for="teacher in teachers()">{{ teacher.name }}</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="container-fluid cover-bottom">
@@ -27,23 +33,21 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
                                 <li>
-                                    <router-link :to="classroom.id + '/members'" class="btn btn-default">Members</router-link>
+                                    <router-link :to="classroom.id + '/members'">Members</router-link>
                                 </li>
-                                <li role="separator" class="divider"></li>
-                                <li>
+                                <li role="separator" class="divider" v-if="isTeacher"></li>
+                                <li v-if="isTeacher">
                                     <router-link
                                         :to="`/classroom/${classroom.id}/edit`"
-                                        v-if="isTeacher"
-                                        class="btn btn-default"
                                         >Edit this classroom
                                     </router-link>
                                 </li>
-                                <li>
-                                    <button class="btn btn-default"
-                                    v-if="isTeacher"
+                                <li v-if="isTeacher">
+                                    <a href="javascript:void(0)"
+                                    v-bind:style="{color: '#a94442'}"
                                     @click="deleteClass"
                                     >Delete classroom
-                                    </button>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -130,10 +134,11 @@
                 headers:{
                     Authorization: 'Bearer ' + this.token
                 }
-            })
-            .then(response => {
+            }).then(response => {
                 this.classroom = response.data.classroom
                 this.posts = response.data.posts
+            }).catch(error => {
+                this.$router.push('/')
             })
         },
         components:{
@@ -148,6 +153,15 @@
             ]),
         },
         methods:{
+            teachers(){
+                var teachers = this.classroom.members.filter(user => {
+                    return user.role.actions === "is_teacher"
+                })
+
+                console.log(teachers)
+
+                return teachers
+            },
             comment(post_id){
                 var data = {
                     'post_id' : post_id,

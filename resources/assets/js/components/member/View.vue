@@ -20,7 +20,7 @@
                             {{ member.role.name }}
                         </div>
                         <div class="col-xs-3">
-                            Delete
+                            <button class="btn btn-default" @click="remove(member.id)">Remove</button>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -37,31 +37,50 @@
         data(){
             return {
                 members: [],
-                classroom: ''
+                classroom: '',
+                classroom_id: this.$route.params.id,
+                token: this.$auth.getToken()
             }
         },
         computed: mapGetters([
             'isTeacher'
         ]),
         created(){
-            var classroom_id = this.$route.params.id
-            var token = this.$auth.getToken()
-
-            axios.get('api/classroom/' + classroom_id, {
+            axios.get('api/classroom/' + this.classroom_id, {
                 headers:{
-                    Authorization: 'Bearer ' + token
+                    Authorization: 'Bearer ' + this.token
                 }
             }).then(response => {
                 this.classroom = response.data.classroom
+            }).catch(error => {
+                this.$router.push('/')
             })
 
-            axios.get('api/members/' + classroom_id, {
+            axios.get('api/members/' + this.classroom_id, {
                 headers:{
-                    Authorization: 'Bearer ' + token
+                    Authorization: 'Bearer ' + this.token
                 }
             }).then(response=>{
                 this.members = response.data
+            }).catch(error => {
+                this.$router.push('/')
             })
+        },
+        methods:{
+            remove(user_id){
+                var data = {
+                    'classroom_id': this.classroom_id,
+                    'user_id': user_id
+                }
+                axios.post('api/members/remove', data, {
+                    headers:{
+                        Authorization: 'Bearer ' + this.token
+                    }
+                }).then(response => {
+                    var index = this.members.findIndex(x => x.id == user_id);
+                    this.members.splice(index, 1)
+                })
+            }
         }
     }
 </script>

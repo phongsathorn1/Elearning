@@ -18,7 +18,11 @@ class ClassroomController extends Controller
 
     public function show($classroom_id)
     {
-        $classroom = Classroom::findOrFail($classroom_id);
+        $classroom = Classroom::findOrFail($classroom_id)->load('members', 'members.role');
+
+        if(!$classroom->members->find(Auth::id())){
+            return response()->json(['error' => "You don't have permission to access this."], 403);
+        }
         if(Auth::user()->role->actions == "is_student"){
             $classroom = $classroom->makeHidden('join_code');
         }
@@ -59,7 +63,7 @@ class ClassroomController extends Controller
         $classroom = Classroom::where('join_code', $request->code)->first();
         if($classroom->exists())
         {
-            if(!$classroom->members()->find(1)->exists()){
+            if(!$classroom->members()->find(Auth::id())){
                 $classroom->members()->attach(Auth::id());
             }
             return response()->json(['success' => true, 'classroom_id' => $classroom->id]);

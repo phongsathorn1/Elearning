@@ -8,7 +8,7 @@ class Role extends Model
 {
     public $timestamps = false;
     protected $hidden = [
-        'id', 'actions'
+        'id'
     ];
 
     protected $fillable = [
