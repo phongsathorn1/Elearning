@@ -9,8 +9,6 @@
                     </div>
                     
                     <div class="class-action">
-
-
                         <div class="btn-group" role="group" aria-label="...">
                         <router-link :to="classroom.id + '/post'" class="btn btn-default">New Post</router-link>
                         <router-link
@@ -48,8 +46,8 @@
                             </ul>
                         </div>
                         </div>
+                    </div><!-- End class-action -->
 
-                    </div>
                 </div>
             </div>
         </div>
