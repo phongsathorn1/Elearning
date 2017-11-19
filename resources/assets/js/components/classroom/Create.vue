@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="margin-container container">
         <div class="form-group">
             <label for="name">Classroom name</label>
             <input type="text" class="form-control" id="name" placeholder="Classroom name" v-model="classroom.name">

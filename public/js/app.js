@@ -70912,7 +70912,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 var options = {
-    'client_secret': 'FbwNBsSJbJhS1cwv9RfPeY8gOieb0Ck0jQ2YFZJQ',
+    'client_secret': 'oYNYj66Mjc2cIcItEUjGcMmRaKqILkclihUWdiua',
     'client_id': 2,
     'grant_type': 'password'
 };
@@ -71245,7 +71245,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "margin-container container" }, [
     _c("div", { staticClass: "form-group" }, [
       _c("label", { attrs: { for: "name" } }, [_vm._v("Classroom name")]),
       _vm._v(" "),
@@ -72528,7 +72528,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "margin-container container" }, [
     _c("div", { staticClass: "form-group" }, [
       _c("label", { attrs: { for: "name" } }, [_vm._v("Classroom name")]),
       _vm._v(" "),
@@ -72970,7 +72970,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
+  return _c("div", { staticClass: "margin-container card" }, [
     _c("div", { staticClass: "form-group" }, [
       _c("label", { attrs: { for: "post" } }, [_vm._v("Post")]),
       _vm._v(" "),
@@ -73028,7 +73028,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container post-container" },
+    { staticClass: "container margin-container" },
     [
       _c("post", { attrs: { detail: _vm.form }, on: { post: _vm.post } }),
       _vm._v(" "),
@@ -75449,7 +75449,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
+  return _c("div", { staticClass: "margin-container card" }, [
     _c("div", { staticClass: "form-group" }, [
       _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
       _vm._v(" "),

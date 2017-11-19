@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="margin-container card">
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" class="form-control" id="title" placeholder="Tile of assignment" v-model="form.title">
