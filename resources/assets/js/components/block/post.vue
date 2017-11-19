@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="margin-container card">
         <div class="form-group">
             <label for="post">Post</label>
             <textarea class="form-control" rows="3" id="detail" v-model="form.detail"></textarea>

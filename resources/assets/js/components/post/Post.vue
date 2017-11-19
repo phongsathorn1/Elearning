@@ -1,5 +1,5 @@
 <template>
-    <div class="container post-container">
+    <div class="container margin-container">
         <post
             :detail="form"
             v-on:post="post"
