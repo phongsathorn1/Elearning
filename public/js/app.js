@@ -77825,7 +77825,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 /* 244 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: \n    background-color: rgba(255, 210, 0, 1);\n                                          ^\n      Invalid CSS after \"...55, 210, 0, 1);\": expected \"}\", was \"<<<<<<< HEAD\"\n      in /home/jusmistic/elearning/resources/assets/sass/design.scss (line 354, column 44)\n    at runLoaders (/home/jusmistic/elearning/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/jusmistic/elearning/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/jusmistic/elearning/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/home/jusmistic/elearning/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at Object.asyncSassJobQueue.push [as callback] (/home/jusmistic/elearning/node_modules/sass-loader/lib/loader.js:55:13)\n    at Object.<anonymous> (/home/jusmistic/elearning/node_modules/async/dist/async.js:2257:31)\n    at Object.callback (/home/jusmistic/elearning/node_modules/async/dist/async.js:958:16)\n    at options.error (/home/jusmistic/elearning/node_modules/node-sass/lib/index.js:294:32)");
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 245 */,
