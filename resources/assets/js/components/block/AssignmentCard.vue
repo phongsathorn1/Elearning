@@ -15,7 +15,7 @@
             >Edit</router-link>
 
             <button class="btn btn-default"
-                @click="removeAssignment(post.assignment.id)"
+                @click="removePost(post.assignment.id)"
                 v-if="showOption"
             >Delete</button>
             <div class="clearfix"></div>

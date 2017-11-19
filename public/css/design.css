@@ -62,14 +62,6 @@ a:hover {
   color: #FFFFFF;
 }
 
-.navbar-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-}
-
 @media (max-width: 768px) {
   #bs-example-navbar-collapse-1 {
     background-color: white;
@@ -327,10 +319,7 @@ a:hover {
   background-color: #ffd200;
 }
 
-<<<<<<< HEAD
-=======
 .margin-container {
   margin-top: 4em;
 }
 
->>>>>>> bceb44aede7fe25277814a2473bcc628b630c4d4

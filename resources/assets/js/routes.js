@@ -107,6 +107,17 @@ const routes = [
         meta: {
             forAuth: true
         }
+    },
+    {
+        path: '/profile',
+        component: require('./components/user/profile.vue'),
+        meta: {
+            forAuth: true
+        }
+    },
+    {
+        path: '*',
+        component: require('./components/error/404.vue')
     }
 ]
 const router = new VueRouter({

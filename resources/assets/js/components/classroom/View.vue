@@ -157,7 +157,7 @@
                             Authorization: 'Bearer ' + self.token
                         }
                     }).then(response => {
-                        var index = self.posts.findIndex(x => x.id == post_id && x.type == "assignment")
+                        var index = self.posts.findIndex(x => x.assignment.id == post_id && x.type == "assignment")
                         self.posts.splice(index, 1)
 
                         console.log('remove success')

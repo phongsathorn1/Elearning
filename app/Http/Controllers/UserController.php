@@ -15,4 +15,10 @@ class UserController extends Controller
 
         return response()->json($me);
     }
+
+    public function update(Request $request)
+    {
+        $me = Auth::user();
+        $me->name = $request->name;
+    }
 }

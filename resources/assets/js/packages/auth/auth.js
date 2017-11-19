@@ -5,10 +5,6 @@ export default function(Vue) {
             localStorage.setItem('expire', expire + Date.now())
         },
 
-        setPersonalData (data) {
-            localStorage.setItem('personal', JSON.stringify(data))
-        },
-
         getToken () {
             var token = localStorage.getItem('token')
             var expire = localStorage.getItem('expire')

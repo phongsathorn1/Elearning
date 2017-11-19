@@ -66,14 +66,7 @@ a:hover{
 .navbar-default.transparent .navbar-nav > li > a:hover {
     color: #FFFFFF;
 }
-// fix navbar in classpages
-.navbar-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-  }
+
 // change color on responsive
 @media(max-width: 768px){
     #bs-example-navbar-collapse-1{
@@ -326,12 +319,9 @@ a:hover{
     color: rgb(26, 26, 26);
     width: 80%;
     background-color: rgba(255, 210, 0, 1);
-<<<<<<< HEAD
-=======
 }
 
 // post page
 .margin-container{
     margin-top: 4em;
->>>>>>> bceb44aede7fe25277814a2473bcc628b630c4d4
 }

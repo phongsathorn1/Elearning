@@ -33,7 +33,10 @@ export const store = new Vuex.Store({
         getUserId: state => {
             return state.user.id
         },
-        getRole : state => {
+        getUser: state => {
+            return state.user
+        },
+        getRole: state => {
             return state.user.role.actions
         },
         isTeacher: state => {

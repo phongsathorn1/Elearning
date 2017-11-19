@@ -62,7 +62,6 @@
                     }
                 })
                 .then(response => {
-                    this.$auth.setPersonalData(response.data)
                     this.$store.commit('storeUser', response.data)
                     this.$router.push('/')
                 })
