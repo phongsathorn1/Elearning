@@ -46,6 +46,22 @@ a:hover{
     height: 100%;
 }
 
+@media(max-width: 400px){
+    .navbar-brand img{
+        display: block;
+        margin-left: 10px;
+        margin-top: 6px;
+        max-width: auto;
+        max-height: 100%;
+        width: 200px;
+        height: auto;
+    }
+    h1{
+        font-size: 1.7em;
+    }
+}
+
+
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
     color: #E0E0E0;
@@ -68,7 +84,7 @@ a:hover{
 }
 
 // change color on responsive
-@media(max-width: 768px){
+@media(max-width: 767px){
     #bs-example-navbar-collapse-1{
         background-color: rgba(255, 255, 255, 1)
     }
@@ -77,8 +93,6 @@ a:hover{
     }
 }
 
-    
-  
 
 .page-header {
     padding: 40px 0px;
@@ -91,15 +105,13 @@ a:hover{
     margin-top: -7rem;
     min-width: 100vp;
     max-width: 100%;
-    max-height: 300px;
+    max-height: auto;
     background-repeat: no-repeat;
     background-size:cover;
-    padding: 150px 0px 100px 0px;
+    padding: 150px 0px 1rem 0px;
     background-image: url(https://pbs.twimg.com/media/CvWl3-yUkAAG0ih.jpg);
     color: #FFFFFF;
 }
-
-
 
 .class-header h1{
     margin: 0px;
@@ -122,8 +134,32 @@ a:hover{
 }
 
 .class-action{
-    padding: 10px 0px;
+    padding: 10px 0px 0px 0;
+    text-align: right;
+    width: auto;
 }
+@media(max-width: 500px){
+    .class-action{
+        padding: 10px 0px 0px 0;
+        text-align: center;
+        width: 100%;
+    }
+}
+
+//fix in page
+.cover-bottom{
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.class-header .btn-default:last-child{
+    text-align: center;
+    color:$primary-color;
+}
+.dropdown-menu{
+    text-align: center;
+}
+
 
 .classroom-list .card{
     height: 150px;
@@ -324,4 +360,10 @@ a:hover{
 // post page
 .margin-container{
     margin-top: 4em;
+<<<<<<< HEAD
+=======
+}
+.post-dropdown > li > a{
+    border: 0px;
+>>>>>>> 16db33cb5288667d42400a8a5417b711dcae7638
 }

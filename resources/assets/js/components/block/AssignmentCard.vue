@@ -7,7 +7,7 @@
             <div class="class-post-time class-meta-item">
                 {{ parseTime(post.created_at) }}
             </div>
-
+            
             <router-link
                 :to="`/classroom/${classroomId}/assignment/${post.assignment.id}/edit`"
                 class="btn btn-default"
