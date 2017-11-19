@@ -10,22 +10,45 @@
                     
                     <div class="class-action">
 
+
+                        <div class="btn-group" role="group" aria-label="...">
                         <router-link :to="classroom.id + '/post'" class="btn btn-default">New Post</router-link>
                         <router-link
                             :to="classroom.id + '/post/assignment'"
                             v-if="isTeacher"
                             class="btn btn-default"
-                        >New Assignment</router-link>
-                        <router-link :to="classroom.id + '/members'" class="btn btn-default">Members</router-link>
-                        <router-link
-                            :to="`/classroom/${classroom.id}/edit`"
-                            v-if="isTeacher"
-                            class="btn btn-default"
-                        >Edit this classroom</router-link>
-                        <button class="btn btn-default"
-                            v-if="isTeacher"
-                            @click="deleteClass"
-                        >Delete classroom</button>
+                            >New Assignment
+                        </router-link>
+
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown
+                            <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li>
+                                    <router-link :to="classroom.id + '/members'" class="btn btn-default">Members</router-link>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <router-link
+                                        :to="`/classroom/${classroom.id}/edit`"
+                                        v-if="isTeacher"
+                                        class="btn btn-default"
+                                        >Edit this classroom
+                                    </router-link>
+                                </li>
+                                <li>
+                                    <button class="btn btn-default"
+                                    v-if="isTeacher"
+                                    @click="deleteClass"
+                                    >Delete classroom
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

@@ -71492,6 +71492,29 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -72044,65 +72067,117 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "class-action" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "btn btn-default",
-                    attrs: { to: _vm.classroom.id + "/post" }
-                  },
-                  [_vm._v("New Post")]
-                ),
-                _vm._v(" "),
-                _vm.isTeacher
-                  ? _c(
-                      "router-link",
-                      {
-                        staticClass: "btn btn-default",
-                        attrs: { to: _vm.classroom.id + "/post/assignment" }
-                      },
-                      [_vm._v("New Assignment")]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "btn btn-default",
-                    attrs: { to: _vm.classroom.id + "/members" }
-                  },
-                  [_vm._v("Members")]
-                ),
-                _vm._v(" "),
-                _vm.isTeacher
-                  ? _c(
-                      "router-link",
-                      {
-                        staticClass: "btn btn-default",
-                        attrs: {
-                          to: "/classroom/" + _vm.classroom.id + "/edit"
-                        }
-                      },
-                      [_vm._v("Edit this classroom")]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.isTeacher
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-default",
-                        on: { click: _vm.deleteClass }
-                      },
-                      [_vm._v("Delete classroom")]
-                    )
-                  : _vm._e()
-              ],
-              1
-            )
+            _c("div", { staticClass: "class-action" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "btn-group",
+                  attrs: { role: "group", "aria-label": "..." }
+                },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-default",
+                      attrs: { to: _vm.classroom.id + "/post" }
+                    },
+                    [_vm._v("New Post")]
+                  ),
+                  _vm._v(" "),
+                  _vm.isTeacher
+                    ? _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-default",
+                          attrs: { to: _vm.classroom.id + "/post/assignment" }
+                        },
+                        [_vm._v("New Assignment\n                    ")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "btn-group", attrs: { role: "group" } },
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c(
+                        "ul",
+                        {
+                          staticClass: "dropdown-menu",
+                          attrs: { "aria-labelledby": "dropdownMenu1" }
+                        },
+                        [
+                          _c(
+                            "li",
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass: "btn btn-default",
+                                  attrs: { to: _vm.classroom.id + "/members" }
+                                },
+                                [_vm._v("Members")]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("li", {
+                            staticClass: "divider",
+                            attrs: { role: "separator" }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "li",
+                            [
+                              _vm.isTeacher
+                                ? _c(
+                                    "router-link",
+                                    {
+                                      staticClass: "btn btn-default",
+                                      attrs: {
+                                        to:
+                                          "/classroom/" +
+                                          _vm.classroom.id +
+                                          "/edit"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Edit this classroom\n                                "
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("li", [
+                            _vm.isTeacher
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-default",
+                                    on: { click: _vm.deleteClass }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "Delete classroom\n                                "
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ])
+                        ]
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
           ])
         ])
       ]),
@@ -72402,7 +72477,29 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-default dropdown-toggle",
+        attrs: {
+          type: "button",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [
+        _vm._v("\n                        Dropdown\n                        "),
+        _c("span", { staticClass: "caret" })
+      ]
+    )
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
