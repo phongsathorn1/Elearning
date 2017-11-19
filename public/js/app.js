@@ -71494,6 +71494,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
 
 
 
@@ -72145,20 +72148,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "post-container" }, [
     _c("div", { staticClass: "class-meta" }, [
-      _c("div", { staticClass: "class-post-user class-meta-item" }, [
-        _vm._v("\n            " + _vm._s(_vm.post.user.name) + "\n        ")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "class-post-time class-meta-item" }, [
-        _vm._v(
-          "\n            " +
-            _vm._s(_vm.parseTime(_vm.post.created_at)) +
-            "\n        "
-        )
-      ]),
-      _vm._v(" "),
       _vm.showOption
-        ? _c("div", { staticClass: "btn-group" }, [
+        ? _c("div", { staticClass: "btn-group post-options" }, [
             _vm._m(0),
             _vm._v(" "),
             _c("ul", { staticClass: "dropdown-menu post-dropdown" }, [
@@ -72177,7 +72168,7 @@ var render = function() {
                           "/edit"
                       }
                     },
-                    [_vm._v("Edit\n                ")]
+                    [_vm._v("Edit\n                    ")]
                   )
                 ],
                 1
@@ -72199,7 +72190,19 @@ var render = function() {
               ])
             ])
           ])
-        : _vm._e()
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "class-post-user class-meta-item" }, [
+        _vm._v("\n            " + _vm._s(_vm.post.user.name) + "\n        ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "class-post-time class-meta-item" }, [
+        _vm._v(
+          "\n            " +
+            _vm._s(_vm.parseTime(_vm.post.created_at)) +
+            "\n        "
+        )
+      ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "clearfix" }),
@@ -72468,7 +72471,7 @@ var render = function() {
     [
       _c("div", { staticClass: "class-header" }, [
         _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "col-md-8" }, [
             _c("h1", [_vm._v(_vm._s(_vm.classroom.name))]),
             _vm._v(" "),
             _c("div", { staticClass: "class-description" }, [
@@ -72477,8 +72480,10 @@ var render = function() {
                   _vm._s(_vm.classroom.description) +
                   "\n                "
               )
-            ]),
-            _vm._v(" "),
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
             _c("div", { staticClass: "class-teacher" }, [
               _c("strong", [_vm._v("Teachers")]),
               _vm._v(" "),
@@ -72492,7 +72497,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "container-fluid cover-bottom" }, [
+        _c("div", { staticClass: "container cover-bottom" }, [
           _c("div", { staticClass: "class-action" }, [
             _c(
               "div",
@@ -72631,8 +72636,10 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("div", { staticClass: "class-post-comments" }, [
-                          _c("strong", [
-                            _vm._v(_vm._s(post.comments.length) + " Comments")
+                          _c("div", { staticClass: "comment-meta" }, [
+                            _c("strong", [
+                              _vm._v(_vm._s(post.comments.length) + " Comments")
+                            ])
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "comment-box" }, [
@@ -72676,16 +72683,7 @@ var render = function() {
                                         )
                                       }
                                     }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-default",
-                                      attrs: { type: "submit" }
-                                    },
-                                    [_vm._v("Comment")]
-                                  )
+                                  })
                                 ])
                               ]
                             )

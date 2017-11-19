@@ -2,11 +2,13 @@
     <div class="classroom" style="min-height: 500px">
         <div class="class-header">
             <div class="container">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <h1>{{ classroom.name }}</h1>
                     <div class="class-description">
                         {{ classroom.description }}
                     </div>
+                </div>
+                <div class="col-md-4">
                     <div class="class-teacher">
                         <strong>Teachers</strong>
                         <ul>
@@ -15,7 +17,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container-fluid cover-bottom">
+            <div class="container cover-bottom">
                 <div class="class-action">
                         <div class="btn-group" role="group" aria-label="...">
                         <router-link :to="classroom.id + '/post'" class="btn btn-default">New Post</router-link>
@@ -68,12 +70,13 @@
                     <attachments :files="post.attachments"></attachments>
 
                     <div class="class-post-comments">
-                        <strong>{{ post.comments.length }} Comments</strong>
+                        <div class="comment-meta">
+                            <strong>{{ post.comments.length }} Comments</strong>
+                        </div>
                         <div class="comment-box">
                             <form v-on:submit.prevent="comment(post.id)">
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="comment" placeholder="Comment..." v-model="comments[post.id]">
-                                    <button type="submit" class="btn btn-default">Comment</button>
                                 </div>
                             </form>
                         </div>
