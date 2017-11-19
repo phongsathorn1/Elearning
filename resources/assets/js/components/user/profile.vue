@@ -2,15 +2,80 @@
     <div class="container">
         <div class="card">
             <div class="profile" v-if="profile">
-                <div class="profile-header">
-                    <h1 v-bind:contenteditable="editable" v-model="profile.name">{{ profile.name }}</h1>
+
+                <!-- profile-header -->
+                <div class="profile-header" v-if="editable">
+                    <h1><input type="text" v-model="profile.name"></h1>
+                    <p class="text-danger"
+                        v-for="error in profile_errors.name"
+                        v-if="profile_errors.name"
+                    >{{ error }}</p>
                     <p>{{ profile.role.name }}</p>
                 </div>
-                <div class="profile-info">
-                    <p>Username: {{ profile.username }}</p>
-                    <p>Email: {{ profile.email }}</p>
+                <div class="profile-header" v-else>
+                    <h1>{{ profile.name }}</h1>
+                    <p>{{ profile.role.name }}</p>
                 </div>
-                <button class="btn btn-default" @click="enableEdit">Edit</button>
+
+                <!-- profile-info -->
+                <div class="profile-info" v-if="editable">
+                    <h2>Basic infomation</h2>
+                    <p>Username: <input type="text" v-model="profile.username"></p>
+                    <p>Email: <input type="text" v-model="profile.email"></p>
+                </div>
+                <div class="profile-info" v-else>
+                    <h2>Basic infomation</h2>
+                    <p>Username: {{ profile.username }}</p>
+                    <p class="text-danger"
+                        v-for="error in profile_errors.username"
+                        v-if="profile_errors.username"
+                    >{{ error }}</p>
+
+                    <p>Email: {{ profile.email }}</p>
+                    <p class="text-danger"
+                        v-for="error in profile_errors.email"
+                        v-if="profile_errors.email"
+                    >{{ error }}</p>
+                </div>
+
+                <!-- security -->
+                <div class="profile-info" v-if="!editable">
+                    <h2>Security</h2>
+                    <p>Password: ●●●●●●●●</p>
+                    <button class="btn btn-default" @click="ToggleChangePass">Change password</button>
+                    <div class="inner-profile-info" v-if="changePass">
+                        <form class="form-horizontal" v-on:submit.prevent="changePassword">
+                            <div class="form-group">
+                                <label for="password" class="col-sm-2 control-label">Old password</label>
+                                <div class="col-sm-10">
+                                <input type="password" class="form-control" id="password" placeholder="Old password" v-model="security.password">
+                                </div>
+                                <p class="text-danger" v-for="error in security_errors.password" v-if="security_errors.password">{{ error }}</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="newpassword" class="col-sm-2 control-label">New password</label>
+                                <div class="col-sm-10">
+                                <input type="password" class="form-control" id="newpassword" placeholder="New password" v-model="security.new_password">
+                                </div>
+                                <p class="text-danger" v-for="error in security_errors.new_password" v-if="security_errors.new_password">{{ error }}</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="newpassword_confirmation" class="col-sm-2 control-label">Confirm new password</label>
+                                <div class="col-sm-10">
+                                <input type="password" class="form-control" id="newpassword_confirmation" placeholder="Confirm new password" v-model="security.new_password_confirmation">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">Confirm change password</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <button class="btn btn-default" @click="ToggleEnableEdit" v-if="!editable">Edit</button>
+                <button class="btn btn-default" @click="ToggleEnableEdit" v-if="editable">Cancel</button>
+                <button class="btn btn-default" @click="changeProfile" v-if="editable">Update</button>
             </div>
         </div>
     </div>
@@ -22,8 +87,16 @@
     export default {
         data(){
             return {
-                profile: this.getUser,
-                editable: false
+                profile: {},
+                security: {
+                    password: '',
+                    new_password: '',
+                    new_password_confirmation: ''
+                },
+                security_errors: {},
+                profile_errors: {},
+                editable: false,
+                changePass: false
             }
         },
         computed:{
@@ -37,14 +110,49 @@
                     return state.user
                 },
                 user => {
-                    this.profile = this.getUser
+                    this.profile = Object.assign({}, this.getUser)
                 }
             )
-            this.profile = this.getUser
+            this.profile = Object.assign({}, this.getUser)
         },
         methods:{
-            enableEdit(){
-                this.editable = true
+            ToggleEnableEdit(){
+                this.editable = !this.editable
+                this.changePass = false
+                this.profile = Object.assign({}, this.getUser)
+            },
+            ToggleChangePass(){
+                this.changePass = !this.changePass
+                this.editable = false
+            },
+            changePassword(){
+                axios.patch('api/me/password', this.security, {
+                    headers:{
+                        Authorization: 'Bearer ' + this.$auth.getToken()
+                    }
+                }).then(response => {
+                    console.log('change password successful')
+                }).catch(error => {
+                    this.security_errors = error.response.data.errors
+                })
+            },
+            changeProfile(){
+                var data = {
+                    name: this.profile.name,
+                    username: this.profile.username,
+                    email: this.profile.email
+                }
+                axios.patch('api/me', data, {
+                    headers:{
+                        Authorization: 'Bearer ' + this.$auth.getToken()
+                    }
+                }).then(response => {
+                    this.$store.dispatch('getPersonal')
+                    this.editable = false
+                    console.log('change profile successful')
+                }).catch(error => {
+                    this.profile_errors = error.response.data.errors
+                })
             }
         }
     }
