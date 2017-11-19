@@ -33,32 +33,17 @@
         <div class="container" v-if="posts">
             <div class="class-posts card" v-for="post in posts">
                 <div class="class-post-item" v-if="post.type === 'post'">
-                    <div class="class-meta">
-                        <div class="class-post-user class-meta-item">
-                            {{ post.user.name }}
-                        </div>
-                        <div class="class-post-time class-meta-item">
-                            {{ parseTime(post.created_at) }}
-                        </div>
 
-                        <router-link
-                            :to="`/classroom/${classroom.id}/post/${post.id}/edit`"
-                            class="btn btn-default"
-                            v-if="checkUserPost(post.user.id)"
-                        >Edit</router-link>
-
-                        <button class="btn btn-default"
-                            @click="removePost(post.id)"
-                            v-if="checkUserPost(post.user.id)"
-                        >Delete</button>
-
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="class-post-main" v-html="renderHTML(post.detail)"></div>
-
+                    <post-card
+                        :post="post"
+                        :classroom-id="classroom.id"
+                        :show-option="checkUserPost(post.user.id)"
+                        v-on:removePost="removePost"
+                    ></post-card>
                     <attachments :files="post.attachments"></attachments>
 
                     <div class="class-post-comments">
+                        <strong>{{ post.comments.length }} Comments</strong>
                         <div class="comment-box">
                             <form v-on:submit.prevent="comment(post.id)">
                                 <div class="form-group">
@@ -75,30 +60,13 @@
                     </div>
                 </div>
                 <div class="class-post-item" v-if="post.type == 'assignment' && post.assignment">
-                    <div class="class-meta">
-                        <div class="class-post-user class-meta-item">
-                            {{ post.user.name }}
-                        </div>
-                        <div class="class-post-time class-meta-item">
-                            {{ parseTime(post.created_at) }}
-                        </div>
-
-                        <router-link
-                            :to="`/classroom/${classroom.id}/assignment/${post.assignment.id}/edit`"
-                            class="btn btn-default"
-                            v-if="checkUserPost(post.user.id)"
-                        >Edit</router-link>
-
-                        <button class="btn btn-default"
-                            @click="removeAssignment(post.assignment.id)"
-                            v-if="checkUserPost(post.user.id)"
-                        >Delete</button>
-                        <div class="clearfix"></div>
-                    </div>
-                    <h3><router-link :to="classroom.id +'/assignment/' + post.assignment.id">{{ post.assignment.title }}</router-link></h3>
-                    <p v-html="renderHTML(post.assignment.detail)"></p>
-                    <p v-if="timeCheck(post.assignment.due_time)">Time up!</p>
-
+                    
+                    <assignment-card
+                        :post="post"
+                        :classroom-id="classroom.id"
+                        :show-option="checkUserPost(post.user.id)"
+                        v-on:removePost="removeAssignment"
+                    ></assignment-card>
                     <attachments :files="post.attachments"></attachments>
                 </div>
             </div>
@@ -112,6 +80,8 @@
     import 'sweetalert2/dist/sweetalert2.min.css';
     import { mapGetters } from 'vuex'
     import attachments from '../block/attachment.vue'
+    import PostCard from '../block/PostCard.vue'
+    import AssignmentCard from '../block/AssignmentCard.vue'
 
     export default {
         data(){
@@ -146,7 +116,9 @@
             })
         },
         components:{
-            attachments
+            attachments,
+            PostCard,
+            AssignmentCard
         },
         computed: {
             ...mapGetters([
@@ -176,20 +148,6 @@
             },
             checkUserPost(user_id){
                 return this.getUserId == user_id
-            },
-            renderHTML(text){
-                if(text){
-                    return text.replace(/(\r\n|\n)/g, "<br/>")
-                }else{
-                    return text
-                }
-            },
-            timeCheck(due_time){
-                return moment().isSameOrAfter(due_time, "YYYY-MM-DD HH-mm-ss");
-            },
-            parseTime(dateTime){
-                var displayTime = moment(dateTime, "YYYY-MM-DD HH-mm-ss").format("dddd, MMMM Do YYYY, h:mm:ss a");
-                return `Post on ${displayTime}`
             },
             removeAssignment(post_id){
                 var self = this
