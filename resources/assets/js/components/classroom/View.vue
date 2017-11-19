@@ -7,8 +7,10 @@
                     <div class="class-description">
                         {{ classroom.description }}
                     </div>
-                    
-                    <div class="class-action">
+                </div>
+            </div>
+            <div class="container-fluid cover-bottom">
+                <div class="class-action">
                         <div class="btn-group" role="group" aria-label="...">
                         <router-link :to="classroom.id + '/post'" class="btn btn-default">New Post</router-link>
                         <router-link
@@ -20,7 +22,7 @@
 
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                             <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -47,8 +49,6 @@
                         </div>
                         </div>
                     </div><!-- End class-action -->
-
-                </div>
             </div>
         </div>
         <div class="container" v-if="posts">
