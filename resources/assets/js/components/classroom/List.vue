@@ -18,9 +18,6 @@
                     <div class="classroom-list-head">
                         <router-link :to="'/classroom/'+classroom.id">{{ classroom.name }}</router-link>
                     </div>
-                    <div class="classroom-description">
-                        {{ classroom.description }}
-                    </div>
                 </div>
             </div>
         </div>

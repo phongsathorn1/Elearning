@@ -70517,9 +70517,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -70756,15 +70753,7 @@ var render = function() {
                   )
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "classroom-description" }, [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(classroom.description) +
-                    "\n                "
-                )
-              ])
+              )
             ])
           ])
         })
@@ -72154,43 +72143,49 @@ var render = function() {
         ? _c("div", { staticClass: "btn-group post-options" }, [
             _vm._m(0),
             _vm._v(" "),
-            _c("ul", { staticClass: "dropdown-menu post-dropdown" }, [
-              _c(
-                "li",
-                [
+            _c(
+              "ul",
+              {
+                staticClass: "dropdown-menu dropdown-menu-right post-dropdown"
+              },
+              [
+                _c(
+                  "li",
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to:
+                            "/classroom/" +
+                            _vm.classroomId +
+                            "/post/" +
+                            _vm.post.id +
+                            "/edit"
+                        }
+                      },
+                      [_vm._v("Edit\n                    ")]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("li", [
                   _c(
-                    "router-link",
+                    "a",
                     {
-                      attrs: {
-                        to:
-                          "/classroom/" +
-                          _vm.classroomId +
-                          "/post/" +
-                          _vm.post.id +
-                          "/edit"
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.removePost(_vm.post.id)
+                        }
                       }
                     },
-                    [_vm._v("Edit\n                    ")]
+                    [_vm._v("Delete")]
                   )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    attrs: { href: "javascript:void(0)" },
-                    on: {
-                      click: function($event) {
-                        _vm.removePost(_vm.post.id)
-                      }
-                    }
-                  },
-                  [_vm._v("Delete")]
-                )
-              ])
-            ])
+                ])
+              ]
+            )
           ])
         : _vm._e(),
       _vm._v(" "),

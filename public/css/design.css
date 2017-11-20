@@ -80,6 +80,9 @@ a:hover {
 
 @media (max-width: 767px) {
   #bs-example-navbar-collapse-1 {
+    width: 100%;
+    position: fixed;
+    z-index: 10;
     background-color: white;
   }
 
