@@ -210,7 +210,7 @@ class AssignmentController extends Controller
     }
 
     public function getPost($classroom_id, $id){
-        Classroom::findOrFail($classroom_id);
+        $classroom = Classroom::findOrFail($classroom_id);
         if(!$classroom->members->find(Auth::id())){
             return response()->json(['error' => "You don't have permission to access this."], 403);
         }

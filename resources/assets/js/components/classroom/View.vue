@@ -1,5 +1,5 @@
 <template>
-    <div class="classroom" style="min-height: 500px">
+    <div class="classroom" style="min-height: 500px" v-if="classroom">
         <div class="class-header">
             <div class="container">
                 <div class="col-md-8">
@@ -100,6 +100,11 @@
             </div>
         </div>
     </div>
+    <div class="spinner" v-else>
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+    </div>
 </template>
 
 <script>
@@ -160,9 +165,6 @@
                 var teachers = this.classroom.members.filter(user => {
                     return user.role.actions === "is_teacher"
                 })
-
-                console.log(teachers)
-
                 return teachers
             },
             comment(post_id){
