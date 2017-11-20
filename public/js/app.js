@@ -31065,7 +31065,7 @@ __WEBPACK_IMPORTED_MODULE_1_axios___default.a.defaults.baseURL = '/';
 __WEBPACK_IMPORTED_MODULE_1_axios___default.a.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
-    if (__WEBPACK_IMPORTED_MODULE_3__routes_js__["a" /* default */].history.current.path != '/login') {
+    if (error.response.status == 500) {
         __WEBPACK_IMPORTED_MODULE_7_sweetalert2___default()('Oops...', 'Something went wrong!', 'error');
     }
     return Promise.reject(error);
@@ -71490,6 +71490,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -71530,6 +71537,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }).then(function (response) {
             _this.classroom = response.data.classroom;
             _this.posts = response.data.posts;
+        }).catch(function (error) {
+            _this.$router.push('/');
         });
     },
 
@@ -71540,6 +71549,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapGetters */])(['getUserId', 'isTeacher'])),
     methods: {
+        teachers: function teachers() {
+            var teachers = this.classroom.members.filter(function (user) {
+                return user.role.actions === "is_teacher";
+            });
+
+            console.log(teachers);
+
+            return teachers;
+        },
         comment: function comment(post_id) {
             var _this2 = this;
 
@@ -72097,11 +72115,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -72135,6 +72148,50 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "post-container" }, [
     _c("div", { staticClass: "class-meta" }, [
+      _vm.showOption
+        ? _c("div", { staticClass: "btn-group post-options" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("ul", { staticClass: "dropdown-menu post-dropdown" }, [
+              _c(
+                "li",
+                [
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        to:
+                          "/classroom/" +
+                          _vm.classroomId +
+                          "/post/" +
+                          _vm.post.id +
+                          "/edit"
+                      }
+                    },
+                    [_vm._v("Edit\n                    ")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("li", [
+                _c(
+                  "a",
+                  {
+                    attrs: { href: "javascript:void(0)" },
+                    on: {
+                      click: function($event) {
+                        _vm.removePost(_vm.post.id)
+                      }
+                    }
+                  },
+                  [_vm._v("Delete")]
+                )
+              ])
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       _c("div", { staticClass: "class-post-user class-meta-item" }, [
         _vm._v("\n            " + _vm._s(_vm.post.user.name) + "\n        ")
       ]),
@@ -72145,53 +72202,6 @@ var render = function() {
             _vm._s(_vm.parseTime(_vm.post.created_at)) +
             "\n        "
         )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "btn-group" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("ul", { staticClass: "dropdown-menu post-dropdown" }, [
-          _c(
-            "li",
-            [
-              _vm.showOption
-                ? _c(
-                    "router-link",
-                    {
-                      staticClass: "btn btn-default",
-                      attrs: {
-                        to:
-                          "/classroom/" +
-                          _vm.classroomId +
-                          "/post/" +
-                          _vm.post.id +
-                          "/edit"
-                      }
-                    },
-                    [_vm._v("Edit\n            ")]
-                  )
-                : _vm._e()
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("li", [
-            _vm.showOption
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-default",
-                    on: {
-                      click: function($event) {
-                        _vm.removePost(_vm.post.id)
-                      }
-                    }
-                  },
-                  [_vm._v("Delete")]
-                )
-              : _vm._e()
-          ])
-        ])
       ])
     ]),
     _vm._v(" "),
@@ -72219,7 +72229,12 @@ var staticRenderFns = [
           "aria-expanded": "false"
         }
       },
-      [_c("span", { staticClass: "caret" })]
+      [
+        _c("span", {
+          staticClass: "glyphicon glyphicon-option-horizontal",
+          attrs: { "aria-hidden": "true" }
+        })
+      ]
     )
   }
 ]
@@ -72456,7 +72471,7 @@ var render = function() {
     [
       _c("div", { staticClass: "class-header" }, [
         _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "col-md-8" }, [
             _c("h1", [_vm._v(_vm._s(_vm.classroom.name))]),
             _vm._v(" "),
             _c("div", { staticClass: "class-description" }, [
@@ -72466,10 +72481,23 @@ var render = function() {
                   "\n                "
               )
             ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "class-teacher" }, [
+              _c("strong", [_vm._v("Teachers")]),
+              _vm._v(" "),
+              _c(
+                "ul",
+                _vm._l(_vm.teachers(), function(teacher) {
+                  return _c("li", [_vm._v(_vm._s(teacher.name))])
+                })
+              )
+            ])
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "container-fluid cover-bottom" }, [
+        _c("div", { staticClass: "container cover-bottom" }, [
           _c("div", { staticClass: "class-action" }, [
             _c(
               "div",
@@ -72516,29 +72544,27 @@ var render = function() {
                           [
                             _c(
                               "router-link",
-                              {
-                                staticClass: "btn btn-default",
-                                attrs: { to: _vm.classroom.id + "/members" }
-                              },
+                              { attrs: { to: _vm.classroom.id + "/members" } },
                               [_vm._v("Members")]
                             )
                           ],
                           1
                         ),
                         _vm._v(" "),
-                        _c("li", {
-                          staticClass: "divider",
-                          attrs: { role: "separator" }
-                        }),
+                        _vm.isTeacher
+                          ? _c("li", {
+                              staticClass: "divider",
+                              attrs: { role: "separator" }
+                            })
+                          : _vm._e(),
                         _vm._v(" "),
-                        _c(
-                          "li",
-                          [
-                            _vm.isTeacher
-                              ? _c(
+                        _vm.isTeacher
+                          ? _c(
+                              "li",
+                              [
+                                _c(
                                   "router-link",
                                   {
-                                    staticClass: "btn btn-default",
                                     attrs: {
                                       to:
                                         "/classroom/" +
@@ -72552,17 +72578,18 @@ var render = function() {
                                     )
                                   ]
                                 )
-                              : _vm._e()
-                          ],
-                          1
-                        ),
+                              ],
+                              1
+                            )
+                          : _vm._e(),
                         _vm._v(" "),
-                        _c("li", [
-                          _vm.isTeacher
-                            ? _c(
-                                "button",
+                        _vm.isTeacher
+                          ? _c("li", [
+                              _c(
+                                "a",
                                 {
-                                  staticClass: "btn btn-default",
+                                  style: { color: "#a94442" },
+                                  attrs: { href: "javascript:void(0)" },
                                   on: { click: _vm.deleteClass }
                                 },
                                 [
@@ -72571,8 +72598,8 @@ var render = function() {
                                   )
                                 ]
                               )
-                            : _vm._e()
-                        ])
+                            ])
+                          : _vm._e()
                       ]
                     )
                   ]
@@ -72609,8 +72636,10 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("div", { staticClass: "class-post-comments" }, [
-                          _c("strong", [
-                            _vm._v(_vm._s(post.comments.length) + " Comments")
+                          _c("div", { staticClass: "comment-meta" }, [
+                            _c("strong", [
+                              _vm._v(_vm._s(post.comments.length) + " Comments")
+                            ])
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "comment-box" }, [
@@ -72654,16 +72683,7 @@ var render = function() {
                                         )
                                       }
                                     }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-default",
-                                      attrs: { type: "submit" }
-                                    },
-                                    [_vm._v("Comment")]
-                                  )
+                                  })
                                 ])
                               ]
                             )
@@ -73055,6 +73075,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function (response) {
                 _this.$router.push('/classroom/' + classroom_id);
+            }).catch(function (error) {
+                _this.$router.push('/');
             });
         },
         post: function post(form) {
@@ -73069,6 +73091,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function (response) {
                 _this2.store(token, classroom_id, form);
+            }).catch(function (error) {
+                _this2.$router.push('/');
             });
         },
         uploadedFile: function uploadedFile(file) {
@@ -73505,6 +73529,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function (response) {
                 _this.$router.go(-1);
+            }).catch(function (error) {
+                _this.$router.push('/');
             });
         },
         uploadedFile: function uploadedFile(file) {
@@ -76336,7 +76362,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             members: [],
-            classroom: ''
+            classroom: '',
+            classroom_id: this.$route.params.id,
+            token: this.$auth.getToken()
         };
     },
 
@@ -76344,24 +76372,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        var classroom_id = this.$route.params.id;
-        var token = this.$auth.getToken();
-
-        axios.get('api/classroom/' + classroom_id, {
+        axios.get('api/classroom/' + this.classroom_id, {
             headers: {
-                Authorization: 'Bearer ' + token
+                Authorization: 'Bearer ' + this.token
             }
         }).then(function (response) {
             _this.classroom = response.data.classroom;
+        }).catch(function (error) {
+            _this.$router.push('/');
         });
 
-        axios.get('api/members/' + classroom_id, {
+        axios.get('api/members/' + this.classroom_id, {
             headers: {
-                Authorization: 'Bearer ' + token
+                Authorization: 'Bearer ' + this.token
             }
         }).then(function (response) {
             _this.members = response.data;
+        }).catch(function (error) {
+            _this.$router.push('/');
         });
+    },
+
+    methods: {
+        remove: function remove(user_id) {
+            var _this2 = this;
+
+            var data = {
+                'classroom_id': this.classroom_id,
+                'user_id': user_id
+            };
+            axios.post('api/members/remove', data, {
+                headers: {
+                    Authorization: 'Bearer ' + this.token
+                }
+            }).then(function (response) {
+                var index = _this2.members.findIndex(function (x) {
+                    return x.id == user_id;
+                });
+                _this2.members.splice(index, 1);
+            });
+        }
     }
 });
 
@@ -76439,7 +76489,18 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-xs-3" }, [
-                _vm._v("\n                        Delete\n                    ")
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default",
+                    on: {
+                      click: function($event) {
+                        _vm.remove(member.id)
+                      }
+                    }
+                  },
+                  [_vm._v("Remove")]
+                )
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "clearfix" })
@@ -77833,14 +77894,87 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            profile: this.getUser,
-            editable: false
+            profile: {},
+            security: {
+                password: '',
+                new_password: '',
+                new_password_confirmation: ''
+            },
+            security_errors: {},
+            profile_errors: {},
+            editable: false,
+            changePass: false
         };
     },
 
@@ -77851,14 +77985,53 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         this.$store.watch(function (state) {
             return state.user;
         }, function (user) {
-            _this.profile = _this.getUser;
+            _this.profile = Object.assign({}, _this.getUser);
         });
-        this.profile = this.getUser;
+        this.profile = Object.assign({}, this.getUser);
     },
 
     methods: {
-        enableEdit: function enableEdit() {
-            this.editable = true;
+        ToggleEnableEdit: function ToggleEnableEdit() {
+            this.editable = !this.editable;
+            this.changePass = false;
+            this.profile = Object.assign({}, this.getUser);
+        },
+        ToggleChangePass: function ToggleChangePass() {
+            this.changePass = !this.changePass;
+            this.editable = false;
+        },
+        changePassword: function changePassword() {
+            var _this2 = this;
+
+            axios.patch('api/me/password', this.security, {
+                headers: {
+                    Authorization: 'Bearer ' + this.$auth.getToken()
+                }
+            }).then(function (response) {
+                console.log('change password successful');
+            }).catch(function (error) {
+                _this2.security_errors = error.response.data.errors;
+            });
+        },
+        changeProfile: function changeProfile() {
+            var _this3 = this;
+
+            var data = {
+                name: this.profile.name,
+                username: this.profile.username,
+                email: this.profile.email
+            };
+            axios.patch('api/me', data, {
+                headers: {
+                    Authorization: 'Bearer ' + this.$auth.getToken()
+                }
+            }).then(function (response) {
+                _this3.$store.dispatch('getPersonal');
+                _this3.editable = false;
+                console.log('change profile successful');
+            }).catch(function (error) {
+                _this3.profile_errors = error.response.data.errors;
+            });
         }
     }
 });
@@ -77875,42 +78048,394 @@ var render = function() {
     _c("div", { staticClass: "card" }, [
       _vm.profile
         ? _c("div", { staticClass: "profile" }, [
-            _c("div", { staticClass: "profile-header" }, [
-              _c(
-                "h1",
-                {
-                  attrs: { contenteditable: _vm.editable },
-                  model: {
-                    value: _vm.profile.name,
-                    callback: function($$v) {
-                      _vm.$set(_vm.profile, "name", $$v)
+            _vm.editable
+              ? _c(
+                  "div",
+                  { staticClass: "profile-header" },
+                  [
+                    _c("h1", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.profile.name,
+                            expression: "profile.name"
+                          }
+                        ],
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.profile.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.profile, "name", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.profile_errors.name, function(error) {
+                      return _vm.profile_errors.name
+                        ? _c("p", { staticClass: "text-danger" }, [
+                            _vm._v(_vm._s(error))
+                          ])
+                        : _vm._e()
+                    }),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(_vm.profile.role.name))])
+                  ],
+                  2
+                )
+              : _c("div", { staticClass: "profile-header" }, [
+                  _c("h1", [_vm._v(_vm._s(_vm.profile.name))]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v(_vm._s(_vm.profile.role.name))])
+                ]),
+            _vm._v(" "),
+            _vm.editable
+              ? _c("div", { staticClass: "profile-info" }, [
+                  _c("h2", [_vm._v("Basic infomation")]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v("Username: "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.profile.username,
+                          expression: "profile.username"
+                        }
+                      ],
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.profile.username },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.profile, "username", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v("Email: "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.profile.email,
+                          expression: "profile.email"
+                        }
+                      ],
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.profile.email },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.profile, "email", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ])
+              : _c(
+                  "div",
+                  { staticClass: "profile-info" },
+                  [
+                    _c("h2", [_vm._v("Basic infomation")]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v("Username: " + _vm._s(_vm.profile.username))
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.profile_errors.username, function(error) {
+                      return _vm.profile_errors.username
+                        ? _c("p", { staticClass: "text-danger" }, [
+                            _vm._v(_vm._s(error))
+                          ])
+                        : _vm._e()
+                    }),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("Email: " + _vm._s(_vm.profile.email))]),
+                    _vm._v(" "),
+                    _vm._l(_vm.profile_errors.email, function(error) {
+                      return _vm.profile_errors.email
+                        ? _c("p", { staticClass: "text-danger" }, [
+                            _vm._v(_vm._s(error))
+                          ])
+                        : _vm._e()
+                    })
+                  ],
+                  2
+                ),
+            _vm._v(" "),
+            !_vm.editable
+              ? _c("div", { staticClass: "profile-info" }, [
+                  _c("h2", [_vm._v("Security")]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v("Password: ●●●●●●●●")]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-default",
+                      on: { click: _vm.ToggleChangePass }
                     },
-                    expression: "profile.name"
-                  }
-                },
-                [_vm._v(_vm._s(_vm.profile.name))]
-              ),
-              _vm._v(" "),
-              _c("p", [_vm._v(_vm._s(_vm.profile.role.name))])
-            ]),
+                    [_vm._v("Change password")]
+                  ),
+                  _vm._v(" "),
+                  _vm.changePass
+                    ? _c("div", { staticClass: "inner-profile-info" }, [
+                        _c(
+                          "form",
+                          {
+                            staticClass: "form-horizontal",
+                            on: {
+                              submit: function($event) {
+                                $event.preventDefault()
+                                _vm.changePassword($event)
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "col-sm-2 control-label",
+                                    attrs: { for: "password" }
+                                  },
+                                  [_vm._v("Old password")]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-sm-10" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.security.password,
+                                        expression: "security.password"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "password",
+                                      id: "password",
+                                      placeholder: "Old password"
+                                    },
+                                    domProps: { value: _vm.security.password },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.security,
+                                          "password",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _vm._l(_vm.security_errors.password, function(
+                                  error
+                                ) {
+                                  return _vm.security_errors.password
+                                    ? _c("p", { staticClass: "text-danger" }, [
+                                        _vm._v(_vm._s(error))
+                                      ])
+                                    : _vm._e()
+                                })
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "col-sm-2 control-label",
+                                    attrs: { for: "newpassword" }
+                                  },
+                                  [_vm._v("New password")]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-sm-10" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.security.new_password,
+                                        expression: "security.new_password"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "password",
+                                      id: "newpassword",
+                                      placeholder: "New password"
+                                    },
+                                    domProps: {
+                                      value: _vm.security.new_password
+                                    },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.security,
+                                          "new_password",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _vm._l(
+                                  _vm.security_errors.new_password,
+                                  function(error) {
+                                    return _vm.security_errors.new_password
+                                      ? _c(
+                                          "p",
+                                          { staticClass: "text-danger" },
+                                          [_vm._v(_vm._s(error))]
+                                        )
+                                      : _vm._e()
+                                  }
+                                )
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "form-group" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "col-sm-2 control-label",
+                                  attrs: { for: "newpassword_confirmation" }
+                                },
+                                [_vm._v("Confirm new password")]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-sm-10" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.security.new_password_confirmation,
+                                      expression:
+                                        "security.new_password_confirmation"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "password",
+                                    id: "newpassword_confirmation",
+                                    placeholder: "Confirm new password"
+                                  },
+                                  domProps: {
+                                    value:
+                                      _vm.security.new_password_confirmation
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.security,
+                                        "new_password_confirmation",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _vm._m(0)
+                          ]
+                        )
+                      ])
+                    : _vm._e()
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("div", { staticClass: "profile-info" }, [
-              _c("p", [_vm._v("Username: " + _vm._s(_vm.profile.username))]),
-              _vm._v(" "),
-              _c("p", [_vm._v("Email: " + _vm._s(_vm.profile.email))])
-            ]),
+            !_vm.editable
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default",
+                    on: { click: _vm.ToggleEnableEdit }
+                  },
+                  [_vm._v("Edit")]
+                )
+              : _vm._e(),
             _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "btn btn-default", on: { click: _vm.enableEdit } },
-              [_vm._v("Edit")]
-            )
+            _vm.editable
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default",
+                    on: { click: _vm.ToggleEnableEdit }
+                  },
+                  [_vm._v("Cancel")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.editable
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default",
+                    on: { click: _vm.changeProfile }
+                  },
+                  [_vm._v("Update")]
+                )
+              : _vm._e()
           ])
         : _vm._e()
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("div", { staticClass: "col-sm-offset-2 col-sm-10" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-default", attrs: { type: "submit" } },
+          [_vm._v("Confirm change password")]
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

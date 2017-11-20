@@ -89,7 +89,8 @@ a:hover{
         width: 100%;
         position: fixed;
         z-index: 10;
-        background-color: rgba(255, 255, 255, 1)
+        background-color: rgba(255, 255, 255, 1);
+        text-align:center;
     }
     #bs-example-navbar-collapse-1 > ul > li > a{
         color: #464646;
@@ -357,7 +358,7 @@ a:hover{
 
 // post page
 .margin-container{
-    margin-top: 4em;
+    margin-top: 1rem;
 }
 .class-posts .post-options{
     float: right;
