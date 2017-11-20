@@ -42,7 +42,7 @@ a:hover{
 }
 .navbar-brand img{
     display: block;
-    margin-left: 10px;
+    margin-left: 20px;
     height: 100%;
 }
 
@@ -162,7 +162,15 @@ a:hover{
 }
 
 .classroom-list-head{
-    font-size: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.card > a {
+    z-index: 20;
+
 }
 
 .class-meta{
@@ -171,6 +179,27 @@ a:hover{
     padding-bottom: 10px;
 }
 
+.class-meta .btn{
+    color: #464646;
+    border: 0px;
+    background: #fff;
+}
+.class-meta .btn:hover{
+    color: $primary-color;
+    border: 0px;
+    background: #fff;
+}
+.class-meta .open > .btn-default.dropdown-toggle:hover,
+.class-meta .open > .btn-default.dropdown-toggle:focus,
+.class-meta .open > .btn-default.dropdown-toggle:active{
+    color: $primary-color;
+    border: 0px;
+    background-color: #fff; 
+}
+.class-meta .btn-group.open .dropdown-toggle{
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
 .class-post-time{
     font-size: 12px;
 }
