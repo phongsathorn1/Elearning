@@ -24,8 +24,20 @@
     <div id="app">
         <div id="login-page">
             <div class="container">
-                <div class="login-form">
-                    <img src="{{ url('/images/logo-full.svg') }}">
+                <div class="login-form col-md-6 col-md-offset-3">
+                    <img src="{{ url('/images/logo-full.svg') }}" class="login-logo" height="100px">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="username" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="password" placeholder="Password">
+                            <div class="alert alert-danger" role="alert">The username or password is incorrect.</div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-default">Login</button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="object">

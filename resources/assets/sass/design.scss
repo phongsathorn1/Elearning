@@ -476,6 +476,44 @@ a:hover{
     position: fixed;
 }
 
+#login-page input::-webkit-input-placeholder { /* Chrome */
+  color: #FFFFFF;
+}
+#login-page input:-ms-input-placeholder { /* IE 10+ */
+  color: #FFFFFF;
+}
+#login-page input::-moz-placeholder { /* Firefox 19+ */
+  color: #FFFFFF;
+  opacity: 1;
+}
+#login-page input:-moz-placeholder { /* Firefox 4 - 18 */
+  color: #FFFFFF;
+  opacity: 1;
+}
+
+.login-logo{
+    margin-bottom: 20px;
+}
+
+.login-form{
+    position: relative;
+    top: 45px;
+}
+
+.login-form .form-group{
+    text-align: left;
+    padding: 5px 0px;
+}
+
+.login-form .form-group .form-control{
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #FFFFFF;
+    border-radius: 0px;
+    box-shadow: none;
+    color: #FFFFFF;
+}
+
 .object{
     position: absolute;
     top: 0;
