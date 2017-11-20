@@ -18,6 +18,9 @@ class AssignmentController extends Controller
     public function show($classroom_id, $id)
     {
         $classroom = Classroom::findOrFail($classroom_id);
+        if(!$classroom->members->find(Auth::id())){
+            return response()->json(['error' => "You don't have permission to access this."], 403);
+        }
         $assignment = Assignment::findOrFail($id)->load('user');
         $attachment = $assignment->post->attachments;
         $files = AssignmentFile::where([
@@ -42,7 +45,9 @@ class AssignmentController extends Controller
     public function store(Request $request, $classroom_id)
     {
         $classroom = Classroom::findOrFail($classroom_id);
-
+        if(!$classroom->members->find(Auth::id())){
+            return response()->json(['error' => "You don't have permission to access this."], 403);
+        }
         $post = Post::create([
             'user_id' => Auth::id(),
             'classroom_id' => $classroom_id,
@@ -69,7 +74,10 @@ class AssignmentController extends Controller
     public function upload(Request $request, $classroom_id, $id)
     {
         Classroom::findOrFail($classroom_id);
-        
+        if(!$classroom->members->find(Auth::id())){
+            return response()->json(['error' => "You don't have permission to access this."], 403);
+        }
+
         $assignment = Assignment::findOrFail($id);
         $now = Carbon::now();
         $due = Carbon::createFromFormat("Y-m-d H:i:s", $assignment->due_time);
@@ -93,6 +101,9 @@ class AssignmentController extends Controller
     public function removeFile(Request $request, $classroom_id, $id)
     {
         Classroom::findOrFail($classroom_id);
+        if(!$classroom->members->find(Auth::id())){
+            return response()->json(['error' => "You don't have permission to access this."], 403);
+        }
 
         $assignment = Assignment::findOrFail($id);
         $now = Carbon::now();
@@ -116,6 +127,9 @@ class AssignmentController extends Controller
 
     public function confirm(Request $request, $classroom_id, $id){
         Classroom::findOrFail($classroom_id);
+        if(!$classroom->members->find(Auth::id())){
+            return response()->json(['error' => "You don't have permission to access this."], 403);
+        }
 
         $assignment = Assignment::findOrFail($id);
         $now = Carbon::now();
@@ -169,6 +183,10 @@ class AssignmentController extends Controller
     //for edit assignment post. only teacher can use
     public function editPost(Request $request, $classroom_id, $id){
         Classroom::findOrFail($classroom_id);
+        if(!$classroom->members->find(Auth::id())){
+            return response()->json(['error' => "You don't have permission to access this."], 403);
+        }
+
         $post = Assignment::findOrFail($id);
         if(Auth::user()->classroom->find($classroom_id) && Auth::user()->role->actions != 'is_student')
         {
@@ -193,6 +211,10 @@ class AssignmentController extends Controller
 
     public function getPost($classroom_id, $id){
         Classroom::findOrFail($classroom_id);
+        if(!$classroom->members->find(Auth::id())){
+            return response()->json(['error' => "You don't have permission to access this."], 403);
+        }
+
         if(Auth::user()->classroom->find($classroom_id))
         {
             $post = Assignment::findOrFail($id);
@@ -207,6 +229,10 @@ class AssignmentController extends Controller
     public function destroy($classroom_id, $id)
     {
         Classroom::findOrFail($classroom_id);
+        if(!$classroom->members->find(Auth::id())){
+            return response()->json(['error' => "You don't have permission to access this."], 403);
+        }
+
         if(Auth::user()->assignments->find($id))
         {
             $post = Assignment::findOrFail($id);

@@ -18,7 +18,7 @@ class CreateClassroomsTable extends Migration
             $table->integer('user_id');
             $table->string('name');
             $table->string('join_code');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->timestamps();
         });
 

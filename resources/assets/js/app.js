@@ -22,7 +22,7 @@ axios.defaults.baseURL = '/';
 axios.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
-    if(router.history.current.path != '/login')
+    if(error.response.status == 500)
     {
         swal(
             'Oops...',

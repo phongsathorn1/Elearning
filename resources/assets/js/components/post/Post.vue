@@ -43,6 +43,8 @@
                     }
                 }).then(response => {
                     this.$router.push('/classroom/' + classroom_id)
+                }).catch(error => {
+                    this.$router.push('/')
                 })
             },
             post(form){
@@ -55,6 +57,8 @@
                     }
                 }).then(response => {
                     this.store(token, classroom_id, form)
+                }).catch(error => {
+                    this.$router.push('/')
                 })
             },
             uploadedFile(file){

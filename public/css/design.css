@@ -1,5 +1,5 @@
 body {
-  font-family: "Nunito", sans-serif;
+  font-family: "Rubik", sans-serif;
   background: #F0F0F0;
   max-height: 100vh;
 }
@@ -19,11 +19,11 @@ a:hover {
   background-color: #ffd200;
 }
 
-.transparent {
+.navbar.transparent {
   background-color: transparent;
 }
 
-.transparent .container {
+.navbar.transparent .container {
   margin-top: 20px;
 }
 
@@ -100,18 +100,16 @@ a:hover {
 
 .class-header {
   margin-top: -7rem;
-  min-width: 100vp;
-  max-width: 100%;
-  max-height: auto;
   background-repeat: no-repeat;
   background-size: cover;
   padding: 150px 0px 1rem 0px;
-  background-image: url(https://pbs.twimg.com/media/CvWl3-yUkAAG0ih.jpg);
+  background-image: url(https://static.pexels.com/photos/629168/pexels-photo-629168.jpeg);
   color: #FFFFFF;
 }
 
 .class-header h1 {
-  margin: 0px;
+  margin-bottom: 10px;
+  margin-top: 0px;
 }
 
 .class-header .btn-default {
@@ -131,9 +129,8 @@ a:hover {
 }
 
 .class-action {
-  padding: 10px 0px 0px 0;
+  padding-top: 30px;
   text-align: right;
-  width: auto;
 }
 
 @media (max-width: 500px) {
@@ -142,11 +139,6 @@ a:hover {
     text-align: center;
     width: 100%;
   }
-}
-
-.cover-bottom {
-  width: 100%;
-  margin-bottom: 0;
 }
 
 .class-header .btn-default:last-child {
@@ -187,12 +179,15 @@ a:hover {
 .card {
   background: #FFFFFF;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 3px;
   margin: 20px 0px;
+  -webkit-box-shadow: 0px 2px 9px 0px rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 2px 9px 0px rgba(0, 0, 0, 0.1);
 }
 
 .attachment {
   margin: 0px -5px;
+  padding: 10px 0px;
 }
 
 .attachment strong {
@@ -232,6 +227,7 @@ a:hover {
   white-space: normal;
   word-wrap: break-word;
   font-size: 13px;
+  line-height: 18px;
 }
 
 .attachment-thumbnail {
@@ -366,7 +362,42 @@ a:hover {
   margin-top: 4em;
 }
 
+.class-posts .post-options {
+  float: right;
+}
+
 .post-dropdown > li > a {
   border: 0px;
+}
+
+.class-post-main {
+  font-size: 16px;
+  padding: 15px 0px;
+}
+
+.class-post-comments {
+  padding: 20px;
+  border-top: 1px solid #e0e0e0;
+  background: #f5f5f5;
+  margin: 0px -20px;
+  margin-bottom: -20px;
+}
+
+.comment-box .form-control {
+  border-radius: 0px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.class-post-comments .comment-meta {
+  padding: 5px 0px;
+}
+
+.class-teacher {
+  text-align: right;
+}
+
+.class-teacher strong {
+  font-size: 20px;
 }
 

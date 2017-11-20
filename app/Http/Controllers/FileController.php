@@ -34,10 +34,6 @@ class FileController extends Controller
     public function attachment($filepath)
     {
         $file = FilesAttachment::where('filepath', $filepath)->first();
-        if($file->user_id !== Auth::id())
-        {
-            return response()->json(['successful' => false], 403);
-        }
         $new_filename = md5($file->filepath . microtime()).'.'.$file->type;
         Storage::copy("attachment/".$file->filepath, 'public/'.$new_filename);
 
@@ -51,7 +47,7 @@ class FileController extends Controller
             return response()->file(storage_path('app/public/'.$filepath))->deleteFileAfterSend(true);
         }
         else {
-            return response()->json(['error' => 'File not found.'], 404);
+            return abort(404);
         }
     }
 
