@@ -5975,7 +5975,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/block/upload.vue"
+Component.options.__file = "resources\\assets\\js\\components\\block\\upload.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -5985,9 +5985,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-252b95da", Component.options)
+    hotAPI.createRecord("data-v-c72be1f2", Component.options)
   } else {
-    hotAPI.reload("data-v-252b95da", Component.options)
+    hotAPI.reload("data-v-c72be1f2", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -6136,13 +6136,15 @@ module.exports = defaults;
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
- * Vue.js v2.5.3
+ * Vue.js v2.5.6
  * (c) 2014-2017 Evan You
  * Released under the MIT License.
  */
 
 
 /*  */
+
+var emptyObject = Object.freeze({});
 
 // these helpers produces better vm code in JS engines due to their
 // explicitness and function inlining
@@ -6561,8 +6563,6 @@ var config = ({
 
 /*  */
 
-var emptyObject = Object.freeze({});
-
 /**
  * Check if a string starts with $ or _
  */
@@ -6603,17 +6603,20 @@ function parsePath (path) {
 
 /*  */
 
+
 // can we use __proto__?
 var hasProto = '__proto__' in {};
 
 // Browser environment sniffing
 var inBrowser = typeof window !== 'undefined';
+var inWeex = typeof WXEnvironment !== 'undefined' && !!WXEnvironment.platform;
+var weexPlatform = inWeex && WXEnvironment.platform.toLowerCase();
 var UA = inBrowser && window.navigator.userAgent.toLowerCase();
 var isIE = UA && /msie|trident/.test(UA);
 var isIE9 = UA && UA.indexOf('msie 9.0') > 0;
 var isEdge = UA && UA.indexOf('edge/') > 0;
-var isAndroid = UA && UA.indexOf('android') > 0;
-var isIOS = UA && /iphone|ipad|ipod|ios/.test(UA);
+var isAndroid = (UA && UA.indexOf('android') > 0) || (weexPlatform === 'android');
+var isIOS = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
 var isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
 
 // Firefox has a "watch" function on Object.prototype...
@@ -7828,7 +7831,7 @@ function logError (err, vm, info) {
     warn(("Error in " + info + ": \"" + (err.toString()) + "\""), vm);
   }
   /* istanbul ignore else */
-  if (inBrowser && typeof console !== 'undefined') {
+  if ((inBrowser || inWeex) && typeof console !== 'undefined') {
     console.error(err);
   } else {
     throw err
@@ -8048,6 +8051,43 @@ if (true) {
       vm._renderProxy = vm;
     }
   };
+}
+
+/*  */
+
+var seenObjects = new _Set();
+
+/**
+ * Recursively traverse an object to evoke all converted
+ * getters, so that every nested property inside the object
+ * is collected as a "deep" dependency.
+ */
+function traverse (val) {
+  _traverse(val, seenObjects);
+  seenObjects.clear();
+}
+
+function _traverse (val, seen) {
+  var i, keys;
+  var isA = Array.isArray(val);
+  if ((!isA && !isObject(val)) || !Object.isExtensible(val)) {
+    return
+  }
+  if (val.__ob__) {
+    var depId = val.__ob__.dep.id;
+    if (seen.has(depId)) {
+      return
+    }
+    seen.add(depId);
+  }
+  if (isA) {
+    i = val.length;
+    while (i--) { _traverse(val[i], seen); }
+  } else {
+    keys = Object.keys(val);
+    i = keys.length;
+    while (i--) { _traverse(val[keys[i]], seen); }
+  }
 }
 
 /*  */
@@ -8645,7 +8685,7 @@ function resolveSlots (
 }
 
 function isWhitespace (node) {
-  return node.isComment || node.text === ' '
+  return (node.isComment && !node.asyncFactory) || node.text === ' '
 }
 
 function resolveScopedSlots (
@@ -9324,40 +9364,6 @@ Watcher.prototype.teardown = function teardown () {
   }
 };
 
-/**
- * Recursively traverse an object to evoke all converted
- * getters, so that every nested property inside the object
- * is collected as a "deep" dependency.
- */
-var seenObjects = new _Set();
-function traverse (val) {
-  seenObjects.clear();
-  _traverse(val, seenObjects);
-}
-
-function _traverse (val, seen) {
-  var i, keys;
-  var isA = Array.isArray(val);
-  if ((!isA && !isObject(val)) || !Object.isExtensible(val)) {
-    return
-  }
-  if (val.__ob__) {
-    var depId = val.__ob__.dep.id;
-    if (seen.has(depId)) {
-      return
-    }
-    seen.add(depId);
-  }
-  if (isA) {
-    i = val.length;
-    while (i--) { _traverse(val[i], seen); }
-  } else {
-    keys = Object.keys(val);
-    i = keys.length;
-    while (i--) { _traverse(val[keys[i]], seen); }
-  }
-}
-
 /*  */
 
 var sharedPropertyDefinition = {
@@ -9935,12 +9941,19 @@ function bindObjectProps (
  */
 function renderStatic (
   index,
-  isInFor
+  isInFor,
+  isOnce
 ) {
-  // static trees can be rendered once and cached on the contructor options
-  // so every instance shares the same cached trees
-  var options = this.$options;
-  var cached = options.cached || (options.cached = []);
+  // render fns generated by compiler < 2.5.4 does not provide v-once
+  // information to runtime so be conservative
+  var isOldVersion = arguments.length < 3;
+  // if a static tree is generated by v-once, it is cached on the instance;
+  // otherwise it is purely static and can be cached on the shared options
+  // across all instances.
+  var renderFns = this.$options.staticRenderFns;
+  var cached = isOldVersion || isOnce
+    ? (this._staticTrees || (this._staticTrees = []))
+    : (renderFns.cached || (renderFns.cached = []));
   var tree = cached[index];
   // if has already-rendered static tree and not inside v-for,
   // we can reuse the same tree by doing a shallow clone.
@@ -9950,7 +9963,7 @@ function renderStatic (
       : cloneVNode(tree)
   }
   // otherwise, render a fresh tree.
-  tree = cached[index] = options.staticRenderFns[index].call(this._renderProxy, null, this);
+  tree = cached[index] = renderFns[index].call(this._renderProxy, null, this);
   markStatic(tree, ("__static__" + index), false);
   return tree
 }
@@ -10482,6 +10495,7 @@ function applyNS (vnode, ns, force) {
 
 function initRender (vm) {
   vm._vnode = null; // the root of the child tree
+  vm._staticTrees = null; // v-once cached trees
   var options = vm.$options;
   var parentVnode = vm.$vnode = options._parentVnode; // the placeholder node in parent tree
   var renderContext = parentVnode && parentVnode.context;
@@ -10533,7 +10547,9 @@ function renderMixin (Vue) {
       // last render. They need to be cloned to ensure "freshness" for this render.
       for (var key in vm.$slots) {
         var slot = vm.$slots[key];
-        if (slot._rendered) {
+        // _rendered is a flag added by renderSlot, but may not be present
+        // if the slot is passed from manually written render functions
+        if (slot._rendered || (slot[0] && slot[0].elm)) {
           vm.$slots[key] = cloneVNodes(slot, true /* deep */);
         }
       }
@@ -10985,12 +11001,13 @@ var KeepAlive = {
   },
 
   render: function render () {
-    var vnode = getFirstComponentChild(this.$slots.default);
+    var slot = this.$slots.default;
+    var vnode = getFirstComponentChild(slot);
     var componentOptions = vnode && vnode.componentOptions;
     if (componentOptions) {
       // check pattern
       var name = getComponentName(componentOptions);
-      if (name && (
+      if (!name || (
         (this.exclude && matches(this.exclude, name)) ||
         (this.include && !matches(this.include, name))
       )) {
@@ -11021,7 +11038,7 @@ var KeepAlive = {
 
       vnode.data.keepAlive = true;
     }
-    return vnode
+    return vnode || (slot && slot[0])
   }
 };
 
@@ -11088,7 +11105,7 @@ Object.defineProperty(Vue$3.prototype, '$ssrContext', {
   }
 });
 
-Vue$3.version = '2.5.3';
+Vue$3.version = '2.5.6';
 
 /*  */
 
@@ -11515,7 +11532,23 @@ function createPatchFunction (backend) {
     }
   }
 
-  var inPre = 0;
+  function isUnknownElement$$1 (vnode, inVPre) {
+    return (
+      !inVPre &&
+      !vnode.ns &&
+      !(
+        config.ignoredElements.length &&
+        config.ignoredElements.some(function (ignore) {
+          return isRegExp(ignore)
+            ? ignore.test(vnode.tag)
+            : ignore === vnode.tag
+        })
+      ) &&
+      config.isUnknownElement(vnode.tag)
+    )
+  }
+
+  var creatingElmInVPre = 0;
   function createElm (vnode, insertedVnodeQueue, parentElm, refElm, nested) {
     vnode.isRootInsert = !nested; // for transition enter check
     if (createComponent(vnode, insertedVnodeQueue, parentElm, refElm)) {
@@ -11528,21 +11561,9 @@ function createPatchFunction (backend) {
     if (isDef(tag)) {
       if (true) {
         if (data && data.pre) {
-          inPre++;
+          creatingElmInVPre++;
         }
-        if (
-          !inPre &&
-          !vnode.ns &&
-          !(
-            config.ignoredElements.length &&
-            config.ignoredElements.some(function (ignore) {
-              return isRegExp(ignore)
-                ? ignore.test(tag)
-                : ignore === tag
-            })
-          ) &&
-          config.isUnknownElement(tag)
-        ) {
+        if (isUnknownElement$$1(vnode, creatingElmInVPre)) {
           warn(
             'Unknown custom element: <' + tag + '> - did you ' +
             'register the component correctly? For recursive components, ' +
@@ -11566,7 +11587,7 @@ function createPatchFunction (backend) {
       }
 
       if ("development" !== 'production' && data && data.pre) {
-        inPre--;
+        creatingElmInVPre--;
       }
     } else if (isTrue(vnode.isComment)) {
       vnode.elm = nodeOps.createComment(vnode.text);
@@ -11921,27 +11942,32 @@ function createPatchFunction (backend) {
     }
   }
 
-  var bailed = false;
+  var hydrationBailed = false;
   // list of modules that can skip create hook during hydration because they
   // are already rendered on the client or has no need for initialization
-  var isRenderedModule = makeMap('attrs,style,class,staticClass,staticStyle,key');
+  // Note: style is excluded because it relies on initial clone for future
+  // deep updates (#7063).
+  var isRenderedModule = makeMap('attrs,class,staticClass,staticStyle,key');
 
   // Note: this is a browser-only function so we can assume elms are DOM nodes.
-  function hydrate (elm, vnode, insertedVnodeQueue) {
-    if (isTrue(vnode.isComment) && isDef(vnode.asyncFactory)) {
-      vnode.elm = elm;
-      vnode.isAsyncPlaceholder = true;
-      return true
-    }
-    if (true) {
-      if (!assertNodeMatch(elm, vnode)) {
-        return false
-      }
-    }
-    vnode.elm = elm;
+  function hydrate (elm, vnode, insertedVnodeQueue, inVPre) {
+    var i;
     var tag = vnode.tag;
     var data = vnode.data;
     var children = vnode.children;
+    inVPre = inVPre || (data && data.pre);
+    vnode.elm = elm;
+
+    if (isTrue(vnode.isComment) && isDef(vnode.asyncFactory)) {
+      vnode.isAsyncPlaceholder = true;
+      return true
+    }
+    // assert node match
+    if (true) {
+      if (!assertNodeMatch(elm, vnode, inVPre)) {
+        return false
+      }
+    }
     if (isDef(data)) {
       if (isDef(i = data.hook) && isDef(i = i.init)) { i(vnode, true /* hydrating */); }
       if (isDef(i = vnode.componentInstance)) {
@@ -11962,9 +11988,9 @@ function createPatchFunction (backend) {
               /* istanbul ignore if */
               if ("development" !== 'production' &&
                 typeof console !== 'undefined' &&
-                !bailed
+                !hydrationBailed
               ) {
-                bailed = true;
+                hydrationBailed = true;
                 console.warn('Parent: ', elm);
                 console.warn('server innerHTML: ', i);
                 console.warn('client innerHTML: ', elm.innerHTML);
@@ -11976,7 +12002,7 @@ function createPatchFunction (backend) {
             var childrenMatch = true;
             var childNode = elm.firstChild;
             for (var i$1 = 0; i$1 < children.length; i$1++) {
-              if (!childNode || !hydrate(childNode, children[i$1], insertedVnodeQueue)) {
+              if (!childNode || !hydrate(childNode, children[i$1], insertedVnodeQueue, inVPre)) {
                 childrenMatch = false;
                 break
               }
@@ -11988,9 +12014,9 @@ function createPatchFunction (backend) {
               /* istanbul ignore if */
               if ("development" !== 'production' &&
                 typeof console !== 'undefined' &&
-                !bailed
+                !hydrationBailed
               ) {
-                bailed = true;
+                hydrationBailed = true;
                 console.warn('Parent: ', elm);
                 console.warn('Mismatching childNodes vs. VNodes: ', elm.childNodes, children);
               }
@@ -12000,11 +12026,17 @@ function createPatchFunction (backend) {
         }
       }
       if (isDef(data)) {
+        var fullInvoke = false;
         for (var key in data) {
           if (!isRenderedModule(key)) {
+            fullInvoke = true;
             invokeCreateHooks(vnode, insertedVnodeQueue);
             break
           }
+        }
+        if (!fullInvoke && data['class']) {
+          // ensure collecting deps for deep class bindings for future updates
+          traverse(data['class']);
         }
       }
     } else if (elm.data !== vnode.text) {
@@ -12013,10 +12045,10 @@ function createPatchFunction (backend) {
     return true
   }
 
-  function assertNodeMatch (node, vnode) {
+  function assertNodeMatch (node, vnode, inVPre) {
     if (isDef(vnode.tag)) {
-      return (
-        vnode.tag.indexOf('vue-component') === 0 ||
+      return vnode.tag.indexOf('vue-component') === 0 || (
+        !isUnknownElement$$1(vnode, inVPre) &&
         vnode.tag.toLowerCase() === (node.tagName && node.tagName.toLowerCase())
       )
     } else {
@@ -12504,39 +12536,59 @@ function addHandler (
   important,
   warn
 ) {
+  modifiers = modifiers || emptyObject;
   // warn prevent and passive modifier
   /* istanbul ignore if */
   if (
     "development" !== 'production' && warn &&
-    modifiers && modifiers.prevent && modifiers.passive
+    modifiers.prevent && modifiers.passive
   ) {
     warn(
       'passive and prevent can\'t be used together. ' +
       'Passive handler can\'t prevent default event.'
     );
   }
+
   // check capture modifier
-  if (modifiers && modifiers.capture) {
+  if (modifiers.capture) {
     delete modifiers.capture;
     name = '!' + name; // mark the event as captured
   }
-  if (modifiers && modifiers.once) {
+  if (modifiers.once) {
     delete modifiers.once;
     name = '~' + name; // mark the event as once
   }
   /* istanbul ignore if */
-  if (modifiers && modifiers.passive) {
+  if (modifiers.passive) {
     delete modifiers.passive;
     name = '&' + name; // mark the event as passive
   }
+
+  // normalize click.right and click.middle since they don't actually fire
+  // this is technically browser-specific, but at least for now browsers are
+  // the only target envs that have right/middle clicks.
+  if (name === 'click') {
+    if (modifiers.right) {
+      name = 'contextmenu';
+      delete modifiers.right;
+    } else if (modifiers.middle) {
+      name = 'mouseup';
+    }
+  }
+
   var events;
-  if (modifiers && modifiers.native) {
+  if (modifiers.native) {
     delete modifiers.native;
     events = el.nativeEvents || (el.nativeEvents = {});
   } else {
     events = el.events || (el.events = {});
   }
-  var newHandler = { value: value, modifiers: modifiers };
+
+  var newHandler = { value: value };
+  if (modifiers !== emptyObject) {
+    newHandler.modifiers = modifiers;
+  }
+
   var handlers = events[name];
   /* istanbul ignore if */
   if (Array.isArray(handlers)) {
@@ -12867,6 +12919,19 @@ function genDefaultModel (
   modifiers
 ) {
   var type = el.attrsMap.type;
+
+  // warn if v-bind:value conflicts with v-model
+  if (true) {
+    var value$1 = el.attrsMap['v-bind:value'] || el.attrsMap[':value'];
+    if (value$1) {
+      var binding = el.attrsMap['v-bind:value'] ? 'v-bind:value' : ':value';
+      warn$1(
+        binding + "=\"" + value$1 + "\" conflicts with v-model on the same element " +
+        'because the latter already expands to a value binding internally'
+      );
+    }
+  }
+
   var ref = modifiers || {};
   var lazy = ref.lazy;
   var number = ref.number;
@@ -13630,12 +13695,12 @@ function leave (vnode, rm) {
   }
 
   var data = resolveTransition(vnode.data.transition);
-  if (isUndef(data)) {
+  if (isUndef(data) || el.nodeType !== 1) {
     return rm()
   }
 
   /* istanbul ignore if */
-  if (isDef(el._leaveCb) || el.nodeType !== 1) {
+  if (isDef(el._leaveCb)) {
     return
   }
 
@@ -14090,7 +14155,7 @@ var Transition = {
   render: function render (h) {
     var this$1 = this;
 
-    var children = this.$options._renderChildren;
+    var children = this.$slots.default;
     if (!children) {
       return
     }
@@ -14169,7 +14234,9 @@ var Transition = {
       oldChild &&
       oldChild.data &&
       !isSameChild(child, oldChild) &&
-      !isAsyncPlaceholder(oldChild)
+      !isAsyncPlaceholder(oldChild) &&
+      // #6687 component root is a comment node
+      !(oldChild.componentInstance && oldChild.componentInstance._vnode.isComment)
     ) {
       // replace old child transition data with fresh one
       // important for dynamic transitions!
@@ -15809,18 +15876,7 @@ function genHandlers (
 ) {
   var res = isNative ? 'nativeOn:{' : 'on:{';
   for (var name in events) {
-    var handler = events[name];
-    // #5330: warn click.right, since right clicks do not actually fire click events.
-    if ("development" !== 'production' &&
-      name === 'click' &&
-      handler && handler.modifiers && handler.modifiers.right
-    ) {
-      warn(
-        "Use \"contextmenu\" instead of \"click.right\" since right clicks " +
-        "do not actually fire \"click\" events."
-      );
-    }
-    res += "\"" + name + "\":" + (genHandler(name, handler)) + ",";
+    res += "\"" + name + "\":" + (genHandler(name, events[name])) + ",";
   }
   return res.slice(0, -1) + '}'
 }
@@ -15987,10 +16043,10 @@ function genElement (el, state) {
 }
 
 // hoist static sub-trees out
-function genStatic (el, state) {
+function genStatic (el, state, once$$1) {
   el.staticProcessed = true;
   state.staticRenderFns.push(("with(this){return " + (genElement(el, state)) + "}"));
-  return ("_m(" + (state.staticRenderFns.length - 1) + (el.staticInFor ? ',true' : '') + ")")
+  return ("_m(" + (state.staticRenderFns.length - 1) + "," + (el.staticInFor ? 'true' : 'false') + "," + (once$$1 ? 'true' : 'false') + ")")
 }
 
 // v-once
@@ -16016,7 +16072,7 @@ function genOnce (el, state) {
     }
     return ("_o(" + (genElement(el, state)) + "," + (state.onceId++) + "," + key + ")")
   } else {
-    return genStatic(el, state)
+    return genStatic(el, state, true)
   }
 }
 
@@ -30833,7 +30889,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/block/attachment.vue"
+Component.options.__file = "resources\\assets\\js\\components\\block\\attachment.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -30843,9 +30899,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-40d9b77c", Component.options)
+    hotAPI.createRecord("data-v-d6a45bae", Component.options)
   } else {
-    hotAPI.reload("data-v-40d9b77c", Component.options)
+    hotAPI.reload("data-v-d6a45bae", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -30881,7 +30937,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/block/post.vue"
+Component.options.__file = "resources\\assets\\js\\components\\block\\post.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -30891,9 +30947,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-d023958e", Component.options)
+    hotAPI.createRecord("data-v-78e315a6", Component.options)
   } else {
-    hotAPI.reload("data-v-d023958e", Component.options)
+    hotAPI.reload("data-v-78e315a6", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -30929,7 +30985,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/block/assignment.vue"
+Component.options.__file = "resources\\assets\\js\\components\\block\\assignment.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -30939,9 +30995,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3c8b0026", Component.options)
+    hotAPI.createRecord("data-v-df41ca5a", Component.options)
   } else {
-    hotAPI.reload("data-v-3c8b0026", Component.options)
+    hotAPI.reload("data-v-df41ca5a", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -70164,7 +70220,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/classroom/List.vue"
+Component.options.__file = "resources\\assets\\js\\components\\classroom\\List.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -70174,9 +70230,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-28ccbfd1", Component.options)
+    hotAPI.createRecord("data-v-255dff84", Component.options)
   } else {
-    hotAPI.reload("data-v-28ccbfd1", Component.options)
+    hotAPI.reload("data-v-255dff84", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -70197,13 +70253,13 @@ var content = __webpack_require__(173);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(174)("16af0e68", content, false);
+var update = __webpack_require__(174)("354d8102", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-28ccbfd1\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./List.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-28ccbfd1\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./List.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-255dff84\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./List.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-255dff84\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./List.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -70767,7 +70823,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-28ccbfd1", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-255dff84", module.exports)
   }
 }
 
@@ -70797,7 +70853,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/Login.vue"
+Component.options.__file = "resources\\assets\\js\\components\\Login.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -70807,9 +70863,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3e2ac97c", Component.options)
+    hotAPI.createRecord("data-v-01e7f602", Component.options)
   } else {
-    hotAPI.reload("data-v-3e2ac97c", Component.options)
+    hotAPI.reload("data-v-01e7f602", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -70905,7 +70961,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 var options = {
-    'client_secret': 'oYNYj66Mjc2cIcItEUjGcMmRaKqILkclihUWdiua',
+    'client_secret': 'lJmFpq8OZZwJZFMNyMwLf52iQjBkWssGBK4We1N0',
     'client_id': 2,
     'grant_type': 'password'
 };
@@ -71039,7 +71095,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3e2ac97c", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-01e7f602", module.exports)
   }
 }
 
@@ -71069,7 +71125,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/Logout.vue"
+Component.options.__file = "resources\\assets\\js\\components\\Logout.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -71079,9 +71135,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-ed0c54fe", Component.options)
+    hotAPI.createRecord("data-v-efb05a7e", Component.options)
   } else {
-    hotAPI.reload("data-v-ed0c54fe", Component.options)
+    hotAPI.reload("data-v-efb05a7e", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -71125,7 +71181,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-ed0c54fe", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-efb05a7e", module.exports)
   }
 }
 
@@ -71155,7 +71211,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/classroom/Create.vue"
+Component.options.__file = "resources\\assets\\js\\components\\classroom\\Create.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -71165,9 +71221,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-b9285322", Component.options)
+    hotAPI.createRecord("data-v-57e1af9c", Component.options)
   } else {
-    hotAPI.reload("data-v-b9285322", Component.options)
+    hotAPI.reload("data-v-57e1af9c", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -71308,7 +71364,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-b9285322", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-57e1af9c", module.exports)
   }
 }
 
@@ -71338,7 +71394,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/classroom/View.vue"
+Component.options.__file = "resources\\assets\\js\\components\\classroom\\View.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -71348,9 +71404,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1fdeee58", Component.options)
+    hotAPI.createRecord("data-v-3739a276", Component.options)
   } else {
-    hotAPI.reload("data-v-1fdeee58", Component.options)
+    hotAPI.reload("data-v-3739a276", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -72011,7 +72067,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-40d9b77c", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-d6a45bae", module.exports)
   }
 }
 
@@ -72041,7 +72097,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/block/PostCard.vue"
+Component.options.__file = "resources\\assets\\js\\components\\block\\PostCard.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -72051,9 +72107,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-123a2809", Component.options)
+    hotAPI.createRecord("data-v-9881ec14", Component.options)
   } else {
-    hotAPI.reload("data-v-123a2809", Component.options)
+    hotAPI.reload("data-v-9881ec14", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -72140,7 +72196,7 @@ var render = function() {
     _c("div", { staticClass: "class-meta" }, [
       _vm.showOption
         ? _c("div", { staticClass: "btn-group post-options" }, [
-            _vm._m(0),
+            _vm._m(0, false, false),
             _vm._v(" "),
             _c(
               "ul",
@@ -72239,7 +72295,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-123a2809", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-9881ec14", module.exports)
   }
 }
 
@@ -72269,7 +72325,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/block/AssignmentCard.vue"
+Component.options.__file = "resources\\assets\\js\\components\\block\\AssignmentCard.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -72279,9 +72335,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-cf33c714", Component.options)
+    hotAPI.createRecord("data-v-5a2318a3", Component.options)
   } else {
-    hotAPI.reload("data-v-cf33c714", Component.options)
+    hotAPI.reload("data-v-5a2318a3", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -72299,6 +72355,19 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -72362,59 +72431,79 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "post-container" }, [
-    _c(
-      "div",
-      { staticClass: "class-meta" },
-      [
-        _c("div", { staticClass: "class-post-user class-meta-item" }, [
-          _vm._v("\n            " + _vm._s(_vm.post.user.name) + "\n        ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "class-post-time class-meta-item" }, [
-          _vm._v(
-            "\n            " +
-              _vm._s(_vm.parseTime(_vm.post.created_at)) +
-              "\n        "
+    _c("div", { staticClass: "class-meta" }, [
+      _c(
+        "div",
+        { staticClass: "btn-group post-options", attrs: { role: "group" } },
+        [
+          _vm._m(0, false, false),
+          _vm._v(" "),
+          _c(
+            "ul",
+            {
+              staticClass: "dropdown-menu dropdown-menu-right",
+              attrs: { "aria-labelledby": "dropdownMenu1" }
+            },
+            [
+              _c(
+                "li",
+                [
+                  _vm.showOption
+                    ? _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-default",
+                          attrs: {
+                            to:
+                              "/classroom/" +
+                              _vm.classroomId +
+                              "/assignment/" +
+                              _vm.post.assignment.id +
+                              "/edit"
+                          }
+                        },
+                        [_vm._v("Edit")]
+                      )
+                    : _vm._e()
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("li", [
+                _vm.showOption
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-default",
+                        on: {
+                          click: function($event) {
+                            _vm.removePost(_vm.post.assignment.id)
+                          }
+                        }
+                      },
+                      [_vm._v("Delete")]
+                    )
+                  : _vm._e()
+              ])
+            ]
           )
-        ]),
-        _vm._v(" "),
-        _vm.showOption
-          ? _c(
-              "router-link",
-              {
-                staticClass: "btn btn-default",
-                attrs: {
-                  to:
-                    "/classroom/" +
-                    _vm.classroomId +
-                    "/assignment/" +
-                    _vm.post.assignment.id +
-                    "/edit"
-                }
-              },
-              [_vm._v("Edit")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.showOption
-          ? _c(
-              "button",
-              {
-                staticClass: "btn btn-default",
-                on: {
-                  click: function($event) {
-                    _vm.removePost(_vm.post.assignment.id)
-                  }
-                }
-              },
-              [_vm._v("Delete")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _c("div", { staticClass: "clearfix" })
-      ],
-      1
-    ),
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "class-post-user class-meta-item" }, [
+        _vm._v("\n            " + _vm._s(_vm.post.user.name) + "\n        ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "class-post-time class-meta-item" }, [
+        _vm._v(
+          "\n            " +
+            _vm._s(_vm.parseTime(_vm.post.created_at)) +
+            "\n        "
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" })
+    ]),
     _vm._v(" "),
     _c(
       "h3",
@@ -72443,13 +72532,37 @@ var render = function() {
       : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-default dropdown-toggle",
+        attrs: {
+          type: "button",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [
+        _c("span", {
+          staticClass: "glyphicon glyphicon-option-horizontal",
+          attrs: { "aria-hidden": "true" }
+        })
+      ]
+    )
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-cf33c714", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-5a2318a3", module.exports)
   }
 }
 
@@ -72527,7 +72640,7 @@ var render = function() {
                       "div",
                       { staticClass: "btn-group", attrs: { role: "group" } },
                       [
-                        _vm._m(0),
+                        _vm._m(0, false, false),
                         _vm._v(" "),
                         _c(
                           "ul",
@@ -72787,7 +72900,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-1fdeee58", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-3739a276", module.exports)
   }
 }
 
@@ -72817,7 +72930,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/classroom/Edit.vue"
+Component.options.__file = "resources\\assets\\js\\components\\classroom\\Edit.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -72827,9 +72940,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3814e73d", Component.options)
+    hotAPI.createRecord("data-v-06cdb0ac", Component.options)
   } else {
-    hotAPI.reload("data-v-3814e73d", Component.options)
+    hotAPI.reload("data-v-06cdb0ac", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -72977,7 +73090,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3814e73d", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-06cdb0ac", module.exports)
   }
 }
 
@@ -73007,7 +73120,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/post/Post.vue"
+Component.options.__file = "resources\\assets\\js\\components\\post\\Post.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -73017,9 +73130,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-734c8d70", Component.options)
+    hotAPI.createRecord("data-v-2fb33735", Component.options)
   } else {
-    hotAPI.reload("data-v-734c8d70", Component.options)
+    hotAPI.reload("data-v-2fb33735", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -73309,7 +73422,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-252b95da", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-c72be1f2", module.exports)
   }
 }
 
@@ -73397,7 +73510,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-d023958e", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-78e315a6", module.exports)
   }
 }
 
@@ -73429,7 +73542,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-734c8d70", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-2fb33735", module.exports)
   }
 }
 
@@ -73459,7 +73572,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/assignment/Post.vue"
+Component.options.__file = "resources\\assets\\js\\components\\assignment\\Post.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -73469,9 +73582,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-545a20fb", Component.options)
+    hotAPI.createRecord("data-v-3f7c8ee8", Component.options)
   } else {
-    hotAPI.reload("data-v-545a20fb", Component.options)
+    hotAPI.reload("data-v-3f7c8ee8", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -73642,8 +73755,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* flatpickr v4.1.0, @license MIT */
-(function(l, i, v, e) { v = l.createElement(i); v.async = 1; v.src = '//' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');
+/* flatpickr v4.1.2, @license MIT */
 (function (global, factory) {
 	 true ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -75983,7 +76095,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3c8b0026", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-df41ca5a", module.exports)
   }
 }
 
@@ -76018,7 +76130,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-545a20fb", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-3f7c8ee8", module.exports)
   }
 }
 
@@ -76048,7 +76160,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/member/Add.vue"
+Component.options.__file = "resources\\assets\\js\\components\\member\\Add.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -76058,9 +76170,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3ac3e6e3", Component.options)
+    hotAPI.createRecord("data-v-4e462756", Component.options)
   } else {
-    hotAPI.reload("data-v-3ac3e6e3", Component.options)
+    hotAPI.reload("data-v-4e462756", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -76276,7 +76388,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3ac3e6e3", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-4e462756", module.exports)
   }
 }
 
@@ -76306,7 +76418,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/member/View.vue"
+Component.options.__file = "resources\\assets\\js\\components\\member\\View.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -76316,9 +76428,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-9d6cb85a", Component.options)
+    hotAPI.createRecord("data-v-0e0f71c0", Component.options)
   } else {
-    hotAPI.reload("data-v-9d6cb85a", Component.options)
+    hotAPI.reload("data-v-0e0f71c0", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -76529,7 +76641,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-9d6cb85a", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-0e0f71c0", module.exports)
   }
 }
 
@@ -76559,7 +76671,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/assignment/View.vue"
+Component.options.__file = "resources\\assets\\js\\components\\assignment\\View.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -76569,9 +76681,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6e823880", Component.options)
+    hotAPI.createRecord("data-v-59a4a66d", Component.options)
   } else {
-    hotAPI.reload("data-v-6e823880", Component.options)
+    hotAPI.reload("data-v-59a4a66d", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -76708,7 +76820,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/assignment/AssignmentUpload.vue"
+Component.options.__file = "resources\\assets\\js\\components\\assignment\\AssignmentUpload.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -76718,9 +76830,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-e1250fee", Component.options)
+    hotAPI.createRecord("data-v-70a16a76", Component.options)
   } else {
-    hotAPI.reload("data-v-e1250fee", Component.options)
+    hotAPI.reload("data-v-70a16a76", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -77023,7 +77135,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-e1250fee", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-70a16a76", module.exports)
   }
 }
 
@@ -77053,7 +77165,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/assignment/AssignmentDone.vue"
+Component.options.__file = "resources\\assets\\js\\components\\assignment\\AssignmentDone.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -77063,9 +77175,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-af31bdec", Component.options)
+    hotAPI.createRecord("data-v-6e426a92", Component.options)
   } else {
-    hotAPI.reload("data-v-af31bdec", Component.options)
+    hotAPI.reload("data-v-6e426a92", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -77314,7 +77426,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-af31bdec", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-6e426a92", module.exports)
   }
 }
 
@@ -77432,7 +77544,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6e823880", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-59a4a66d", module.exports)
   }
 }
 
@@ -77462,7 +77574,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/assignment/Edit.vue"
+Component.options.__file = "resources\\assets\\js\\components\\assignment\\Edit.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -77472,9 +77584,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-f28f9d36", Component.options)
+    hotAPI.createRecord("data-v-71da9f52", Component.options)
   } else {
-    hotAPI.reload("data-v-f28f9d36", Component.options)
+    hotAPI.reload("data-v-71da9f52", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -77636,7 +77748,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-f28f9d36", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-71da9f52", module.exports)
   }
 }
 
@@ -77666,7 +77778,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/post/Edit.vue"
+Component.options.__file = "resources\\assets\\js\\components\\post\\Edit.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -77676,9 +77788,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0e906c9c", Component.options)
+    hotAPI.createRecord("data-v-6211479f", Component.options)
   } else {
-    hotAPI.reload("data-v-0e906c9c", Component.options)
+    hotAPI.reload("data-v-6211479f", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -77827,7 +77939,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0e906c9c", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-6211479f", module.exports)
   }
 }
 
@@ -77857,7 +77969,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/user/profile.vue"
+Component.options.__file = "resources\\assets\\js\\components\\user\\profile.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -77867,9 +77979,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-74774a7c", Component.options)
+    hotAPI.createRecord("data-v-19bc696f", Component.options)
   } else {
-    hotAPI.reload("data-v-74774a7c", Component.options)
+    hotAPI.reload("data-v-19bc696f", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -78387,7 +78499,7 @@ var render = function() {
                               ])
                             ]),
                             _vm._v(" "),
-                            _vm._m(0)
+                            _vm._m(0, false, false)
                           ]
                         )
                       ])
@@ -78453,7 +78565,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-74774a7c", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-19bc696f", module.exports)
   }
 }
 
@@ -78483,7 +78595,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/error/404.vue"
+Component.options.__file = "resources\\assets\\js\\components\\error\\404.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -78493,9 +78605,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0671842a", Component.options)
+    hotAPI.createRecord("data-v-bb4f3bc6", Component.options)
   } else {
-    hotAPI.reload("data-v-0671842a", Component.options)
+    hotAPI.reload("data-v-bb4f3bc6", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -78534,7 +78646,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _vm._m(0, false, false)
 }
 var staticRenderFns = [
   function() {
@@ -78553,7 +78665,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0671842a", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-bb4f3bc6", module.exports)
   }
 }
 
@@ -78583,7 +78695,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/App.vue"
+Component.options.__file = "resources\\assets\\js\\App.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -78593,9 +78705,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-66ab2f82", Component.options)
+    hotAPI.createRecord("data-v-6dd1125c", Component.options)
   } else {
-    hotAPI.reload("data-v-66ab2f82", Component.options)
+    hotAPI.reload("data-v-6dd1125c", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -78663,7 +78775,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/NavbarComponent.vue"
+Component.options.__file = "resources\\assets\\js\\components\\NavbarComponent.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -78673,9 +78785,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5b258f66", Component.options)
+    hotAPI.createRecord("data-v-36407a26", Component.options)
   } else {
-    hotAPI.reload("data-v-5b258f66", Component.options)
+    hotAPI.reload("data-v-36407a26", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -78799,7 +78911,7 @@ var render = function() {
               "div",
               { staticClass: "navbar-header" },
               [
-                _vm._m(0),
+                _vm._m(0, false, false),
                 _vm._v(" "),
                 _c(
                   "router-link",
@@ -78821,7 +78933,7 @@ var render = function() {
                 attrs: { id: "bs-example-navbar-collapse-1" }
               },
               [
-                _vm._m(1),
+                _vm._m(1, false, false),
                 _vm._v(" "),
                 _vm.isLoggedIn
                   ? _c("ul", { staticClass: "nav navbar-nav navbar-right" }, [
@@ -78957,7 +79069,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5b258f66", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-36407a26", module.exports)
   }
 }
 
@@ -78986,7 +79098,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-66ab2f82", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-6dd1125c", module.exports)
   }
 }
 
