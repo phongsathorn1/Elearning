@@ -22,6 +22,9 @@
 Route::get('download/file/{filepath}/', 'FileController@download');
 Route::get('download/assignment/{assignment_id}/{filepath}/', 'FileController@downloadAssignment');
 Route::get('thumbnail/file/{filepath}', 'FileController@downloadImage');
+Route::get('beta/login/', function(){
+    return view('login');
+});
 
 Route::any('{all}', function () {
     return view('app');

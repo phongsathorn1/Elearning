@@ -467,3 +467,121 @@ a:hover{
     transform: scale(1.0);
   }
 }
+
+//login-page
+#login-page{
+    background-image: linear-gradient(rgb(232, 83, 12) 0%, rgb(242, 144, 41) 40%, rgb(246, 160, 28) 100%);
+    height: 100%;
+    width: 100%;
+    position: fixed;
+}
+
+.object{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.star-1,
+.star-2{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+}
+
+.star-1{
+    animation: fade 3s ease-in-out infinite;
+}
+
+.star-2{
+    animation: fade 5s ease-in-out infinite;
+}
+
+.mountain{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: bottom;
+    background-repeat: no-repeat;
+}
+
+.mountain-1{
+    background-image: url(/images/login/m1_ly1.png);
+}
+
+.mountain-2{
+    background-image: url(/images/login/m2_ly1.png);
+}
+
+.mountain-3{
+    background-image: url(/images/login/m3_ly1.png);
+}
+
+.mountain-4{
+    background-image: url(/images/login/m4_ly1.png);
+}
+
+.mountain-5{
+    background-image: url(/images/login/m5_ly1.png);
+}
+
+.cloud{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    background-size: cover;
+}
+
+.cloud-4{
+    background-image: url(/images/login/cloud4_ly2.png);
+    animation: slide 45s linear infinite;
+}
+
+.cloud-3{
+    background-image: url(/images/login/cloud3_ly2.png);
+    animation: slide 45s linear infinite;
+}
+
+.cloud-2{
+    background-image: url(/images/login/cloud2_ly2.png);
+    animation: slide 40s linear infinite;
+}
+
+.cloud-1{
+    background-image: url(/images/login/cloud1_ly2.png);
+    animation: slide 40s linear infinite;
+}
+
+#login-page .container{
+    position: relative;
+    z-index: 99;
+    top: 10%;
+    text-align: center;
+}
+
+@-webkit-keyframes slide {
+    from { background-position: 900px 0; }
+    to { background-position: -900px 0; }
+}
+
+@keyframes fade{
+    0% { opacity: 0 }
+    50% {opacity: 1 }
+    100% { opacity: 0}
+}
+
+@keyframes mountain{
+    0%{
+        background-position:1828px 0px;
+    }
+    100%{
+        background-position:-1828px 0px;
+    }
+}
