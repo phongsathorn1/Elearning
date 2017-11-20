@@ -106,4 +106,6 @@ class ClassroomController extends Controller
         $classroom = Auth::user()->classroom()->findOrFail($classroom_id);
         return response()->json($classroom);
     }
+
+    
 }

@@ -73,7 +73,7 @@ class AssignmentController extends Controller
 
     public function upload(Request $request, $classroom_id, $id)
     {
-        Classroom::findOrFail($classroom_id);
+        $classroom = Classroom::findOrFail($classroom_id);
         if(!$classroom->members->find(Auth::id())){
             return response()->json(['error' => "You don't have permission to access this."], 403);
         }
@@ -100,7 +100,7 @@ class AssignmentController extends Controller
 
     public function removeFile(Request $request, $classroom_id, $id)
     {
-        Classroom::findOrFail($classroom_id);
+        $classroom = Classroom::findOrFail($classroom_id);
         if(!$classroom->members->find(Auth::id())){
             return response()->json(['error' => "You don't have permission to access this."], 403);
         }
@@ -126,7 +126,7 @@ class AssignmentController extends Controller
     }
 
     public function confirm(Request $request, $classroom_id, $id){
-        Classroom::findOrFail($classroom_id);
+        $classroom = Classroom::findOrFail($classroom_id);
         if(!$classroom->members->find(Auth::id())){
             return response()->json(['error' => "You don't have permission to access this."], 403);
         }
@@ -182,7 +182,7 @@ class AssignmentController extends Controller
 
     //for edit assignment post. only teacher can use
     public function editPost(Request $request, $classroom_id, $id){
-        Classroom::findOrFail($classroom_id);
+        $classroom = Classroom::findOrFail($classroom_id);
         if(!$classroom->members->find(Auth::id())){
             return response()->json(['error' => "You don't have permission to access this."], 403);
         }
@@ -228,7 +228,7 @@ class AssignmentController extends Controller
 
     public function destroy($classroom_id, $id)
     {
-        Classroom::findOrFail($classroom_id);
+        $classroom = Classroom::findOrFail($classroom_id);
         if(!$classroom->members->find(Auth::id())){
             return response()->json(['error' => "You don't have permission to access this."], 403);
         }
