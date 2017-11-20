@@ -5,7 +5,7 @@
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
                 </button>
-                <ul class="dropdown-menu post-dropdown">
+                <ul class="dropdown-menu dropdown-menu-right post-dropdown">
                     <li>
                         <router-link
                             :to="`/classroom/${classroomId}/post/${post.id}/edit`"
