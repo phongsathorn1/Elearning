@@ -3,6 +3,7 @@
 /public/hot
 /public/storage
 /public/js/app.js
+public/js/app.js
 /storage/*.key
 /vendor
 /.idea
