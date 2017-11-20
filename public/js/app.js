@@ -71497,6 +71497,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -71553,9 +71558,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var teachers = this.classroom.members.filter(function (user) {
                 return user.role.actions === "is_teacher";
             });
-
-            console.log(teachers);
-
             return teachers;
         },
         comment: function comment(post_id) {
@@ -72465,283 +72467,299 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "classroom", staticStyle: { "min-height": "500px" } },
-    [
-      _c("div", { staticClass: "class-header" }, [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "col-md-8" }, [
-            _c("h1", [_vm._v(_vm._s(_vm.classroom.name))]),
-            _vm._v(" "),
-            _c("div", { staticClass: "class-description" }, [
-              _vm._v(
-                "\n                    " +
-                  _vm._s(_vm.classroom.description) +
-                  "\n                "
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("div", { staticClass: "class-teacher" }, [
-              _c("strong", [_vm._v("Teachers")]),
-              _vm._v(" "),
-              _c(
-                "ul",
-                _vm._l(_vm.teachers(), function(teacher) {
-                  return _c("li", [_vm._v(_vm._s(teacher.name))])
-                })
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "container cover-bottom" }, [
-          _c("div", { staticClass: "class-action" }, [
-            _c(
-              "div",
-              {
-                staticClass: "btn-group",
-                attrs: { role: "group", "aria-label": "..." }
-              },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "btn btn-default",
-                    attrs: { to: _vm.classroom.id + "/post" }
-                  },
-                  [_vm._v("New Post")]
-                ),
+  return _vm.classroom
+    ? _c(
+        "div",
+        { staticClass: "classroom", staticStyle: { "min-height": "500px" } },
+        [
+          _c("div", { staticClass: "class-header" }, [
+            _c("div", { staticClass: "container" }, [
+              _c("div", { staticClass: "col-md-8" }, [
+                _c("h1", [_vm._v(_vm._s(_vm.classroom.name))]),
                 _vm._v(" "),
-                _vm.isTeacher
-                  ? _c(
+                _c("div", { staticClass: "class-description" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.classroom.description) +
+                      "\n                "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c("div", { staticClass: "class-teacher" }, [
+                  _c("strong", [_vm._v("Teachers")]),
+                  _vm._v(" "),
+                  _c(
+                    "ul",
+                    _vm._l(_vm.teachers(), function(teacher) {
+                      return _c("li", [_vm._v(_vm._s(teacher.name))])
+                    })
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "container cover-bottom" }, [
+              _c("div", { staticClass: "class-action" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "btn-group",
+                    attrs: { role: "group", "aria-label": "..." }
+                  },
+                  [
+                    _c(
                       "router-link",
                       {
                         staticClass: "btn btn-default",
-                        attrs: { to: _vm.classroom.id + "/post/assignment" }
+                        attrs: { to: _vm.classroom.id + "/post" }
                       },
-                      [_vm._v("New Assignment\n                    ")]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "btn-group", attrs: { role: "group" } },
-                  [
-                    _vm._m(0),
+                      [_vm._v("New Post")]
+                    ),
+                    _vm._v(" "),
+                    _vm.isTeacher
+                      ? _c(
+                          "router-link",
+                          {
+                            staticClass: "btn btn-default",
+                            attrs: { to: _vm.classroom.id + "/post/assignment" }
+                          },
+                          [_vm._v("New Assignment\n                    ")]
+                        )
+                      : _vm._e(),
                     _vm._v(" "),
                     _c(
-                      "ul",
-                      {
-                        staticClass: "dropdown-menu dropdown-menu-right",
-                        attrs: { "aria-labelledby": "dropdownMenu1" }
-                      },
+                      "div",
+                      { staticClass: "btn-group", attrs: { role: "group" } },
                       [
+                        _vm._m(0),
+                        _vm._v(" "),
                         _c(
-                          "li",
+                          "ul",
+                          {
+                            staticClass: "dropdown-menu dropdown-menu-right",
+                            attrs: { "aria-labelledby": "dropdownMenu1" }
+                          },
                           [
                             _c(
-                              "router-link",
-                              { attrs: { to: _vm.classroom.id + "/members" } },
-                              [_vm._v("Members")]
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _vm.isTeacher
-                          ? _c("li", {
-                              staticClass: "divider",
-                              attrs: { role: "separator" }
-                            })
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.isTeacher
-                          ? _c(
                               "li",
                               [
                                 _c(
                                   "router-link",
                                   {
-                                    attrs: {
-                                      to:
-                                        "/classroom/" +
-                                        _vm.classroom.id +
-                                        "/edit"
-                                    }
+                                    attrs: { to: _vm.classroom.id + "/members" }
                                   },
-                                  [
-                                    _vm._v(
-                                      "Edit this classroom\n                                "
-                                    )
-                                  ]
+                                  [_vm._v("Members")]
                                 )
                               ],
                               1
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.isTeacher
-                          ? _c("li", [
-                              _c(
-                                "a",
-                                {
-                                  style: { color: "#a94442" },
-                                  attrs: { href: "javascript:void(0)" },
-                                  on: { click: _vm.deleteClass }
-                                },
-                                [
-                                  _vm._v(
-                                    "Delete classroom\n                                "
+                            ),
+                            _vm._v(" "),
+                            _vm.isTeacher
+                              ? _c("li", {
+                                  staticClass: "divider",
+                                  attrs: { role: "separator" }
+                                })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.isTeacher
+                              ? _c(
+                                  "li",
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        attrs: {
+                                          to:
+                                            "/classroom/" +
+                                            _vm.classroom.id +
+                                            "/edit"
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "Edit this classroom\n                                "
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.isTeacher
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      style: { color: "#a94442" },
+                                      attrs: { href: "javascript:void(0)" },
+                                      on: { click: _vm.deleteClass }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Delete classroom\n                                "
+                                      )
+                                    ]
                                   )
-                                ]
-                              )
-                            ])
-                          : _vm._e()
+                                ])
+                              : _vm._e()
+                          ]
+                        )
                       ]
                     )
-                  ]
+                  ],
+                  1
                 )
-              ],
-              1
-            )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _vm.posts
-        ? _c(
-            "div",
-            { staticClass: "container" },
-            _vm._l(_vm.posts, function(post) {
-              return _c("div", { staticClass: "class-posts card" }, [
-                post.type === "post"
-                  ? _c(
-                      "div",
-                      { staticClass: "class-post-item" },
-                      [
-                        _c("post-card", {
-                          attrs: {
-                            post: post,
-                            "classroom-id": _vm.classroom.id,
-                            "show-option": _vm.checkUserPost(post.user.id)
-                          },
-                          on: { removePost: _vm.removePost }
-                        }),
-                        _vm._v(" "),
-                        _c("attachments", {
-                          attrs: { files: post.attachments }
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "class-post-comments" }, [
-                          _c("div", { staticClass: "comment-meta" }, [
-                            _c("strong", [
-                              _vm._v(_vm._s(post.comments.length) + " Comments")
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "comment-box" }, [
-                            _c(
-                              "form",
-                              {
-                                on: {
-                                  submit: function($event) {
-                                    $event.preventDefault()
-                                    _vm.comment(post.id)
-                                  }
-                                }
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _vm.posts
+            ? _c(
+                "div",
+                { staticClass: "container" },
+                _vm._l(_vm.posts, function(post) {
+                  return _c("div", { staticClass: "class-posts card" }, [
+                    post.type === "post"
+                      ? _c(
+                          "div",
+                          { staticClass: "class-post-item" },
+                          [
+                            _c("post-card", {
+                              attrs: {
+                                post: post,
+                                "classroom-id": _vm.classroom.id,
+                                "show-option": _vm.checkUserPost(post.user.id)
                               },
-                              [
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.comments[post.id],
-                                        expression: "comments[post.id]"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "comment",
-                                      placeholder: "Comment..."
-                                    },
-                                    domProps: { value: _vm.comments[post.id] },
+                              on: { removePost: _vm.removePost }
+                            }),
+                            _vm._v(" "),
+                            _c("attachments", {
+                              attrs: { files: post.attachments }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "class-post-comments" }, [
+                              _c("div", { staticClass: "comment-meta" }, [
+                                _c("strong", [
+                                  _vm._v(
+                                    _vm._s(post.comments.length) + " Comments"
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "comment-box" }, [
+                                _c(
+                                  "form",
+                                  {
                                     on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.$set(
-                                          _vm.comments,
-                                          post.id,
-                                          $event.target.value
-                                        )
+                                      submit: function($event) {
+                                        $event.preventDefault()
+                                        _vm.comment(post.id)
                                       }
                                     }
-                                  })
-                                ])
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "comment-list" },
-                            _vm._l(post.comments, function(comment) {
-                              return _c(
+                                  },
+                                  [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.comments[post.id],
+                                            expression: "comments[post.id]"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          id: "comment",
+                                          placeholder: "Comment..."
+                                        },
+                                        domProps: {
+                                          value: _vm.comments[post.id]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.comments,
+                                              post.id,
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c(
                                 "div",
-                                { staticClass: "comment-list-item" },
-                                [
-                                  _c("b", [
-                                    _vm._v(_vm._s(comment.user.name) + " : ")
-                                  ]),
-                                  _vm._v(
-                                    " " +
-                                      _vm._s(comment.comment) +
-                                      "\n                        "
+                                { staticClass: "comment-list" },
+                                _vm._l(post.comments, function(comment) {
+                                  return _c(
+                                    "div",
+                                    { staticClass: "comment-list-item" },
+                                    [
+                                      _c("b", [
+                                        _vm._v(
+                                          _vm._s(comment.user.name) + " : "
+                                        )
+                                      ]),
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(comment.comment) +
+                                          "\n                        "
+                                      )
+                                    ]
                                   )
-                                ]
+                                })
                               )
+                            ])
+                          ],
+                          1
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    post.type == "assignment" && post.assignment
+                      ? _c(
+                          "div",
+                          { staticClass: "class-post-item" },
+                          [
+                            _c("assignment-card", {
+                              attrs: {
+                                post: post,
+                                "classroom-id": _vm.classroom.id,
+                                "show-option": _vm.checkUserPost(post.user.id)
+                              },
+                              on: { removePost: _vm.removeAssignment }
+                            }),
+                            _vm._v(" "),
+                            _c("attachments", {
+                              attrs: { files: post.attachments }
                             })
-                          )
-                        ])
-                      ],
-                      1
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                post.type == "assignment" && post.assignment
-                  ? _c(
-                      "div",
-                      { staticClass: "class-post-item" },
-                      [
-                        _c("assignment-card", {
-                          attrs: {
-                            post: post,
-                            "classroom-id": _vm.classroom.id,
-                            "show-option": _vm.checkUserPost(post.user.id)
-                          },
-                          on: { removePost: _vm.removeAssignment }
-                        }),
-                        _vm._v(" "),
-                        _c("attachments", {
-                          attrs: { files: post.attachments }
-                        })
-                      ],
-                      1
-                    )
-                  : _vm._e()
-              ])
-            })
-          )
-        : _vm._e()
-    ]
-  )
+                          ],
+                          1
+                        )
+                      : _vm._e()
+                  ])
+                })
+              )
+            : _vm._e()
+        ]
+      )
+    : _c("div", { staticClass: "spinner" }, [
+        _c("div", { staticClass: "bounce1" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "bounce2" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "bounce3" })
+      ])
 }
 var staticRenderFns = [
   function() {
