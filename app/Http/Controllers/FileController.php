@@ -85,4 +85,15 @@ class FileController extends Controller
             return response()->json(['error' => 'File not found.'], 404);
         }
     }
+
+    public function avatar($user_id, $filename)
+    {
+        if(Storage::exists('avatar/'.$user_id.'/'.$filename))
+        {
+            return response()->file(storage_path('app/avatar/'.$user_id.'/'.$filename));
+        }
+        else {
+            return abort(404);
+        }
+    }
 }

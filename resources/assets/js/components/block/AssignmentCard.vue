@@ -1,6 +1,8 @@
 <template>
     <div class="post-container">
         <div class="class-meta">
+            <div class="profile-picture profile-picture-small" :style="{backgroundImage : `url(${post.user.avatar_url})`}">
+            </div>
             <div class="class-post-user class-meta-item">
                 {{ post.user.name }}
             </div>

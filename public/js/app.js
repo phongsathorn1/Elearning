@@ -210,17 +210,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -817,6 +806,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -852,6 +843,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__("./node_modules/moment/moment.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+//
+//
 //
 //
 //
@@ -1065,6 +1058,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ["detail"],
@@ -1152,6 +1146,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         uploadComplete: function uploadComplete(file, status, xhr) {
             this.uploaded_files.push(JSON.parse(xhr.response));
             this.$emit('complete', this.uploaded_files);
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/block/uploadAvatar.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['imgSrc'],
+    data: function data() {
+        return {
+            options: {
+                url: '/api/me/avatar/upload',
+                paramName: 'file',
+                headers: {
+                    Authorization: 'Bearer ' + this.$auth.getToken()
+                }
+            }
+        };
+    },
+
+    methods: {
+        uploadComplete: function uploadComplete(file, status, xhr) {
+            var avatar_url = JSON.parse(xhr.response).avatar_url;
+            this.$emit('uploaded', avatar_url);
         }
     }
 });
@@ -1308,6 +1347,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -1398,6 +1439,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__block_AssignmentCard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__block_AssignmentCard_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
 //
 //
 //
@@ -2080,7 +2125,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_uploadAvatar_vue__ = __webpack_require__("./resources/assets/js/components/block/uploadAvatar.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_uploadAvatar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__block_uploadAvatar_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -2171,35 +2218,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -2212,6 +2231,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 new_password: '',
                 new_password_confirmation: ''
             },
+            showUpload: false,
             security_errors: {},
             profile_errors: {},
             editable: false,
@@ -2219,7 +2239,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapGetters"])(['getUser'])),
+    components: {
+        uploadAvatar: __WEBPACK_IMPORTED_MODULE_0__block_uploadAvatar_vue___default.a
+    },
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["mapGetters"])(['getUser'])),
     mounted: function mounted() {
         var _this = this;
 
@@ -2232,6 +2255,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     methods: {
+        uploadComplete: function uploadComplete(url) {
+            this.profile.avatar = url;
+        },
+        ToggleShowUpload: function ToggleShowUpload() {
+            this.showUpload = !this.showUpload;
+        },
         ToggleEnableEdit: function ToggleEnableEdit() {
             this.editable = !this.editable;
             this.changePass = false;
@@ -28203,122 +28232,31 @@ var render = function() {
     _c("div", { staticClass: "card" }, [
       _vm.profile
         ? _c("div", { staticClass: "profile" }, [
-            _c("div", { staticClass: "profile-picture" }, [
-              _c("img", {
-                attrs: {
-                  src:
-                    "data:image/gif;base64,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"
-                }
-              }),
-              _vm._v(" "),
-              _c("button", { staticClass: "btn btn-default" }, [
-                _vm._v("Change picture")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "popup-modal" }, [
-                _c("div", { staticClass: "col-md-6 col-md-offset-3" }, [
-                  _c(
-                    "div",
-                    { staticClass: "card" },
-                    [
-                      _c(
-                        "vue-clip",
-                        {
-                          attrs: {
-                            options: _vm.options,
-                            "on-complete": _vm.uploadComplete
-                          },
-                          scopedSlots: _vm._u([
-                            {
-                              key: "clip-uploader-body",
-                              fn: function(props) {
-                                return _vm._l(props.files, function(file) {
-                                  return file.status != "success"
-                                    ? _c("div", [
-                                        _c(
-                                          "div",
-                                          {
-                                            on: {
-                                              click: function($event) {
-                                                _vm.removeFile(file)
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                    " +
-                                                _vm._s(file.name) +
-                                                " " +
-                                                _vm._s(file.status) +
-                                                "\n                                    "
-                                            ),
-                                            _c(
-                                              "div",
-                                              { staticClass: "progress" },
-                                              [
-                                                _c(
-                                                  "div",
-                                                  {
-                                                    staticClass: "progress-bar",
-                                                    style: {
-                                                      width: file.progress + "%"
-                                                    },
-                                                    attrs: {
-                                                      role: "progressbar",
-                                                      "aria-valuenow":
-                                                        file.progress,
-                                                      "aria-valuemin": "0",
-                                                      "aria-valuemax": "100"
-                                                    }
-                                                  },
-                                                  [
-                                                    _c(
-                                                      "span",
-                                                      {
-                                                        staticClass: "sr-only"
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          _vm._s(
-                                                            file.progress
-                                                          ) + " Complete"
-                                                        )
-                                                      ]
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        )
-                                      ])
-                                    : _vm._e()
-                                })
-                              }
-                            }
-                          ])
-                        },
-                        [
-                          _c("template", { slot: "clip-uploader-action" }, [
-                            _c("div", [
-                              _c("div", { staticClass: "dz-message" }, [
-                                _c("h2", [
-                                  _vm._v(
-                                    " Click or Drag and Drop files here upload "
-                                  )
-                                ])
-                              ])
-                            ])
-                          ])
-                        ],
-                        2
-                      )
-                    ],
-                    1
-                  )
-                ])
-              ])
-            ]),
+            _c(
+              "div",
+              {
+                staticClass: "profile-picture profile-picture-normal",
+                style: { "background-image": "url(" + _vm.profile.avatar + ")" }
+              },
+              [
+                _vm.showUpload
+                  ? _c("upload-avatar", {
+                      attrs: { "img-src": _vm.profile.avatar },
+                      on: { uploaded: _vm.uploadComplete }
+                    })
+                  : _vm._e()
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-default",
+                on: { click: _vm.ToggleShowUpload }
+              },
+              [_vm._v("Change picture")]
+            ),
             _vm._v(" "),
             _vm.editable
               ? _c(
@@ -28765,20 +28703,20 @@ var render = function() {
         { staticClass: "container" },
         _vm._l(_vm.classrooms, function(classroom) {
           return _c("div", { staticClass: "classroom-list col-md-4" }, [
-            _c(
-              "div",
-              { staticClass: "card" },
-              [
-                _c("div", { staticClass: "classroom-list-head" }),
-                _vm._v(" "),
-                _c(
-                  "router-link",
-                  { attrs: { to: "/classroom/" + classroom.id } },
-                  [_vm._v(_vm._s(classroom.name))]
-                )
-              ],
-              1
-            )
+            _c("div", { staticClass: "card" }, [
+              _c(
+                "div",
+                { staticClass: "classroom-list-head" },
+                [
+                  _c(
+                    "router-link",
+                    { attrs: { to: "/classroom/" + classroom.id } },
+                    [_vm._v(_vm._s(classroom.name))]
+                  )
+                ],
+                1
+              )
+            ])
           ])
         })
       )
@@ -28873,7 +28811,7 @@ var render = function() {
                 attrs: { id: "bs-example-navbar-collapse-1" }
               },
               [
-                _vm._m(1),
+                _c("ul", { staticClass: "nav navbar-nav" }),
                 _vm._v(" "),
                 _vm.isLoggedIn
                   ? _c("ul", { staticClass: "nav navbar-nav navbar-right" }, [
@@ -28953,55 +28891,6 @@ var staticRenderFns = [
         _c("span", { staticClass: "icon-bar" })
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "nav navbar-nav" }, [
-      _c("li", { staticClass: "dropdown" }, [
-        _c(
-          "a",
-          {
-            staticClass: "dropdown-toggle",
-            attrs: {
-              href: "#",
-              "data-toggle": "dropdown",
-              role: "button",
-              "aria-haspopup": "true",
-              "aria-expanded": "false"
-            }
-          },
-          [_vm._v("Dropdown "), _c("span", { staticClass: "caret" })]
-        ),
-        _vm._v(" "),
-        _c("ul", { staticClass: "dropdown-menu" }, [
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Action")])]),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "#" } }, [_vm._v("Another action")])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "#" } }, [_vm._v("Something else here")])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "divider", attrs: { role: "separator" } }),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "#" } }, [_vm._v("Separated link")])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "divider", attrs: { role: "separator" } }),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "#" } }, [
-              _vm._v("One more separated link")
-            ])
-          ])
-        ])
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -29048,7 +28937,20 @@ var render = function() {
                   _c(
                     "ul",
                     _vm._l(_vm.teachers(), function(teacher) {
-                      return _c("li", [_vm._v(_vm._s(teacher.name))])
+                      return _c("li", [
+                        _c("div", {
+                          staticClass: "profile-picture profile-picture-small",
+                          style: {
+                            backgroundImage: "url(" + teacher.avatar_url + ")"
+                          }
+                        }),
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(teacher.name) +
+                            "\n                            "
+                        ),
+                        _c("div", { staticClass: "clearfix" })
+                      ])
                     })
                   )
                 ])
@@ -29390,6 +29292,40 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4429ee80\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/block/uploadAvatar.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "vue-clip",
+    { attrs: { options: _vm.options, "on-complete": _vm.uploadComplete } },
+    [
+      _c("template", { slot: "clip-uploader-action" }, [
+        _c("div", { staticClass: "profile-upload-overlay" }, [
+          _c("div", { staticClass: "dz-message" }, [
+            _c("span", [_vm._v("Change avatar")])
+          ])
+        ])
+      ])
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4429ee80", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4e462756\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/member/Add.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -29702,6 +29638,11 @@ var render = function() {
       "div",
       { staticClass: "class-meta" },
       [
+        _c("div", {
+          staticClass: "profile-picture profile-picture-small",
+          style: { backgroundImage: "url(" + _vm.post.user.avatar_url + ")" }
+        }),
+        _vm._v(" "),
         _c("div", { staticClass: "class-post-user class-meta-item" }, [
           _vm._v("\n            " + _vm._s(_vm.post.user.name) + "\n        ")
         ]),
@@ -30223,7 +30164,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "margin-container card" }, [
+  return _c("div", { staticClass: "margin-container card post-block" }, [
     _c("div", { staticClass: "form-group" }, [
       _c("label", { attrs: { for: "post" } }, [_vm._v("Post")]),
       _vm._v(" "),
@@ -30258,7 +30199,9 @@ var render = function() {
         on: { click: _vm.post }
       },
       [_vm._v("Post")]
-    )
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "clearfix" })
   ])
 }
 var staticRenderFns = []
@@ -30331,6 +30274,11 @@ var render = function() {
             )
           ])
         : _vm._e(),
+      _vm._v(" "),
+      _c("div", {
+        staticClass: "profile-picture profile-picture-small",
+        style: { backgroundImage: "url(" + _vm.post.user.avatar_url + ")" }
+      }),
       _vm._v(" "),
       _c("div", { staticClass: "class-post-user class-meta-item" }, [
         _vm._v("\n            " + _vm._s(_vm.post.user.name) + "\n        ")
@@ -30442,6 +30390,7 @@ var render = function() {
       _c(
         "vue-clip",
         {
+          ref: "vc",
           attrs: { options: _vm.options, "on-complete": _vm.uploadComplete },
           scopedSlots: _vm._u([
             {
@@ -30498,7 +30447,7 @@ var render = function() {
         },
         [
           _c("template", { slot: "clip-uploader-action" }, [
-            _c("div", [
+            _c("div", { staticClass: "upload-drop" }, [
               _c("div", { staticClass: "dz-message" }, [
                 _c("h2", [_vm._v(" Click or Drag and Drop files here upload ")])
               ])
@@ -34672,6 +34621,55 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-c72be1f2", Component.options)
   } else {
     hotAPI.reload("data-v-c72be1f2", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/block/uploadAvatar.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/block/uploadAvatar.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4429ee80\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/block/uploadAvatar.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\block\\uploadAvatar.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4429ee80", Component.options)
+  } else {
+    hotAPI.reload("data-v-4429ee80", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
