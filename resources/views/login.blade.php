@@ -28,11 +28,13 @@
                     <img src="{{ url('/images/logo-full.svg') }}" class="login-logo" height="100px">
                     <form>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="username" placeholder="Username">
+                            <input type="text" class="form-control" id="username">
+                            <label for="username">Username</label>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="password" placeholder="Password">
-                            <div class="alert alert-danger" role="alert">The username or password is incorrect.</div>
+                            <input type="password" class="form-control" id="password">
+                            <label for="username">Password</label>
+                            <span class="login-error">The username or password is incorrect.</span>
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-default">Login</button>

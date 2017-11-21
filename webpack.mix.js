@@ -11,6 +11,9 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css')
-   .sass('resources/assets/sass/design.scss', 'public/css');
+mix.js('resources/assets/js/app.js', 'public/js').extract(
+    ['vue', 'axios', 'moment', 'jquery', 'sweetalert2', 'vuex', 'vue-flatpickr-component']
+    ).version()
+   .sass('resources/assets/sass/app.scss', 'css')
+   .sass('resources/assets/sass/design.scss', 'css')
+   .sass('resources/assets/sass/loading.scss', 'css');

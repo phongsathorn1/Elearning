@@ -435,82 +435,43 @@ a:hover {
   font-size: 20px;
 }
 
-.spinner {
-  margin: 100px auto 0;
-  width: 70px;
-  text-align: center;
-}
-
-.spinner > div {
-  width: 18px;
-  height: 18px;
-  background-color: #333;
-  border-radius: 100%;
-  display: inline-block;
-  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-}
-
-.spinner .bounce1 {
-  -webkit-animation-delay: -0.32s;
-  animation-delay: -0.32s;
-}
-
-.spinner .bounce2 {
-  -webkit-animation-delay: -0.16s;
-  animation-delay: -0.16s;
-}
-
-@-webkit-keyframes sk-bouncedelay {
-  0%, 80%, 100% {
-    -webkit-transform: scale(0);
-  }
-
-  40% {
-    -webkit-transform: scale(1);
-  }
-}
-
-@keyframes sk-bouncedelay {
-  0%, 80%, 100% {
-    -webkit-transform: scale(0);
-    transform: scale(0);
-  }
-
-  40% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-}
-
 #login-page {
   background-image: -webkit-gradient(linear, left top, left bottom, from(#e8530c), color-stop(40%, #f29029), to(#f6a01c));
   background-image: linear-gradient(#e8530c 0%, #f29029 40%, #f6a01c 100%);
   height: 100%;
   width: 100%;
   position: fixed;
+  color: #FFFFFF;
+  font-size: 15px;
 }
 
 #login-page input::-webkit-input-placeholder {
   /* Chrome */
-  color: #FFFFFF;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 #login-page input:-ms-input-placeholder {
   /* IE 10+ */
-  color: #FFFFFF;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 #login-page input::-moz-placeholder {
   /* Firefox 19+ */
-  color: #FFFFFF;
+  color: rgba(255, 255, 255, 0.75);
   opacity: 1;
 }
 
 #login-page input:-moz-placeholder {
   /* Firefox 4 - 18 */
-  color: #FFFFFF;
+  color: rgba(255, 255, 255, 0.75);
   opacity: 1;
+}
+
+#login-page .login-error {
+  color: #FFFFFF;
+  margin-top: 20px;
+  display: block;
+  text-align: center;
 }
 
 .login-logo {
@@ -522,19 +483,41 @@ a:hover {
   top: 45px;
 }
 
+.login-form label {
+  position: absolute;
+  top: 18px;
+  color: #FFFFFF;
+  pointer-events: none;
+  -webkit-transform-origin: left;
+          transform-origin: left;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.login-form input:focus ~ label,
+.login-form input:valid ~ label {
+  top: 0;
+  -webkit-transform: scale(0.7, 0.7);
+          transform: scale(0.7, 0.7);
+}
+
 .login-form .form-group {
   text-align: left;
   padding: 5px 0px;
+  position: relative;
 }
 
 .login-form .form-group .form-control {
   background: transparent;
   border: none;
-  border-bottom: 2px solid #FFFFFF;
-  border-radius: 0px;
+  border-bottom: 2px solid #fff;
+  padding: 20px 0px 0px 10px;
+  border-radius: 0;
   -webkit-box-shadow: none;
-          box-shadow: none;
-  color: #FFFFFF;
+  box-shadow: none;
+  color: #fff;
+  font-size: 16px;
+  height: 45px;
 }
 
 .object {
@@ -555,13 +538,13 @@ a:hover {
 }
 
 .star-1 {
-  -webkit-animation: fade 3s ease-in-out infinite;
-          animation: fade 3s ease-in-out infinite;
+  -webkit-animation: star 3s ease-in-out infinite;
+          animation: star 3s ease-in-out infinite;
 }
 
 .star-2 {
-  -webkit-animation: fade 5s ease-in-out infinite;
-          animation: fade 5s ease-in-out infinite;
+  -webkit-animation: star 5s ease-in-out infinite;
+          animation: star 5s ease-in-out infinite;
 }
 
 .mountain {
@@ -643,7 +626,7 @@ a:hover {
   }
 }
 
-@-webkit-keyframes fade {
+@-webkit-keyframes star {
   0% {
     opacity: 0;
   }
@@ -657,7 +640,7 @@ a:hover {
   }
 }
 
-@keyframes fade {
+@keyframes star {
   0% {
     opacity: 0;
   }
@@ -668,26 +651,6 @@ a:hover {
 
   100% {
     opacity: 0;
-  }
-}
-
-@-webkit-keyframes mountain {
-  0% {
-    background-position: 1828px 0px;
-  }
-
-  100% {
-    background-position: -1828px 0px;
-  }
-}
-
-@keyframes mountain {
-  0% {
-    background-position: 1828px 0px;
-  }
-
-  100% {
-    background-position: -1828px 0px;
   }
 }
 
