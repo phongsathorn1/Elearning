@@ -400,7 +400,7 @@ a:hover{
 }
 
 .login-form .text-center{
-margin: 26px auto;
+    margin: 26px auto;
     width: 70%;
 }
 .login-form button:hover{
@@ -412,7 +412,6 @@ margin: 26px auto;
         padding: 1rem 7rem;
     }
 }
-
 
 // post page
 .margin-container{
@@ -642,6 +641,69 @@ margin: 26px auto;
     0% { opacity: 0 }
     50% {opacity: 1 }
     100% { opacity: 0}
+}
+
+// modal
+.popup-modal{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+// profile
+.profile-picture{
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.class-post-item .profile-picture{
+    float: left;
+    margin-right: 10px;
+    position: relative;
+    top: 3px;
+}
+
+.class-teacher .profile-picture{
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.class-teacher li{
+    list-style: none;
+}
+
+.profile-picture-normal{
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+}
+
+.profile-picture-small{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.profile-picture .profile-upload-overlay{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.3);
+    color: rgba(255, 255, 255, 0.6);
+    padding: 45% 0px;
+    text-align: center;
+}
+.profile-picture .profile-upload-overlay:hover,
+.profile-picture .profile-upload-overlay:focus{
+    color: #FFFFFF;
+    background: rgba(0, 0, 0, 0.6);
 }
 
 // Upload 

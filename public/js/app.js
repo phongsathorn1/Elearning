@@ -816,9 +816,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -854,6 +851,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__("./node_modules/moment/moment.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+//
+//
 //
 //
 //
@@ -1161,6 +1160,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/block/uploadAvatar.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['imgSrc'],
+    data: function data() {
+        return {
+            options: {
+                url: '/api/me/avatar/upload',
+                paramName: 'file',
+                headers: {
+                    Authorization: 'Bearer ' + this.$auth.getToken()
+                }
+            }
+        };
+    },
+
+    methods: {
+        uploadComplete: function uploadComplete(file, status, xhr) {
+            var avatar_url = JSON.parse(xhr.response).avatar_url;
+            this.$emit('uploaded', avatar_url);
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/classroom/Create.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1405,6 +1449,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__block_AssignmentCard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__block_AssignmentCard_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
 //
 //
 //
@@ -2087,7 +2135,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_uploadAvatar_vue__ = __webpack_require__("./resources/assets/js/components/block/uploadAvatar.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_uploadAvatar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__block_uploadAvatar_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -2173,6 +2223,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
@@ -2185,6 +2241,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 new_password: '',
                 new_password_confirmation: ''
             },
+            showUpload: false,
             security_errors: {},
             profile_errors: {},
             editable: false,
@@ -2192,7 +2249,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapGetters"])(['getUser'])),
+    components: {
+        uploadAvatar: __WEBPACK_IMPORTED_MODULE_0__block_uploadAvatar_vue___default.a
+    },
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["mapGetters"])(['getUser'])),
     mounted: function mounted() {
         var _this = this;
 
@@ -2205,6 +2265,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     methods: {
+        uploadComplete: function uploadComplete(url) {
+            this.profile.avatar = url;
+        },
+        ToggleShowUpload: function ToggleShowUpload() {
+            this.showUpload = !this.showUpload;
+        },
         ToggleEnableEdit: function ToggleEnableEdit() {
             this.editable = !this.editable;
             this.changePass = false;
@@ -28190,6 +28256,32 @@ var render = function() {
     _c("div", { staticClass: "card" }, [
       _vm.profile
         ? _c("div", { staticClass: "profile" }, [
+            _c(
+              "div",
+              {
+                staticClass: "profile-picture profile-picture-normal",
+                style: { "background-image": "url(" + _vm.profile.avatar + ")" }
+              },
+              [
+                _vm.showUpload
+                  ? _c("upload-avatar", {
+                      attrs: { "img-src": _vm.profile.avatar },
+                      on: { uploaded: _vm.uploadComplete }
+                    })
+                  : _vm._e()
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-default",
+                on: { click: _vm.ToggleShowUpload }
+              },
+              [_vm._v("Change picture")]
+            ),
+            _vm._v(" "),
             _vm.editable
               ? _c(
                   "div",
@@ -28871,7 +28963,20 @@ var render = function() {
                   _c(
                     "ul",
                     _vm._l(_vm.teachers(), function(teacher) {
-                      return _c("li", [_vm._v(_vm._s(teacher.name))])
+                      return _c("li", [
+                        _c("div", {
+                          staticClass: "profile-picture profile-picture-small",
+                          style: {
+                            backgroundImage: "url(" + teacher.avatar_url + ")"
+                          }
+                        }),
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(teacher.name) +
+                            "\n                            "
+                        ),
+                        _c("div", { staticClass: "clearfix" })
+                      ])
                     })
                   )
                 ])
@@ -29213,6 +29318,40 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4429ee80\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/block/uploadAvatar.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "vue-clip",
+    { attrs: { options: _vm.options, "on-complete": _vm.uploadComplete } },
+    [
+      _c("template", { slot: "clip-uploader-action" }, [
+        _c("div", { staticClass: "profile-upload-overlay" }, [
+          _c("div", { staticClass: "dz-message" }, [
+            _c("span", [_vm._v("Change avatar")])
+          ])
+        ])
+      ])
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4429ee80", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4e462756\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/member/Add.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -29522,6 +29661,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "post-container" }, [
     _c("div", { staticClass: "class-meta" }, [
+      _c("div", {
+        staticClass: "profile-picture profile-picture-small",
+        style: { backgroundImage: "url(" + _vm.post.user.avatar_url + ")" }
+      }),
+      _vm._v(" "),
       _c(
         "div",
         { staticClass: "btn-group post-options", attrs: { role: "group" } },
@@ -30199,6 +30343,11 @@ var render = function() {
             )
           ])
         : _vm._e(),
+      _vm._v(" "),
+      _c("div", {
+        staticClass: "profile-picture profile-picture-small",
+        style: { backgroundImage: "url(" + _vm.post.user.avatar_url + ")" }
+      }),
       _vm._v(" "),
       _c("div", { staticClass: "class-post-user class-meta-item" }, [
         _vm._v("\n            " + _vm._s(_vm.post.user.name) + "\n        ")
@@ -34541,6 +34690,55 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-c72be1f2", Component.options)
   } else {
     hotAPI.reload("data-v-c72be1f2", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/block/uploadAvatar.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/block/uploadAvatar.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4429ee80\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/block/uploadAvatar.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\block\\uploadAvatar.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4429ee80", Component.options)
+  } else {
+    hotAPI.reload("data-v-4429ee80", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true

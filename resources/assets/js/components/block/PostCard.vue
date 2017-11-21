@@ -17,6 +17,8 @@
                     </li>
                 </ul>
             </div>
+            <div class="profile-picture profile-picture-small" :style="{backgroundImage : `url(${post.user.avatar_url})`}">
+            </div>
             <div class="class-post-user class-meta-item">
                 {{ post.user.name }}
             </div>

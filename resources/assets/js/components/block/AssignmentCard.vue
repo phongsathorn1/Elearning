@@ -1,23 +1,24 @@
 <template>
     <div class="post-container">
         <div class="class-meta">
+            <div class="profile-picture profile-picture-small" :style="{backgroundImage : `url(${post.user.avatar_url})`}"></div>
             <div class="btn-group post-options" role="group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right post-dropdown" aria-labelledby="dropdownMenu1">
                     <li>
-                        <router-link
-                :to="`/classroom/${classroomId}/assignment/${post.assignment.id}/edit`"
-                class=""
-                v-if="showOption"
-            >Edit</router-link>
+                    <router-link
+                        :to="`/classroom/${classroomId}/assignment/${post.assignment.id}/edit`"
+                        class=""
+                        v-if="showOption"
+                    >Edit</router-link>
                     </li>
                     <li>
-                        <a href="javascript:void(0)" 
-                @click="removePost(post.assignment.id)"
-                v-if="showOption"
-            >Delete</a>
+                    <a href="javascript:void(0)" 
+                        @click="removePost(post.assignment.id)"
+                        v-if="showOption"
+                    >Delete</a>
                     </li>
                 </ul>
             </div>
@@ -27,10 +28,6 @@
             <div class="class-post-time class-meta-item">
                 {{ parseTime(post.created_at) }}
             </div>
-        
-            
-       
-
             <div class="clearfix"></div>
         </div>
         <h3><router-link :to="classroomId +'/assignment/' + post.assignment.id">{{ post.assignment.title }}</router-link></h3>
