@@ -418,13 +418,8 @@ a:hover {
 }
 
 .login-form .text-center {
-<<<<<<< HEAD
-  margin-top: 25px;
-  width: 100%;
-=======
   margin: 26px auto;
   width: 70%;
->>>>>>> 0d141f0de0ae7f49ebbd7565984bda1459d0678a
 }
 
 .login-form button:hover {

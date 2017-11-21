@@ -343,24 +343,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_upload_vue__ = __webpack_require__("./resources/assets/js/components/block/upload.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_upload_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__block_upload_vue__);
 //
 //
 //
@@ -388,6 +372,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['classroomId', 'assignmentId'],
     data: function data() {
@@ -400,13 +386,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             assignment_id: this.assignmentId,
             token: this.$auth.getToken(),
             options: {
-                url: 'api/classroom/' + this.$route.params.id + '/assignment/' + this.$route.params.assignment_id + '/upload',
+                url: '/api/classroom/' + this.$route.params.id + '/assignment/' + this.$route.params.assignment_id + '/upload',
                 paramName: 'file',
                 headers: {
                     Authorization: 'Bearer ' + this.$auth.getToken()
                 }
             }
         };
+    },
+
+    components: {
+        upload: __WEBPACK_IMPORTED_MODULE_0__block_upload_vue___default.a
     },
     created: function created() {
         var _this = this;
@@ -424,38 +414,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        removeFile: function removeFile(file) {
-            var _this2 = this;
-
-            if (this.is_done) {
-                return false;
-            }
-            var index = this.uploaded_files.findIndex(function (x) {
-                return x.id == file.id;
-            });
-            var data = {
-                'file_id': file.id
-            };
-            axios.post('api/classroom/' + this.classroom_id + '/assignment/' + this.assignment_id + '/remove', data, {
-                headers: {
-                    Authorization: 'Bearer ' + this.token
-                }
-            }).then(function (response) {
-                _this2.uploaded_files.splice(index, 1);
-            });
+        uploadedFile: function uploadedFile(file) {
+            this.uploaded_files = file;
         },
-        uploadComplete: function uploadComplete(file, status, xhr) {
-            this.uploaded_files.push(JSON.parse(xhr.response));
+        removeFile: function removeFile(file) {
+            this.uploaded_files = file;
         },
         confirm: function confirm() {
-            var _this3 = this;
+            var _this2 = this;
 
             axios.get('api/classroom/' + this.classroom_id + '/assignment/' + this.assignment_id + '/confirm', {
                 headers: {
                     Authorization: 'Bearer ' + this.token
                 }
             }).then(function (response) {
-                _this3.$router.push('/classroom/' + _this3.classroom_id);
+                _this2.$router.push('/classroom/' + _this2.classroom_id);
             });
         },
         download: function download(file) {
@@ -816,9 +789,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -854,6 +824,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__("./node_modules/moment/moment.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+//
+//
 //
 //
 //
@@ -1161,6 +1133,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/block/uploadAvatar.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['imgSrc'],
+    data: function data() {
+        return {
+            options: {
+                url: '/api/me/avatar/upload',
+                paramName: 'file',
+                headers: {
+                    Authorization: 'Bearer ' + this.$auth.getToken()
+                }
+            }
+        };
+    },
+
+    methods: {
+        uploadComplete: function uploadComplete(file, status, xhr) {
+            var avatar_url = JSON.parse(xhr.response).avatar_url;
+            this.$emit('uploaded', avatar_url);
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/classroom/Create.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1315,6 +1332,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -1405,6 +1424,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__block_AssignmentCard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__block_AssignmentCard_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
 //
 //
 //
@@ -2087,7 +2110,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_uploadAvatar_vue__ = __webpack_require__("./resources/assets/js/components/block/uploadAvatar.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_uploadAvatar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__block_uploadAvatar_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -2173,6 +2198,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
@@ -2185,6 +2216,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 new_password: '',
                 new_password_confirmation: ''
             },
+            showUpload: false,
             security_errors: {},
             profile_errors: {},
             editable: false,
@@ -2192,7 +2224,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapGetters"])(['getUser'])),
+    components: {
+        uploadAvatar: __WEBPACK_IMPORTED_MODULE_0__block_uploadAvatar_vue___default.a
+    },
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["mapGetters"])(['getUser'])),
     mounted: function mounted() {
         var _this = this;
 
@@ -2205,6 +2240,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     methods: {
+        uploadComplete: function uploadComplete(url) {
+            this.profile.avatar = url;
+        },
+        ToggleShowUpload: function ToggleShowUpload() {
+            this.showUpload = !this.showUpload;
+        },
         ToggleEnableEdit: function ToggleEnableEdit() {
             this.editable = !this.editable;
             this.changePass = false;
@@ -27935,6 +27976,11 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
+      _c("div", {
+        staticClass: "profile-picture profile-picture-small",
+        style: { backgroundImage: "url(" + _vm.post.user.avatar_url + ")" }
+      }),
+      _vm._v(" "),
       _c("div", { staticClass: "class-post-user class-meta-item" }, [
         _vm._v("\n            " + _vm._s(_vm.post.user.name) + "\n        ")
       ]),
@@ -28032,7 +28078,20 @@ var render = function() {
                   _c(
                     "ul",
                     _vm._l(_vm.teachers(), function(teacher) {
-                      return _c("li", [_vm._v(_vm._s(teacher.name))])
+                      return _c("li", [
+                        _c("div", {
+                          staticClass: "profile-picture profile-picture-small",
+                          style: {
+                            backgroundImage: "url(" + teacher.avatar_url + ")"
+                          }
+                        }),
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(teacher.name) +
+                            "\n                            "
+                        ),
+                        _c("div", { staticClass: "clearfix" })
+                      ])
                     })
                   )
                 ])
@@ -28509,6 +28568,8 @@ var render = function() {
         _vm._l(_vm.classrooms, function(classroom) {
           return _c("div", { staticClass: "classroom-list col-md-4" }, [
             _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "classroom-background" }),
+              _vm._v(" "),
               _c("div", { staticClass: "classroom-list-head" }, [
                 _c(
                   "h3",
@@ -28537,6 +28598,40 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-28ccbfd1", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2eb2e553\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/block/uploadAvatar.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "vue-clip",
+    { attrs: { options: _vm.options, "on-complete": _vm.uploadComplete } },
+    [
+      _c("template", { slot: "clip-uploader-action" }, [
+        _c("div", { staticClass: "profile-upload-overlay" }, [
+          _c("div", { staticClass: "dz-message" }, [
+            _c("span", [_vm._v("Change avatar")])
+          ])
+        ])
+      ])
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2eb2e553", module.exports)
   }
 }
 
@@ -29506,6 +29601,32 @@ var render = function() {
     _c("div", { staticClass: "card" }, [
       _vm.profile
         ? _c("div", { staticClass: "profile" }, [
+            _c(
+              "div",
+              {
+                staticClass: "profile-picture profile-picture-normal",
+                style: { "background-image": "url(" + _vm.profile.avatar + ")" }
+              },
+              [
+                _vm.showUpload
+                  ? _c("upload-avatar", {
+                      attrs: { "img-src": _vm.profile.avatar },
+                      on: { uploaded: _vm.uploadComplete }
+                    })
+                  : _vm._e()
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-default",
+                on: { click: _vm.ToggleShowUpload }
+              },
+              [_vm._v("Change picture")]
+            ),
+            _vm._v(" "),
             _vm.editable
               ? _c(
                   "div",
@@ -30311,6 +30432,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "post-container" }, [
     _c("div", { staticClass: "class-meta" }, [
+      _c("div", {
+        staticClass: "profile-picture profile-picture-small",
+        style: { backgroundImage: "url(" + _vm.post.user.avatar_url + ")" }
+      }),
+      _vm._v(" "),
       _c(
         "div",
         { staticClass: "btn-group post-options", attrs: { role: "group" } },
@@ -30320,7 +30446,7 @@ var render = function() {
           _c(
             "ul",
             {
-              staticClass: "dropdown-menu dropdown-menu-right",
+              staticClass: "dropdown-menu dropdown-menu-right post-dropdown",
               attrs: { "aria-labelledby": "dropdownMenu1" }
             },
             [
@@ -30331,7 +30457,6 @@ var render = function() {
                     ? _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-default",
                           attrs: {
                             to:
                               "/classroom/" +
@@ -30351,9 +30476,9 @@ var render = function() {
               _c("li", [
                 _vm.showOption
                   ? _c(
-                      "button",
+                      "a",
                       {
-                        staticClass: "btn btn-default",
+                        attrs: { href: "javascript:void(0)" },
                         on: {
                           click: function($event) {
                             _vm.removePost(_vm.post.assignment.id)
@@ -30532,87 +30657,18 @@ var render = function() {
             : _vm._e(),
           _vm._v(" "),
           !_vm.is_done
-            ? _c(
-                "vue-clip",
-                {
-                  ref: "vc",
-                  attrs: {
-                    options: _vm.options,
-                    "on-complete": _vm.uploadComplete
-                  },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "clip-uploader-body",
-                      fn: function(props) {
-                        return _vm._l(props.files, function(file) {
-                          return file.status != "success"
-                            ? _c("div", [
-                                _c(
-                                  "div",
-                                  {
-                                    on: {
-                                      click: function($event) {
-                                        _vm.removeFile(file)
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                    " +
-                                        _vm._s(file.name) +
-                                        " " +
-                                        _vm._s(file.status) +
-                                        "\n                    "
-                                    ),
-                                    _c("div", { staticClass: "progress" }, [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "progress-bar",
-                                          style: { width: file.progress + "%" },
-                                          attrs: {
-                                            role: "progressbar",
-                                            "aria-valuenow": file.progress,
-                                            "aria-valuemin": "0",
-                                            "aria-valuemax": "100"
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "span",
-                                            { staticClass: "sr-only" },
-                                            [
-                                              _vm._v(
-                                                _vm._s(file.progress) +
-                                                  " Complete"
-                                              )
-                                            ]
-                                          )
-                                        ]
-                                      )
-                                    ])
-                                  ]
-                                )
-                              ])
-                            : _vm._e()
-                        })
-                      }
-                    }
-                  ])
+            ? _c("upload", {
+                attrs: {
+                  callback:
+                    "/api/classroom/" +
+                    _vm.classroomId +
+                    "/assignment/" +
+                    _vm.assignmentId +
+                    "/upload",
+                  uploadFiles: _vm.uploaded_files
                 },
-                [
-                  _c("template", { slot: "clip-uploader-action" }, [
-                    _c("div", [
-                      _c("div", { staticClass: "dz-message" }, [
-                        _c("h2", [
-                          _vm._v(" Click or Drag and Drop files here upload ")
-                        ])
-                      ])
-                    ])
-                  ])
-                ],
-                2
-              )
+                on: { complete: _vm.uploadedFile, remove: _vm.removeFile }
+              })
             : _vm._e(),
           _vm._v(" "),
           _vm._l(_vm.uploaded_files, function(file) {
@@ -30627,18 +30683,6 @@ var render = function() {
                   }
                 },
                 [_vm._v(_vm._s(file.name))]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.removeFile(file)
-                    }
-                  }
-                },
-                [_vm._v("delete")]
               )
             ])
           }),
@@ -34541,6 +34585,55 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-252b95da", Component.options)
   } else {
     hotAPI.reload("data-v-252b95da", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/block/uploadAvatar.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/block/uploadAvatar.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2eb2e553\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/block/uploadAvatar.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/block/uploadAvatar.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2eb2e553", Component.options)
+  } else {
+    hotAPI.reload("data-v-2eb2e553", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
