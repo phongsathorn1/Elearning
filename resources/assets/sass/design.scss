@@ -157,18 +157,28 @@ a:hover{
 }
 
 
+
 .classroom-list .card{
     height: 150px;
+    position: relative;
+    padding: 0;
+}
+
+.classroom-background{
+    height: 100%;
+    max-height: 150px;
+    max-width: 100%;
+    background-size: cover;
+    background-image: url("https://orig00.deviantart.net/1d05/f/2014/243/b/6/_9__cover_zing__irene__rv_by_hanicucheoo-d7xd3ef.jpg");
 }
 
 .classroom-list-head{
-    position: relative;
-    top: 0;
+    position: absolute;
+    top: 20%;
     left: 0;
     width: 100%;
     height: 100%;
     text-align: center;
-    padding: 2.5em 0;
 }
 
 .card > a {
@@ -392,6 +402,15 @@ a:hover{
 .login-form .text-center{
     margin: 26px auto;
     width: 70%;
+}
+.login-form button:hover{
+    border-color: white;
+    background-color: white;
+}
+@media(max-width: 300px){
+    .login-form button{
+        padding: 1rem 7rem;
+    }
 }
 
 // post page

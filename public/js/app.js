@@ -1330,6 +1330,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -27957,7 +27959,7 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              _vm._m(0)
+              _vm._m(0, false, false)
             ]
           )
         ]
@@ -28580,7 +28582,7 @@ var render = function() {
                               ])
                             ]),
                             _vm._v(" "),
-                            _vm._m(0)
+                            _vm._m(0, false, false)
                           ]
                         )
                       ])
@@ -28699,6 +28701,8 @@ var render = function() {
         _vm._l(_vm.classrooms, function(classroom) {
           return _c("div", { staticClass: "classroom-list col-md-4" }, [
             _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "classroom-background" }),
+              _vm._v(" "),
               _c(
                 "div",
                 { staticClass: "classroom-list-head" },
@@ -28784,7 +28788,7 @@ var render = function() {
               "div",
               { staticClass: "navbar-header" },
               [
-                _vm._m(0),
+                _vm._m(0, false, false),
                 _vm._v(" "),
                 _c(
                   "router-link",
@@ -28985,7 +28989,7 @@ var render = function() {
                       "div",
                       { staticClass: "btn-group", attrs: { role: "group" } },
                       [
-                        _vm._m(0),
+                        _vm._m(0, false, false),
                         _vm._v(" "),
                         _c(
                           "ul",
@@ -29639,7 +29643,7 @@ var render = function() {
         "div",
         { staticClass: "btn-group post-options", attrs: { role: "group" } },
         [
-          _vm._m(0),
+          _vm._m(0, false, false),
           _vm._v(" "),
           _c(
             "ul",
@@ -30184,7 +30188,7 @@ var render = function() {
     _c("div", { staticClass: "class-meta" }, [
       _vm.showOption
         ? _c("div", { staticClass: "btn-group post-options" }, [
-            _vm._m(0),
+            _vm._m(0, false, false),
             _vm._v(" "),
             _c(
               "ul",
@@ -30308,7 +30312,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _vm._m(0, false, false)
 }
 var staticRenderFns = [
   function() {
@@ -30540,7 +30544,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _vm._m(0, false, false)
 }
 var staticRenderFns = [
   function() {
@@ -35186,7 +35190,7 @@ module.exports = Component.exports
 
 "use strict";
 var options = {
-    'client_secret': '8jjUbNiwZdb8egKf4J4TSMyRUe6kfbLHXejBcC2h',
+    'client_secret': 'lJmFpq8OZZwJZFMNyMwLf52iQjBkWssGBK4We1N0',
     'client_id': 2,
     'grant_type': 'password'
 };
