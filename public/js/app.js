@@ -1313,6 +1313,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -28634,6 +28636,8 @@ var render = function() {
         _vm._l(_vm.classrooms, function(classroom) {
           return _c("div", { staticClass: "classroom-list col-md-4" }, [
             _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "classroom-background" }),
+              _vm._v(" "),
               _c(
                 "div",
                 { staticClass: "classroom-list-head" },
@@ -35385,7 +35389,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["default"].Store({
 /***/ "./resources/assets/sass/design.scss":
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: \r\n.login-form .text-center{\r\n                        ^\r\n      Invalid CSS after \"...m .text-center{\": expected \"}\", was \"<<<<<<< HEAD\"\r\n      in C:\\Users\\poom\\Desktop\\ITF\\elearning\\resources\\assets\\sass\\design.scss (line 392, column 26)\n    at runLoaders (C:\\Users\\poom\\Desktop\\ITF\\elearning\\node_modules\\webpack\\lib\\NormalModule.js:195:19)\n    at C:\\Users\\poom\\Desktop\\ITF\\elearning\\node_modules\\loader-runner\\lib\\LoaderRunner.js:364:11\n    at C:\\Users\\poom\\Desktop\\ITF\\elearning\\node_modules\\loader-runner\\lib\\LoaderRunner.js:230:18\n    at context.callback (C:\\Users\\poom\\Desktop\\ITF\\elearning\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at Object.asyncSassJobQueue.push [as callback] (C:\\Users\\poom\\Desktop\\ITF\\elearning\\node_modules\\sass-loader\\lib\\loader.js:55:13)\n    at Object.<anonymous> (C:\\Users\\poom\\Desktop\\ITF\\elearning\\node_modules\\async\\dist\\async.js:2257:31)\n    at Object.callback (C:\\Users\\poom\\Desktop\\ITF\\elearning\\node_modules\\async\\dist\\async.js:958:16)\n    at options.error (C:\\Users\\poom\\Desktop\\ITF\\elearning\\node_modules\\node-sass\\lib\\index.js:294:32)");
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
