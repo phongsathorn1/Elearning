@@ -3,26 +3,35 @@
         <div id="adduser">
             <div class="page-header">
                 <div class="container">
-                    <h1>{{ classroom.name }} <small>Add member</small></h1>
+                    <h1>{{ classroom.name }}</h1>
                 </div>
             </div>
+        
             <div class="container">
-                <div class="member-list">
-                    <div class="member-list-item" v-for="user in users">
-                        <div v-bind:class="{active: added_users.indexOf(user.id) > -1}">
-                            <div class="col-xs-6">
-                                {{ user.name }}
-                            </div>
-                            <div class="col-xs-3">
-                                {{ user.role.name }}
-                            </div>
-                            <div class="col-xs-3">
-                                <button class="btn btn-default" v-on:click="add(user.id)" v-if="added_users.indexOf(user.id) <= -1">Add</button>
-                                <button class="btn btn-default" v-on:click="remove(user.id)" v-if="added_users.indexOf(user.id) > -1">Remove</button>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
+                    <div class="control-area">
+                        <button type="button" class="btn btn-default btn-back" @click="back">Back</button>
                     </div>
+                <div class="card">
+                    <h5><kbd>Add member</kbd></h5>
+                 <table class="table member-list">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tr v-for="user in users">
+                        <th scope="row">1</th>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.role.name }}</td>
+                        <td>
+                            <button class="btn btn-success" v-on:click="add(user.id)" v-if="added_users.indexOf(user.id) <= -1">Add</button>
+                                <button class="btn btn-danger" v-on:click="remove(user.id)" v-if="added_users.indexOf(user.id) > -1">Remove</button>
+                        </td>
+                    </tr>
+                 </table>
                 </div>
             </div>
         </div>
@@ -82,6 +91,9 @@
                         Authorization: 'Bearer ' + this.token
                     }
                 })
+            },
+            back(){
+                this.$router.go(-1)
             },
             remove(user_id){
                 var index = this.added_users.indexOf(user_id)

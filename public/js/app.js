@@ -466,6 +466,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -554,6 +558,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         removeFile: function removeFile(file) {
             this.attachments = file;
+        },
+        back: function back() {
+            this.$router.go(-1);
         }
     },
     components: {
@@ -573,6 +580,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_upload_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__block_upload_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__block_assignment_vue__ = __webpack_require__("./resources/assets/js/components/block/assignment.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__block_assignment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__block_assignment_vue__);
+//
+//
+//
 //
 //
 //
@@ -632,6 +642,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         removeFile: function removeFile(file) {
             this.uploaded_files = file;
+        },
+        back: function back() {
+            this.$router.go(-1);
         }
     },
     components: {
@@ -1730,6 +1743,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -1787,6 +1809,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             });
         },
+        back: function back() {
+            this.$router.go(-1);
+        },
         remove: function remove(user_id) {
             var index = this.added_users.indexOf(user_id);
             if (index > -1) {
@@ -1814,6 +1839,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1902,6 +1938,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
                 _this2.members.splice(index, 1);
             });
+        },
+        back: function back() {
+            this.$router.go(-1);
         }
     }
 });
@@ -1917,6 +1956,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_post_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__block_post_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__block_upload_vue__ = __webpack_require__("./resources/assets/js/components/block/upload.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__block_upload_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__block_upload_vue__);
+//
+//
+//
 //
 //
 //
@@ -2006,6 +2048,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.$router.push('/classroom/' + _this2.$route.params.id);
             });
         },
+        back: function back() {
+            this.$router.go(-1);
+        },
         uploadedFile: function uploadedFile(file) {
             this.attachments = file;
         },
@@ -2026,6 +2071,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_upload_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__block_upload_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__block_post_vue__ = __webpack_require__("./resources/assets/js/components/block/post.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__block_post_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__block_post_vue__);
+//
+//
+//
+//
 //
 //
 //
@@ -2077,6 +2126,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (error) {
                 _this.$router.push('/');
             });
+        },
+        back: function back() {
+            this.$router.go(-1);
         },
         post: function post(form) {
             var _this2 = this;
@@ -27892,6 +27944,18 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
+      _c("div", { staticClass: "control-area" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-default btn-back",
+            attrs: { type: "button" },
+            on: { click: _vm.back }
+          },
+          [_vm._v("Back")]
+        )
+      ]),
+      _vm._v(" "),
       _c("post", { attrs: { detail: _vm.form }, on: { post: _vm.post } }),
       _vm._v(" "),
       _c("upload", {
@@ -28731,45 +28795,56 @@ var render = function() {
     _c("div", { attrs: { id: "adduser" } }, [
       _c("div", { staticClass: "page-header" }, [
         _c("div", { staticClass: "container" }, [
-          _c("h1", [
-            _vm._v(_vm._s(_vm.classroom.name) + " "),
-            _c("small", [_vm._v("Add member")])
-          ])
+          _c("h1", [_vm._v(_vm._s(_vm.classroom.name))])
         ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "container" }, [
-        _c(
-          "div",
-          { staticClass: "member-list" },
-          _vm._l(_vm.users, function(user) {
-            return _c("div", { staticClass: "member-list-item" }, [
-              _c(
-                "div",
-                { class: { active: _vm.added_users.indexOf(user.id) > -1 } },
-                [
-                  _c("div", { staticClass: "col-xs-6" }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(user.name) +
-                        "\n                        "
-                    )
-                  ]),
+        _c("div", { staticClass: "control-area" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-default btn-back",
+              attrs: { type: "button" },
+              on: { click: _vm.back }
+            },
+            [_vm._v("Back")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card" }, [
+          _c("h5", [_c("kbd", [_vm._v("Add member")])]),
+          _vm._v(" "),
+          _c(
+            "table",
+            { staticClass: "table member-list" },
+            [
+              _c("thead", [
+                _c("tr", [
+                  _c("th", [_vm._v("#")]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-xs-3" }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(user.role.name) +
-                        "\n                        "
-                    )
-                  ]),
+                  _c("th", [_vm._v("Name")]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-xs-3" }, [
+                  _c("th", [_vm._v("Role")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("Action")])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.users, function(user) {
+                return _c("tr", [
+                  _c("th", { attrs: { scope: "row" } }, [_vm._v("1")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(user.name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(user.role.name))]),
+                  _vm._v(" "),
+                  _c("td", [
                     _vm.added_users.indexOf(user.id) <= -1
                       ? _c(
                           "button",
                           {
-                            staticClass: "btn btn-default",
+                            staticClass: "btn btn-success",
                             on: {
                               click: function($event) {
                                 _vm.add(user.id)
@@ -28784,7 +28859,7 @@ var render = function() {
                       ? _c(
                           "button",
                           {
-                            staticClass: "btn btn-default",
+                            staticClass: "btn btn-danger",
                             on: {
                               click: function($event) {
                                 _vm.remove(user.id)
@@ -28794,14 +28869,13 @@ var render = function() {
                           [_vm._v("Remove")]
                         )
                       : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "clearfix" })
-                ]
-              )
-            ])
-          })
-        )
+                  ])
+                ])
+              })
+            ],
+            2
+          )
+        ])
       ])
     ])
   ])
@@ -29248,6 +29322,18 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
+      _c("div", { staticClass: "control-area" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-default btn-back",
+            attrs: { type: "button" },
+            on: { click: _vm.back }
+          },
+          [_vm._v("Back")]
+        )
+      ]),
+      _vm._v(" "),
       _c("assignment-post", {
         attrs: { detail: _vm.form },
         on: { submit: _vm.add }
@@ -29568,6 +29654,18 @@ var render = function() {
     "div",
     { staticClass: "container margin-container" },
     [
+      _c("div", { staticClass: "control-area" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-default btn-back",
+            attrs: { type: "button" },
+            on: { click: _vm.back }
+          },
+          [_vm._v("Back")]
+        )
+      ]),
+      _vm._v(" "),
       _c("post", { attrs: { detail: _vm.form }, on: { post: _vm.post } }),
       _vm._v(" "),
       _c("upload", {
@@ -30037,86 +30135,105 @@ var render = function() {
     _c("div", { attrs: { id: "members" } }, [
       _c("div", { staticClass: "page-header" }, [
         _c("div", { staticClass: "container" }, [
-          _c("h1", [
-            _vm._v(_vm._s(_vm.classroom.name) + " "),
-            _c("small", [_vm._v("Members")])
-          ]),
-          _vm._v(" "),
-          _vm.isTeacher
-            ? _c(
-                "div",
-                { staticClass: "control-area" },
-                [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "btn btn-default",
-                      attrs: { to: "members/add" }
-                    },
-                    [_vm._v("Add member")]
-                  ),
-                  _vm._v(" "),
-                  _c("span", [
-                    _vm._v("Join code: "),
+          _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
+            _c("h1", [_vm._v(_vm._s(_vm.classroom.name))]),
+            _vm._v(" "),
+            _vm.isTeacher
+              ? _c(
+                  "div",
+                  { staticClass: "control-area" },
+                  [
                     _c(
-                      "span",
+                      "router-link",
                       {
-                        staticStyle: {
-                          padding: "10px",
-                          border: "1px solid #e0e0e0"
-                        }
+                        staticClass: "btn btn-default",
+                        attrs: { to: "members/add" }
                       },
-                      [_vm._v(_vm._s(_vm.classroom.join_code))]
-                    )
-                  ])
-                ],
-                1
-              )
-            : _vm._e()
+                      [_vm._v("Add member")]
+                    ),
+                    _vm._v(" "),
+                    _c("span", [
+                      _vm._v("Join code: "),
+                      _c(
+                        "span",
+                        {
+                          staticStyle: {
+                            padding: "10px",
+                            border: "1px solid #e0e0e0"
+                          }
+                        },
+                        [_vm._v(_vm._s(_vm.classroom.join_code))]
+                      )
+                    ])
+                  ],
+                  1
+                )
+              : _vm._e()
+          ])
         ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "container" }, [
-        _c(
-          "div",
-          { staticClass: "member-list" },
-          _vm._l(_vm.members, function(member) {
-            return _c("div", { staticClass: "member-list-item" }, [
-              _c("div", { staticClass: "col-xs-6" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(member.name) +
-                    "\n                    "
-                )
+        _c("div", { staticClass: "control-area" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-default btn-back",
+              attrs: { type: "button" },
+              on: { click: _vm.back }
+            },
+            [_vm._v("Back")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card" }, [
+          _c("h5", [_c("kbd", [_vm._v("Members")])]),
+          _vm._v(" "),
+          _c(
+            "table",
+            { staticClass: "table member-list" },
+            [
+              _c("thead", [
+                _c("tr", [
+                  _c("th", [_vm._v("#")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("Name")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("Role")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("Action")])
+                ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-xs-3" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(member.role.name) +
-                    "\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-xs-3" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-default",
-                    on: {
-                      click: function($event) {
-                        _vm.remove(member.id)
-                      }
-                    }
-                  },
-                  [_vm._v("Remove")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "clearfix" })
-            ])
-          })
-        )
+              _vm._l(_vm.members, function(member) {
+                return _c("tr", [
+                  _c("th", { attrs: { scope: "row" } }, [_vm._v("1")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(member.name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(member.role.name))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        staticStyle: { margin: "4px 15px" },
+                        on: {
+                          click: function($event) {
+                            _vm.remove(member.id)
+                          }
+                        }
+                      },
+                      [_vm._v("X")]
+                    )
+                  ])
+                ])
+              })
+            ],
+            2
+          )
+        ])
       ])
     ])
   ])
@@ -30747,6 +30864,18 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
+      _c("div", { staticClass: "control-area" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-default btn-back",
+            attrs: { type: "button" },
+            on: { click: _vm.back }
+          },
+          [_vm._v("Back")]
+        )
+      ]),
+      _vm._v(" "),
       _c("assignment-post", {
         attrs: { detail: _vm.form },
         on: { submit: _vm.edit }

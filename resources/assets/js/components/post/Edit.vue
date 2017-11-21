@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+                    <div class="control-area">
+                        <button type="button" class="btn btn-default btn-back" @click="back">Back</button>
+                    </div>
         <post
             :detail="form"
             v-on:post="post"
@@ -59,6 +62,8 @@
                 }).then(response => {
                     this.$router.push('/classroom/' + this.$route.params.id)
                 })
+            },back(){
+                this.$router.go(-1)
             },
             uploadedFile(file){
                 this.attachments = file

@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+<div class="control-area">
+    <button type="button" class="btn btn-default btn-back" @click="back">Back</button>
+</div>
         <assignment-post :detail="form" v-on:submit="add"></assignment-post>
         <upload
             :callback="'/api/attachment/upload'"
@@ -54,6 +57,9 @@
             },
             removeFile(file){
                 this.uploaded_files = file
+            },
+            back(){
+                this.$router.go(-1)
             }
         },
         components: {

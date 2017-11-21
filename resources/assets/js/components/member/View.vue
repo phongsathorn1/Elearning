@@ -3,28 +3,39 @@
         <div id="members">
             <div class="page-header">
                 <div class="container">
-                    <h1>{{ classroom.name }} <small>Members</small></h1>
+                    <div class="col-md-8 col-md-offset-2">
+                    <h1>{{ classroom.name }}</h1>
                     <div class="control-area" v-if="isTeacher">
                         <router-link :to="'members/add'" class="btn btn-default">Add member</router-link>
                         <span>Join code: <span style="padding:10px;border:1px solid #e0e0e0">{{ classroom.join_code }}</span></span>
                     </div>
+                    </div>
                 </div>
             </div>
             <div class="container">
-                <div class="member-list">
-                    <div class="member-list-item" v-for="member in members">
-                        <div class="col-xs-6">
-                            {{ member.name }}
-                        </div>
-                        <div class="col-xs-3">
-                            {{ member.role.name }}
-                        </div>
-                        <div class="col-xs-3">
-                            <button class="btn btn-default" @click="remove(member.id)">Remove</button>
-                        </div>
-                        <div class="clearfix"></div>
+                    <div class="control-area">
+                        <button type="button" class="btn btn-default btn-back" @click="back">Back</button>
                     </div>
+                <div class="card">
+                    <h5><kbd>Members</kbd></h5>
+                 <table class="table member-list">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tr v-for="member in members">
+                        <th scope="row">1</th>
+                        <td>{{ member.name }}</td>
+                        <td>{{ member.role.name }}</td>
+                        <td><button class="btn btn-danger" style="margin: 4px 15px;" @click="remove(member.id)">X</button></td>
+                    </tr>
+                 </table>
                 </div>
+                
             </div>
         </div>
     </transition>
@@ -80,6 +91,9 @@
                     var index = this.members.findIndex(x => x.id == user_id);
                     this.members.splice(index, 1)
                 })
+            },
+            back(){
+                this.$router.go(-1)
             }
         }
     }

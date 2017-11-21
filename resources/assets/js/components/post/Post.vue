@@ -1,5 +1,9 @@
 <template>
     <div class="container margin-container">
+<div class="control-area">
+    <button type="button" class="btn btn-default btn-back" @click="back">Back</button>
+</div>
+
         <post
             :detail="form"
             v-on:post="post"
@@ -46,6 +50,9 @@
                 }).catch(error => {
                     this.$router.push('/')
                 })
+            },
+            back(){
+                this.$router.go(-1)
             },
             post(form){
                 var classroom_id = this.$route.params.id
