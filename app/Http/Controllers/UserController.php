@@ -13,14 +13,6 @@ class UserController extends Controller
     {
         $me = User::findOrFail(Auth::id())->load('role');
         $me->role->makeVisible('actions');
-        if(!$me->avatar)
-        {
-            $me->avatar = url('images/avatar.svg');
-        }
-        else
-        {
-            $me->avatar = url('avatar/'.$me->id.'/'.$me->avatar);
-        }
 
         return response()->json($me);
     }

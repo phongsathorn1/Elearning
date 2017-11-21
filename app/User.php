@@ -63,14 +63,14 @@ class User extends Authenticatable
 
     public function getAvatarUrlAttribute()
     {
-        $avatar_url = '';
-        if($this->attributes['avatar'])
+        if($this->avatar)
         {
-            $avatar_url = url('avatar/'.$this->attributes['id'].'/'.$this->attributes['avatar']);
+            $avatar_url = url('avatar/'.$this->id.'/'.$this->avatar);
         }
-        else {
+        else{
             $avatar_url = url('images/avatar.svg');
         }
-        return $this->attributes['avatar_url'] = $avatar_url;
+
+        return $avatar_url;
     }
 }

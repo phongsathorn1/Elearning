@@ -4,7 +4,7 @@
             <div class="profile" v-if="profile">
 
                 <!-- profile-picture -->
-                <div class="profile-picture profile-picture-normal" v-bind:style="{'background-image': `url(${profile.avatar_url})`}">
+                <div class="profile-picture profile-picture-large" v-bind:style="{'background-image': `url(${profile.avatar_url})`}">
                     <upload-avatar v-if="showUpload" v-on:uploaded="uploadComplete" :img-src="profile.avatar_url"></upload-avatar>
                 </div>
                 <button class="btn btn-default" @click="ToggleShowUpload">Change picture</button>

@@ -1,6 +1,17 @@
 <template>
     <div id="classroom" style="min-height: 500px">
         <div class="page-header">
+            <div class="container user-profile">
+                <div class="profile-picture profile-picture-large" v-bind:style="{'background-image': `url(${getUser.avatar_url})`}"></div>
+                <div class="profile">
+                    <div class="profile-name">{{ getUser.name }} <span class="username">@{{ getUser.username }}</span></div>
+                    <div class="">{{ getUser.email }}</div>
+                </div>
+                <router-link
+                    to="profile"
+                    class="btn btn-default pull-right"
+                >Profile</router-link>
+            </div>
             <div class="container">
                 <h1>Your Classroom</h1>
                 <router-link
@@ -22,7 +33,6 @@
                         <router-link :to="'/classroom/'+classroom.id">{{ classroom.name }}</router-link> 
                         </h3>
                     </div>
-                             
                 </div>
             </div>
         </div>
@@ -39,11 +49,13 @@
             return{
                 classrooms: '',
                 status: false,
-                show_join: false
+                show_join: false,
+                user: this.getUser
             }
         },
         computed: mapGetters([
-            'isTeacher'
+            'isTeacher',
+            'getUser'
         ]),
         methods:{
             showJoin(){
