@@ -5,8 +5,8 @@
             :on-complete="uploadComplete"
         >
             <template slot="clip-uploader-action">
-                <div>
-                <div class="dz-message"><h2> Click or Drag and Drop files here upload </h2></div>
+                <div class="upload-drop">
+                    <div class="dz-message"><h2> Click or Drag and Drop files here upload </h2></div>
                 </div>
             </template>
 

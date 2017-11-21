@@ -1,10 +1,11 @@
 <template>
-    <div class="margin-container card">
+    <div class="margin-container card post-block">
         <div class="form-group">
             <label for="post">Post</label>
             <textarea class="form-control" rows="3" id="detail" v-model="form.detail"></textarea>
         </div>
         <button type="submit" class="btn btn-default" @click="post">Post</button>
+        <div class="clearfix"></div>
     </div>
 </template>
 
