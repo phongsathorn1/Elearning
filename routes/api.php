@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('me', 'UserController@index');
     Route::patch('me', 'UserController@update');
     Route::patch('me/password', 'UserController@updatePassword');
+    Route::post('me/avatar/upload', 'UserController@uploadProfile');
     Route::get('assignment/download/{file_id}', 'FileController@assignment');
     Route::get('attachment/download/{file_id}', 'FileController@attachment');
     Route::post('attachment/upload', 'FilesAttachmentController@upload');

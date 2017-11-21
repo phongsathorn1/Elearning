@@ -19,6 +19,9 @@ class User extends Authenticatable
         'name', 'email', 'username', 'password', 'role_id'
     ];
 
+    protected $appends = [
+        'avatar_url'
+    ];
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -56,5 +59,18 @@ class User extends Authenticatable
     public function assignments()
     {
         return $this->hasMany('App\Assignment');
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        $avatar_url = '';
+        if($this->attributes['avatar'])
+        {
+            $avatar_url = url('avatar/'.$this->attributes['id'].'/'.$this->attributes['avatar']);
+        }
+        else {
+            $avatar_url = url('images/avatar.svg');
+        }
+        return $this->attributes['avatar_url'] = $avatar_url;
     }
 }

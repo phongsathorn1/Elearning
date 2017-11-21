@@ -13,6 +13,14 @@ class UserController extends Controller
     {
         $me = User::findOrFail(Auth::id())->load('role');
         $me->role->makeVisible('actions');
+        if(!$me->avatar)
+        {
+            $me->avatar = url('images/avatar.svg');
+        }
+        else
+        {
+            $me->avatar = url('avatar/'.$me->id.'/'.$me->avatar);
+        }
 
         return response()->json($me);
     }
@@ -79,5 +87,16 @@ class UserController extends Controller
         $me->save();
 
         return response()->json(['success' => true]);
+    }
+
+    public function uploadProfile(Request $request){
+        $user = Auth::user();
+        $file = $request->file('file')->store('avatar/'.$user->id);
+
+        $uploaded_name = trim(basename($file));
+        $user->avatar = $uploaded_name;
+        $user->save();
+
+        return response()->json(['success' => true, 'avatar_url' => url('avatar/'.$user->id.'/'.$uploaded_name)]);
     }
 }

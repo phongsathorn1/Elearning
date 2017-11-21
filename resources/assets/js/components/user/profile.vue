@@ -3,6 +3,11 @@
         <div class="card">
             <div class="profile" v-if="profile">
 
+                <!-- profile-picture -->
+                <div class="profile-picture profile-picture-normal" v-bind:style="{'background-image': `url(${profile.avatar})`}">
+                    <upload-avatar v-if="showUpload" v-on:uploaded="uploadComplete" :img-src="profile.avatar"></upload-avatar>
+                </div>
+                <button class="btn btn-default" @click="ToggleShowUpload">Change picture</button>
                 <!-- profile-header -->
                 <div class="profile-header" v-if="editable">
                     <h1><input type="text" v-model="profile.name"></h1>
@@ -82,6 +87,7 @@
 </template>
 
 <script>
+    import uploadAvatar from '../block/uploadAvatar.vue'
     import { mapGetters } from 'vuex'
 
     export default {
@@ -93,11 +99,15 @@
                     new_password: '',
                     new_password_confirmation: ''
                 },
+                showUpload: false,
                 security_errors: {},
                 profile_errors: {},
                 editable: false,
                 changePass: false
             }
+        },
+        components: {
+            uploadAvatar
         },
         computed:{
             ...mapGetters([
@@ -116,6 +126,12 @@
             this.profile = Object.assign({}, this.getUser)
         },
         methods:{
+            uploadComplete(url){
+                this.profile.avatar = url
+            },
+            ToggleShowUpload(){
+                this.showUpload = !this.showUpload
+            },
             ToggleEnableEdit(){
                 this.editable = !this.editable
                 this.changePass = false

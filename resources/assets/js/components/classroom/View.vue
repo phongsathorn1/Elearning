@@ -12,7 +12,11 @@
                     <div class="class-teacher">
                         <strong>Teachers</strong>
                         <ul>
-                            <li v-for="teacher in teachers()">{{ teacher.name }}</li>
+                            <li v-for="teacher in teachers()">
+                                <div class="profile-picture profile-picture-small" :style="{backgroundImage : `url(${teacher.avatar_url})`}"></div>
+                                {{ teacher.name }}
+                                <div class="clearfix"></div>
+                            </li>
                         </ul>
                     </div>
                 </div>
