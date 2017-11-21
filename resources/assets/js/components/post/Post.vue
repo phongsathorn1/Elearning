@@ -2,6 +2,7 @@
     <div class="container margin-container">
         <post
             :detail="form"
+            :errors="post_errors"
             v-on:post="post"
         ></post>
         <upload
@@ -22,7 +23,8 @@
                 form:{
                     detail: ''
                 },
-                uploaded_files: []
+                uploaded_files: [],
+                post_errors: []
             }
         },
         components:{
@@ -43,8 +45,9 @@
                     }
                 }).then(response => {
                     this.$router.push('/classroom/' + classroom_id)
-                }).catch(error => {
-                    this.$router.push('/')
+                })
+                .catch(error => {
+                    this.post_errors = error.response.data.errors
                 })
             },
             post(form){

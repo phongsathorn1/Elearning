@@ -32,6 +32,10 @@ class PostController extends Controller
     }
     public function store(Request $request)
     {
+        $request->validate([
+            'post' => 'required'
+        ]);
+
         $post = Post::create([
             'user_id' => Auth::id(),
             'classroom_id' => $request->classroom_id,

@@ -44,6 +44,12 @@ class AssignmentController extends Controller
 
     public function store(Request $request, $classroom_id)
     {
+        $request->validate([
+            'title' => 'required|max:191',
+            'duetime' => 'nullable|date_format:Y-m-d H:i',
+            'score' => 'required|numeric'
+        ]);
+
         $classroom = Classroom::findOrFail($classroom_id);
         if(!$classroom->members->find(Auth::id())){
             return response()->json(['error' => "You don't have permission to access this."], 403);
@@ -167,6 +173,9 @@ class AssignmentController extends Controller
     //for teacher give them score
     public function update(Request $request, $classroom_id, $id)
     {
+        $request->validate([
+            'score' => 'numeric|required'
+        ]);
         Classroom::findOrFail($classroom_id);
         $assignment = AssignmentCheck::where([
             ['assignment_id', $id],

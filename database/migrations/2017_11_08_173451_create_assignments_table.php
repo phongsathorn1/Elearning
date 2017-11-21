@@ -20,7 +20,7 @@ class CreateAssignmentsTable extends Migration
             $table->integer('post_id')->unsigned();
             $table->string('title');
             $table->longtext('detail')->nullable();
-            $table->time('due_time')->nullable();
+            $table->datetime('due_time')->nullable();
             $table->float('score')->unsigned();
             $table->timestamps();
         });

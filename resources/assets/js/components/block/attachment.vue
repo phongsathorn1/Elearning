@@ -1,5 +1,5 @@
 <template>
-    <div class="attachment" v-if="files">
+    <div class="attachment" v-if="files && files.length">
         <strong>{{ files.length }} Attachments</strong>
             <div class="attachment-block">
                 <div class="attachment-item" v-for="file in files" @click="download(file)">

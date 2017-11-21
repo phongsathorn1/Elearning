@@ -3,6 +3,10 @@
         <div class="form-group">
             <label for="name">Classroom name</label>
             <input type="text" class="form-control" id="name" placeholder="Classroom name" v-model="classroom.name">
+            <p class="text-danger"
+                v-for="error in classroom_errors.name"
+                v-if="classroom_errors.name"
+            >{{ error }}</p>
         </div>
         <div class="form-group">
             <label for="description">description</label>
@@ -19,7 +23,8 @@
                 classroom : {
                     name : '',
                     description: ''
-                }
+                },
+                classroom_errors: []
             }
         },
         methods : {
@@ -38,6 +43,9 @@
                 .then(response=>{
                     var classroom_id = response.data.id
                     this.$router.push('/classroom/' + classroom_id)
+                })
+                .catch(error => {
+                    this.classroom_errors = error.response.data.errors
                 })
             }
         }

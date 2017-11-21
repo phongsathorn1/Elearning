@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <assignment-post :detail="form" v-on:submit="edit"></assignment-post>
+        <assignment-post :detail="form" :errors="post_errors" v-on:submit="edit"></assignment-post>
         <upload
             :callback="'/api/attachment/upload'"
             :upload-files='attachments'
@@ -28,6 +28,7 @@
                 token: this.$auth.getToken(),
                 post_id: this.$route.params.post_id,
                 attachments: [],
+                post_errors: []
             }
         },
         created(){

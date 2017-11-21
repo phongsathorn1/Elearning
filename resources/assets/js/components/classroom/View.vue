@@ -98,6 +98,10 @@
                             <form v-on:submit.prevent="comment(post.id)">
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="comment" placeholder="Comment..." v-model="comments[post.id]">
+                                    <p class="text-danger"
+                                        v-for="error in comment_errors.comment"
+                                        v-if="comment_errors.comment && focus_id == post.id"
+                                    >{{ error }}</p>
                                 </div>
                             </form>
                         </div>
@@ -145,6 +149,8 @@
                 posts : [],
                 comments : {},
                 token : '',
+                comment_errors: [],
+                focus_id: '',
                 swal_config: {
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -211,6 +217,10 @@
 
                     var index = this.posts.findIndex(x => x.id == post_id)
                     this.posts[index].comments.push(response.data)
+                })
+                .catch(error => {
+                    this.comment_errors = error.response.data.errors
+                    this.focus_id = post_id
                 })
             },
             checkUserPost(user_id){

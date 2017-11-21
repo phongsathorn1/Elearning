@@ -44,6 +44,10 @@ class ClassroomController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|max:191'
+        ]);
+
         $join_code = str_random(6);
 
         $classroom = Classroom::create([

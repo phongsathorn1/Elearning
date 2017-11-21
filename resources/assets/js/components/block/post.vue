@@ -3,6 +3,10 @@
         <div class="form-group">
             <label for="post">Post</label>
             <textarea class="form-control" rows="3" id="detail" v-model="form.detail"></textarea>
+            <p class="text-danger"
+                v-for="error in errors.post"
+                v-if="errors.post"
+            >{{ error }}</p>
         </div>
         <button type="submit" class="btn btn-default" @click="post">Post</button>
         <div class="clearfix"></div>
@@ -11,7 +15,7 @@
 
 <script>
     export default {
-        props: ["detail"],
+        props: ["detail", "errors"],
         data(){
             return {
                 form : this.detail

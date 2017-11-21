@@ -3,6 +3,10 @@
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" class="form-control" id="title" placeholder="Tile of assignment" v-model="form.title">
+            <p class="text-danger"
+                v-for="error in errors.title"
+                v-if="errors.title"
+            >{{ error }}</p>
         </div>
         <div class="form-group">
             <label for="detail">Detail of this assignment</label>
@@ -11,6 +15,10 @@
         <div class="form-group">
             <label for="score">Score</label>
             <input type="text" class="form-control" id="score" placeholder="Score" v-model="form.score">
+            <p class="text-danger"
+                v-for="error in errors.score"
+                v-if="errors.score"
+            >{{ error }}</p>
         </div>
         <div class="form-group">
             <div class="col-md-6">
@@ -21,6 +29,10 @@
                 <label for="duetime">Time</label>
                 <input type="text" id="duetime" class="form-control" @blur="timecheck" v-model="form.duetime">
             </div>
+            <p class="text-danger"
+                v-for="error in errors.duetime"
+                v-if="errors.duetime"
+            >{{ error }}</p>
             <div class="clearfix"></div>
         </div>
         <button type="submit" class="btn btn-default" @click="submit">Add assignment</button>
@@ -33,7 +45,7 @@
     import moment from 'moment';
 
     export default {
-        props: ['detail'],
+        props: ['detail', 'errors'],
         data(){
             return {
                 form: this.detail,

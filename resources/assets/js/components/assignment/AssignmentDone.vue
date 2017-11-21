@@ -8,7 +8,7 @@
                 <div class="assignment-done-item" v-for="file in done.files" @click="download(file)">
                     {{ file.name }}
                 </div>
-                <input type="text" name="score" v-model="done.score"> / {{ maxScore }}
+                <input type="text" name="score" @blur="scoreCheck(done.id)" v-model="done.score"> / {{ maxScore }}
                 <textarea class="form-control" rows="3" v-model="done.comment"></textarea>
                 <button type="button" class="btn btn-primary"@click="returnWork(done.id)" v-if="!done.returned">Return</button>
                 <button type="button" class="btn btn-success" @click="returnWork(done.id)" v-if="done.returned">Update</button>
@@ -40,6 +40,16 @@ export default {
         })
     },
     methods: {
+        scoreCheck(done_id){
+            var index = this.all_done.findIndex(x => x.id == done_id);
+            console.log(index)
+            if(!Number.isInteger(this.all_done[index].score)){
+                this.all_done[index].score = Math.floor(this.all_done[index].score)
+            }
+            if(this.all_done[index].score > this.maxScore){
+                this.all_done[index].score = this.maxScore
+            }
+        },
         activeId(id){
             if(this.active_id == id){
                 this.active_id = 0

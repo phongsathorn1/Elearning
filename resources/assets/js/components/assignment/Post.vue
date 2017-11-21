@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <assignment-post :detail="form" v-on:submit="add"></assignment-post>
+        <assignment-post :detail="form" v-on:submit="add" :errors="post_errors"></assignment-post>
         <upload
             :callback="'/api/attachment/upload'"
             v-on:complete="uploadedFile"
@@ -26,6 +26,7 @@
                 classroom_id: this.$route.params.id,
                 token: this.$auth.getToken(),
                 uploaded_files: [],
+                post_errors: []
             }
         },
         methods:{
@@ -46,7 +47,7 @@
                 }).then(response => {
                     this.$router.go(-1)
                 }).catch(error => {
-                    this.$router.push('/')
+                    this.post_errors = error.response.data.errors
                 })
             },
             uploadedFile(file){

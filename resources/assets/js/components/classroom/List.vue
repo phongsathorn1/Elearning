@@ -15,7 +15,7 @@
         <div class="container">
             <div class="classroom-list col-md-4" v-for="classroom in classrooms">
                 <div class="card">
-                    <div class="classroom-background">
+                    <div class="classroom-background" v-bind:style="{'background-image': `url(${classroom.cover_url})`}">
                     </div> 
                     <div class="classroom-list-head">
                         <router-link :to="'/classroom/'+classroom.id">{{ classroom.name }}</router-link> 
