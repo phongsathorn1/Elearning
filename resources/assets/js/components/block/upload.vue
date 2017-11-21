@@ -23,10 +23,20 @@
                 </div>
             </template>
         </vue-clip>
+        <div>
+            <table class="table upload-list" v-for="file in uploaded_files">
+                <tbody>
+                    <tr class="col-md-8">
+                        <td class="">{{ file.name }}<kbd @click="removeFile(file)">delete</kbd></td>
+                    </tr> 
+                </tbody>
+            </table>
+        </div>
+        <!-- 
         <div v-for="file in uploaded_files">
             <div @click="download(file)">{{ file.name }}</div>
-            <div @click="removeFile(file)">delete</div>
         </div>
+        -->
     </div>
 </template>
 
