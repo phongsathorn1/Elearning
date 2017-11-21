@@ -18,7 +18,9 @@
                     <div class="classroom-background" v-bind:style="{'background-image': `url(${classroom.cover_url})`}">
                     </div> 
                     <div class="classroom-list-head">
+                        <h3>
                         <router-link :to="'/classroom/'+classroom.id">{{ classroom.name }}</router-link> 
+                        </h3>
                     </div>
                              
                 </div>
