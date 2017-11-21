@@ -1,7 +1,7 @@
 <template>
     <div id="login-page">
         <div class="container">
-            <div class="login-form col-md-6 col-md-offset-3">
+            <div class="login-form col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1">
                 <img v-bind:src="`${baseUrl}/images/logo-full.svg`" class="login-logo" height="100px">
                 <form v-on:submit.prevent="login">
                     <div class="form-group">
