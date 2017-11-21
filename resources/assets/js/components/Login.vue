@@ -1,9 +1,9 @@
 <template>
-    <div class='login-bg'>
-        <div class="container">
-            <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8">
-                <div class="jumbotron login">
-                    <img src="images/Med_logo.png"/>
+
+    <div id="login-page">
+            <div class="container">
+                <div class="login-form col-md-6 col-md-offset-3">
+                    <img src="/images/logo-full.svg" class="login-logo" height="100px">
                     <form v-on:submit.prevent="login">
                         <div class="form-group">
                             <label for="username">Username</label>
@@ -20,8 +20,28 @@
                     </form>
                 </div>
             </div>
+            <div class="object">
+                <div class="overlay-bg">
+                </div>
+                <div class="star-1">
+                    <img src="/images/login/star_Ly4.png" class="img-responsive">
+                </div>
+                <div class="star-2">
+                    <img src="/images/login/star2_Ly4.png" class="img-responsive">
+                </div>
+                <div class="mountain mountain-5"></div>
+                <div class="mountain mountain-4"></div>
+                <div class="mountain mountain-3"></div>
+                <div class="mountain mountain-2"></div>
+                <div class="mountain mountain-1"></div>
+                <div class="cloud cloud-4"></div>
+                <div class="cloud cloud-3"></div>
+                <div class="cloud cloud-2"></div>
+                <div class="cloud cloud-1"></div>
+            </div>
         </div>
-    </div>
+
+        
 </template>
 
 <script>
@@ -68,4 +88,5 @@
             }
         }
     }
+    
 </script>
