@@ -57,6 +57,19 @@ a:hover {
   }
 }
 
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: white;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: white;
+}
+
+.navbar-default .navbar-toggle:hover .icon-bar {
+  background-color: #464646;
+}
+
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
   color: #E0E0E0;
@@ -79,7 +92,7 @@ a:hover {
 }
 
 @media (max-width: 767px) {
-  #bs-example-navbar-collapse-1 {
+  #navbar-dropdown-menu-small {
     width: 100%;
     position: fixed;
     z-index: 10;
@@ -87,7 +100,7 @@ a:hover {
     text-align: center;
   }
 
-  #bs-example-navbar-collapse-1 > ul > li > a {
+  #navbar-dropdown-menu-small > ul > li > a {
     color: #464646;
   }
 }
@@ -111,6 +124,11 @@ a:hover {
 .class-header h1 {
   margin-bottom: 10px;
   margin-top: 0px;
+}
+
+.class-header .char-shadow {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0 5px;
 }
 
 .class-header .btn-default {
@@ -161,8 +179,9 @@ a:hover {
   height: 100%;
   max-height: 150px;
   max-width: 100%;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.25)), to(rgba(0, 0, 0, 0.25))), url("http://kpop.youzab.com/wp-content/uploads/2015/04/Jessica1.jpg");
+  background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url("http://kpop.youzab.com/wp-content/uploads/2015/04/Jessica1.jpg");
   background-size: cover;
-  background-image: url("https://orig00.deviantart.net/1d05/f/2014/243/b/6/_9__cover_zing__irene__rv_by_hanicucheoo-d7xd3ef.jpg");
 }
 
 .classroom-list-head {
@@ -172,6 +191,10 @@ a:hover {
   width: 100%;
   height: 100%;
   text-align: center;
+}
+
+.classroom-list-head a {
+  color: white;
 }
 
 .card > a {
@@ -219,6 +242,7 @@ a:hover {
 
 .member-list {
   background: #FFFFFF;
+  padding: 5px;
 }
 
 .card {
@@ -273,6 +297,10 @@ a:hover {
   word-wrap: break-word;
   font-size: 13px;
   line-height: 18px;
+}
+
+.btn-back {
+  margin-top: 20px;
 }
 
 .attachment-thumbnail {
@@ -461,6 +489,11 @@ a:hover {
 
 .class-teacher strong {
   font-size: 20px;
+}
+
+.class-teacher kbd {
+  position: relative;
+  top: -1.5rem;
 }
 
 .post-block button {
@@ -774,6 +807,11 @@ a:hover {
   left: 0;
 }
 
+.upload-list kbd {
+  margin-left: 1rem;
+  background-color: #5e1313;
+}
+
 .cover-bottom {
   padding-bottom: 15px;
 }
@@ -801,5 +839,14 @@ a:hover {
 
 .cover-edit-bottom .container .btn {
   color: #FFFFFF;
+}
+
+.assignment-done-box .assignment-done-list {
+  cursor: pointer;
+  padding: 10px;
+}
+
+.assignment-done-box .assignment-done-list:hover {
+  background: #E0E0E0;
 }
 

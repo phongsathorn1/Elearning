@@ -1,26 +1,29 @@
 <template>
-    <div class="assignment-upload-box" v-if="loaded">
-        <div v-if="status">
-            <div v-if="status.returned">
-                Returned
+    <div class="card">
+        <div class="assignment-upload-box container" v-if="loaded">
+            <div v-if="status">
+                <h4> Status</h4>
+                <div v-if="status.returned">
+                    Returned
+                </div>
+                <div v-else>
+                    In progress
+                </div>
+                <b>Comment from teacher: </b>{{ status.comment }}
+                <b>Score: </b>{{ status.score }}
             </div>
-            <div v-else>
-                In progress
+            <upload
+                v-if="!is_done"
+                :callback="`/api/classroom/${classroomId}/assignment/${assignmentId}/upload`"
+                v-on:complete="uploadedFile"
+                v-on:remove="removeFile"
+                :uploadFiles="uploaded_files"
+            ></upload>
+            <div v-for="file in uploaded_files">
+                <div @click="download(file)">{{ file.name }}</div>
             </div>
-            <b>Comment from teacher: </b>{{ status.comment }}
-            <b>Score: </b>{{ status.score }}
+            <button type="button" class="btn btn-success" @click="confirm" v-if="!is_done">Send</button>
         </div>
-        <upload
-            v-if="!is_done"
-            :callback="`/api/classroom/${classroomId}/assignment/${assignmentId}/upload`"
-            v-on:complete="uploadedFile"
-            v-on:remove="removeFile"
-            :uploadFiles="uploaded_files"
-        ></upload>
-        <div v-for="file in uploaded_files">
-            <div @click="download(file)">{{ file.name }}</div>
-        </div>
-        <button type="button" class="btn btn-success" @click="confirm" v-if="!is_done">Send</button>
     </div>
 </template>
 
