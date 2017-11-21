@@ -85,6 +85,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -97,6 +99,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 password: ''
             },
             login_error: false,
+            loading: false,
             baseUrl: this.$store.getters.baseUrl
         };
     },
@@ -108,6 +111,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         login: function login() {
             var _this = this;
 
+            this.login_error = false;
+            this.loading = true;
             var data = {
                 'grant_type': __WEBPACK_IMPORTED_MODULE_0__config_js__["a" /* default */].grant_type,
                 'client_id': __WEBPACK_IMPORTED_MODULE_0__config_js__["a" /* default */].client_id,
@@ -120,6 +125,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.$auth.setToken(response.data.access_token, response.data.expires_in + Date.now());
                 _this.setData();
             }).catch(function (response) {
+                _this.loading = false;
                 _this.login_error = true;
             });
         },
@@ -27875,20 +27881,21 @@ var render = function() {
                 : _vm._e()
             ]),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "text-center" },
-              [
-                _c("spinner"),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  { staticClass: "btn btn-default", attrs: { type: "submit" } },
-                  [_vm._v("Login")]
+            _vm.loading
+              ? _c(
+                  "div",
+                  { staticClass: "text-center" },
+                  [
+                    _c("spinner"),
+                    _c("span", { staticClass: "loading-msg" }, [
+                      _vm._v("Logging in...")
+                    ])
+                  ],
+                  1
                 )
-              ],
-              1
-            )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm._m(0)
           ]
         )
       ])
@@ -27931,7 +27938,20 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "text-center" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-default", attrs: { type: "submit" } },
+        [_vm._v("Login")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
