@@ -20,8 +20,8 @@
             <div class="class-post-user class-meta-item">
                 {{ post.user.name }}
             </div>
-            <div class="class-post-time class-meta-item">
-                {{ parseTime(post.created_at) }}
+            <div class="class-post-time class-meta-item" v-bind:title="parseTime(post.created_at)">
+                {{ parseTimeFromNow(post.created_at) }}
             </div>
         </div>
 
@@ -45,9 +45,13 @@
                     return text
                 }
             },
+            parseTimeFromNow(dateTime){
+                var displayTime = moment(dateTime, "YYYY-MM-DD HH-mm-ss").fromNow();
+                return `Post on ${displayTime}`
+            },
             parseTime(dateTime){
                 var displayTime = moment(dateTime, "YYYY-MM-DD HH-mm-ss").format("dddd, MMMM Do YYYY, h:mm:ss a");
-                return `Post on ${displayTime}`
+                return displayTime
             },
             removePost(postId){
                 this.$emit('removePost', postId)

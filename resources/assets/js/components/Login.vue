@@ -11,7 +11,7 @@
                     <div class="form-group">
                         <input type="password" class="form-control" id="password" required v-model="form.password">
                         <label for="username">Password</label>
-                        <span class="login-error" v-if="login_error">The username or password is incorrect.</span>
+                        <span class="login-error" v-if="login_error"><span class="glyphicon glyphicon-alert"></span> The username or password is incorrect.</span>
                     </div>
                     <div class="text-center" v-if="loading">
                         <spinner></spinner><span class="loading-msg">Logging in...</span>
