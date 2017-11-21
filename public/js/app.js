@@ -808,6 +808,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -27873,100 +27881,114 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "login-page" } }, [
     _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "login-form col-md-6 col-md-offset-3" }, [
-        _c("img", {
-          staticClass: "login-logo",
-          attrs: { src: _vm.baseUrl + "/images/logo-full.svg", height: "100px" }
-        }),
-        _vm._v(" "),
-        _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                _vm.login($event)
-              }
+      _c(
+        "div",
+        {
+          staticClass:
+            "login-form col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1"
+        },
+        [
+          _c("img", {
+            staticClass: "login-logo",
+            attrs: {
+              src: _vm.baseUrl + "/images/logo-full.svg",
+              height: "100px"
             }
-          },
-          [
-            _c("div", { staticClass: "form-group" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.username,
-                    expression: "form.username"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text", id: "username", required: "" },
-                domProps: { value: _vm.form.username },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form, "username", $event.target.value)
-                  }
+          }),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  _vm.login($event)
                 }
-              }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "username" } }, [_vm._v("Username")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.password,
-                    expression: "form.password"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "password", id: "password", required: "" },
-                domProps: { value: _vm.form.password },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              }
+            },
+            [
+              _c("div", { staticClass: "form-group" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.username,
+                      expression: "form.username"
                     }
-                    _vm.$set(_vm.form, "password", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "username" } }, [_vm._v("Password")]),
-              _vm._v(" "),
-              _vm.login_error
-                ? _c("span", { staticClass: "login-error" }, [
-                    _c("span", { staticClass: "glyphicon glyphicon-alert" }),
-                    _vm._v(" The username or password is incorrect.")
-                  ])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _vm.loading
-              ? _c(
-                  "div",
-                  { staticClass: "text-center" },
-                  [
-                    _c("spinner"),
-                    _c("span", { staticClass: "loading-msg" }, [
-                      _vm._v("Logging in...")
-                    ])
                   ],
-                  1
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm._m(0)
-          ]
-        )
-      ])
+                  staticClass: "form-control",
+                  attrs: { type: "text", id: "username", required: "" },
+                  domProps: { value: _vm.form.username },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "username", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "username" } }, [
+                  _vm._v("Username")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.password,
+                      expression: "form.password"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "password", id: "password", required: "" },
+                  domProps: { value: _vm.form.password },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "password", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "username" } }, [
+                  _vm._v("Password")
+                ]),
+                _vm._v(" "),
+                _vm.login_error
+                  ? _c("span", { staticClass: "login-error" }, [
+                      _c("span", { staticClass: "glyphicon glyphicon-alert" }),
+                      _vm._v(" The username or password is incorrect.")
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _vm.loading
+                ? _c(
+                    "div",
+                    { staticClass: "text-center" },
+                    [
+                      _c("spinner"),
+                      _c("span", { staticClass: "loading-msg" }, [
+                        _vm._v("Logging in...")
+                      ])
+                    ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm._m(0)
+            ]
+          )
+        ]
+      )
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "object" }, [
@@ -29634,64 +29656,83 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "post-container" }, [
-    _c(
-      "div",
-      { staticClass: "class-meta" },
-      [
-        _c("div", {
-          staticClass: "profile-picture profile-picture-small",
-          style: { backgroundImage: "url(" + _vm.post.user.avatar_url + ")" }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "class-post-user class-meta-item" }, [
-          _vm._v("\n            " + _vm._s(_vm.post.user.name) + "\n        ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "class-post-time class-meta-item" }, [
-          _vm._v(
-            "\n            " +
-              _vm._s(_vm.parseTime(_vm.post.created_at)) +
-              "\n        "
+    _c("div", { staticClass: "class-meta" }, [
+      _c("div", {
+        staticClass: "profile-picture profile-picture-small",
+        style: { backgroundImage: "url(" + _vm.post.user.avatar_url + ")" }
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "btn-group post-options", attrs: { role: "group" } },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "ul",
+            {
+              staticClass: "dropdown-menu dropdown-menu-right post-dropdown",
+              attrs: { "aria-labelledby": "dropdownMenu1" }
+            },
+            [
+              _c(
+                "li",
+                [
+                  _vm.showOption
+                    ? _c(
+                        "router-link",
+                        {
+                          attrs: {
+                            to:
+                              "/classroom/" +
+                              _vm.classroomId +
+                              "/assignment/" +
+                              _vm.post.assignment.id +
+                              "/edit"
+                          }
+                        },
+                        [_vm._v("Edit")]
+                      )
+                    : _vm._e()
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("li", [
+                _vm.showOption
+                  ? _c(
+                      "a",
+                      {
+                        attrs: { href: "javascript:void(0)" },
+                        on: {
+                          click: function($event) {
+                            _vm.removePost(_vm.post.assignment.id)
+                          }
+                        }
+                      },
+                      [_vm._v("Delete")]
+                    )
+                  : _vm._e()
+              ])
+            ]
           )
-        ]),
-        _vm._v(" "),
-        _vm.showOption
-          ? _c(
-              "router-link",
-              {
-                staticClass: "btn btn-default",
-                attrs: {
-                  to:
-                    "/classroom/" +
-                    _vm.classroomId +
-                    "/assignment/" +
-                    _vm.post.assignment.id +
-                    "/edit"
-                }
-              },
-              [_vm._v("Edit")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.showOption
-          ? _c(
-              "button",
-              {
-                staticClass: "btn btn-default",
-                on: {
-                  click: function($event) {
-                    _vm.removePost(_vm.post.assignment.id)
-                  }
-                }
-              },
-              [_vm._v("Delete")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _c("div", { staticClass: "clearfix" })
-      ],
-      1
-    ),
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "class-post-user class-meta-item" }, [
+        _vm._v("\n            " + _vm._s(_vm.post.user.name) + "\n        ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "class-post-time class-meta-item" }, [
+        _vm._v(
+          "\n            " +
+            _vm._s(_vm.parseTime(_vm.post.created_at)) +
+            "\n        "
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" })
+    ]),
     _vm._v(" "),
     _c(
       "h3",
@@ -29720,7 +29761,31 @@ var render = function() {
       : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-default dropdown-toggle",
+        attrs: {
+          type: "button",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [
+        _c("span", {
+          staticClass: "glyphicon glyphicon-option-horizontal",
+          attrs: { "aria-hidden": "true" }
+        })
+      ]
+    )
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

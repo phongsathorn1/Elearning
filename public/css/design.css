@@ -388,10 +388,16 @@ a:hover {
   margin: auto;
 }
 
-.login .btn {
-  color: #1a1a1a;
-  width: 80%;
-  background-color: #ffd200;
+.login-form button {
+  width: 100%;
+  border-color: white;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.01);
+}
+
+.login-form .text-center {
+  margin: 26px auto;
+  width: 70%;
 }
 
 .margin-container {
@@ -481,7 +487,8 @@ a:hover {
 }
 
 .login-logo {
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
+  width: 100%;
 }
 
 .login-form {
@@ -620,6 +627,12 @@ a:hover {
   z-index: 99;
   top: 10%;
   text-align: center;
+}
+
+@media (max-width: 320px) {
+  #login-page .container {
+    top: 2%;
+  }
 }
 
 @-webkit-keyframes slide {

@@ -382,10 +382,16 @@ a:hover{
     filter: invert(80%);
     margin:auto;
 }
-.login .btn{
-    color: rgb(26, 26, 26);
-    width: 80%;
-    background-color: rgba(255, 210, 0, 1);
+.login-form button{
+    width: 100%;
+    border-color: white;
+    color: white;
+    background-color: rgba(255,255,255,0.01);
+}
+
+.login-form .text-center{
+    margin: 26px auto;
+    width: 70%;
 }
 
 // post page
@@ -469,7 +475,8 @@ a:hover{
 }
 
 .login-logo{
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
+    width: 100%;
 }
 
 .login-form{
@@ -599,6 +606,11 @@ a:hover{
     z-index: 99;
     top: 10%;
     text-align: center;
+}
+@media(max-width:320px){
+    #login-page .container{
+        top:2%;
+    }
 }
 
 @-webkit-keyframes slide {
