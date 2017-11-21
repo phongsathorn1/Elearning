@@ -107,5 +107,15 @@ class ClassroomController extends Controller
         return response()->json($classroom);
     }
 
-    
+    public function cover(Request $request, $classroom_id)
+    {
+        $classroom = Auth::user()->classroom()->findOrFail($classroom_id);
+        $file = $request->file('file')->store('classroom/'.$classroom_id);
+
+        $uploaded_name = trim(basename($file));
+        $classroom->cover = $uploaded_name;
+        $classroom->save();
+
+        return response()->json(['success' => true, 'cover_url' => url('classroom/'.$classroom->id.'/'.$uploaded_name)]);
+    }
 }

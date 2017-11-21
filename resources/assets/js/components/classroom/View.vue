@@ -1,7 +1,22 @@
 <template>
     <div class="classroom" style="min-height: 500px" v-if="classroom">
-        <div class="class-header">
-            <div class="container">
+        <div class="class-header"
+            v-bind:style="{'background-image': `url(${classroom.cover_url})`}"
+        >
+            <div class="cover-edit" v-if="coverEdit">
+                <div class="cover-upload">
+                    <upload-cover
+                        :classroom-id="classroom.id"
+                        v-on:uploaded="coverUploaded"
+                    ></upload-cover>
+                </div>
+                <div class="cover-edit-bottom">
+                    <div class="container">
+                        <button type="button" class="btn btn-default" @click="toggleCoverEdit">Done</button>
+                    </div>
+                </div>
+            </div>
+            <div class="container" v-else>
                 <div class="col-md-8">
                     <h1>{{ classroom.name }}</h1>
                     <div class="class-description">
@@ -21,7 +36,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container cover-bottom">
+            <div class="container cover-bottom" v-if="!coverEdit">
                 <div class="class-action">
                         <div class="btn-group" role="group" aria-label="...">
                         <router-link :to="classroom.id + '/post'" class="btn btn-default">New Post</router-link>
@@ -42,12 +57,14 @@
                                     <router-link :to="classroom.id + '/members'">Members</router-link>
                                 </li>
                                 <li role="separator" class="divider" v-if="isTeacher"></li>
+                                <li v-if="isTeacher"><a href="javascript:void(0)" @click="toggleCoverEdit">Change cover photo</a></li>
                                 <li v-if="isTeacher">
                                     <router-link
                                         :to="`/classroom/${classroom.id}/edit`"
                                         >Edit this classroom
                                     </router-link>
                                 </li>
+                                <li role="separator" class="divider" v-if="isTeacher"></li>
                                 <li v-if="isTeacher">
                                     <a href="javascript:void(0)"
                                     v-bind:style="{color: '#a94442'}"
@@ -119,6 +136,7 @@
     import attachments from '../block/attachment.vue'
     import PostCard from '../block/PostCard.vue'
     import AssignmentCard from '../block/AssignmentCard.vue'
+    import uploadCover from '../block/uploadCover.vue'
 
     export default {
         data(){
@@ -135,7 +153,8 @@
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, delete it!'
-                }
+                },
+                coverEdit: false
             }
         },
         created(){
@@ -156,7 +175,8 @@
         components:{
             attachments,
             PostCard,
-            AssignmentCard
+            AssignmentCard,
+            uploadCover
         },
         computed: {
             ...mapGetters([
@@ -165,6 +185,9 @@
             ]),
         },
         methods:{
+            toggleCoverEdit(){
+                this.coverEdit = !this.coverEdit
+            },
             teachers(){
                 var teachers = this.classroom.members.filter(user => {
                     return user.role.actions === "is_teacher"
@@ -235,6 +258,9 @@
                         self.$router.push('/')
                     })
                 })
+            },
+            coverUploaded(url){
+                this.classroom.cover_url = url
             }
         }
     }

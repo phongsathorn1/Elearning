@@ -96,4 +96,15 @@ class FileController extends Controller
             return abort(404);
         }
     }
+
+    public function class_cover($classroom_id, $filename)
+    {
+        if(Storage::exists('classroom/'.$classroom_id.'/'.$filename))
+        {
+            return response()->file(storage_path('app/classroom/'.$classroom_id.'/'.$filename));
+        }
+        else {
+            return abort(404);
+        }
+    }
 }

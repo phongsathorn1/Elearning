@@ -4,8 +4,8 @@
             <div class="profile" v-if="profile">
 
                 <!-- profile-picture -->
-                <div class="profile-picture profile-picture-normal" v-bind:style="{'background-image': `url(${profile.avatar})`}">
-                    <upload-avatar v-if="showUpload" v-on:uploaded="uploadComplete" :img-src="profile.avatar"></upload-avatar>
+                <div class="profile-picture profile-picture-normal" v-bind:style="{'background-image': `url(${profile.avatar_url})`}">
+                    <upload-avatar v-if="showUpload" v-on:uploaded="uploadComplete" :img-src="profile.avatar_url"></upload-avatar>
                 </div>
                 <button class="btn btn-default" @click="ToggleShowUpload">Change picture</button>
                 <!-- profile-header -->
@@ -127,7 +127,7 @@
         },
         methods:{
             uploadComplete(url){
-                this.profile.avatar = url
+                this.profile.avatar_url = url
             },
             ToggleShowUpload(){
                 this.showUpload = !this.showUpload
