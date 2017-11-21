@@ -393,6 +393,10 @@ a:hover{
     margin-top: 25px;
     width: 100%;
 }
+.login-form button:hover{
+    border-color: white;
+    background-color: white;
+}
 @media(max-width: 300px){
     .login-form button{
         padding: 1rem 7rem;
