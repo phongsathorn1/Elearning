@@ -118,7 +118,7 @@ a:hover{
     margin-top: -7rem;
     background-repeat: no-repeat;
     background-size:cover;
-    padding: 150px 0px 1rem 0px;
+    padding: 150px 0px 0px 0px;
     background-image: url(https://static.pexels.com/photos/629168/pexels-photo-629168.jpeg);
     color: #FFFFFF;
 }
@@ -728,4 +728,40 @@ a:hover{
 }
 .upload-drop h2{
     color: rgba(0, 0, 0, 0.25);
+}
+.cover-upload-overlay{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+//cover
+.cover-bottom{
+    padding-bottom: 15px;
+}
+.cover-upload {
+    position: relative;
+    height: 200px;
+    margin-top: -70px;
+    text-align: center;
+    line-height: 200px;
+    vertical-align: middle;
+    background: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.cover-edit-bottom{
+    background: rgba(0, 0, 0, 0.5);
+    text-align: right;
+}
+
+.cover-edit-bottom .container{
+    border-top: 1px solid #FFFFFF;
+    padding: 10px 0px;
+}
+
+.cover-edit-bottom .container .btn{
+    color: #FFFFFF;
 }

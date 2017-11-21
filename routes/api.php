@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('classroom', 'ClassroomController');
     Route::post('classroom/join', 'ClassroomController@join');
     Route::resource('post', 'PostController');
+    Route::post('classroom/{classroom_id}/cover', 'ClassroomController@cover');
     Route::get('classroom/{classroom_id}/get', 'ClassroomController@getClassroom');
     Route::resource('classroom/{classroom_id}/assignment', 'AssignmentController');
     Route::post('classroom/{classroom_id}/assignment/{id}/upload', 'AssignmentController@upload');

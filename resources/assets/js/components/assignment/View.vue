@@ -11,7 +11,11 @@
                 <div class="class-post-time class-meta-item">
                     {{ assignment_post.created_at }}
                 </div>
-                <router-link :to="`/classroom/${classroom_id}/assignment/${assignment_post.id}/edit`" class="btn btn-default">Edit</router-link>
+                <router-link
+                    :to="`/classroom/${classroom_id}/assignment/${assignment_post.id}/edit`"
+                    class="btn btn-default"
+                    v-if="getRole != 'is_student'"
+                >Edit</router-link>
                 <div class="clearfix"></div>
             </div>
             <h3>{{ assignment_post.title }}</h3>
