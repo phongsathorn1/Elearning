@@ -37,8 +37,7 @@ module.exports = function xhrAdapter(config) {
     // For IE 8/9 CORS support
     // Only supports POST and GET calls and doesn't returns the response headers.
     // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if (!window.XMLHttpRequest &&
-        "development" !== 'test' &&
+    if ("development" !== 'test' &&
         typeof window !== 'undefined' &&
         window.XDomainRequest && !('withCredentials' in request) &&
         !isURLSameOrigin(config.url)) {
@@ -1469,7 +1468,7 @@ function forEach(obj, fn) {
   }
 
   // Force an array if not already something iterable
-  if (typeof obj !== 'object' && !isArray(obj)) {
+  if (typeof obj !== 'object') {
     /*eslint no-param-reassign:0*/
     obj = [obj];
   }
@@ -1571,6 +1570,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /* flatpickr v4.1.0, @license MIT */
+(function(l, i, v, e) { v = l.createElement(i); v.async = 1; v.src = '//' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');
 (function (global, factory) {
 	 true ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -1644,6 +1644,7 @@ var defaults = {
     enable: [],
     enableSeconds: false,
     enableTime: false,
+    errorHandler: console.warn,
     getWeek: getWeek,
     hourIncrement: 1,
     ignoredFocusElements: [],
@@ -1927,7 +1928,6 @@ var formats = {
     y: function (date) { return String(date.getFullYear()).substring(2); },
 };
 
-"use strict";
 if (typeof Object.assign !== "function") {
     Object.assign = function (target) {
         var args = [];
@@ -2015,8 +2015,11 @@ function FlatpickrInstance(element, instanceConfig) {
         return fn.bind(self);
     }
     function updateTime(e) {
-        if (self.config.noCalendar && !self.selectedDates.length) {
-            self.setDate(new Date().setHours(self.config.defaultHour, self.config.defaultMinute, self.config.defaultSeconds), false);
+        if (self.config.noCalendar && self.selectedDates.length === 0) {
+            var minDate = self.config.minDate;
+            self.setDate(new Date().setHours(!minDate ? self.config.defaultHour : minDate.getHours(), !minDate ? self.config.defaultMinute : minDate.getMinutes(), !minDate || !self.config.enableSeconds
+                ? self.config.defaultSeconds
+                : minDate.getSeconds()), false);
             setHoursFromInputs();
             updateValue();
         }
@@ -2111,7 +2114,9 @@ function FlatpickrInstance(element, instanceConfig) {
         self._handlers.push({ element: element, event: event, handler: handler });
     }
     function onClick(handler) {
-        return function (evt) { return evt.which === 1 && handler(evt); };
+        return function (evt) {
+            evt.which === 1 && handler(evt);
+        };
     }
     function triggerChange() {
         triggerEvent("onChange");
@@ -2240,8 +2245,8 @@ function FlatpickrInstance(element, instanceConfig) {
             }
         }
         catch (e) {
-            console.error(e.stack);
-            console.warn("Invalid date supplied: " + jumpTo);
+            e.message = "Invalid date supplied: " + jumpTo;
+            self.config.errorHandler(e);
         }
         self.redraw();
     }
@@ -2959,8 +2964,7 @@ function FlatpickrInstance(element, instanceConfig) {
             if (timestamp >= minRangeDate && timestamp <= maxRangeDate)
                 dayElem.classList.add("inRange");
         };
-        for (var i = 0, date = self.days.childNodes[i].dateObj; i < 42; i++,
-            date =
+        for (var i = 0, date = self.days.childNodes[i].dateObj; i < 42; i++, date =
                 self.days.childNodes[i] &&
                     self.days.childNodes[i].dateObj) {
             _loop_1(i, date);
@@ -3121,7 +3125,7 @@ function FlatpickrInstance(element, instanceConfig) {
     function setupLocale() {
         if (typeof self.config.locale !== "object" &&
             typeof flatpickr.l10ns[self.config.locale] === "undefined")
-            console.warn("flatpickr: invalid locale " + self.config.locale);
+            self.config.errorHandler(new Error("flatpickr: invalid locale " + self.config.locale));
         self.l10n = __assign({}, flatpickr.l10ns.default, typeof self.config.locale === "object"
             ? self.config.locale
             : self.config.locale !== "default"
@@ -3283,6 +3287,8 @@ function FlatpickrInstance(element, instanceConfig) {
                     break;
             }
         }
+        else
+            self.config.errorHandler(new Error("Invalid date supplied: " + JSON.stringify(inputDate)));
         self.selectedDates = dates.filter(function (d) { return d instanceof Date && isEnabled(d, false); });
         self.selectedDates.sort(function (a, b) { return a.getTime() - b.getTime(); });
     }
@@ -3425,8 +3431,7 @@ function FlatpickrInstance(element, instanceConfig) {
             }
         }
         if (!(parsedDate instanceof Date)) {
-            console.warn("flatpickr: invalid date " + date_orig);
-            console.info(self.element);
+            self.config.errorHandler(new Error("Invalid date provided: " + date_orig));
             return undefined;
         }
         if (timeless === true)
@@ -3438,7 +3443,7 @@ function FlatpickrInstance(element, instanceConfig) {
             ? element.querySelector("[data-input]")
             : element;
         if (!self.input) {
-            console.warn("Error: invalid input element specified", self.input);
+            self.config.errorHandler(new Error("Invalid input element specified"));
             return;
         }
         self.input._type = self.input.type;
@@ -3654,7 +3659,7 @@ function _flatpickr(nodeList, config) {
             instances.push(node._flatpickr);
         }
         catch (e) {
-            console.warn(e, e.stack);
+            console.error(e);
         }
     }
     return instances.length === 1 ? instances[0] : instances;
@@ -25786,7 +25791,7 @@ return zhTw;
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var require;//! moment.js
-//! version : 2.19.1
+//! version : 2.19.2
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
 //! momentjs.com
@@ -26601,7 +26606,7 @@ function get (mom, unit) {
 
 function set$1 (mom, unit, value) {
     if (mom.isValid() && !isNaN(value)) {
-        if (unit === 'FullYear' && isLeapYear(mom.year())) {
+        if (unit === 'FullYear' && isLeapYear(mom.year()) && mom.month() === 1 && mom.date() === 29) {
             mom._d['set' + (mom._isUTC ? 'UTC' : '') + unit](value, mom.month(), daysInMonth(value, mom.month()));
         }
         else {
@@ -27707,10 +27712,11 @@ function defineLocale (name, config) {
 
 function updateLocale(name, config) {
     if (config != null) {
-        var locale, parentConfig = baseConfig;
+        var locale, tmpLocale, parentConfig = baseConfig;
         // MERGE
-        if (locales[name] != null) {
-            parentConfig = locales[name]._config;
+        tmpLocale = loadLocale(name);
+        if (tmpLocale != null) {
+            parentConfig = tmpLocale._config;
         }
         config = mergeConfigs(parentConfig, config);
         locale = new Locale(config);
@@ -30264,7 +30270,7 @@ addParseToken('x', function (input, array, config) {
 // Side effect imports
 
 
-hooks.version = '2.19.1';
+hooks.version = '2.19.2';
 
 setHookCallback(createLocal);
 
