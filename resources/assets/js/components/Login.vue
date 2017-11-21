@@ -19,6 +19,25 @@
                     </div>
                 </form>
             </div>
+            <div class="object">
+                <div class="overlay-bg">
+                </div>
+                <div class="star-1">
+                    <img src="/images/login/star_Ly4.png" class="img-responsive">
+                </div>
+                <div class="star-2">
+                    <img src="/images/login/star2_Ly4.png" class="img-responsive">
+                </div>
+                <div class="mountain mountain-5"></div>
+                <div class="mountain mountain-4"></div>
+                <div class="mountain mountain-3"></div>
+                <div class="mountain mountain-2"></div>
+                <div class="mountain mountain-1"></div>
+                <div class="cloud cloud-4"></div>
+                <div class="cloud cloud-3"></div>
+                <div class="cloud cloud-2"></div>
+                <div class="cloud cloud-1"></div>
+            </div>
         </div>
         <div class="object">
             <div class="overlay-bg">
@@ -92,4 +111,5 @@
             }
         }
     }
+    
 </script>
