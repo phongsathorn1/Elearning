@@ -29527,7 +29527,7 @@ var render = function() {
           _c(
             "ul",
             {
-              staticClass: "dropdown-menu dropdown-menu-right",
+              staticClass: "dropdown-menu dropdown-menu-right post-dropdown",
               attrs: { "aria-labelledby": "dropdownMenu1" }
             },
             [
@@ -29538,7 +29538,6 @@ var render = function() {
                     ? _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-default",
                           attrs: {
                             to:
                               "/classroom/" +
@@ -29558,9 +29557,9 @@ var render = function() {
               _c("li", [
                 _vm.showOption
                   ? _c(
-                      "button",
+                      "a",
                       {
-                        staticClass: "btn btn-default",
+                        attrs: { href: "javascript:void(0)" },
                         on: {
                           click: function($event) {
                             _vm.removePost(_vm.post.assignment.id)
