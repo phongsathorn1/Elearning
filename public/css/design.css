@@ -126,6 +126,11 @@ a:hover {
   margin-top: 0px;
 }
 
+.class-header .char-shadow {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0 5px;
+}
+
 .class-header .btn-default {
   background-color: transparent;
   color: #FFFFFF;
@@ -481,6 +486,11 @@ a:hover {
   font-size: 20px;
 }
 
+.class-teacher kbd {
+  position: relative;
+  top: -1.5rem;
+}
+
 .post-block button {
   float: right;
 }
@@ -819,5 +829,14 @@ a:hover {
 
 .cover-edit-bottom .container .btn {
   color: #FFFFFF;
+}
+
+.assignment-done-box .assignment-done-list {
+  cursor: pointer;
+  padding: 10px;
+}
+
+.assignment-done-box .assignment-done-list:hover {
+  background: #E0E0E0;
 }
 

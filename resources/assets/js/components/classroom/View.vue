@@ -1,7 +1,8 @@
 <template>
     <div class="classroom" style="min-height: 500px" v-if="classroom">
         <div class="class-header"
-            v-bind:style="{'background-image': `url(${classroom.cover_url})`}"
+
+            v-bind:style="{'background': `linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.3)), url(${classroom.cover_url})`} "
         >
             <div class="cover-edit" v-if="coverEdit">
                 <div class="cover-upload">
@@ -20,6 +21,7 @@
                 <div class="col-md-8">
                     <h1>{{ classroom.name }}</h1>
                     <div class="class-description">
+                        
                         {{ classroom.description }}
                     </div>
                 </div>
@@ -28,8 +30,8 @@
                         <strong>Teachers</strong>
                         <ul>
                             <li v-for="teacher in teachers()">
-                                <div class="profile-picture profile-picture-small" :style="{backgroundImage : `url(${teacher.avatar_url})`}"></div>
-                                {{ teacher.name }}
+                                <div class="profile-picture profile-picture-small" :style="{backgroundImage : `url(${teacher.avatar_url})`} "></div>
+                                <kbd>{{ teacher.name }}</kbd>
                                 <div class="clearfix"></div>
                             </li>
                         </ul>

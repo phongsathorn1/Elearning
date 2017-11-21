@@ -706,6 +706,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -1191,6 +1195,64 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/block/uploadCover.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_spinner_vue__ = __webpack_require__("./resources/assets/js/components/elements/spinner.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_spinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__elements_spinner_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['classroomId'],
+    data: function data() {
+        return {
+            options: {
+                url: '/api/classroom/' + this.classroomId + '/cover',
+                paramName: 'file',
+                headers: {
+                    Authorization: 'Bearer ' + this.$auth.getToken()
+                }
+            }
+        };
+    },
+
+    components: {
+        spinner: __WEBPACK_IMPORTED_MODULE_0__elements_spinner_vue___default.a
+    },
+    methods: {
+        uploadComplete: function uploadComplete(file, status, xhr) {
+            var cover_url = JSON.parse(xhr.response).cover_url;
+            this.$emit('uploaded', cover_url);
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/classroom/Create.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1435,6 +1497,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__block_PostCard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__block_PostCard_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__block_AssignmentCard_vue__ = __webpack_require__("./resources/assets/js/components/block/AssignmentCard.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__block_AssignmentCard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__block_AssignmentCard_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__block_uploadCover_vue__ = __webpack_require__("./resources/assets/js/components/block/uploadCover.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__block_uploadCover_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__block_uploadCover_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -1550,6 +1614,26 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -1574,7 +1658,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, delete it!'
-            }
+            },
+            coverEdit: false
         };
     },
     created: function created() {
@@ -1598,10 +1683,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     components: {
         attachments: __WEBPACK_IMPORTED_MODULE_4__block_attachment_vue___default.a,
         PostCard: __WEBPACK_IMPORTED_MODULE_5__block_PostCard_vue___default.a,
-        AssignmentCard: __WEBPACK_IMPORTED_MODULE_6__block_AssignmentCard_vue___default.a
+        AssignmentCard: __WEBPACK_IMPORTED_MODULE_6__block_AssignmentCard_vue___default.a,
+        uploadCover: __WEBPACK_IMPORTED_MODULE_7__block_uploadCover_vue___default.a
     },
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["mapGetters"])(['getUserId', 'isTeacher'])),
     methods: {
+        toggleCoverEdit: function toggleCoverEdit() {
+            this.coverEdit = !this.coverEdit;
+        },
         teachers: function teachers() {
             var teachers = this.classroom.members.filter(function (user) {
                 return user.role.actions === "is_teacher";
@@ -1679,6 +1768,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     self.$router.push('/');
                 });
             });
+        },
+        coverUploaded: function coverUploaded(url) {
+            this.classroom.cover_url = url;
         }
     }
 });
@@ -2293,7 +2385,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
     methods: {
         uploadComplete: function uploadComplete(url) {
-            this.profile.avatar = url;
+            this.profile.avatar_url = url;
         },
         ToggleShowUpload: function ToggleShowUpload() {
             this.showUpload = !this.showUpload;
@@ -28121,162 +28213,236 @@ var render = function() {
         "div",
         { staticClass: "classroom", staticStyle: { "min-height": "500px" } },
         [
-          _c("div", { staticClass: "class-header" }, [
-            _c("div", { staticClass: "container" }, [
-              _c("div", { staticClass: "col-md-8" }, [
-                _c("h1", [_vm._v(_vm._s(_vm.classroom.name))]),
-                _vm._v(" "),
-                _c("div", { staticClass: "class-description" }, [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(_vm.classroom.description) +
-                      "\n                "
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-4" }, [
-                _c("div", { staticClass: "class-teacher" }, [
-                  _c("strong", [_vm._v("Teachers")]),
-                  _vm._v(" "),
-                  _c(
-                    "ul",
-                    _vm._l(_vm.teachers(), function(teacher) {
-                      return _c("li", [
-                        _c("div", {
-                          staticClass: "profile-picture profile-picture-small",
-                          style: {
-                            backgroundImage: "url(" + teacher.avatar_url + ")"
-                          }
-                        }),
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(teacher.name) +
-                            "\n                            "
-                        ),
-                        _c("div", { staticClass: "clearfix" })
-                      ])
-                    })
-                  )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "container cover-bottom" }, [
-              _c("div", { staticClass: "class-action" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "btn-group",
-                    attrs: { role: "group", "aria-label": "..." }
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "btn btn-default",
-                        attrs: { to: _vm.classroom.id + "/post" }
-                      },
-                      [_vm._v("New Post")]
-                    ),
-                    _vm._v(" "),
-                    _vm.isTeacher
-                      ? _c(
-                          "router-link",
-                          {
-                            staticClass: "btn btn-default",
-                            attrs: { to: _vm.classroom.id + "/post/assignment" }
-                          },
-                          [_vm._v("New Assignment\n                    ")]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "class-header",
+              style: {
+                background:
+                  "linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.3)), url(" +
+                  _vm.classroom.cover_url +
+                  ")"
+              }
+            },
+            [
+              _vm.coverEdit
+                ? _c("div", { staticClass: "cover-edit" }, [
                     _c(
                       "div",
-                      { staticClass: "btn-group", attrs: { role: "group" } },
+                      { staticClass: "cover-upload" },
                       [
-                        _vm._m(0),
+                        _c("upload-cover", {
+                          attrs: { "classroom-id": _vm.classroom.id },
+                          on: { uploaded: _vm.coverUploaded }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "cover-edit-bottom" }, [
+                      _c("div", { staticClass: "container" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-default",
+                            attrs: { type: "button" },
+                            on: { click: _vm.toggleCoverEdit }
+                          },
+                          [_vm._v("Done")]
+                        )
+                      ])
+                    ])
+                  ])
+                : _c("div", { staticClass: "container" }, [
+                    _c("div", { staticClass: "col-md-8" }, [
+                      _c("h1", [_vm._v(_vm._s(_vm.classroom.name))]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "class-description" }, [
+                        _vm._v(
+                          "\n                    \n                    " +
+                            _vm._s(_vm.classroom.description) +
+                            "\n                "
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _c("div", { staticClass: "class-teacher" }, [
+                        _c("strong", [_vm._v("Teachers")]),
                         _vm._v(" "),
                         _c(
                           "ul",
-                          {
-                            staticClass: "dropdown-menu dropdown-menu-right",
-                            attrs: { "aria-labelledby": "dropdownMenu1" }
-                          },
-                          [
-                            _c(
-                              "li",
-                              [
-                                _c(
-                                  "router-link",
-                                  {
-                                    attrs: { to: _vm.classroom.id + "/members" }
-                                  },
-                                  [_vm._v("Members")]
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _vm.isTeacher
-                              ? _c("li", {
-                                  staticClass: "divider",
-                                  attrs: { role: "separator" }
-                                })
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.isTeacher
-                              ? _c(
-                                  "li",
-                                  [
-                                    _c(
-                                      "router-link",
-                                      {
-                                        attrs: {
-                                          to:
-                                            "/classroom/" +
-                                            _vm.classroom.id +
-                                            "/edit"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Edit this classroom\n                                "
-                                        )
-                                      ]
-                                    )
-                                  ],
-                                  1
-                                )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.isTeacher
-                              ? _c("li", [
-                                  _c(
-                                    "a",
-                                    {
-                                      style: { color: "#a94442" },
-                                      attrs: { href: "javascript:void(0)" },
-                                      on: { click: _vm.deleteClass }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "Delete classroom\n                                "
-                                      )
-                                    ]
-                                  )
-                                ])
-                              : _vm._e()
-                          ]
+                          _vm._l(_vm.teachers(), function(teacher) {
+                            return _c("li", [
+                              _c("div", {
+                                staticClass:
+                                  "profile-picture profile-picture-small",
+                                style: {
+                                  backgroundImage:
+                                    "url(" + teacher.avatar_url + ")"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("kbd", [_vm._v(_vm._s(teacher.name))]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "clearfix" })
+                            ])
+                          })
                         )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ])
-            ])
-          ]),
+                      ])
+                    ])
+                  ]),
+              _vm._v(" "),
+              !_vm.coverEdit
+                ? _c("div", { staticClass: "container cover-bottom" }, [
+                    _c("div", { staticClass: "class-action" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "btn-group",
+                          attrs: { role: "group", "aria-label": "..." }
+                        },
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "btn btn-default",
+                              attrs: { to: _vm.classroom.id + "/post" }
+                            },
+                            [_vm._v("New Post")]
+                          ),
+                          _vm._v(" "),
+                          _vm.isTeacher
+                            ? _c(
+                                "router-link",
+                                {
+                                  staticClass: "btn btn-default",
+                                  attrs: {
+                                    to: _vm.classroom.id + "/post/assignment"
+                                  }
+                                },
+                                [_vm._v("New Assignment\n                    ")]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "btn-group",
+                              attrs: { role: "group" }
+                            },
+                            [
+                              _vm._m(0),
+                              _vm._v(" "),
+                              _c(
+                                "ul",
+                                {
+                                  staticClass:
+                                    "dropdown-menu dropdown-menu-right",
+                                  attrs: { "aria-labelledby": "dropdownMenu1" }
+                                },
+                                [
+                                  _c(
+                                    "li",
+                                    [
+                                      _c(
+                                        "router-link",
+                                        {
+                                          attrs: {
+                                            to: _vm.classroom.id + "/members"
+                                          }
+                                        },
+                                        [_vm._v("Members")]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _vm.isTeacher
+                                    ? _c("li", {
+                                        staticClass: "divider",
+                                        attrs: { role: "separator" }
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.isTeacher
+                                    ? _c("li", [
+                                        _c(
+                                          "a",
+                                          {
+                                            attrs: {
+                                              href: "javascript:void(0)"
+                                            },
+                                            on: { click: _vm.toggleCoverEdit }
+                                          },
+                                          [_vm._v("Change cover photo")]
+                                        )
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.isTeacher
+                                    ? _c(
+                                        "li",
+                                        [
+                                          _c(
+                                            "router-link",
+                                            {
+                                              attrs: {
+                                                to:
+                                                  "/classroom/" +
+                                                  _vm.classroom.id +
+                                                  "/edit"
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "Edit this classroom\n                                "
+                                              )
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.isTeacher
+                                    ? _c("li", {
+                                        staticClass: "divider",
+                                        attrs: { role: "separator" }
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.isTeacher
+                                    ? _c("li", [
+                                        _c(
+                                          "a",
+                                          {
+                                            style: { color: "#a94442" },
+                                            attrs: {
+                                              href: "javascript:void(0)"
+                                            },
+                                            on: { click: _vm.deleteClass }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "Delete classroom\n                                "
+                                            )
+                                          ]
+                                        )
+                                      ])
+                                    : _vm._e()
+                                ]
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ])
+                  ])
+                : _vm._e()
+            ]
+          ),
           _vm._v(" "),
           _vm.posts
             ? _c(
@@ -29577,21 +29743,23 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c(
-                "router-link",
-                {
-                  staticClass: "btn btn-default",
-                  attrs: {
-                    to:
-                      "/classroom/" +
-                      _vm.classroom_id +
-                      "/assignment/" +
-                      _vm.assignment_post.id +
-                      "/edit"
-                  }
-                },
-                [_vm._v("Edit")]
-              ),
+              _vm.getRole != "is_student"
+                ? _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-default",
+                      attrs: {
+                        to:
+                          "/classroom/" +
+                          _vm.classroom_id +
+                          "/assignment/" +
+                          _vm.assignment_post.id +
+                          "/edit"
+                      }
+                    },
+                    [_vm._v("Edit")]
+                  )
+                : _vm._e(),
               _vm._v(" "),
               _c("div", { staticClass: "clearfix" })
             ],
@@ -29703,12 +29871,14 @@ var render = function() {
               "div",
               {
                 staticClass: "profile-picture profile-picture-normal",
-                style: { "background-image": "url(" + _vm.profile.avatar + ")" }
+                style: {
+                  "background-image": "url(" + _vm.profile.avatar_url + ")"
+                }
               },
               [
                 _vm.showUpload
                   ? _c("upload-avatar", {
-                      attrs: { "img-src": _vm.profile.avatar },
+                      attrs: { "img-src": _vm.profile.avatar_url },
                       on: { uploaded: _vm.uploadComplete }
                     })
                   : _vm._e()
@@ -30311,7 +30481,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "assignment-done-box" },
+    { staticClass: "assignment-done-box card" },
     _vm._l(_vm.all_done, function(done) {
       return _c("div", { staticClass: "assignment-done-list" }, [
         _c(
@@ -30535,6 +30705,64 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-b9285322", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-bcfb6ea6\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/block/uploadCover.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "vue-clip",
+    {
+      attrs: { options: _vm.options, "on-complete": _vm.uploadComplete },
+      scopedSlots: _vm._u([
+        {
+          key: "clip-uploader-body",
+          fn: function(props) {
+            return _vm._l(props.files, function(file) {
+              return file.status != "success"
+                ? _c(
+                    "div",
+                    { staticClass: "cover-uploading" },
+                    [
+                      _c("spinner"),
+                      _c("span", { staticClass: "loading-msg" }, [
+                        _vm._v("Uploading...")
+                      ])
+                    ],
+                    1
+                  )
+                : _vm._e()
+            })
+          }
+        }
+      ])
+    },
+    [
+      _c("template", { slot: "clip-uploader-action" }, [
+        _c("div", { staticClass: "cover-upload-overlay" }, [
+          _c("div", { staticClass: "dz-message" }, [
+            _c("span", [_vm._v("Drag & drop or click here to change cover")])
+          ])
+        ])
+      ])
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-bcfb6ea6", module.exports)
   }
 }
 
@@ -34763,6 +34991,55 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-2eb2e553", Component.options)
   } else {
     hotAPI.reload("data-v-2eb2e553", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/block/uploadCover.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/block/uploadCover.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-bcfb6ea6\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/block/uploadCover.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/block/uploadCover.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-bcfb6ea6", Component.options)
+  } else {
+    hotAPI.reload("data-v-bcfb6ea6", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
