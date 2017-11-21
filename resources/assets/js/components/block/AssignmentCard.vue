@@ -25,14 +25,26 @@
             <div class="class-post-user class-meta-item">
                 {{ post.user.name }}
             </div>
-            <div class="class-post-time class-meta-item">
-                {{ parseTime(post.created_at) }}
+            <div class="class-post-time class-meta-item" v-bind:title="parseTime(post.created_at)">
+                {{ postTimeFromNow(post.created_at) }}
             </div>
             <div class="clearfix"></div>
         </div>
-        <h3><router-link :to="classroomId +'/assignment/' + post.assignment.id">{{ post.assignment.title }}</router-link></h3>
-        <p v-html="renderHTML(post.assignment.detail)"></p>
-        <p v-if="timeCheck(post.assignment.due_time)">Time up!</p>
+        <div class="col-md-9">
+            <h3><router-link :to="classroomId +'/assignment/' + post.assignment.id">{{ post.assignment.title }}</router-link></h3>
+            <p v-html="renderHTML(post.assignment.detail)"></p>
+        </div>
+        <div class="col-md-3">
+            <div class="assignment-time" v-if="timeCheck(post.assignment.due_time)">
+                <div class="assignment-timeup"><span class="glyphicon glyphicon-exclamation-sign"></span> Time up!</div>
+            </div>
+            <div class="assignment-time" v-else>
+                <div class="assignment-left"><span class="glyphicon glyphicon-time"></span> {{ parseTimeFromNow(post.assignment.due_time) }} left!</div>
+                <div class="assignment-datetime">Due {{ parseShortTime(post.assignment.due_time) }}</div>
+            </div>
+            <router-link class="btn btn-default" :to="classroomId +'/assignment/' + post.assignment.id">Open</router-link>
+        </div>
+        <div class="clearfix"></div>
     </div>
 </template>
 
@@ -49,9 +61,21 @@
                     return text
                 }
             },
+            postTimeFromNow(dateTime){
+                var displayTime = moment(dateTime, "YYYY-MM-DD HH-mm-ss").fromNow();
+                return `Post on ${displayTime}`
+            },
+            parseTimeFromNow(dateTime){
+                var displayTime = moment(dateTime, "YYYY-MM-DD HH-mm-ss").fromNow(true);
+                return displayTime
+            },
             parseTime(dateTime){
                 var displayTime = moment(dateTime, "YYYY-MM-DD HH-mm-ss").format("dddd, MMMM Do YYYY, h:mm:ss a");
-                return `Post on ${displayTime}`
+                return displayTime
+            },
+            parseShortTime(dateTime){
+                var displayTime = moment(dateTime, "YYYY-MM-DD HH-mm-ss").format('llll');
+                return displayTime
             },
             removePost(postId){
                 this.$emit('removePost', postId)

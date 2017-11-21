@@ -8,8 +8,8 @@
                 <div class="class-post-user class-meta-item" v-if="assignment_post.user.name">
                     {{ assignment_post.user.name }}
                 </div>
-                <div class="class-post-time class-meta-item">
-                    {{ assignment_post.created_at }}
+                <div class="class-post-time class-meta-item" v-bind:title="parseTime(assignment_post.created_at)">
+                    {{ postTimeFromNow(assignment_post.created_at) }}
                 </div>
                 <router-link
                     :to="`/classroom/${classroom_id}/assignment/${assignment_post.id}/edit`"
@@ -18,10 +18,21 @@
                 >Edit</router-link>
                 <div class="clearfix"></div>
             </div>
-            <h3>{{ assignment_post.title }}</h3>
-            <p>{{ assignment_post.detail }}</p>
+            <div class="col-md-9">
+                <h3>{{ assignment_post.title }}</h3>
+                <p v-html="renderHTML(assignment_post.detail)"></p>
+            </div>
+            <div class="col-md-3">
+                <div class="assignment-time" v-if="timeCheck(assignment_post.due_time)">
+                    <div class="assignment-timeup"><span class="glyphicon glyphicon-exclamation-sign"></span> Time up!</div>
+                </div>
+                <div class="assignment-time" v-else>
+                    <div class="assignment-left"><span class="glyphicon glyphicon-time"></span> {{ parseTimeFromNow(assignment_post.due_time) }} left!</div>
+                    <div class="assignment-datetime">Due {{ parseShortTime(assignment_post.due_time) }}</div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
             <attachment :files="attachment"></attachment>
-            <p v-if="timeCheck()">Time up!</p>
         </div>
 
         <assignment-upload
@@ -78,11 +89,34 @@
             })
         },
         methods:{
+            renderHTML(text){
+                if(text){
+                    return text.replace(/(\r\n|\n)/g, "<br/>")
+                }else{
+                    return text
+                }
+            },
             timeCheck(){
                 return moment().isSameOrAfter(this.assignment_post.due_time, "YYYY-MM-DD HH-mm-ss");
             },
             back(){
                 this.$router.go(-1)
+            },
+            postTimeFromNow(dateTime){
+                var displayTime = moment(dateTime, "YYYY-MM-DD HH-mm-ss").fromNow();
+                return `Post on ${displayTime}`
+            },
+            parseTimeFromNow(dateTime){
+                var displayTime = moment(dateTime, "YYYY-MM-DD HH-mm-ss").fromNow(true);
+                return displayTime
+            },
+            parseTime(dateTime){
+                var displayTime = moment(dateTime, "YYYY-MM-DD HH-mm-ss").format("dddd, MMMM Do YYYY, h:mm:ss a");
+                return displayTime
+            },
+            parseShortTime(dateTime){
+                var displayTime = moment(dateTime, "YYYY-MM-DD HH-mm-ss").format('llll');
+                return displayTime
             }
         }
     }

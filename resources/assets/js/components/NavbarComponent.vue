@@ -15,10 +15,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="navbar-dropdown-menu-small">
       <ul class="nav navbar-nav">
-        <!--
-          <li><router-link to="/login">Login</router-link></li>
-         -->
-        
+          <li><router-link to="/user">All account</router-link></li>
       </ul>
       <ul class="nav navbar-nav navbar-right" v-if="isLoggedIn">
         <li class="dropdown">
@@ -51,7 +48,8 @@
         'isLoggedIn'
       ]),
       ...mapGetters([
-        'getName'
+        'getName',
+        'isTeacher'
       ])
     },
     created(){
