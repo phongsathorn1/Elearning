@@ -396,7 +396,14 @@ a:hover {
 }
 
 .login-form .text-center {
-  margin: 30px;
+  margin-top: 25px;
+  width: 100%;
+}
+
+@media (max-width: 300px) {
+  .login-form button {
+    padding: 1rem 7rem;
+  }
 }
 
 .margin-container {
