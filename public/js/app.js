@@ -29453,11 +29453,11 @@ var render = function() {
         _c(
           "button",
           {
-            staticClass: "btn btn-link",
+            staticClass: "btn btn-default btn-back",
             attrs: { type: "button" },
             on: { click: _vm.back }
           },
-          [_vm._v("< Back")]
+          [_vm._v("Back")]
         )
       ]),
       _vm._v(" "),

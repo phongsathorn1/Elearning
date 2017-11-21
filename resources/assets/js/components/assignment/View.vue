@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="control-area">
-            <button type="button" class="btn btn-link" @click="back">&lt; Back</button>
+            <button type="button" class="btn btn-default btn-back" @click="back">Back</button>
         </div>
         <div class="class-post-item card">
             <div class="class-meta">
