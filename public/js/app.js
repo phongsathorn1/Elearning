@@ -343,24 +343,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_upload_vue__ = __webpack_require__("./resources/assets/js/components/block/upload.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_upload_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__block_upload_vue__);
 //
 //
 //
@@ -388,6 +372,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['classroomId', 'assignmentId'],
     data: function data() {
@@ -400,13 +386,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             assignment_id: this.assignmentId,
             token: this.$auth.getToken(),
             options: {
-                url: 'api/classroom/' + this.$route.params.id + '/assignment/' + this.$route.params.assignment_id + '/upload',
+                url: '/api/classroom/' + this.$route.params.id + '/assignment/' + this.$route.params.assignment_id + '/upload',
                 paramName: 'file',
                 headers: {
                     Authorization: 'Bearer ' + this.$auth.getToken()
                 }
             }
         };
+    },
+
+    components: {
+        upload: __WEBPACK_IMPORTED_MODULE_0__block_upload_vue___default.a
     },
     created: function created() {
         var _this = this;
@@ -424,38 +414,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        removeFile: function removeFile(file) {
-            var _this2 = this;
-
-            if (this.is_done) {
-                return false;
-            }
-            var index = this.uploaded_files.findIndex(function (x) {
-                return x.id == file.id;
-            });
-            var data = {
-                'file_id': file.id
-            };
-            axios.post('api/classroom/' + this.classroom_id + '/assignment/' + this.assignment_id + '/remove', data, {
-                headers: {
-                    Authorization: 'Bearer ' + this.token
-                }
-            }).then(function (response) {
-                _this2.uploaded_files.splice(index, 1);
-            });
+        uploadedFile: function uploadedFile(file) {
+            this.uploaded_files = file;
         },
-        uploadComplete: function uploadComplete(file, status, xhr) {
-            this.uploaded_files.push(JSON.parse(xhr.response));
+        removeFile: function removeFile(file) {
+            this.uploaded_files = file;
         },
         confirm: function confirm() {
-            var _this3 = this;
+            var _this2 = this;
 
             axios.get('api/classroom/' + this.classroom_id + '/assignment/' + this.assignment_id + '/confirm', {
                 headers: {
                     Authorization: 'Bearer ' + this.token
                 }
             }).then(function (response) {
-                _this3.$router.push('/classroom/' + _this3.classroom_id);
+                _this2.$router.push('/classroom/' + _this2.classroom_id);
             });
         },
         download: function download(file) {
@@ -30044,87 +30017,18 @@ var render = function() {
             : _vm._e(),
           _vm._v(" "),
           !_vm.is_done
-            ? _c(
-                "vue-clip",
-                {
-                  ref: "vc",
-                  attrs: {
-                    options: _vm.options,
-                    "on-complete": _vm.uploadComplete
-                  },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "clip-uploader-body",
-                      fn: function(props) {
-                        return _vm._l(props.files, function(file) {
-                          return file.status != "success"
-                            ? _c("div", [
-                                _c(
-                                  "div",
-                                  {
-                                    on: {
-                                      click: function($event) {
-                                        _vm.removeFile(file)
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                    " +
-                                        _vm._s(file.name) +
-                                        " " +
-                                        _vm._s(file.status) +
-                                        "\n                    "
-                                    ),
-                                    _c("div", { staticClass: "progress" }, [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "progress-bar",
-                                          style: { width: file.progress + "%" },
-                                          attrs: {
-                                            role: "progressbar",
-                                            "aria-valuenow": file.progress,
-                                            "aria-valuemin": "0",
-                                            "aria-valuemax": "100"
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "span",
-                                            { staticClass: "sr-only" },
-                                            [
-                                              _vm._v(
-                                                _vm._s(file.progress) +
-                                                  " Complete"
-                                              )
-                                            ]
-                                          )
-                                        ]
-                                      )
-                                    ])
-                                  ]
-                                )
-                              ])
-                            : _vm._e()
-                        })
-                      }
-                    }
-                  ])
+            ? _c("upload", {
+                attrs: {
+                  callback:
+                    "/api/classroom/" +
+                    _vm.classroomId +
+                    "/assignment/" +
+                    _vm.assignmentId +
+                    "/upload",
+                  uploadFiles: _vm.uploaded_files
                 },
-                [
-                  _c("template", { slot: "clip-uploader-action" }, [
-                    _c("div", [
-                      _c("div", { staticClass: "dz-message" }, [
-                        _c("h2", [
-                          _vm._v(" Click or Drag and Drop files here upload ")
-                        ])
-                      ])
-                    ])
-                  ])
-                ],
-                2
-              )
+                on: { complete: _vm.uploadedFile, remove: _vm.removeFile }
+              })
             : _vm._e(),
           _vm._v(" "),
           _vm._l(_vm.uploaded_files, function(file) {
@@ -30139,18 +30043,6 @@ var render = function() {
                   }
                 },
                 [_vm._v(_vm._s(file.name))]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.removeFile(file)
-                    }
-                  }
-                },
-                [_vm._v("delete")]
               )
             ])
           }),
