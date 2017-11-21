@@ -437,6 +437,10 @@ a:hover {
   font-size: 20px;
 }
 
+.post-block button {
+  float: right;
+}
+
 #login-page {
   background-image: -webkit-gradient(linear, left top, left bottom, from(#e8530c), color-stop(40%, #f29029), to(#f6a01c));
   background-image: linear-gradient(#e8530c 0%, #f29029 40%, #f6a01c 100%);
@@ -654,5 +658,16 @@ a:hover {
   100% {
     opacity: 0;
   }
+}
+
+.upload-drop {
+  border: dashed 3px rgba(0, 0, 0, 0.3);
+  padding: 20px 20px;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.upload-drop h2 {
+  color: rgba(0, 0, 0, 0.25);
 }
 
