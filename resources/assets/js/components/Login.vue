@@ -13,30 +13,13 @@
                         <label for="username">Password</label>
                         <span class="login-error" v-if="login_error">The username or password is incorrect.</span>
                     </div>
+                    <div class="text-center" v-if="loading">
+                        <spinner></spinner><span class="loading-msg">Logging in...</span>
+                    </div>
                     <div class="text-center">
-                        <spinner></spinner>
                         <button type="submit" class="btn btn-default">Login</button>
                     </div>
                 </form>
-            </div>
-            <div class="object">
-                <div class="overlay-bg">
-                </div>
-                <div class="star-1">
-                    <img src="/images/login/star_Ly4.png" class="img-responsive">
-                </div>
-                <div class="star-2">
-                    <img src="/images/login/star2_Ly4.png" class="img-responsive">
-                </div>
-                <div class="mountain mountain-5"></div>
-                <div class="mountain mountain-4"></div>
-                <div class="mountain mountain-3"></div>
-                <div class="mountain mountain-2"></div>
-                <div class="mountain mountain-1"></div>
-                <div class="cloud cloud-4"></div>
-                <div class="cloud cloud-3"></div>
-                <div class="cloud cloud-2"></div>
-                <div class="cloud cloud-1"></div>
             </div>
         </div>
         <div class="object">
@@ -73,6 +56,7 @@
                     password: ''
                 },
                 login_error: false,
+                loading: false,
                 baseUrl: this.$store.getters.baseUrl
             }
         },
@@ -81,6 +65,8 @@
         },
         methods: {
             login () {
+                this.login_error = false;
+                this.loading = true;
                 var data = {
                     'grant_type': config.grant_type,
                     'client_id': config.client_id,
@@ -95,6 +81,7 @@
                     this.setData()
                 })
                 .catch(response => {
+                    this.loading = false
                     this.login_error = true
                 })
             },
