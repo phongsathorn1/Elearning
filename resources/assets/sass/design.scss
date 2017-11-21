@@ -383,13 +383,14 @@ a:hover{
     margin:auto;
 }
 .login-form button{
-    padding: 1rem 10rem;
+    width: 100%;
     border-color: white;
     color: white;
     background-color: rgba(255,255,255,0.01);
 }
 
 .login-form .text-center{
+<<<<<<< HEAD
     margin-top: 25px;
     width: 100%;
 }
@@ -401,7 +402,12 @@ a:hover{
     .login-form button{
         padding: 1rem 7rem;
     }
+=======
+    margin: 26px auto;
+    width: 70%;
+>>>>>>> a07cd303c9bf4ff1d6775037c77ab95bdca29d5c
 }
+
 
 // post page
 .margin-container{
@@ -484,7 +490,8 @@ a:hover{
 }
 
 .login-logo{
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
+    width: 100%;
 }
 
 .login-form{
@@ -614,6 +621,11 @@ a:hover{
     z-index: 99;
     top: 10%;
     text-align: center;
+}
+@media(max-width:320px){
+    #login-page .container{
+        top:2%;
+    }
 }
 
 @-webkit-keyframes slide {
