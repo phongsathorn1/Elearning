@@ -1,5 +1,5 @@
 <template>
-    <div class="assignment-done-box">
+    <div class="assignment-done-box card">
         <div class="assignment-done-list" v-for="done in all_done">
             <div class="assignment-done-meta" @click="activeId(done.id)">
                 {{ done.user.name }}, score {{ done.score }}, {{ done.files.length }} files
