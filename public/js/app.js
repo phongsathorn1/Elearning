@@ -1313,6 +1313,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -28507,18 +28509,19 @@ var render = function() {
         _vm._l(_vm.classrooms, function(classroom) {
           return _c("div", { staticClass: "classroom-list col-md-4" }, [
             _c("div", { staticClass: "card" }, [
-              _c(
-                "div",
-                { staticClass: "classroom-list-head" },
-                [
-                  _c(
-                    "router-link",
-                    { attrs: { to: "/classroom/" + classroom.id } },
-                    [_vm._v(_vm._s(classroom.name))]
-                  )
-                ],
-                1
-              )
+              _c("div", { staticClass: "classroom-list-head" }, [
+                _c(
+                  "h3",
+                  [
+                    _c(
+                      "router-link",
+                      { attrs: { to: "/classroom/" + classroom.id } },
+                      [_vm._v(_vm._s(classroom.name))]
+                    )
+                  ],
+                  1
+                )
+              ])
             ])
           ])
         })
@@ -29214,7 +29217,7 @@ var render = function() {
               "div",
               {
                 staticClass: "collapse navbar-collapse",
-                attrs: { id: "bs-example-navbar-collapse-1" }
+                attrs: { id: "navbar-dropdown-menu-small" }
               },
               [
                 _c("ul", { staticClass: "nav navbar-nav" }),
@@ -29283,7 +29286,7 @@ var staticRenderFns = [
         attrs: {
           type: "button",
           "data-toggle": "collapse",
-          "data-target": "#bs-example-navbar-collapse-1",
+          "data-target": "#navbar-dropdown-menu-small",
           "aria-expanded": "false"
         }
       },
@@ -35386,7 +35389,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["default"].Store({
 /***/ "./resources/assets/sass/design.scss":
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: \n.login-form .text-center{\n                        ^\n      Invalid CSS after \"...m .text-center{\": expected \"}\", was \"<<<<<<< HEAD\"\n      in /home/jusmistic/elearning/resources/assets/sass/design.scss (line 392, column 26)\n    at runLoaders (/home/jusmistic/elearning/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/jusmistic/elearning/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/jusmistic/elearning/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/home/jusmistic/elearning/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at Object.asyncSassJobQueue.push [as callback] (/home/jusmistic/elearning/node_modules/sass-loader/lib/loader.js:55:13)\n    at Object.<anonymous> (/home/jusmistic/elearning/node_modules/async/dist/async.js:2257:31)\n    at Object.callback (/home/jusmistic/elearning/node_modules/async/dist/async.js:958:16)\n    at options.error (/home/jusmistic/elearning/node_modules/node-sass/lib/index.js:294:32)");
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
