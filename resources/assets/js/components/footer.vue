@@ -46,8 +46,10 @@
             setStyle(route){
                 this.transparent = false
                 this.hide = false
-                if(route.meta.footerstyle.hide){
-                    this.hide = route.meta.footerstyle.hide
+                if(route.meta.footerstyle){
+                    if(route.meta.footerstyle.hide){
+                        this.hide = route.meta.footerstyle.hide
+                    }
                 }
             }
         }
