@@ -64,7 +64,7 @@
                 <div class="profile-info" v-if="!editable">
                     <!-- security -->
                     <h4>Security</h4>
-                    <p><span style="font-weight: bold">Password:</span> <span style="font-weight: bold">●●●●●●●●</span></p>
+                    <p><span style="font-weight: bold">Password:</span> <span style="font-weight: ">●●●●●●●●</span></p>
                     <button class="btn btn-default" @click="ToggleChangePass">Change password</button>
                     <div class="inner-profile-info" v-if="changePass">
                         <form class="form-horizontal" v-on:submit.prevent="changePassword">
