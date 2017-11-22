@@ -1041,6 +1041,15 @@ footer .footer-mountain {
   background-position: right bottom;
 }
 
+footer .footer-link li {
+  font-size: 16px;
+  list-style: none;
+}
+
+footer .footer-link li a {
+  color: #000000;
+}
+
 .form-passchange input {
   width: 200px;
 }

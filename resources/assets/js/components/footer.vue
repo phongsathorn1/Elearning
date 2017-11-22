@@ -8,12 +8,16 @@
             <div class="container">
                 <div class="col-md-9">
                     <div class="footer-logo">
-                        <img v-bind:src="`${baseUrl}/images/Med_logo.png`" height="50px;">
+                        <router-link :to="'/'">
+                            <img v-bind:src="`${baseUrl}/images/Med_logo.png`" height="50px;">
+                        </router-link>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="footer-contain">
-                        <router-link :to="'about-us'">About us</router-link>
+                        <ul class="footer-link">
+                            <li><router-link :to="'/about-us'">About us</router-link></li>
+                        </ul>
                     </div>
                 </div>
             </div>

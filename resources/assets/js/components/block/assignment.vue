@@ -35,7 +35,8 @@
             >{{ error }}</p>
             <div class="clearfix"></div>
         </div>
-        <button type="submit" class="btn btn-default" @click="submit">Add assignment</button>
+        <button type="submit" class="btn btn-yel pull-right" @click="submit">Add assignment</button>
+        <div class="clearfix"></div>
     </div>
 </template>
 
