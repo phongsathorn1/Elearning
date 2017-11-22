@@ -19,6 +19,12 @@ class UserController extends Controller
         return response()->json($me);
     }
 
+    public function show()
+    {
+        $users = User::get()->load('role');
+        return response()->json($users);
+    }
+
     public function update(Request $request)
     {
         $request->validate([

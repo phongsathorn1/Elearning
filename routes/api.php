@@ -44,5 +44,6 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('attachment/download/{file_id}', 'FileController@attachment');
     Route::post('attachment/upload', 'FilesAttachmentController@upload');
     Route::post('user', 'UserController@store')->middleware('role:is_teacher');
+    Route::get('user', 'UserController@show')->middleware('role:is_teacher');
     Route::get('role', 'RoleController@index')->middleware('role:is_teacher');
 });
