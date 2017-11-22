@@ -1619,8 +1619,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -29467,10 +29465,14 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("input", {
-          staticClass: "btn btn-info pull-right",
-          attrs: { type: "submit", value: "Submit" }
-        }),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-yel pull-right",
+            attrs: { type: "submit", value: "Submit" }
+          },
+          [_vm._v("Submit")]
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "clearfix" })
       ]
@@ -30477,6 +30479,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "classroom-list-head" }, [
+                _vm._v("\n     .               "),
                 _c(
                   "h3",
                   [
@@ -30729,7 +30732,7 @@ var render = function() {
             {
               staticClass: "class-header",
               style: {
-                background:
+                "background-image":
                   "linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.3)), url(" +
                   _vm.classroom.cover_url +
                   ")"
