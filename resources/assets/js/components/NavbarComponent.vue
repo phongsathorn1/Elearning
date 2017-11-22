@@ -18,8 +18,13 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="navbar-dropdown-menu-small">
       <ul class="nav navbar-nav">
-          <li><router-link to="/user">View all account</router-link></li>
-          <li><router-link to="/user/create">Create account</router-link></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Management<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><router-link to="/user">View all User</router-link></li>
+            <li><router-link to="/user/create">Create User</router-link></li>
+          </ul>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right" v-if="isLoggedIn">
         <li class="dropdown">

@@ -999,7 +999,7 @@ a:hover {
 
 .page-title {
   color: #5b5b5b;
-  padding: 14px 0px;
+  padding: 14px 50px;
 }
 
 @media (max-width: 768px) {
@@ -1039,6 +1039,15 @@ footer .footer-mountain {
   height: 100%;
   background-repeat: no-repeat;
   background-position: right bottom;
+}
+
+footer .footer-link li {
+  font-size: 16px;
+  list-style: none;
+}
+
+footer .footer-link li a {
+  color: #000000;
 }
 
 .form-passchange input {
