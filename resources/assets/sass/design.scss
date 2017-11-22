@@ -35,9 +35,6 @@ a:hover{
 .navbar.transparent{
     background-color: rgba(0,0, 0, 0);
 }
-.navbar.transparent .container{
-    margin-top: 20px;
-}
 
 .navbar-default .navbar-brand {
     color: #464646;
@@ -115,7 +112,8 @@ a:hover{
 .page-header {
     margin: 0px;
     margin-bottom: 10px;
-    background: #FFC107;
+    background-color: #FFC107;
+    background-image: url(/images/mountain.svg);
 }
 
 
@@ -782,7 +780,7 @@ a:hover{
 }
 
 #classroom .user-profile{
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid #747474;
     padding: 25px 1.5rem;
     word-wrap: break-word;
 }
