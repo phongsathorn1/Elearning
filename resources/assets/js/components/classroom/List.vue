@@ -3,27 +3,24 @@
         <div class="page-header">
             <div class="container user-profile">
                 <div>
-                    <div class="col col-xs-6">
-                        <div class="profile-picture profile-picture-large" v-bind:style="{'background-image': `url(${getUser.avatar_url})`}"></div>
+                    <div class="col-md-2 col-xs-4">
+                        <div class="profile-picture profile-picture-medium" v-bind:style="{'background-image': `url(${getUser.avatar_url})`}"></div>
                     </div>
-                    <div class="col col-xs-6">
+                    <div class="col-md-10 col-xs-8 profile-detail">
                         <div class="row">
-                            <div class="col-xs-12 profile-info">
+                            <div class="col-md-12 profile-info">
                                 <div class="profile-name">
-                                <router-link
-                                to="profile"
-                                class="btn btn-link"
-                                >
-                                <p>
-                                {{ getUser.name }}
-                                </p>
+                                <router-link to="profile">
+                                    <p>
+                                    {{ getUser.name }}
+                                    </p>
                                 </router-link>
                                 
                             </div>
                             <span class="username">@{{ getUser.username }}</span>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row hidden-xs">
                             <div class="col-xs-12">
                             <div class="profile-email">{{ getUser.email }}</div>
                                 
@@ -34,7 +31,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container">
+            <div class="container page-title">
                 <h1>Your Classroom</h1>
                 <router-link
                     to="classroom/create"

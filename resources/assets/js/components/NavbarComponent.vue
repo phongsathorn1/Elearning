@@ -50,7 +50,8 @@
       ]),
       ...mapGetters([
         'getName',
-        'isTeacher'
+        'isTeacher',
+        'getUser'
       ])
     },
     created(){
