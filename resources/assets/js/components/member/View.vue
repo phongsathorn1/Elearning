@@ -27,8 +27,8 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tr v-for="member in members">
-                        <th scope="row">1</th>
+                    <tr v-for="(member, key) in members">
+                        <th scope="row">{{ key + 1 }}</th>
                         <td>{{ member.name }}</td>
                         <td>{{ member.role.name }}</td>
                         <td><button class="btn btn-danger" style="margin: 4px 15px;" @click="remove(member.id)">X</button></td>

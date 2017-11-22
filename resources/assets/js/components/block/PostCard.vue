@@ -1,21 +1,23 @@
 <template>
     <div class="post-container">
         <div class="class-meta">
-            <div class="btn-group post-options" v-if="showOption">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right post-dropdown">
-                    <li>
-                        <router-link
-                            :to="`/classroom/${classroomId}/post/${post.id}/edit`"
-                            >Edit
-                        </router-link>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" @click="removePost(post.id)">Delete</a>
-                    </li>
-                </ul>
+            <div class="class-meta-right">
+                <div class="btn-group post-options meta-right-item" v-if="showOption">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right post-dropdown">
+                        <li>
+                            <router-link
+                                :to="`/classroom/${classroomId}/post/${post.id}/edit`"
+                                >Edit
+                            </router-link>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" @click="removePost(post.id)">Delete</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="profile-picture profile-picture-small" :style="{backgroundImage : `url(${post.user.avatar_url})`}">
             </div>

@@ -2,25 +2,31 @@
     <div class="post-container">
         <div class="class-meta">
             <div class="profile-picture profile-picture-small" :style="{backgroundImage : `url(${post.user.avatar_url})`}"></div>
-            <div class="btn-group post-options" role="group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right post-dropdown" aria-labelledby="dropdownMenu1">
-                    <li>
-                    <router-link
-                        :to="`/classroom/${classroomId}/assignment/${post.assignment.id}/edit`"
-                        class=""
-                        v-if="showOption"
-                    >Edit</router-link>
-                    </li>
-                    <li>
-                    <a href="javascript:void(0)" 
-                        @click="removePost(post.assignment.id)"
-                        v-if="showOption"
-                    >Delete</a>
-                    </li>
-                </ul>
+            <div class="class-meta-right">
+                <div class="post-tag meta-right-item">
+                    <span class="glyphicon glyphicon-list-alt"></span> Assignment
+                </div>
+                <div class="btn-group post-options 
+                meta-right-item" role="group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right post-dropdown" aria-labelledby="dropdownMenu1">
+                        <li>
+                        <router-link
+                            :to="`/classroom/${classroomId}/assignment/${post.assignment.id}/edit`"
+                            class=""
+                            v-if="showOption"
+                        >Edit</router-link>
+                        </li>
+                        <li>
+                        <a href="javascript:void(0)" 
+                            @click="removePost(post.assignment.id)"
+                            v-if="showOption"
+                        >Delete</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="class-post-user class-meta-item">
                 {{ post.user.name }}
@@ -35,7 +41,10 @@
             <p v-html="renderHTML(post.assignment.detail)"></p>
         </div>
         <div class="col-md-3">
-            <div class="assignment-time" v-if="timeCheck(post.assignment.due_time)">
+            <div class="assignment-time" v-if="!post.assignment.due_time">
+                <div class="assignment-timeup"><span class="glyphicon glyphicon-leaf"></span> No expiration</div>
+            </div>
+            <div class="assignment-time" v-else-if="timeCheck(post.assignment.due_time)">
                 <div class="assignment-timeup"><span class="glyphicon glyphicon-exclamation-sign"></span> Time up!</div>
             </div>
             <div class="assignment-time" v-else>

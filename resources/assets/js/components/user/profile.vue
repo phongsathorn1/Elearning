@@ -137,6 +137,7 @@
         methods:{
             uploadComplete(url){
                 this.profile.avatar_url = url
+                this.$store.dispatch('getPersonal')
             },
             ToggleShowUpload(){
                 this.showUpload = !this.showUpload

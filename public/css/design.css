@@ -455,8 +455,20 @@ a:hover {
   margin-top: 1rem;
 }
 
-.class-posts .post-options {
+.class-meta .class-meta-right {
   float: right;
+}
+
+.meta-right-item {
+  float: left;
+  margin: 0px 5px;
+}
+
+.post-tag {
+  background: #7051de;
+  color: #FFFFFF;
+  padding: 5px 10px;
+  border-radius: 5px;
 }
 
 .post-dropdown > li > a {

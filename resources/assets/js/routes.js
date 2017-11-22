@@ -116,6 +116,22 @@ const routes = [
         }
     },
     {
+        path: '/user/create',
+        component: require('./components/user/create.vue'),
+        meta: {
+            forAuth: true,
+            role: 'is_teacher'
+        }
+    },
+    {
+        path: '/user',
+        component: require('./components/user/view.vue'),
+        meta: {
+            forAuth: true,
+            role: 'is_teacher'
+        }
+    },
+    {
         path: '*',
         component: require('./components/error/404.vue')
     }
