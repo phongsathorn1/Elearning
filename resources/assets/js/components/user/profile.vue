@@ -14,25 +14,29 @@
                         </div>
                         <!-- profile-header -->
                         <div class="profile-header col col-md-8 col-sm-8  col-xs-4" v-if="editable">
-                            <h3><input type="text" v-model="profile.name"></h3>
+                            <div class="form-group">
+                                <label for="email">Name:</label>
+                                <input type="text" v-model="profile.name">
+                            </div>
                             <p class="text-danger"
                                 v-for="error in profile_errors.name"
                                 v-if="profile_errors.name"
                             >{{ error }}</p>
-                            <p>{{ profile.role.name }}</p>
+                            <h4>Basic infomation</h4>
+                            <div class="form-group">
+                                <label for="username">Username:</label>
+                                <input type="text" v-model="profile.username">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="text" v-model="profile.email">
+                            </div>
+                            
                         </div>
 
                         <div class="profile-header col col-md-8 col-sm-8 col-xs-8" v-else>
                             <h3>{{ profile.name }}</h3>
                             <p>{{ profile.role.name }}</p>
-                        <!-- profile-info -->
-                        <div class="info-container">
-                            <div class="profile-info" v-if="editable">
-                                <h3>Basic infomation</h3>
-                                <p>Username: <input type="text" v-model="profile.username"></p>
-                                <p>Email: <input type="text" v-model="profile.email"></p>
-                            </div>
-                            <div class="profile-info" v-else>
                                 <h3>Basic infomation</h3>
                                 <p>Username: {{ profile.username }}</p>
                                 <p class="text-danger"
@@ -45,8 +49,9 @@
                                     v-for="error in profile_errors.email"
                                     v-if="profile_errors.email"
                                 >{{ error }}</p>
-                            </div>
                         </div>
+                        </div>
+
                         </div>
                     </div>
 

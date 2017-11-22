@@ -789,6 +789,12 @@ a:hover{
     
 }
 
+@media(min-width: 500px){
+    #classroom .profile-picture{
+        width: 200px;
+        height: 200px;
+    }
+}
 .profile-picture .profile-upload-overlay{
     position: absolute;
     height: 100%;
@@ -906,3 +912,8 @@ a:hover{
 .assignment-status-list:hover{
     background-color: #e0e0e0;
 } 
+
+
+.profile-info{
+    
+}

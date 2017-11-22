@@ -8,7 +8,7 @@
                     </div>
                     <div class="col col-xs-6">
                         <div class="row">
-                            <div class="col-xs-12">
+                            <div class="col-xs-12 profile-info">
                                 <div class="profile-name">
                                 <router-link
                                 to="profile"

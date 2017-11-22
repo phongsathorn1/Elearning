@@ -850,6 +850,13 @@ a:hover {
   word-wrap: break-word;
 }
 
+@media (min-width: 500px) {
+  #classroom .profile-picture {
+    width: 200px;
+    height: 200px;
+  }
+}
+
 .profile-picture .profile-upload-overlay {
   position: absolute;
   height: 100%;
