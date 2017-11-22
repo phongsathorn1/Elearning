@@ -2,7 +2,7 @@
         <div id="members" v-if="members">
             <div class="page-header">
                 <div class="container">
-                    <div class="col-md-8 col-md-offset-2">
+                    <div class="col-md-8">
                     <h1>{{ classroom.name }}</h1>
                     <div class="control-area" v-if="isTeacher">
                         <router-link :to="'members/add'" class="btn btn-default">Add member</router-link>

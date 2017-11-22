@@ -31965,7 +31965,7 @@ var render = function() {
     ? _c("div", { attrs: { id: "members" } }, [
         _c("div", { staticClass: "page-header" }, [
           _c("div", { staticClass: "container" }, [
-            _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
+            _c("div", { staticClass: "col-md-8" }, [
               _c("h1", [_vm._v(_vm._s(_vm.classroom.name))]),
               _vm._v(" "),
               _vm.isTeacher
