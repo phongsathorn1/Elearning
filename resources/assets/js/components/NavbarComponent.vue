@@ -9,7 +9,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <router-link to="/" class="navbar-brand"><img v-bind:src="`${baseUrl}/images/Med_logo.png`"/></router-link>
+      <router-link to="/" class="navbar-brand">
+        <img v-bind:src="`${baseUrl}/images/Med_logo-w.png`" v-if="transparent"/>
+        <img v-bind:src="`${baseUrl}/images/Med_logo.png`" v-else/>
+      </router-link>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->

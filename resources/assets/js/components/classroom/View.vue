@@ -1,7 +1,6 @@
 <template>
     <div class="classroom" style="min-height: 500px" v-if="classroom">
         <div class="class-header"
-
             v-bind:style="{'background-image': `linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.3)), url(${classroom.cover_url})`} "
         >
             <div class="cover-edit" v-if="coverEdit">

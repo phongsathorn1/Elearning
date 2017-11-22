@@ -51,7 +51,7 @@
                 <label for="password_confirmation">Confirm password</label>
                 <input type="password" class="form-control" id="password_confirmation" placeholder="Confirm password" v-on:input="checkPassword" v-model="form.password_confirmation">
             </div>
-            <input class="btn btn-info pull-right" type="submit" value="Submit">
+            <button class="btn btn-yel pull-right" type="submit" value="Submit">Submit</button>
             <div class="clearfix"></div>
         </form>
     </div>
