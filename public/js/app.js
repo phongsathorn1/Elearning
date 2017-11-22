@@ -220,7 +220,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     };
   },
 
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapState"])(['isLoggedIn']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapGetters"])(['getName', 'isTeacher'])),
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapState"])(['isLoggedIn']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapGetters"])(['getName', 'isTeacher', 'getUser'])),
   created: function created() {
     this.$store.dispatch('getPersonal');
     this.setStyle(this.$route);
@@ -1614,9 +1614,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -2657,6 +2654,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
 //
 //
 //
@@ -29449,38 +29447,31 @@ var render = function() {
       _c("div", { staticClass: "page-header" }, [
         _c("div", { staticClass: "container user-profile" }, [
           _c("div", [
-            _c("div", { staticClass: "col col-xs-6" }, [
+            _c("div", { staticClass: "col-md-2 col-xs-4" }, [
               _c("div", {
-                staticClass: "profile-picture profile-picture-large",
+                staticClass: "profile-picture profile-picture-medium",
                 style: {
                   "background-image": "url(" + _vm.getUser.avatar_url + ")"
                 }
               })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col col-xs-6" }, [
+            _c("div", { staticClass: "col-md-10 col-xs-8 profile-detail" }, [
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-xs-12 profile-info" }, [
+                _c("div", { staticClass: "col-md-12 profile-info" }, [
                   _c(
                     "div",
                     { staticClass: "profile-name" },
                     [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-link",
-                          attrs: { to: "profile" }
-                        },
-                        [
-                          _c("p", [
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(_vm.getUser.name) +
-                                "\n                            "
-                            )
-                          ])
-                        ]
-                      )
+                      _c("router-link", { attrs: { to: "profile" } }, [
+                        _c("p", [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.getUser.name) +
+                              "\n                                "
+                          )
+                        ])
+                      ])
                     ],
                     1
                   ),
@@ -29491,7 +29482,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "row hidden-xs" }, [
                 _c("div", { staticClass: "col-xs-12" }, [
                   _c("div", { staticClass: "profile-email" }, [
                     _vm._v(_vm._s(_vm.getUser.email))
@@ -29504,7 +29495,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "container" },
+          { staticClass: "container page-title" },
           [
             _c("h1", [_vm._v("Your Classroom")]),
             _vm._v(" "),
@@ -29540,7 +29531,10 @@ var render = function() {
               _c("div", {
                 staticClass: "classroom-background",
                 style: {
-                  "background-image": "url(" + classroom.cover_url + ")"
+                  "background-image":
+                    "linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url(" +
+                    classroom.cover_url +
+                    ")"
                 }
               }),
               _vm._v(" "),
@@ -30811,7 +30805,7 @@ var render = function() {
                       [
                         _vm.showUpload
                           ? _c("upload-avatar", {
-                              attrs: { "img-src": _vm.profile.avatar_url },
+                              attrs: { callback: "/api/me/avatar/upload" },
                               on: { uploaded: _vm.uploadComplete }
                             })
                           : _vm._e()
@@ -31838,6 +31832,7 @@ var render = function() {
     _c(
       "form",
       {
+        staticClass: "card",
         on: {
           submit: function($event) {
             $event.preventDefault()
@@ -32112,9 +32107,11 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("input", {
-          staticClass: "btn btn-default",
+          staticClass: "btn btn-info pull-right",
           attrs: { type: "submit", value: "Submit" }
-        })
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "clearfix" })
       ]
     )
   ])
