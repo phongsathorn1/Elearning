@@ -44,7 +44,7 @@ class FileController extends Controller
     {
         if(Storage::exists('public/'.$filepath))
         {
-            return response()->file(storage_path('app/public/'.$filepath))->deleteFileAfterSend(true);
+            return response()->file(storage_path('app/public/'.$filepath));
         }
         else {
             return abort(404);
