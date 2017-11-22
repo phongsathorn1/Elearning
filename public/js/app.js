@@ -840,6 +840,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -1344,6 +1349,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['callback', 'uploadFiles'],
@@ -1692,6 +1698,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -1786,6 +1797,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__block_uploadCover_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__block_uploadCover_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
 //
 //
 //
@@ -2288,6 +2302,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+//
+//
 //
 //
 //
@@ -2963,7 +2979,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-//
 //
 //
 //
@@ -29168,116 +29183,135 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("transition", { attrs: { name: "fade" } }, [
-    _c("div", { attrs: { id: "members" } }, [
-      _c("div", { staticClass: "page-header" }, [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
-            _c("h1", [_vm._v(_vm._s(_vm.classroom.name))]),
-            _vm._v(" "),
-            _vm.isTeacher
-              ? _c(
-                  "div",
-                  { staticClass: "control-area" },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "btn btn-default",
-                        attrs: { to: "members/add" }
-                      },
-                      [_vm._v("Add member")]
-                    ),
-                    _vm._v(" "),
-                    _c("span", { staticStyle: { padding: "15px" } }, [
-                      _vm._v("Join code: "),
+  return _vm.members
+    ? _c("div", { attrs: { id: "members" } }, [
+        _c("div", { staticClass: "page-header" }, [
+          _c("div", { staticClass: "container" }, [
+            _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
+              _c("h1", [_vm._v(_vm._s(_vm.classroom.name))]),
+              _vm._v(" "),
+              _vm.isTeacher
+                ? _c(
+                    "div",
+                    { staticClass: "control-area" },
+                    [
                       _c(
-                        "span",
+                        "router-link",
                         {
-                          staticStyle: {
-                            padding: "10px",
-                            border: "1px solid #e0e0e0"
-                          }
+                          staticClass: "btn btn-default",
+                          attrs: { to: "members/add" }
                         },
-                        [_vm._v(_vm._s(_vm.classroom.join_code))]
-                      )
-                    ])
-                  ],
-                  1
-                )
-              : _vm._e()
+                        [_vm._v("Add member")]
+                      ),
+                      _vm._v(" "),
+                      _c("span", { staticStyle: { padding: "15px" } }, [
+                        _vm._v("Join code: "),
+                        _c(
+                          "span",
+                          {
+                            staticStyle: {
+                              padding: "10px",
+                              border: "1px solid #e0e0e0"
+                            }
+                          },
+                          [_vm._v(_vm._s(_vm.classroom.join_code))]
+                        )
+                      ])
+                    ],
+                    1
+                  )
+                : _vm._e()
+            ])
           ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "control-area" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-default btn-back",
-              attrs: { type: "button" },
-              on: { click: _vm.back }
-            },
-            [_vm._v("Back")]
-          )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "card" }, [
-          _c("h5", [_c("kbd", [_vm._v("Members")])]),
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "control-area" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-default btn-back",
+                attrs: { type: "button" },
+                on: { click: _vm.back }
+              },
+              [_vm._v("Back")]
+            )
+          ]),
           _vm._v(" "),
-          _c(
-            "table",
-            { staticClass: "table member-list" },
-            [
-              _c("thead", [
-                _c("tr", [
-                  _c("th", [_vm._v("#")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("Name")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("Role")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("Action")])
-                ])
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.members, function(member, key) {
-                return _c("tr", [
-                  _c("th", { attrs: { scope: "row" } }, [
-                    _vm._v(_vm._s(key + 1))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(member.name))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(member.role.name))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        staticStyle: { margin: "4px 15px" },
-                        on: {
-                          click: function($event) {
-                            _vm.remove(member.id)
+          _c("div", { staticClass: "card" }, [
+            _vm._m(0, false, false),
+            _vm._v(" "),
+            _c(
+              "table",
+              { staticClass: "table member-list" },
+              [
+                _vm._m(1, false, false),
+                _vm._v(" "),
+                _vm._l(_vm.members, function(member, key) {
+                  return _c("tr", [
+                    _c("th", { attrs: { scope: "row" } }, [
+                      _vm._v(_vm._s(key + 1))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(member.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(member.role.name))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger",
+                          staticStyle: { margin: "4px 15px" },
+                          on: {
+                            click: function($event) {
+                              _vm.remove(member.id)
+                            }
                           }
-                        }
-                      },
-                      [_vm._v("X")]
-                    )
+                        },
+                        [_vm._v("X")]
+                      )
+                    ])
                   ])
-                ])
-              })
-            ],
-            2
-          )
+                })
+              ],
+              2
+            )
+          ])
         ])
       ])
-    ])
-  ])
+    : _c("div", { staticClass: "spinner" }, [
+        _c("div", { staticClass: "bounce1" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "bounce2" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "bounce3" })
+      ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", [_c("kbd", [_vm._v("Members")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Role")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -29959,10 +29993,10 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "card" }, [
-      _vm.profile
-        ? _c("div", { staticClass: "profile" }, [
+  return _vm.profile.role
+    ? _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "profile" }, [
             _c("div", { staticClass: "container" }, [
               _c("div", { staticClass: "row" }, [
                 _c(
@@ -30484,9 +30518,15 @@ var render = function() {
               ])
             ])
           ])
-        : _vm._e()
-    ])
-  ])
+        ])
+      ])
+    : _c("div", { staticClass: "spinner" }, [
+        _c("div", { staticClass: "bounce1" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "bounce2" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "bounce3" })
+      ])
 }
 var staticRenderFns = [
   function() {
@@ -30534,125 +30574,140 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticStyle: { "min-height": "500px" }, attrs: { id: "classroom" } },
-    [
-      _c("div", { staticClass: "page-header" }, [
-        _c("div", { staticClass: "container user-profile" }, [
-          _c("div", [
-            _c("div", { staticClass: "col-md-2 col-xs-4" }, [
-              _c("div", {
-                staticClass: "profile-picture profile-picture-medium",
-                style: {
-                  "background-image": "url(" + _vm.getUser.avatar_url + ")"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-10 col-xs-8 profile-detail" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12 profile-info" }, [
-                  _c(
-                    "div",
-                    { staticClass: "profile-name" },
-                    [
-                      _c("router-link", { attrs: { to: "profile" } }, [
-                        _c("p", [
-                          _vm._v(
-                            "\n                                " +
-                              _vm._s(_vm.getUser.name) +
-                              "\n                                "
-                          )
+  return _vm.classrooms && _vm.getUser
+    ? _c(
+        "div",
+        { staticStyle: { "min-height": "500px" }, attrs: { id: "classroom" } },
+        [
+          _c("div", { staticClass: "page-header" }, [
+            _c("div", { staticClass: "container user-profile" }, [
+              _c("div", [
+                _c("div", { staticClass: "col-md-2 col-xs-4" }, [
+                  _c("div", {
+                    staticClass: "profile-picture profile-picture-medium",
+                    style: {
+                      "background-image": "url(" + _vm.getUser.avatar_url + ")"
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-md-10 col-xs-8 profile-detail" },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-12 profile-info" }, [
+                        _c(
+                          "div",
+                          { staticClass: "profile-name" },
+                          [
+                            _c("router-link", { attrs: { to: "profile" } }, [
+                              _c("p", [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(_vm.getUser.name) +
+                                    "\n                                "
+                                )
+                              ])
+                            ])
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "username" }, [
+                          _vm._v("@" + _vm._s(_vm.getUser.username))
                         ])
                       ])
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "username" }, [
-                    _vm._v("@" + _vm._s(_vm.getUser.username))
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row hidden-xs" }, [
-                _c("div", { staticClass: "col-xs-12" }, [
-                  _c("div", { staticClass: "profile-email" }, [
-                    _vm._v(_vm._s(_vm.getUser.email))
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "container page-title" },
-          [
-            _c("h1", [_vm._v("Your Classroom")]),
-            _vm._v(" "),
-            _vm.isTeacher
-              ? _c(
-                  "router-link",
-                  {
-                    staticClass: "btn btn-default",
-                    attrs: { to: "classroom/create" }
-                  },
-                  [_vm._v("Create class")]
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row hidden-xs" }, [
+                      _c("div", { staticClass: "col-xs-12" }, [
+                        _c("div", { staticClass: "profile-email" }, [
+                          _vm._v(_vm._s(_vm.getUser.email))
+                        ])
+                      ])
+                    ])
+                  ]
                 )
-              : _vm._e(),
+              ])
+            ]),
             _vm._v(" "),
             _c(
-              "button",
-              { staticClass: "btn btn-default", on: { click: _vm.showJoin } },
-              [_vm._v("Join class")]
-            )
-          ],
-          1
-        )
-      ]),
-      _vm._v(" "),
-      _vm.show_join ? _c("classroom-join") : _vm._e(),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "container" },
-        _vm._l(_vm.classrooms, function(classroom) {
-          return _c("div", { staticClass: "classroom-list col-md-4" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", {
-                staticClass: "classroom-background",
-                style: {
-                  "background-image":
-                    "linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url(" +
-                    classroom.cover_url +
-                    ")"
-                }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "classroom-list-head" }, [
-                _vm._v("\n     .               "),
-                _c(
-                  "h3",
-                  [
-                    _c(
+              "div",
+              { staticClass: "container page-title" },
+              [
+                _c("h1", [_vm._v("Your Classroom")]),
+                _vm._v(" "),
+                _vm.isTeacher
+                  ? _c(
                       "router-link",
-                      { attrs: { to: "/classroom/" + classroom.id } },
-                      [_vm._v(_vm._s(classroom.name))]
+                      {
+                        staticClass: "btn btn-default",
+                        attrs: { to: "classroom/create" }
+                      },
+                      [_vm._v("Create class")]
                     )
-                  ],
-                  1
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default",
+                    on: { click: _vm.showJoin }
+                  },
+                  [_vm._v("Join class")]
                 )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _vm.show_join ? _c("classroom-join") : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "container" },
+            _vm._l(_vm.classrooms, function(classroom) {
+              return _c("div", { staticClass: "classroom-list col-md-4" }, [
+                _c("div", { staticClass: "card" }, [
+                  _c("div", {
+                    staticClass: "classroom-background",
+                    style: {
+                      "background-image":
+                        "linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url(" +
+                        classroom.cover_url +
+                        ")"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "classroom-list-head" }, [
+                    _vm._v("\n     .               "),
+                    _c(
+                      "h3",
+                      [
+                        _c(
+                          "router-link",
+                          { attrs: { to: "/classroom/" + classroom.id } },
+                          [_vm._v(_vm._s(classroom.name))]
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                ])
               ])
-            ])
-          ])
-        })
+            })
+          )
+        ],
+        1
       )
-    ],
-    1
-  )
+    : _c("div", { staticClass: "spinner" }, [
+        _c("div", { staticClass: "bounce1" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "bounce2" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "bounce3" })
+      ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -31141,8 +31196,11 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm.posts
-            ? _c(
+          !_vm.posts.length
+            ? _c("div", { staticClass: "container" }, [
+                _c("div", { staticClass: "no-post" }, [_vm._v("No post yet")])
+              ])
+            : _c(
                 "div",
                 { staticClass: "container" },
                 _vm._l(_vm.posts, function(post) {
@@ -31296,7 +31354,6 @@ var render = function() {
                   ])
                 })
               )
-            : _vm._e()
         ]
       )
     : _c("div", { staticClass: "spinner" }, [
@@ -31650,209 +31707,229 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _c("div", { staticClass: "control-area" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-default btn-back",
-            attrs: { type: "button" },
-            on: { click: _vm.back }
-          },
-          [_vm._v("Back")]
-        )
-      ]),
-      _vm._v(" "),
-      _c(
+  return _vm.assignment_post
+    ? _c(
         "div",
-        { staticClass: "class-post-item card" },
+        { staticClass: "container" },
         [
-          _c("div", { staticClass: "class-meta" }, [
-            _c("div", { staticClass: "class-meta-right" }, [
-              _vm._m(0, false, false),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "btn-group post-options \n                meta-right-item",
-                  attrs: { role: "group" }
-                },
-                [
-                  _vm.getRole != "is_student"
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-default dropdown-toggle",
-                          attrs: {
-                            type: "button",
-                            "data-toggle": "dropdown",
-                            "aria-haspopup": "true",
-                            "aria-expanded": "false"
-                          }
-                        },
-                        [
-                          _c("span", {
-                            staticClass:
-                              "glyphicon glyphicon-option-horizontal",
-                            attrs: { "aria-hidden": "true" }
-                          })
-                        ]
-                      )
-                    : _vm._e(),
+          _c("div", { staticClass: "control-area" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-default btn-back",
+                attrs: { type: "button" },
+                on: { click: _vm.back }
+              },
+              [_vm._v("Back")]
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "class-post-item card" },
+            [
+              _c("div", { staticClass: "class-meta" }, [
+                _c("div", { staticClass: "class-meta-right" }, [
+                  _vm._m(0, false, false),
                   _vm._v(" "),
-                  _vm.getRole != "is_student"
-                    ? _c(
-                        "ul",
-                        {
-                          staticClass:
-                            "dropdown-menu dropdown-menu-right post-dropdown",
-                          attrs: { "aria-labelledby": "dropdownMenu1" }
-                        },
-                        [
-                          _c(
-                            "li",
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "btn-group post-options \n                meta-right-item",
+                      attrs: { role: "group" }
+                    },
+                    [
+                      _vm.getRole != "is_student"
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-default dropdown-toggle",
+                              attrs: {
+                                type: "button",
+                                "data-toggle": "dropdown",
+                                "aria-haspopup": "true",
+                                "aria-expanded": "false"
+                              }
+                            },
+                            [
+                              _c("span", {
+                                staticClass:
+                                  "glyphicon glyphicon-option-horizontal",
+                                attrs: { "aria-hidden": "true" }
+                              })
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.getRole != "is_student"
+                        ? _c(
+                            "ul",
+                            {
+                              staticClass:
+                                "dropdown-menu dropdown-menu-right post-dropdown",
+                              attrs: { "aria-labelledby": "dropdownMenu1" }
+                            },
                             [
                               _c(
-                                "router-link",
-                                {
-                                  attrs: {
-                                    to:
-                                      "/classroom/" +
-                                      _vm.classroom_id +
-                                      "/assignment/" +
-                                      _vm.assignment_post.id +
-                                      "/edit"
-                                  }
-                                },
-                                [_vm._v("Edit")]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "javascript:void(0)" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.removePost(_vm.post.assignment.id)
-                                  }
-                                }
-                              },
-                              [_vm._v("Delete")]
-                            )
-                          ])
-                        ]
-                      )
-                    : _vm._e()
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _vm.assignment_post.user.name
-              ? _c("div", { staticClass: "class-post-user class-meta-item" }, [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.assignment_post.user.name) +
-                      "\n            "
+                                "li",
+                                [
+                                  _c(
+                                    "router-link",
+                                    {
+                                      attrs: {
+                                        to:
+                                          "/classroom/" +
+                                          _vm.classroom_id +
+                                          "/assignment/" +
+                                          _vm.assignment_post.id +
+                                          "/edit"
+                                      }
+                                    },
+                                    [_vm._v("Edit")]
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "javascript:void(0)" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.removePost(_vm.post.assignment.id)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Delete")]
+                                )
+                              ])
+                            ]
+                          )
+                        : _vm._e()
+                    ]
                   )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "class-post-time class-meta-item",
-                attrs: { title: _vm.parseTime(_vm.assignment_post.created_at) }
-              },
-              [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(
-                      _vm.postTimeFromNow(_vm.assignment_post.created_at)
-                    ) +
-                    "\n            "
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "clearfix" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-9" }, [
-              _c("h3", [_vm._v(_vm._s(_vm.assignment_post.title))]),
+                ]),
+                _vm._v(" "),
+                _vm.assignment_post.user.name
+                  ? _c(
+                      "div",
+                      { staticClass: "class-post-user class-meta-item" },
+                      [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(_vm.assignment_post.user.name) +
+                            "\n            "
+                        )
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "class-post-time class-meta-item",
+                    attrs: {
+                      title: _vm.parseTime(_vm.assignment_post.created_at)
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          _vm.postTimeFromNow(_vm.assignment_post.created_at)
+                        ) +
+                        "\n            "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" })
+              ]),
               _vm._v(" "),
-              _c("p", {
-                domProps: {
-                  innerHTML: _vm._s(_vm.renderHTML(_vm.assignment_post.detail))
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-9" }, [
+                  _c("h3", [_vm._v(_vm._s(_vm.assignment_post.title))]),
+                  _vm._v(" "),
+                  _c("p", {
+                    domProps: {
+                      innerHTML: _vm._s(
+                        _vm.renderHTML(_vm.assignment_post.detail)
+                      )
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _vm.timeCheck(_vm.assignment_post.due_time)
+                    ? _c("div", { staticClass: "assignment-time" }, [
+                        _vm._m(1, false, false)
+                      ])
+                    : _c("div", { staticClass: "assignment-time" }, [
+                        _c("div", { staticClass: "assignment-left" }, [
+                          _c("span", {
+                            staticClass: "glyphicon glyphicon-time"
+                          }),
+                          _vm._v(
+                            " " +
+                              _vm._s(
+                                _vm.parseTimeFromNow(
+                                  _vm.assignment_post.due_time
+                                )
+                              ) +
+                              " left!"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "assignment-datetime" }, [
+                          _vm._v(
+                            "Due " +
+                              _vm._s(
+                                _vm.parseShortTime(_vm.assignment_post.due_time)
+                              )
+                          )
+                        ])
+                      ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" })
+              ]),
+              _vm._v(" "),
+              _c("attachment", { attrs: { files: _vm.attachment } })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm.getRole == "is_student"
+            ? _c("assignment-upload", {
+                attrs: {
+                  "classroom-id": _vm.classroom_id,
+                  "assignment-id": _vm.assignment_id
                 }
               })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _vm.timeCheck(_vm.assignment_post.due_time)
-                ? _c("div", { staticClass: "assignment-time" }, [
-                    _vm._m(1, false, false)
-                  ])
-                : _c("div", { staticClass: "assignment-time" }, [
-                    _c("div", { staticClass: "assignment-left" }, [
-                      _c("span", { staticClass: "glyphicon glyphicon-time" }),
-                      _vm._v(
-                        " " +
-                          _vm._s(
-                            _vm.parseTimeFromNow(_vm.assignment_post.due_time)
-                          ) +
-                          " left!"
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "assignment-datetime" }, [
-                      _vm._v(
-                        "Due " +
-                          _vm._s(
-                            _vm.parseShortTime(_vm.assignment_post.due_time)
-                          )
-                      )
-                    ])
-                  ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "clearfix" })
-          ]),
+            : _vm._e(),
           _vm._v(" "),
-          _c("attachment", { attrs: { files: _vm.attachment } })
+          _vm.getRole != "is_student"
+            ? _c("assignment-done", {
+                attrs: {
+                  "classroom-id": _vm.classroom_id,
+                  "assignment-id": _vm.assignment_id,
+                  "max-score": _vm.assignment_post.score
+                }
+              })
+            : _vm._e()
         ],
         1
-      ),
-      _vm._v(" "),
-      _vm.getRole == "is_student"
-        ? _c("assignment-upload", {
-            attrs: {
-              "classroom-id": _vm.classroom_id,
-              "assignment-id": _vm.assignment_id
-            }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.getRole != "is_student"
-        ? _c("assignment-done", {
-            attrs: {
-              "classroom-id": _vm.classroom_id,
-              "assignment-id": _vm.assignment_id,
-              "max-score": _vm.assignment_post.score
-            }
-          })
-        : _vm._e()
-    ],
-    1
-  )
+      )
+    : _c("div", { staticClass: "spinner" }, [
+        _c("div", { staticClass: "bounce1" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "bounce2" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "bounce3" })
+      ])
 }
 var staticRenderFns = [
   function() {
@@ -32830,7 +32907,23 @@ var render = function() {
             _vm._v("Phongsathron Kittiworapanya")
           ]),
           _vm._v(" "),
-          _vm._m(0, false, false)
+          _c("p", [
+            _c(
+              "a",
+              {
+                attrs: { href: "https://www.facebook.com/Phongsathron.co.th" }
+              },
+              [
+                _c("img", {
+                  attrs: {
+                    src: _vm.baseUrl + "/images/facebook.svg",
+                    height: "25px"
+                  }
+                }),
+                _vm._v(" Facebook")
+              ]
+            )
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-4 about-us-item" }, [
@@ -32843,7 +32936,17 @@ var render = function() {
             _vm._v("Puttimate Thammasaeng")
           ]),
           _vm._v(" "),
-          _vm._m(1, false, false)
+          _c("p", [
+            _c("a", { attrs: { href: "https://www.facebook.com/jusmistic" } }, [
+              _c("img", {
+                attrs: {
+                  src: _vm.baseUrl + "/images/facebook.svg",
+                  height: "25px"
+                }
+              }),
+              _vm._v(" Facebook")
+            ])
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-4 about-us-item" }, [
@@ -32854,7 +32957,17 @@ var render = function() {
           _vm._v(" "),
           _c("p", { staticClass: "about-us-name" }, [_vm._v("Hunu")]),
           _vm._v(" "),
-          _vm._m(2, false, false)
+          _c("p", [
+            _c("a", { attrs: { href: "https://www.facebook.com/Hnunkungs" } }, [
+              _c("img", {
+                attrs: {
+                  src: _vm.baseUrl + "/images/facebook.svg",
+                  height: "25px"
+                }
+              }),
+              _vm._v(" Facebook")
+            ])
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-4 about-us-item" }, [
@@ -32865,7 +32978,17 @@ var render = function() {
           _vm._v(" "),
           _c("p", { staticClass: "about-us-name" }, [_vm._v("Poom Netrakom")]),
           _vm._v(" "),
-          _vm._m(3, false, false)
+          _c("p", [
+            _c("a", { attrs: { href: "https://www.facebook.com/poom.net" } }, [
+              _c("img", {
+                attrs: {
+                  src: _vm.baseUrl + "/images/facebook.svg",
+                  height: "25px"
+                }
+              }),
+              _vm._v(" Facebook")
+            ])
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-4 about-us-item" }, [
@@ -32876,66 +32999,27 @@ var render = function() {
           _vm._v(" "),
           _c("p", { staticClass: "about-us-name" }, [_vm._v("Dorn Nutavej")]),
           _vm._v(" "),
-          _vm._m(4, false, false)
+          _c("p", [
+            _c(
+              "a",
+              { attrs: { href: "https://www.facebook.com/dorn.kubpom" } },
+              [
+                _c("img", {
+                  attrs: {
+                    src: _vm.baseUrl + "/images/facebook.svg",
+                    height: "25px"
+                  }
+                }),
+                _vm._v(" Facebook")
+              ]
+            )
+          ])
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _c(
-        "a",
-        { attrs: { href: "https://www.facebook.com/Phongsathron.co.th" } },
-        [_vm._v("Facebook")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _c("a", { attrs: { href: "https://www.facebook.com/jusmistic" } }, [
-        _vm._v("Facebook")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _c("a", { attrs: { href: "https://www.facebook.com/Hnunkungs" } }, [
-        _vm._v("Facebook")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _c("a", { attrs: { href: "https://www.facebook.com/poom.net" } }, [
-        _vm._v("Facebook")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _c("a", { attrs: { href: "https://www.facebook.com/dorn.kubpom" } }, [
-        _vm._v("Facebook")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -33062,28 +33146,35 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        _vm._l(_vm.uploaded_files, function(file) {
-          return _c("table", { staticClass: "table upload-list" }, [
-            _c("tbody", [
-              _c("tr", { staticClass: "col-md-8" }, [
-                _c("td", {}, [
-                  _vm._v(_vm._s(file.name)),
-                  _c(
-                    "kbd",
-                    {
-                      on: {
-                        click: function($event) {
-                          _vm.removeFile(file)
+        [
+          _vm.uploaded_files.length
+            ? _c("strong", [_vm._v("Uploaded files")])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._l(_vm.uploaded_files, function(file) {
+            return _c("table", { staticClass: "table upload-list" }, [
+              _c("tbody", [
+                _c("tr", { staticClass: "col-md-8" }, [
+                  _c("td", {}, [
+                    _vm._v(_vm._s(file.name)),
+                    _c(
+                      "kbd",
+                      {
+                        on: {
+                          click: function($event) {
+                            _vm.removeFile(file)
+                          }
                         }
-                      }
-                    },
-                    [_vm._v("delete")]
-                  )
+                      },
+                      [_vm._v("delete")]
+                    )
+                  ])
                 ])
               ])
             ])
-          ])
-        })
+          })
+        ],
+        2
       )
     ],
     1

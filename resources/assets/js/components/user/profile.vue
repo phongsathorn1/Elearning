@@ -1,7 +1,7 @@
 <template>
-    <div class="container">
+    <div class="container" v-if="profile.role">
         <div class="card">
-            <div class="profile" v-if="profile">
+            <div class="profile">
 
                 <!-- profile-picture -->
                 <div class="container">
@@ -98,17 +98,16 @@
                 </div>
                         </div>
                         </div>
-
                         </div>
                     </div>
-
-
-                
-
                 </div>
-                
             </div>
         </div>
+    </div>
+    <div class="spinner" v-else>
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
     </div>
 </template>
 

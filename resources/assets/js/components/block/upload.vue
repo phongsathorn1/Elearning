@@ -24,6 +24,7 @@
             </template>
         </vue-clip>
         <div>
+            <strong v-if="uploaded_files.length">Uploaded files</strong>
             <table class="table upload-list" v-for="file in uploaded_files">
                 <tbody>
                     <tr class="col-md-8">
