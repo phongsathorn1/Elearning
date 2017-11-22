@@ -9,7 +9,7 @@
                 <div class="col-md-9">
                     <div class="footer-logo">
                         <router-link :to="'/'">
-                            <img v-bind:src="`${baseUrl}/images/Med_logo.png`" height="50px;">
+                            <img v-bind:src="`${baseUrl}/images/Med_logo-w.png`" height="50px;">
                         </router-link>
                     </div>
                 </div>
