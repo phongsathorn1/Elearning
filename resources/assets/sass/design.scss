@@ -369,6 +369,37 @@ a:hover{
     background-position: 0px -150px;
 }
 
+//zip
+.attachment-thumbnail.file-zip,
+.attachment-thumbnail.file-rar{
+    background: #FFC107;
+}
+
+.attachment-thumbnail.file-zip .file-icon,
+.attachment-thumbnail.file-rar .file-icon{
+    background-position: -50px -150px;
+}
+
+.attachment-thumbnail.file-mp3,
+.attachment-thumbnail.file-wav,
+.attachment-thumbnail.file-ogg{
+    background: #E91E63;
+}
+
+.attachment-thumbnail.file-mp3 .file-icon,
+.attachment-thumbnail.file-wav .file-icon,
+.attachment-thumbnail.file-ogg .file-icon{
+    background-position: -51px -51px;
+}
+
+.attachment-thumbnail.file-mp4{
+    background: #9C27B0;
+}
+
+.attachment-thumbnail.file-mp4 .file-icon{
+    background-position: -50px -100px;
+}
+
 //popup
 .swal-modal {
     border-radius: 0px;
