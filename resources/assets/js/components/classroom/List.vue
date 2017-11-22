@@ -45,12 +45,10 @@
         <div class="container">
             <div class="classroom-list col-md-4" v-for="classroom in classrooms">
                 <div class="card">
-
-                    
                     <div class="classroom-background" v-bind:style="{'background-image': `linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url(${classroom.cover_url})`}">
                     </div> 
                     <div class="classroom-list-head">
-                        <h3>
+         .               <h3>
                         <router-link :to="'/classroom/'+classroom.id">{{ classroom.name }}</router-link> 
                         </h3>
                     </div>

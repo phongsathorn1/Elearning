@@ -626,6 +626,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -1443,6 +1444,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -1475,6 +1479,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (error) {
                 _this.classroom_errors = error.response.data.errors;
             });
+        },
+        back: function back() {
+            this.$router.go(-1);
         }
     }
 });
@@ -1552,8 +1559,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sweetalert2_dist_sweetalert2_min_css__ = __webpack_require__("./node_modules/sweetalert2/dist/sweetalert2.min.css");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sweetalert2_dist_sweetalert2_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_sweetalert2_dist_sweetalert2_min_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-//
-//
 //
 //
 //
@@ -28881,7 +28886,7 @@ var render = function() {
             {
               staticClass: "class-header",
               style: {
-                background:
+                "background-image":
                   "linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.3)), url(" +
                   _vm.classroom.cover_url +
                   ")"
@@ -29539,6 +29544,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "classroom-list-head" }, [
+                _vm._v("\n     .               "),
                 _c(
                   "h3",
                   [
@@ -30263,22 +30269,22 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default btn-back",
+          attrs: { type: "button" },
+          on: { click: _vm.back }
+        },
+        [_vm._v("Back")]
+      ),
+      _vm._v(" "),
       _c("assignment-post", {
         attrs: { detail: _vm.form, errors: _vm.post_errors },
         on: { submit: _vm.add }
       }),
       _vm._v(" "),
-      _c("div", { staticClass: "control-area" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-default btn-back",
-            attrs: { type: "button" },
-            on: { click: _vm.back }
-          },
-          [_vm._v("Back")]
-        )
-      ]),
+      _c("div", { staticClass: "control-area" }),
       _vm._v(" "),
       _c("upload", {
         attrs: { callback: "/api/attachment/upload" },
@@ -30968,7 +30974,9 @@ var render = function() {
                       [
                         _c("h3", [_vm._v(_vm._s(_vm.profile.name))]),
                         _vm._v(" "),
-                        _c("p", [_vm._v(_vm._s(_vm.profile.role.name))]),
+                        _c("p", [
+                          _c("kbd", [_vm._v(_vm._s(_vm.profile.role.name))])
+                        ]),
                         _vm._v(" "),
                         _c("h3", [_vm._v("Basic infomation")]),
                         _vm._v(" "),
@@ -31051,7 +31059,8 @@ var render = function() {
                                       _c(
                                         "form",
                                         {
-                                          staticClass: "form-horizontal",
+                                          staticClass:
+                                            "form-horizontal form-passchange",
                                           on: {
                                             submit: function($event) {
                                               $event.preventDefault()
@@ -32362,79 +32371,91 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "margin-container container" }, [
+  return _c("div", { staticClass: "container" }, [
     _c(
-      "div",
-      { staticClass: "form-group" },
-      [
-        _c("label", { attrs: { for: "name" } }, [_vm._v("Classroom name")]),
+      "button",
+      {
+        staticClass: "btn btn-default btn-back",
+        attrs: { type: "button" },
+        on: { click: _vm.back }
+      },
+      [_vm._v("Back")]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "card" }, [
+      _c(
+        "div",
+        { staticClass: "form-group" },
+        [
+          _c("label", { attrs: { for: "name" } }, [_vm._v("Classroom name")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.classroom.name,
+                expression: "classroom.name"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", id: "name", placeholder: "Classroom name" },
+            domProps: { value: _vm.classroom.name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.classroom, "name", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm._l(_vm.classroom_errors.name, function(error) {
+            return _vm.classroom_errors.name
+              ? _c("p", { staticClass: "text-danger" }, [_vm._v(_vm._s(error))])
+              : _vm._e()
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "description" } }, [_vm._v("description")]),
         _vm._v(" "),
-        _c("input", {
+        _c("textarea", {
           directives: [
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.classroom.name,
-              expression: "classroom.name"
+              value: _vm.classroom.description,
+              expression: "classroom.description"
             }
           ],
           staticClass: "form-control",
-          attrs: { type: "text", id: "name", placeholder: "Classroom name" },
-          domProps: { value: _vm.classroom.name },
+          attrs: { id: "description", rows: "3" },
+          domProps: { value: _vm.classroom.description },
           on: {
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.$set(_vm.classroom, "name", $event.target.value)
+              _vm.$set(_vm.classroom, "description", $event.target.value)
             }
           }
-        }),
-        _vm._v(" "),
-        _vm._l(_vm.classroom_errors.name, function(error) {
-          return _vm.classroom_errors.name
-            ? _c("p", { staticClass: "text-danger" }, [_vm._v(_vm._s(error))])
-            : _vm._e()
         })
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "description" } }, [_vm._v("description")]),
+      ]),
       _vm._v(" "),
-      _c("textarea", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.classroom.description,
-            expression: "classroom.description"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { id: "description", rows: "3" },
-        domProps: { value: _vm.classroom.description },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.classroom, "description", $event.target.value)
-          }
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-default",
-        attrs: { type: "submit" },
-        on: { click: _vm.create }
-      },
-      [_vm._v("Submit")]
-    )
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default",
+          attrs: { type: "submit" },
+          on: { click: _vm.create }
+        },
+        [_vm._v("Submit")]
+      )
+    ])
   ])
 }
 var staticRenderFns = []
