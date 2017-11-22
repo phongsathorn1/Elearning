@@ -1,13 +1,20 @@
 <template>
     <div class="assignment-done-box card">
+    <h4>Assignment Status</h4>
         <div class="assignment-done-list" v-for="done in all_done">
             <div class="assignment-done-meta" @click="activeId(done.id)">
                 {{ done.user.name }}, score {{ done.score }}, {{ done.files.length }} files
             </div>
             <div class="assignment-done-files" v-if="done.id == active_id">
-                <div class="assignment-done-item" v-for="file in done.files" @click="download(file)">
-                    {{ file.name }}
-                </div>
+                <table class="table">
+                    <tbody class="table-striped">
+                        <tr class="assignment-done-item" v-for="file in done.files" @click="download(file)">
+                            <td>
+                                {{ file.name }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
                 <input type="text" name="score" @blur="scoreCheck(done.id)" v-model="done.score"> / {{ maxScore }}
                 <textarea class="form-control" rows="3" v-model="done.comment"></textarea>
                 <button type="button" class="btn btn-primary"@click="returnWork(done.id)" v-if="!done.returned">Return</button>
