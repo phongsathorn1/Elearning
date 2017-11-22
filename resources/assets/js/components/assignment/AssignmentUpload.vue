@@ -4,7 +4,7 @@
             <div v-if="status">
                 <h4> Status</h4>
                 <div v-if="status.returned">
-                    Returned
+                    Complete
                 </div>
                 <div v-else>
                     In progress
@@ -20,7 +20,7 @@
                 :uploadFiles="uploaded_files"
             ></upload>
             <div v-for="file in uploaded_files">
-                <div @click="download(file)">{{ file.name }}</div>
+                <div alt="Click to download"@click="download(file)" class="assignment-status-list">{{ file.name }}</div>
             </div>
             <button type="button" class="btn btn-success" @click="confirm" v-if="!is_done">Send</button>
         </div>

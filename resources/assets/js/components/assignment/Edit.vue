@@ -1,9 +1,10 @@
 <template>
     <div class="container">
-        <assignment-post :detail="form" :errors="post_errors" v-on:submit="edit"></assignment-post>
         <div class="control-area">
             <button type="button" class="btn btn-default btn-back" @click="back">Back</button>
         </div>
+        <assignment-post :detail="form" :errors="post_errors" v-on:submit="edit"></assignment-post>
+
         <upload
             :callback="'/api/attachment/upload'"
             :upload-files='attachments'

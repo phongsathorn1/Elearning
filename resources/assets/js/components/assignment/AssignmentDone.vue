@@ -3,7 +3,7 @@
     <h4>Assignment Status</h4>
         <div class="assignment-done-list" v-for="done in all_done">
             <div class="assignment-done-meta" @click="activeId(done.id)">
-                {{ done.user.name }}, score {{ done.score }}, {{ done.files.length }} files
+                <kbd>{{ done.user.name }}</kbd>, score {{ done.score }}, {{ done.files.length }} files
             </div>
             <div class="assignment-done-files" v-if="done.id == active_id">
                 <table class="table">
@@ -15,7 +15,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <input type="text" name="score" @blur="scoreCheck(done.id)" v-model="done.score"> / {{ maxScore }}
+                <row>
+                    <h4>Score</h4>
+                    <input type="text" name="score" @blur="scoreCheck(done.id)" v-model="done.score"> / {{ maxScore }}
+                </row>
                 <textarea class="form-control" rows="3" v-model="done.comment"></textarea>
                 <button type="button" class="btn btn-primary"@click="returnWork(done.id)" v-if="!done.returned">Return</button>
                 <button type="button" class="btn btn-success" @click="returnWork(done.id)" v-if="done.returned">Update</button>
