@@ -14,7 +14,8 @@
             <label for="description">description</label>
             <textarea class="form-control" id="description" rows="3" v-model="classroom.description"></textarea>
         </div>
-        <button type="submit" class="btn btn-default" @click="create">Submit</button>
+        <button type="submit" class="btn btn-yel pull-right" @click="create">Submit</button>
+        <div class="clearfix"></div>
     </div>
 </div>
 </template>
