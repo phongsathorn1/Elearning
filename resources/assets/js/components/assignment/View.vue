@@ -18,6 +18,7 @@
                 >Edit</router-link>
                 <div class="clearfix"></div>
             </div>
+            <div class="row">
             <div class="col-md-9">
                 <h3>{{ assignment_post.title }}</h3>
                 <p v-html="renderHTML(assignment_post.detail)"></p>
@@ -32,6 +33,7 @@
                 </div>
             </div>
             <div class="clearfix"></div>
+            </div>
             <attachment :files="attachment"></attachment>
         </div>
 

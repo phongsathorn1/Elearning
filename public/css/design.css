@@ -4,6 +4,10 @@ body {
   max-height: 100vh;
 }
 
+p {
+  word-wrap: break-word;
+}
+
 a {
   color: #7051de;
 }
@@ -106,7 +110,6 @@ a:hover {
 }
 
 .page-header {
-  padding: 40px 0px;
   margin: 0px;
   margin-bottom: 10px;
   background: #FFFFFF;
@@ -758,9 +761,15 @@ a:hover {
   list-style: none;
 }
 
-.profile-picture-normal {
+.profile-picture-large {
   width: 250px;
   height: 250px;
+  border-radius: 50%;
+}
+
+.profile-picture-large {
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
 }
 
@@ -768,6 +777,30 @@ a:hover {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+}
+
+.profile-name {
+  float: left;
+  font-size: 25px;
+}
+
+#classroom .profile-picture {
+  float: left;
+}
+
+#classroom .profile {
+  float: left;
+  padding: 15px;
+}
+
+#classroom .user-profile {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 25px 0px;
+}
+
+#classroom .username {
+  font-size: 15px;
+  color: #929292;
 }
 
 .profile-picture .profile-upload-overlay {
@@ -848,5 +881,24 @@ a:hover {
 
 .assignment-done-box .assignment-done-list:hover {
   background: #E0E0E0;
+}
+
+.assignment-left {
+  padding-top: 10px;
+  font-size: 22px;
+}
+
+.assignment-datetime {
+  padding-top: 10px;
+}
+
+.assignment-time {
+  margin: 15px 0px;
+  border: 1px solid #e0e0e0;
+  padding: 15px;
+}
+
+.assignment-timeup {
+  font-size: 22px;
 }
 
