@@ -29776,10 +29776,14 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("input", {
-          staticClass: "btn btn-info pull-right",
-          attrs: { type: "submit", value: "Submit" }
-        }),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-yel pull-right",
+            attrs: { type: "submit", value: "Submit" }
+          },
+          [_vm._v("Submit")]
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "clearfix" })
       ]
