@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <form v-on:submit.prevent="update">
+        <form class="card" v-on:submit.prevent="update">
             <div class="profile-picture profile-picture-large" v-bind:style="{'background-image': `url(${getAvatar()})`}">
                 <upload-avatar
                     v-on:uploaded="uploadComplete"
@@ -51,7 +51,8 @@
                 <label for="password_confirmation">Confirm password</label>
                 <input type="password" class="form-control" id="password_confirmation" placeholder="Confirm password" v-on:input="checkPassword" v-model="form.password_confirmation">
             </div>
-            <input class="btn btn-default" type="submit" value="Submit">
+            <input class="btn btn-info pull-right" type="submit" value="Submit">
+            <div class="clearfix"></div>
         </form>
     </div>
 </template>

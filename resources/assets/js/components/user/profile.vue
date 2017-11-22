@@ -15,7 +15,7 @@
                         <!-- profile-header -->
                         <div class="profile-header col col-md-8 col-sm-8  col-xs-4" v-if="editable">
                             <div class="form-group">
-                                <label for="email">Name:</label>
+                                <label for="name">Name:</label>
                                 <input type="text" v-model="profile.name">
                             </div>
                             <p class="text-danger"
@@ -31,35 +31,40 @@
                                 <label for="email">Email:</label>
                                 <input type="text" v-model="profile.email">
                             </div>
-                            
+                                            <button class="btn btn-default" @click="ToggleEnableEdit" v-if="editable">Cancel</button>
+                <button class="btn btn-default" @click="changeProfile" v-if="editable">Update</button>
                         </div>
 
                         <div class="profile-header col col-md-8 col-sm-8 col-xs-8" v-else>
                             <h3>{{ profile.name }}</h3>
                             <p>{{ profile.role.name }}</p>
                                 <h3>Basic infomation</h3>
-                                <p>Username: {{ profile.username }}</p>
+                                <p>
+                                    <span style="font-weight: bold">Username: </span>
+                                     {{ profile.username }}
+                                    
+                                </p>
                                 <p class="text-danger"
                                     v-for="error in profile_errors.username"
                                     v-if="profile_errors.username"
                                 >{{ error }}</p>
 
-                                <p>Email: {{ profile.email }}</p>
+                                <p>
+                                    <span style="font-weight: bold">
+                                    Email: </span
+                                    >{{ profile.email }}
+                                    
+                                </p>
                                 <p class="text-danger"
                                     v-for="error in profile_errors.email"
                                     v-if="profile_errors.email"
                                 >{{ error }}</p>
-                        </div>
-                        </div>
-
-                        </div>
-                    </div>
-
-
-                <!-- security -->
+                                <button class="btn btn-default" @click="ToggleEnableEdit" v-if="!editable">Edit</button>
+                                
                 <div class="profile-info" v-if="!editable">
-                    <h2>Security</h2>
-                    <p>Password: ●●●●●●●●</p>
+                    <!-- security -->
+                    <h4>Security</h4>
+                    <p><span style="font-weight: bold">Password:</span> <span style="font-weight: bold">●●●●●●●●</span></p>
                     <button class="btn btn-default" @click="ToggleChangePass">Change password</button>
                     <div class="inner-profile-info" v-if="changePass">
                         <form class="form-horizontal" v-on:submit.prevent="changePassword">
@@ -91,10 +96,17 @@
                         </form>
                     </div>
                 </div>
+                        </div>
+                        </div>
+
+                        </div>
+                    </div>
+
+
+                
+
                 </div>
-                <button class="btn btn-default" @click="ToggleEnableEdit" v-if="!editable">Edit</button>
-                <button class="btn btn-default" @click="ToggleEnableEdit" v-if="editable">Cancel</button>
-                <button class="btn btn-default" @click="changeProfile" v-if="editable">Update</button>
+                
             </div>
         </div>
     </div>
