@@ -1,5 +1,5 @@
 <template>
-    <div id="classroom" style="min-height: 500px">
+    <div id="classroom" style="min-height: 500px" v-if="classrooms && getUser">
         <div class="page-header">
             <div class="container user-profile">
                 <div>
@@ -55,6 +55,11 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="spinner" v-else>
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
     </div>
 </template>
 

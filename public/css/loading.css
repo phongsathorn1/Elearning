@@ -102,7 +102,7 @@ div.loading div.bar12 {
 .spinner > div {
   width: 18px;
   height: 18px;
-  background-color: #333;
+  background-color: #EF6C00;
   border-radius: 100%;
   display: inline-block;
   -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;

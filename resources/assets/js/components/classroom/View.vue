@@ -79,7 +79,10 @@
                     </div><!-- End class-action -->
             </div>
         </div>
-        <div class="container" v-if="posts">
+        <div class="container" v-if="!posts.length">
+            <div class="no-post">No post yet</div>
+        </div>
+        <div class="container" v-else>
             <div class="class-posts card" v-for="post in posts">
                 <div class="class-post-item" v-if="post.type === 'post'">
 

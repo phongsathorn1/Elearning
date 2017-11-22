@@ -1,6 +1,5 @@
 <template>
-    <transition name="fade">
-        <div id="members">
+        <div id="members" v-if="members">
             <div class="page-header">
                 <div class="container">
                     <div class="col-md-8 col-md-offset-2">
@@ -35,10 +34,13 @@
                     </tr>
                  </table>
                 </div>
-                
             </div>
         </div>
-    </transition>
+        <div class="spinner" v-else>
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
 </template>
 
 <script>

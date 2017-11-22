@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" v-if="assignment_post">
         <div class="control-area">
             <button type="button" class="btn btn-default btn-back" @click="back">Back</button>
         </div>
@@ -68,6 +68,11 @@
             v-bind:max-score="assignment_post.score"
             v-if="getRole != 'is_student'"
         ></assignment-done>
+    </div>
+    <div class="spinner" v-else>
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
     </div>
 </template>
 

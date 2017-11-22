@@ -1071,3 +1071,26 @@ footer .footer-link li a {
   color: #FFC107;
 }
 
+.no-post {
+  padding: 50px 0px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.about-us-item {
+  text-align: center;
+  padding: 20px;
+}
+
+.about-us-thumbnail {
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+.about-us-name {
+  font-size: 18px;
+}
+
