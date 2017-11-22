@@ -4,11 +4,13 @@
         <transition name="fade">
             <router-view></router-view>
         </transition>
+        <footer-component></footer-component>
     </div>
 </template>
 
 <script>
     import navbar from './components/NavbarComponent.vue'
+    import footerComponent from './components/footer.vue'
 
     export default {
         data(){
@@ -17,7 +19,8 @@
             }
         },
         components : {
-            'navbar': navbar
+            'navbar': navbar,
+            footerComponent
         }
     }
 </script>

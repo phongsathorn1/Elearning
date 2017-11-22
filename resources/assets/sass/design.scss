@@ -114,6 +114,9 @@ a:hover{
     margin-bottom: 10px;
     background-color: #FFC107;
     background-image: url(/images/mountain.svg);
+    background-size: contain;
+    background-position: bottom left;
+    background-repeat: no-repeat;
 }
 
 
@@ -933,4 +936,14 @@ a:hover{
     .profile-detail{
         margin-top: 0px;
     }
+}
+
+footer{
+    background: #dddddd;
+}
+footer .giraffe{
+    background: #dddddd;
+}
+footer .container{
+    padding: 10px 0px;
 }
