@@ -143,6 +143,10 @@ const routes = [
         }
     },
     {
+        path: '/about-us',
+        component: require('./components/about-us.vue'),
+    },
+    {
         path: '*',
         component: require('./components/error/404.vue')
     }
