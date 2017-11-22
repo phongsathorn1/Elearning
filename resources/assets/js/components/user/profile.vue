@@ -4,49 +4,52 @@
             <div class="profile" v-if="profile">
 
                 <!-- profile-picture -->
-                <div class="profile-picture profile-picture-large" v-bind:style="{'background-image': `url(${profile.avatar_url})`}">
-                    <upload-avatar
-                        v-if="showUpload"
-                        v-on:uploaded="uploadComplete"
-                        :img-src="profile.avatar_url"
-                        :callback="'/api/me/avatar/upload'"
-                    ></upload-avatar>
-                </div>
-                <button class="btn btn-default" @click="ToggleShowUpload">Change picture</button>
-                <!-- profile-header -->
-                <div class="profile-header" v-if="editable">
-                    <h1><input type="text" v-model="profile.name"></h1>
-                    <p class="text-danger"
-                        v-for="error in profile_errors.name"
-                        v-if="profile_errors.name"
-                    >{{ error }}</p>
-                    <p>{{ profile.role.name }}</p>
-                </div>
-                <div class="profile-header" v-else>
-                    <h1>{{ profile.name }}</h1>
-                    <p>{{ profile.role.name }}</p>
-                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="profile-container col col-md-4 col-sm-4 col-xs-4">
+                            <div class="profile-picture profile-picture-large" v-bind:style="{'background-image': `url(${profile.avatar_url})`}">
+                                <upload-avatar v-if="showUpload" v-on:uploaded="uploadComplete" :img-src="profile.avatar_url"></upload-avatar>
+                            </div>
+                            <button class="btn btn-default" @click="ToggleShowUpload">Change picture</button>
+                        </div>
+                        <!-- profile-header -->
+                        <div class="profile-header col col-md-8 col-sm-8  col-xs-4" v-if="editable">
+                            <h3><input type="text" v-model="profile.name"></h3>
+                            <p class="text-danger"
+                                v-for="error in profile_errors.name"
+                                v-if="profile_errors.name"
+                            >{{ error }}</p>
+                            <p>{{ profile.role.name }}</p>
+                        </div>
 
-                <!-- profile-info -->
-                <div class="profile-info" v-if="editable">
-                    <h2>Basic infomation</h2>
-                    <p>Username: <input type="text" v-model="profile.username"></p>
-                    <p>Email: <input type="text" v-model="profile.email"></p>
-                </div>
-                <div class="profile-info" v-else>
-                    <h2>Basic infomation</h2>
-                    <p>Username: {{ profile.username }}</p>
-                    <p class="text-danger"
-                        v-for="error in profile_errors.username"
-                        v-if="profile_errors.username"
-                    >{{ error }}</p>
+                        <div class="profile-header col col-md-8 col-sm-8 col-xs-8" v-else>
+                            <h3>{{ profile.name }}</h3>
+                            <p>{{ profile.role.name }}</p>
+                        <!-- profile-info -->
+                        <div class="info-container">
+                            <div class="profile-info" v-if="editable">
+                                <h3>Basic infomation</h3>
+                                <p>Username: <input type="text" v-model="profile.username"></p>
+                                <p>Email: <input type="text" v-model="profile.email"></p>
+                            </div>
+                            <div class="profile-info" v-else>
+                                <h3>Basic infomation</h3>
+                                <p>Username: {{ profile.username }}</p>
+                                <p class="text-danger"
+                                    v-for="error in profile_errors.username"
+                                    v-if="profile_errors.username"
+                                >{{ error }}</p>
 
-                    <p>Email: {{ profile.email }}</p>
-                    <p class="text-danger"
-                        v-for="error in profile_errors.email"
-                        v-if="profile_errors.email"
-                    >{{ error }}</p>
-                </div>
+                                <p>Email: {{ profile.email }}</p>
+                                <p class="text-danger"
+                                    v-for="error in profile_errors.email"
+                                    v-if="profile_errors.email"
+                                >{{ error }}</p>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
 
                 <!-- security -->
                 <div class="profile-info" v-if="!editable">
@@ -82,6 +85,7 @@
                             </div>
                         </form>
                     </div>
+                </div>
                 </div>
                 <button class="btn btn-default" @click="ToggleEnableEdit" v-if="!editable">Edit</button>
                 <button class="btn btn-default" @click="ToggleEnableEdit" v-if="editable">Cancel</button>

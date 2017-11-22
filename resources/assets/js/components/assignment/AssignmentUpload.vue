@@ -4,13 +4,21 @@
             <div v-if="status">
                 <h4> Status</h4>
                 <div v-if="status.returned">
+                    <kbd style="background-color:#5cb85c">
                     Complete
+                    </kbd>
                 </div>
                 <div v-else>
+                    <kbd style="background-color:#f0ad4e">
                     In progress
+                    </kbd>
                 </div>
+                <div>
                 <b>Comment from teacher: </b>{{ status.comment }}
+                </div>
+                <div>
                 <b>Score: </b>{{ status.score }}
+                </div>
             </div>
             <upload
                 v-if="!is_done"
