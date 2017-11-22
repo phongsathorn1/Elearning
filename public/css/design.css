@@ -28,10 +28,6 @@ a:hover {
   background-color: transparent;
 }
 
-.navbar.transparent .container {
-  margin-top: 20px;
-}
-
 .navbar-default .navbar-brand {
   color: #464646;
 }
@@ -113,7 +109,11 @@ a:hover {
 .page-header {
   margin: 0px;
   margin-bottom: 10px;
-  background: #FFC107;
+  background-color: #FFC107;
+  background-image: url(/images/mountain.svg);
+  background-size: contain;
+  background-position: bottom left;
+  background-repeat: repeat-x;
 }
 
 .class-header {
@@ -852,7 +852,7 @@ a:hover {
 }
 
 #classroom .user-profile {
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #747474;
   padding: 25px 1.5rem;
   word-wrap: break-word;
 }
@@ -1014,5 +1014,51 @@ a:hover {
   .profile-detail {
     margin-top: 0px;
   }
+}
+
+footer .giraffe {
+  background: url(/images/ful_giraffe.svg);
+  background-repeat: no-repeat;
+  height: 150px;
+}
+
+footer .main-footer .container {
+  padding: 10px 0px;
+}
+
+footer .main-footer {
+  background: #dddddd;
+}
+
+footer .footer-contain {
+  padding: 10px 5px;
+}
+
+footer .footer-mountain {
+  background: url(/images/footer-mountain.svg);
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: right bottom;
+}
+
+.form-passchange input {
+  width: 200px;
+}
+
+.inner-profile-info {
+  margin-top: 3rem;
+}
+
+.btn-yel {
+  background-color: #FFC107;
+  border: 1px solid #FFC107;
+  color: white;
+}
+
+.btn-yel:hover {
+  background-color: white;
+  padding: 6px 12px;
+  border: 1px solid #FFC107;
+  color: #FFC107;
 }
 

@@ -8,7 +8,7 @@
                 v-if="errors.post"
             >{{ error }}</p>
         </div>
-        <button type="submit" class="btn btn-default" @click="post">Post</button>
+        <button type="submit" class="btn btn-yel" @click="post">Post</button>
         <div class="clearfix"></div>
     </div>
 </template>

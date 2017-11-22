@@ -213,6 +213,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
 
 
 
@@ -1104,6 +1107,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -1512,6 +1516,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -1548,6 +1556,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (response) {
                 _this2.$router.push('/classroom/' + _this2.classroom.id);
             });
+        },
+        back: function back() {
+            this.$router.go(-1);
         }
     }
 });
@@ -2058,7 +2069,26 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapGetters"])(['baseUrl']))
+    data: function data() {
+        return {
+            hide: false
+        };
+    },
+    created: function created() {
+        this.setStyle(this.$route);
+        this.$watch('$route', this.setStyle);
+    },
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapGetters"])(['baseUrl'])),
+    methods: {
+        setStyle: function setStyle(route) {
+            this.transparent = false;
+            this.hide = false;
+            if (route.meta.footerstyle.hide) {
+                this.hide = route.meta.footerstyle.hide;
+            }
+        }
+    }
 });
 
 /***/ }),
@@ -28707,7 +28737,7 @@ var render = function() {
         "table",
         { staticClass: "table member-list" },
         [
-          _vm._m(0),
+          _vm._m(0, false, false),
           _vm._v(" "),
           _vm._l(_vm.users, function(user, key) {
             return _c("tr", [
@@ -28902,7 +28932,7 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              _vm._m(0)
+              _vm._m(0, false, false)
             ]
           )
         ]
@@ -28978,68 +29008,82 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "margin-container container" }, [
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "name" } }, [_vm._v("Classroom name")]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.classroom.name,
-            expression: "classroom.name"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { type: "text", id: "name", placeholder: "Classroom name" },
-        domProps: { value: _vm.classroom.name },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.classroom, "name", $event.target.value)
-          }
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "description" } }, [_vm._v("description")]),
-      _vm._v(" "),
-      _c("textarea", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.classroom.description,
-            expression: "classroom.description"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { id: "description", rows: "3" },
-        domProps: { value: _vm.classroom.description },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.classroom, "description", $event.target.value)
-          }
-        }
-      })
-    ]),
-    _vm._v(" "),
+  return _c("div", { staticClass: "container" }, [
     _c(
       "button",
       {
-        staticClass: "btn btn-default",
-        attrs: { type: "submit" },
-        on: { click: _vm.update }
+        staticClass: "btn btn-default btn-back",
+        attrs: { type: "button" },
+        on: { click: _vm.back }
       },
-      [_vm._v("Update")]
-    )
+      [_vm._v("Back")]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "name" } }, [_vm._v("Classroom name")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.classroom.name,
+              expression: "classroom.name"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", id: "name", placeholder: "Classroom name" },
+          domProps: { value: _vm.classroom.name },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.classroom, "name", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "description" } }, [_vm._v("description")]),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.classroom.description,
+              expression: "classroom.description"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "description", rows: "3" },
+          domProps: { value: _vm.classroom.description },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.classroom, "description", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-yel pull-right",
+          attrs: { type: "submit" },
+          on: { click: _vm.update }
+        },
+        [_vm._v("Update")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" })
+    ])
   ])
 }
 var staticRenderFns = []
@@ -29082,7 +29126,7 @@ var render = function() {
                       [_vm._v("Add member")]
                     ),
                     _vm._v(" "),
-                    _c("span", [
+                    _c("span", { staticStyle: { padding: "15px" } }, [
                       _vm._v("Join code: "),
                       _c(
                         "span",
@@ -29508,10 +29552,14 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("input", {
-          staticClass: "btn btn-info pull-right",
-          attrs: { type: "submit", value: "Submit" }
-        }),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-yel pull-right",
+            attrs: { type: "submit", value: "Submit" }
+          },
+          [_vm._v("Submit")]
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "clearfix" })
       ]
@@ -29815,10 +29863,14 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("input", {
-          staticClass: "btn btn-info pull-right",
-          attrs: { type: "submit", value: "Submit" }
-        }),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-yel pull-right",
+            attrs: { type: "submit", value: "Submit" }
+          },
+          [_vm._v("Submit")]
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "clearfix" })
       ]
@@ -30098,7 +30150,7 @@ var render = function() {
                           ? _c("div", { staticClass: "profile-info" }, [
                               _c("h4", [_vm._v("Security")]),
                               _vm._v(" "),
-                              _vm._m(0),
+                              _vm._m(0, false, false),
                               _vm._v(" "),
                               _c(
                                 "button",
@@ -30355,7 +30407,7 @@ var render = function() {
                                             ]
                                           ),
                                           _vm._v(" "),
-                                          _vm._m(1)
+                                          _vm._m(1, false, false)
                                         ]
                                       )
                                     ]
@@ -30619,15 +30671,19 @@ var render = function() {
               "div",
               { staticClass: "navbar-header" },
               [
-                _vm._m(0),
+                _vm._m(0, false, false),
                 _vm._v(" "),
                 _c(
                   "router-link",
                   { staticClass: "navbar-brand", attrs: { to: "/" } },
                   [
-                    _c("img", {
-                      attrs: { src: _vm.baseUrl + "/images/Med_logo.png" }
-                    })
+                    _vm.transparent
+                      ? _c("img", {
+                          attrs: { src: _vm.baseUrl + "/images/Med_logo-w.png" }
+                        })
+                      : _c("img", {
+                          attrs: { src: _vm.baseUrl + "/images/Med_logo.png" }
+                        })
                   ]
                 )
               ],
@@ -30885,7 +30941,7 @@ var render = function() {
                               attrs: { role: "group" }
                             },
                             [
-                              _vm._m(0),
+                              _vm._m(0, false, false),
                               _vm._v(" "),
                               _c(
                                 "ul",
@@ -31526,7 +31582,7 @@ var render = function() {
         [
           _c("div", { staticClass: "class-meta" }, [
             _c("div", { staticClass: "class-meta-right" }, [
-              _vm._m(0),
+              _vm._m(0, false, false),
               _vm._v(" "),
               _c(
                 "div",
@@ -31652,7 +31708,9 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "col-md-3" }, [
               _vm.timeCheck(_vm.assignment_post.due_time)
-                ? _c("div", { staticClass: "assignment-time" }, [_vm._m(1)])
+                ? _c("div", { staticClass: "assignment-time" }, [
+                    _vm._m(1, false, false)
+                  ])
                 : _c("div", { staticClass: "assignment-time" }, [
                     _c("div", { staticClass: "assignment-left" }, [
                       _c("span", { staticClass: "glyphicon glyphicon-time" }),
@@ -31752,7 +31810,7 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("div", { staticClass: "class-meta-right" }, [
-        _vm._m(0),
+        _vm._m(0, false, false),
         _vm._v(" "),
         _c(
           "div",
@@ -31761,7 +31819,7 @@ var render = function() {
             attrs: { role: "group" }
           },
           [
-            _vm._m(1),
+            _vm._m(1, false, false),
             _vm._v(" "),
             _c(
               "ul",
@@ -31866,9 +31924,13 @@ var render = function() {
       { staticClass: "col-md-3" },
       [
         !_vm.post.assignment.due_time
-          ? _c("div", { staticClass: "assignment-time" }, [_vm._m(2)])
+          ? _c("div", { staticClass: "assignment-time" }, [
+              _vm._m(2, false, false)
+            ])
           : _vm.timeCheck(_vm.post.assignment.due_time)
-            ? _c("div", { staticClass: "assignment-time" }, [_vm._m(3)])
+            ? _c("div", { staticClass: "assignment-time" }, [
+                _vm._m(3, false, false)
+              ])
             : _c("div", { staticClass: "assignment-time" }, [
                 _c("div", { staticClass: "assignment-left" }, [
                   _c("span", { staticClass: "glyphicon glyphicon-time" }),
@@ -32499,7 +32561,7 @@ var render = function() {
     _c(
       "button",
       {
-        staticClass: "btn btn-default",
+        staticClass: "btn btn-yel",
         attrs: { type: "submit" },
         on: { click: _vm.post }
       },
@@ -32536,7 +32598,7 @@ var render = function() {
               "div",
               { staticClass: "btn-group post-options meta-right-item" },
               [
-                _vm._m(0),
+                _vm._m(0, false, false),
                 _vm._v(" "),
                 _c(
                   "ul",
@@ -32663,7 +32725,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _vm._m(0, false, false)
 }
 var staticRenderFns = [
   function() {
@@ -32893,7 +32955,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _vm._m(0, false, false)
 }
 var staticRenderFns = [
   function() {
@@ -33117,12 +33179,14 @@ var render = function() {
     _c(
       "button",
       {
-        staticClass: "btn btn-default",
+        staticClass: "btn btn-yel pull-right",
         attrs: { type: "submit" },
         on: { click: _vm.submit }
       },
       [_vm._v("Add assignment")]
-    )
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "clearfix" })
   ])
 }
 var staticRenderFns = []
@@ -33165,37 +33229,39 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("footer", [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "main-footer" }, [
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "col-md-9" }, [
-          _c("div", { staticClass: "footer-logo" }, [
-            _c("img", {
-              attrs: {
-                src: _vm.baseUrl + "/images/Med_logo.png",
-                height: "50px;"
-              }
-            })
-          ])
-        ]),
+  return !_vm.hide
+    ? _c("footer", [
+        _vm._m(0, false, false),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-3" }, [
-          _c(
-            "div",
-            { staticClass: "footer-contain" },
-            [
-              _c("router-link", { attrs: { to: "about-us" } }, [
-                _vm._v("About us")
+        _c("div", { staticClass: "main-footer" }, [
+          _c("div", { staticClass: "container" }, [
+            _c("div", { staticClass: "col-md-9" }, [
+              _c("div", { staticClass: "footer-logo" }, [
+                _c("img", {
+                  attrs: {
+                    src: _vm.baseUrl + "/images/Med_logo.png",
+                    height: "50px;"
+                  }
+                })
               ])
-            ],
-            1
-          )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3" }, [
+              _c(
+                "div",
+                { staticClass: "footer-contain" },
+                [
+                  _c("router-link", { attrs: { to: "about-us" } }, [
+                    _vm._v("About us")
+                  ])
+                ],
+                1
+              )
+            ])
+          ])
         ])
       ])
-    ])
-  ])
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {
@@ -37594,7 +37660,7 @@ module.exports = Component.exports
 
 "use strict";
 var options = {
-    'client_secret': '8jjUbNiwZdb8egKf4J4TSMyRUe6kfbLHXejBcC2h',
+    'client_secret': '5oMTavr0f1vKWPcD15xUU0fMuAbl8aKlvYvKzSKt',
     'client_id': 2,
     'grant_type': 'password'
 };
@@ -37688,6 +37754,9 @@ var routes = [{
     meta: {
         forVisitors: true,
         navstyle: {
+            hide: true
+        },
+        footerstyle: {
             hide: true
         }
     }
