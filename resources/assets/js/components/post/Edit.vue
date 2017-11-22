@@ -1,10 +1,11 @@
 <template>
     <div class="container">
-                    <div class="control-area">
-                        <button type="button" class="btn btn-default btn-back" @click="back">Back</button>
-                    </div>
+        <div class="control-area">
+            <button type="button" class="btn btn-default btn-back" @click="back">Back</button>
+        </div>
         <post
             :detail="form"
+            :errors="errors"
             v-on:post="post"
         ></post>
         <upload
@@ -28,6 +29,7 @@
                 },
                 token: this.$auth.getToken(),
                 attachments: [],
+                errors: {},
             }
         },
         components:{
