@@ -1,5 +1,7 @@
 <template>
-    <div class="margin-container container">
+    <div class="container">
+        <button type="button" @click="back" class="btn btn-default btn-back">Back</button>
+        <div class="card">
         <div class="form-group">
             <label for="name">Classroom name</label>
             <input type="text" class="form-control" id="name" placeholder="Classroom name" v-model="classroom.name">
@@ -14,6 +16,7 @@
         </div>
         <button type="submit" class="btn btn-default" @click="create">Submit</button>
     </div>
+</div>
 </template>
 
 <script>
@@ -47,6 +50,8 @@
                 .catch(error => {
                     this.classroom_errors = error.response.data.errors
                 })
+            },back(){
+                this.$router.go(-1)
             }
         }
     }

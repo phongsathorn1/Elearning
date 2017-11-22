@@ -37,7 +37,7 @@
 
                         <div class="profile-header col col-md-8 col-sm-8 col-xs-8" v-else>
                             <h3>{{ profile.name }}</h3>
-                            <p>{{ profile.role.name }}</p>
+                            <p><kbd>{{ profile.role.name }}</kbd></p>
                                 <h3>Basic infomation</h3>
                                 <p>
                                     <span style="font-weight: bold">Username: </span>
@@ -67,7 +67,7 @@
                     <p><span style="font-weight: bold">Password:</span> <span style="font-weight: ">●●●●●●●●</span></p>
                     <button class="btn btn-default" @click="ToggleChangePass">Change password</button>
                     <div class="inner-profile-info" v-if="changePass">
-                        <form class="form-horizontal" v-on:submit.prevent="changePassword">
+                        <form class="form-horizontal form-passchange" v-on:submit.prevent="changePassword">
                             <div class="form-group">
                                 <label for="password" class="col-sm-2 control-label">Old password</label>
                                 <div class="col-sm-10">

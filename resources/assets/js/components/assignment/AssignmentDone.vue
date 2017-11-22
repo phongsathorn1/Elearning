@@ -3,7 +3,7 @@
     <h4>Assignment Status</h4>
         <div class="assignment-done-list" v-for="done in all_done">
             <div class="assignment-done-meta" @click="activeId(done.id)">
-                <kbd>{{ done.user.name }}</kbd>, score {{ done.score }}, {{ done.files.length }} files
+                <kbd>{{ done.user.name }}</kbd> score {{ done.score }}, {{ done.files.length }} files
             </div>
             <div class="assignment-done-files" v-if="done.id == active_id">
                 <table class="table">
