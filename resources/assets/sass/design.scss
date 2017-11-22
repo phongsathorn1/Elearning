@@ -114,6 +114,9 @@ a:hover{
     margin-bottom: 10px;
     background-color: #FFC107;
     background-image: url(/images/mountain.svg);
+    background-size: contain;
+    background-position: bottom left;
+    background-repeat: repeat-x;
 }
 
 
@@ -933,6 +936,29 @@ a:hover{
     .profile-detail{
         margin-top: 0px;
     }
+}
+
+//footer
+
+footer .giraffe{
+    background: url(/images/ful_giraffe.svg);
+    background-repeat: no-repeat;
+    height: 150px;
+}
+footer .main-footer .container{
+    padding: 10px 0px;
+}
+footer .main-footer{
+    background: #dddddd;
+}
+footer .footer-contain{
+    padding: 10px 5px;
+}
+footer .footer-mountain{
+    background: url(/images/footer-mountain.svg);
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: right bottom;
 }
 
 .form-passchange input{

@@ -18,6 +18,9 @@ const routes = [
             forVisitors: true,
             navstyle: {
                 hide: true
+            },
+            footerstyle: {
+                hide: true
             }
         }
     },
