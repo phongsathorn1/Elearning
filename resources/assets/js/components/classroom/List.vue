@@ -96,6 +96,7 @@
         },
         mounted(){
             var token = this.$auth.getToken()
+            this.$store.dispatch('getPersonal')
 
             axios.get('api/classroom', {
                 headers:{
@@ -107,10 +108,3 @@
         }
     }
 </script>
-
-<style>
-    .test {
-        border-radius: 0px;
-        font-family: "Nunito", sans-serif;
-    }
-</style>

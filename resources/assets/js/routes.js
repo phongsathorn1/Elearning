@@ -124,6 +124,14 @@ const routes = [
         }
     },
     {
+        path: '/user/:id/edit',
+        component: require('./components/user/edit.vue'),
+        meta: {
+            forAuth: true,
+            role: 'is_teacher'
+        }
+    },
+    {
         path: '/user',
         component: require('./components/user/view.vue'),
         meta: {

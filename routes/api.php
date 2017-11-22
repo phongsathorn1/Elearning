@@ -45,5 +45,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('attachment/upload', 'FilesAttachmentController@upload');
     Route::post('user', 'UserController@store')->middleware('role:is_teacher');
     Route::get('user', 'UserController@show')->middleware('role:is_teacher');
+    Route::get('user/{user_id}', 'UserController@getUser')->middleware('role:is_teacher');
+    Route::patch('user/{user_id}', 'UserController@edit')->middleware('role:is_teacher');
+    Route::delete('user/{user_id}', 'UserController@destroy')->middleware('role:is_teacher');
     Route::get('role', 'RoleController@index')->middleware('role:is_teacher');
 });

@@ -25,6 +25,80 @@ class UserController extends Controller
         return response()->json($users);
     }
 
+    public function destroy($user_id)
+    {
+        if(Auth::id() == $user_id){
+            return response()->json(['success' => false]);
+        }
+        User::findOrFail($user_id)->delete();
+        return response()->json(['success' => true]);
+    }
+
+    public function getUser($user_id)
+    {
+        $user = User::findOrFail($user_id)->load('role');
+        $user->role->makeVisible('id');
+        return response()->json($user);
+    }
+
+    public function edit(Request $request, $user_id)
+    {
+        $request->validate([
+            'name' => 'required|max:191',
+            'username' => 'required',
+            'email' => 'required|email|max:191',
+            'role_id' => 'required',
+            'password' => 'nullable|confirmed'
+        ]);
+
+        $user = User::findOrFail($user_id);
+
+        if(User::where('username', $request->username)->count() &&
+        $user->username != $request->username)
+        {
+            $errors = [
+                'errors' => [
+                    "username" => ['Username is already exist.']
+                ]
+            ];
+            return response()->json($errors, 403);
+        }
+
+        if(User::where('email', $request->email)->count() &&
+        $user->email != $request->email)
+        {
+            $errors = [
+                'errors' => [
+                    "email" => ['Email is already exist.']
+                ]
+            ];
+            return response()->json($errors, 403);
+        }
+
+        $filename = null;
+        if(strlen($request->avatar_url) > 0){
+            $filename = basename($request->avatar_url);
+        }
+
+        if($filename){
+            Storage::move('avatar/cache/'.$filename, 'avatar/'.$user->id.'/'.$filename);
+            $user->avatar = $filename;
+        }
+
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->role_id = $request->role_id;
+
+        if(strlen($request->password)){
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->save();
+
+        return response()->json(['success' => true]);
+    }
+
     public function update(Request $request)
     {
         $request->validate([
