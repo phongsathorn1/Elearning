@@ -8,7 +8,7 @@ class Classroom extends Model
 {
     //
     protected $fillable = [
-        'user_id', 'name', 'description', 'join_code'
+        'user_id', 'name', 'description', 'join_code', 'cover'
     ];
 
     protected $appends = [
@@ -34,14 +34,13 @@ class Classroom extends Model
 
     public function getCoverUrlAttribute()
     {
-        $cover_url = '';
-        if($this->attributes['cover'])
+        if($this->cover)
         {
-            $cover_url = url('classroom/'.$this->attributes['id'].'/'.$this->attributes['cover']);
+            $cover_url = url('classroom/'.$this->id.'/'.$this->cover);
         }
         else {
             $cover_url = url('images/classroom.svg');
         }
-        return $this->attributes['cover_url'] = $cover_url;
+        return $cover_url;
     }
 }
