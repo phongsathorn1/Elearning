@@ -216,6 +216,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -30418,25 +30423,31 @@ var render = function() {
               },
               [
                 _c("ul", { staticClass: "nav navbar-nav" }, [
-                  _c(
-                    "li",
-                    [
-                      _c("router-link", { attrs: { to: "/user" } }, [
-                        _vm._v("View all account")
-                      ])
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    [
-                      _c("router-link", { attrs: { to: "/user/create" } }, [
-                        _vm._v("Create account")
-                      ])
-                    ],
-                    1
-                  )
+                  _c("li", { staticClass: "dropdown" }, [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("ul", { staticClass: "dropdown-menu" }, [
+                      _c(
+                        "li",
+                        [
+                          _c("router-link", { attrs: { to: "/user" } }, [
+                            _vm._v("View all User")
+                          ])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        [
+                          _c("router-link", { attrs: { to: "/user/create" } }, [
+                            _vm._v("Create User")
+                          ])
+                        ],
+                        1
+                      )
+                    ])
+                  ])
                 ]),
                 _vm._v(" "),
                 _vm.isLoggedIn
@@ -30516,6 +30527,25 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("span", { staticClass: "icon-bar" })
       ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "dropdown-toggle",
+        attrs: {
+          href: "#",
+          "data-toggle": "dropdown",
+          role: "button",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [_vm._v("User Management"), _c("span", { staticClass: "caret" })]
     )
   }
 ]
