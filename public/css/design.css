@@ -762,12 +762,6 @@ a:hover {
 }
 
 .profile-picture-large {
-  width: 250px;
-  height: 250px;
-  border-radius: 50%;
-}
-
-.profile-picture-large {
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -780,27 +774,68 @@ a:hover {
 }
 
 .profile-name {
-  float: left;
   font-size: 25px;
 }
 
-#classroom .profile-picture {
-  float: left;
+.profile-name .btn-link {
+  font-size: 1.8rem;
+  padding: 0;
+  color: #464646;
+  white-space: normal;
 }
 
-#classroom .profile {
-  float: left;
-  padding: 15px;
+.profile-name p {
+  text-align: left;
+}
+
+.profile-name .btn-link:hover {
+  color: #7051de;
+}
+
+.profile-container {
+  padding: 0 1.2rem;
+}
+
+.profile .profile-container .btn {
+  margin-top: 1rem;
+  margin-left: 3rem;
+}
+
+@media (max-width: 650px) {
+  .profile .profile-picture.profile-picture-large {
+    margin: auto;
+  }
+
+  .profile .profile-container .btn {
+    margin-left: 0;
+  }
+
+  .profile .profile-container {
+    text-align: center;
+    width: 100%;
+  }
+}
+
+.profile-container .profile-picture-large {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
 }
 
 #classroom .user-profile {
   border-bottom: 1px solid #e0e0e0;
-  padding: 25px 0px;
+  padding: 25px 1.5rem;
+  word-wrap: break-word;
 }
 
 #classroom .username {
   font-size: 15px;
   color: #929292;
+}
+
+#classroom .profile-email,
+.profile-name {
+  word-wrap: break-word;
 }
 
 .profile-picture .profile-upload-overlay {

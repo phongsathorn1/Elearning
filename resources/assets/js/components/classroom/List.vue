@@ -2,15 +2,37 @@
     <div id="classroom" style="min-height: 500px">
         <div class="page-header">
             <div class="container user-profile">
-                <div class="profile-picture profile-picture-large" v-bind:style="{'background-image': `url(${getUser.avatar_url})`}"></div>
-                <div class="profile">
-                    <div class="profile-name">{{ getUser.name }} <span class="username">@{{ getUser.username }}</span></div>
-                    <div class="">{{ getUser.email }}</div>
+                <div>
+                    <div class="col col-xs-6">
+                        <div class="profile-picture profile-picture-large" v-bind:style="{'background-image': `url(${getUser.avatar_url})`}"></div>
+                    </div>
+                    <div class="col col-xs-6">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="profile-name">
+                                <router-link
+                                to="profile"
+                                class="btn btn-link"
+                                >
+                                <p>
+                                {{ getUser.name }}
+                                </p>
+                                </router-link>
+                                
+                            </div>
+                            <span class="username">@{{ getUser.username }}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                            <div class="profile-email">{{ getUser.email }}</div>
+                                
+                            </div>
+
+                        </div>
+                        
+                    </div>
                 </div>
-                <router-link
-                    to="profile"
-                    class="btn btn-default pull-right"
-                >Profile</router-link>
             </div>
             <div class="container">
                 <h1>Your Classroom</h1>
@@ -26,6 +48,8 @@
         <div class="container">
             <div class="classroom-list col-md-4" v-for="classroom in classrooms">
                 <div class="card">
+
+                    
                     <div class="classroom-background" v-bind:style="{'background-image': `url(${classroom.cover_url})`}">
                     </div> 
                     <div class="classroom-list-head">

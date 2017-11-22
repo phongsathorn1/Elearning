@@ -393,6 +393,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -693,6 +701,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment__ = __webpack_require__("./node_modules/moment/moment.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+//
+//
 //
 //
 //
@@ -1493,6 +1503,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sweetalert2_dist_sweetalert2_min_css__ = __webpack_require__("./node_modules/sweetalert2/dist/sweetalert2.min.css");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sweetalert2_dist_sweetalert2_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_sweetalert2_dist_sweetalert2_min_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2396,6 +2430,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -28919,39 +28962,60 @@ var render = function() {
     { staticStyle: { "min-height": "500px" }, attrs: { id: "classroom" } },
     [
       _c("div", { staticClass: "page-header" }, [
-        _c(
-          "div",
-          { staticClass: "container user-profile" },
-          [
-            _c("div", {
-              staticClass: "profile-picture profile-picture-large",
-              style: {
-                "background-image": "url(" + _vm.getUser.avatar_url + ")"
-              }
-            }),
+        _c("div", { staticClass: "container user-profile" }, [
+          _c("div", [
+            _c("div", { staticClass: "col col-xs-6" }, [
+              _c("div", {
+                staticClass: "profile-picture profile-picture-large",
+                style: {
+                  "background-image": "url(" + _vm.getUser.avatar_url + ")"
+                }
+              })
+            ]),
             _vm._v(" "),
-            _c("div", { staticClass: "profile" }, [
-              _c("div", { staticClass: "profile-name" }, [
-                _vm._v(_vm._s(_vm.getUser.name) + " "),
-                _c("span", { staticClass: "username" }, [
-                  _vm._v("@" + _vm._s(_vm.getUser.username))
+            _c("div", { staticClass: "col col-xs-6" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-xs-12" }, [
+                  _c(
+                    "div",
+                    { staticClass: "profile-name" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-link",
+                          attrs: { to: "profile" }
+                        },
+                        [
+                          _c("p", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.getUser.name) +
+                                "\n                            "
+                            )
+                          ])
+                        ]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "username" }, [
+                    _vm._v("@" + _vm._s(_vm.getUser.username))
+                  ])
                 ])
               ]),
               _vm._v(" "),
-              _c("div", {}, [_vm._v(_vm._s(_vm.getUser.email))])
-            ]),
-            _vm._v(" "),
-            _c(
-              "router-link",
-              {
-                staticClass: "btn btn-default pull-right",
-                attrs: { to: "profile" }
-              },
-              [_vm._v("Profile")]
-            )
-          ],
-          1
-        ),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-xs-12" }, [
+                  _c("div", { staticClass: "profile-email" }, [
+                    _vm._v(_vm._s(_vm.getUser.email))
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ]),
         _vm._v(" "),
         _c(
           "div",
@@ -30019,41 +30083,45 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-9" }, [
-            _c("h3", [_vm._v(_vm._s(_vm.assignment_post.title))]),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-9" }, [
+              _c("h3", [_vm._v(_vm._s(_vm.assignment_post.title))]),
+              _vm._v(" "),
+              _c("p", {
+                domProps: {
+                  innerHTML: _vm._s(_vm.renderHTML(_vm.assignment_post.detail))
+                }
+              })
+            ]),
             _vm._v(" "),
-            _c("p", {
-              domProps: {
-                innerHTML: _vm._s(_vm.renderHTML(_vm.assignment_post.detail))
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-3" }, [
-            _vm.timeCheck(_vm.assignment_post.due_time)
-              ? _c("div", { staticClass: "assignment-time" }, [_vm._m(0)])
-              : _c("div", { staticClass: "assignment-time" }, [
-                  _c("div", { staticClass: "assignment-left" }, [
-                    _c("span", { staticClass: "glyphicon glyphicon-time" }),
-                    _vm._v(
-                      " " +
-                        _vm._s(
-                          _vm.parseTimeFromNow(_vm.assignment_post.due_time)
-                        ) +
-                        " left!"
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "assignment-datetime" }, [
-                    _vm._v(
-                      "Due " +
-                        _vm._s(_vm.parseShortTime(_vm.assignment_post.due_time))
-                    )
+            _c("div", { staticClass: "col-md-3" }, [
+              _vm.timeCheck(_vm.assignment_post.due_time)
+                ? _c("div", { staticClass: "assignment-time" }, [_vm._m(0)])
+                : _c("div", { staticClass: "assignment-time" }, [
+                    _c("div", { staticClass: "assignment-left" }, [
+                      _c("span", { staticClass: "glyphicon glyphicon-time" }),
+                      _vm._v(
+                        " " +
+                          _vm._s(
+                            _vm.parseTimeFromNow(_vm.assignment_post.due_time)
+                          ) +
+                          " left!"
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "assignment-datetime" }, [
+                      _vm._v(
+                        "Due " +
+                          _vm._s(
+                            _vm.parseShortTime(_vm.assignment_post.due_time)
+                          )
+                      )
+                    ])
                   ])
-                ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "clearfix" })
           ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "clearfix" }),
           _vm._v(" "),
           _c("attachment", { attrs: { files: _vm.attachment } })
         ],
@@ -30163,230 +30231,130 @@ var render = function() {
     _c("div", { staticClass: "card" }, [
       _vm.profile
         ? _c("div", { staticClass: "profile" }, [
-            _c(
-              "div",
-              {
-                staticClass: "profile-picture profile-picture-large",
-                style: {
-                  "background-image": "url(" + _vm.profile.avatar_url + ")"
-                }
-              },
-              [
-                _vm.showUpload
-                  ? _c("upload-avatar", {
-                      attrs: { "img-src": _vm.profile.avatar_url },
-                      on: { uploaded: _vm.uploadComplete }
-                    })
-                  : _vm._e()
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-default",
-                on: { click: _vm.ToggleShowUpload }
-              },
-              [_vm._v("Change picture")]
-            ),
-            _vm._v(" "),
-            _vm.editable
-              ? _c(
+            _c("div", { staticClass: "container" }, [
+              _c("div", { staticClass: "row" }, [
+                _c(
                   "div",
-                  { staticClass: "profile-header" },
+                  {
+                    staticClass:
+                      "profile-container col col-md-4 col-sm-4 col-xs-4"
+                  },
                   [
-                    _c("h1", [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.profile.name,
-                            expression: "profile.name"
-                          }
-                        ],
-                        attrs: { type: "text" },
-                        domProps: { value: _vm.profile.name },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.profile, "name", $event.target.value)
-                          }
+                    _c(
+                      "div",
+                      {
+                        staticClass: "profile-picture profile-picture-large",
+                        style: {
+                          "background-image":
+                            "url(" + _vm.profile.avatar_url + ")"
                         }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.profile_errors.name, function(error) {
-                      return _vm.profile_errors.name
-                        ? _c("p", { staticClass: "text-danger" }, [
-                            _vm._v(_vm._s(error))
-                          ])
-                        : _vm._e()
-                    }),
-                    _vm._v(" "),
-                    _c("p", [_vm._v(_vm._s(_vm.profile.role.name))])
-                  ],
-                  2
-                )
-              : _c("div", { staticClass: "profile-header" }, [
-                  _c("h1", [_vm._v(_vm._s(_vm.profile.name))]),
-                  _vm._v(" "),
-                  _c("p", [_vm._v(_vm._s(_vm.profile.role.name))])
-                ]),
-            _vm._v(" "),
-            _vm.editable
-              ? _c("div", { staticClass: "profile-info" }, [
-                  _c("h2", [_vm._v("Basic infomation")]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _vm._v("Username: "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.profile.username,
-                          expression: "profile.username"
-                        }
+                      },
+                      [
+                        _vm.showUpload
+                          ? _c("upload-avatar", {
+                              attrs: { "img-src": _vm.profile.avatar_url },
+                              on: { uploaded: _vm.uploadComplete }
+                            })
+                          : _vm._e()
                       ],
-                      attrs: { type: "text" },
-                      domProps: { value: _vm.profile.username },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.profile, "username", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _vm._v("Email: "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.profile.email,
-                          expression: "profile.email"
-                        }
-                      ],
-                      attrs: { type: "text" },
-                      domProps: { value: _vm.profile.email },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.profile, "email", $event.target.value)
-                        }
-                      }
-                    })
-                  ])
-                ])
-              : _c(
-                  "div",
-                  { staticClass: "profile-info" },
-                  [
-                    _c("h2", [_vm._v("Basic infomation")]),
+                      1
+                    ),
                     _vm._v(" "),
-                    _c("p", [
-                      _vm._v("Username: " + _vm._s(_vm.profile.username))
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.profile_errors.username, function(error) {
-                      return _vm.profile_errors.username
-                        ? _c("p", { staticClass: "text-danger" }, [
-                            _vm._v(_vm._s(error))
-                          ])
-                        : _vm._e()
-                    }),
-                    _vm._v(" "),
-                    _c("p", [_vm._v("Email: " + _vm._s(_vm.profile.email))]),
-                    _vm._v(" "),
-                    _vm._l(_vm.profile_errors.email, function(error) {
-                      return _vm.profile_errors.email
-                        ? _c("p", { staticClass: "text-danger" }, [
-                            _vm._v(_vm._s(error))
-                          ])
-                        : _vm._e()
-                    })
-                  ],
-                  2
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-default",
+                        on: { click: _vm.ToggleShowUpload }
+                      },
+                      [_vm._v("Change picture")]
+                    )
+                  ]
                 ),
-            _vm._v(" "),
-            !_vm.editable
-              ? _c("div", { staticClass: "profile-info" }, [
-                  _c("h2", [_vm._v("Security")]),
-                  _vm._v(" "),
-                  _c("p", [_vm._v("Password: ●●●●●●●●")]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-default",
-                      on: { click: _vm.ToggleChangePass }
-                    },
-                    [_vm._v("Change password")]
-                  ),
-                  _vm._v(" "),
-                  _vm.changePass
-                    ? _c("div", { staticClass: "inner-profile-info" }, [
-                        _c(
-                          "form",
-                          {
-                            staticClass: "form-horizontal",
+                _vm._v(" "),
+                _vm.editable
+                  ? _c(
+                      "div",
+                      {
+                        staticClass:
+                          "profile-header col col-md-8 col-sm-8  col-xs-4"
+                      },
+                      [
+                        _c("h3", [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.profile.name,
+                                expression: "profile.name"
+                              }
+                            ],
+                            attrs: { type: "text" },
+                            domProps: { value: _vm.profile.name },
                             on: {
-                              submit: function($event) {
-                                $event.preventDefault()
-                                _vm.changePassword($event)
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.profile,
+                                  "name",
+                                  $event.target.value
+                                )
                               }
                             }
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "form-group" },
-                              [
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "col-sm-2 control-label",
-                                    attrs: { for: "password" }
-                                  },
-                                  [_vm._v("Old password")]
-                                ),
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.profile_errors.name, function(error) {
+                          return _vm.profile_errors.name
+                            ? _c("p", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(error))
+                              ])
+                            : _vm._e()
+                        }),
+                        _vm._v(" "),
+                        _c("p", [_vm._v(_vm._s(_vm.profile.role.name))])
+                      ],
+                      2
+                    )
+                  : _c(
+                      "div",
+                      {
+                        staticClass:
+                          "profile-header col col-md-8 col-sm-8 col-xs-8"
+                      },
+                      [
+                        _c("h3", [_vm._v(_vm._s(_vm.profile.name))]),
+                        _vm._v(" "),
+                        _c("p", [_vm._v(_vm._s(_vm.profile.role.name))]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "info-container" }, [
+                          _vm.editable
+                            ? _c("div", { staticClass: "profile-info" }, [
+                                _c("h3", [_vm._v("Basic infomation")]),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "col-sm-10" }, [
+                                _c("p", [
+                                  _vm._v("Username: "),
                                   _c("input", {
                                     directives: [
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: _vm.security.password,
-                                        expression: "security.password"
+                                        value: _vm.profile.username,
+                                        expression: "profile.username"
                                       }
                                     ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "password",
-                                      id: "password",
-                                      placeholder: "Old password"
-                                    },
-                                    domProps: { value: _vm.security.password },
+                                    attrs: { type: "text" },
+                                    domProps: { value: _vm.profile.username },
                                     on: {
                                       input: function($event) {
                                         if ($event.target.composing) {
                                           return
                                         }
                                         _vm.$set(
-                                          _vm.security,
-                                          "password",
+                                          _vm.profile,
+                                          "username",
                                           $event.target.value
                                         )
                                       }
@@ -30394,137 +30362,295 @@ var render = function() {
                                   })
                                 ]),
                                 _vm._v(" "),
-                                _vm._l(_vm.security_errors.password, function(
-                                  error
-                                ) {
-                                  return _vm.security_errors.password
-                                    ? _c("p", { staticClass: "text-danger" }, [
-                                        _vm._v(_vm._s(error))
-                                      ])
-                                    : _vm._e()
-                                })
-                              ],
-                              2
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "form-group" },
-                              [
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "col-sm-2 control-label",
-                                    attrs: { for: "newpassword" }
-                                  },
-                                  [_vm._v("New password")]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-sm-10" }, [
+                                _c("p", [
+                                  _vm._v("Email: "),
                                   _c("input", {
                                     directives: [
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: _vm.security.new_password,
-                                        expression: "security.new_password"
+                                        value: _vm.profile.email,
+                                        expression: "profile.email"
                                       }
                                     ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "password",
-                                      id: "newpassword",
-                                      placeholder: "New password"
-                                    },
-                                    domProps: {
-                                      value: _vm.security.new_password
-                                    },
+                                    attrs: { type: "text" },
+                                    domProps: { value: _vm.profile.email },
                                     on: {
                                       input: function($event) {
                                         if ($event.target.composing) {
                                           return
                                         }
                                         _vm.$set(
-                                          _vm.security,
-                                          "new_password",
+                                          _vm.profile,
+                                          "email",
                                           $event.target.value
                                         )
                                       }
                                     }
                                   })
-                                ]),
-                                _vm._v(" "),
-                                _vm._l(
-                                  _vm.security_errors.new_password,
-                                  function(error) {
-                                    return _vm.security_errors.new_password
+                                ])
+                              ])
+                            : _c(
+                                "div",
+                                { staticClass: "profile-info" },
+                                [
+                                  _c("h3", [_vm._v("Basic infomation")]),
+                                  _vm._v(" "),
+                                  _c("p", [
+                                    _vm._v(
+                                      "Username: " +
+                                        _vm._s(_vm.profile.username)
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.profile_errors.username, function(
+                                    error
+                                  ) {
+                                    return _vm.profile_errors.username
                                       ? _c(
                                           "p",
                                           { staticClass: "text-danger" },
                                           [_vm._v(_vm._s(error))]
                                         )
                                       : _vm._e()
-                                  }
-                                )
-                              ],
-                              2
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "form-group" }, [
+                                  }),
+                                  _vm._v(" "),
+                                  _c("p", [
+                                    _vm._v(
+                                      "Email: " + _vm._s(_vm.profile.email)
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.profile_errors.email, function(
+                                    error
+                                  ) {
+                                    return _vm.profile_errors.email
+                                      ? _c(
+                                          "p",
+                                          { staticClass: "text-danger" },
+                                          [_vm._v(_vm._s(error))]
+                                        )
+                                      : _vm._e()
+                                  })
+                                ],
+                                2
+                              )
+                        ])
+                      ]
+                    )
+              ]),
+              _vm._v(" "),
+              !_vm.editable
+                ? _c("div", { staticClass: "profile-info" }, [
+                    _c("h2", [_vm._v("Security")]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("Password: ●●●●●●●●")]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-default",
+                        on: { click: _vm.ToggleChangePass }
+                      },
+                      [_vm._v("Change password")]
+                    ),
+                    _vm._v(" "),
+                    _vm.changePass
+                      ? _c("div", { staticClass: "inner-profile-info" }, [
+                          _c(
+                            "form",
+                            {
+                              staticClass: "form-horizontal",
+                              on: {
+                                submit: function($event) {
+                                  $event.preventDefault()
+                                  _vm.changePassword($event)
+                                }
+                              }
+                            },
+                            [
                               _c(
-                                "label",
-                                {
-                                  staticClass: "col-sm-2 control-label",
-                                  attrs: { for: "newpassword_confirmation" }
-                                },
-                                [_vm._v("Confirm new password")]
+                                "div",
+                                { staticClass: "form-group" },
+                                [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "col-sm-2 control-label",
+                                      attrs: { for: "password" }
+                                    },
+                                    [_vm._v("Old password")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-sm-10" }, [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.security.password,
+                                          expression: "security.password"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "password",
+                                        id: "password",
+                                        placeholder: "Old password"
+                                      },
+                                      domProps: {
+                                        value: _vm.security.password
+                                      },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.security,
+                                            "password",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.security_errors.password, function(
+                                    error
+                                  ) {
+                                    return _vm.security_errors.password
+                                      ? _c(
+                                          "p",
+                                          { staticClass: "text-danger" },
+                                          [_vm._v(_vm._s(error))]
+                                        )
+                                      : _vm._e()
+                                  })
+                                ],
+                                2
                               ),
                               _vm._v(" "),
-                              _c("div", { staticClass: "col-sm-10" }, [
-                                _c("input", {
-                                  directives: [
+                              _c(
+                                "div",
+                                { staticClass: "form-group" },
+                                [
+                                  _c(
+                                    "label",
                                     {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value:
-                                        _vm.security.new_password_confirmation,
-                                      expression:
-                                        "security.new_password_confirmation"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: {
-                                    type: "password",
-                                    id: "newpassword_confirmation",
-                                    placeholder: "Confirm new password"
-                                  },
-                                  domProps: {
-                                    value:
-                                      _vm.security.new_password_confirmation
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
+                                      staticClass: "col-sm-2 control-label",
+                                      attrs: { for: "newpassword" }
+                                    },
+                                    [_vm._v("New password")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-sm-10" }, [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.security.new_password,
+                                          expression: "security.new_password"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "password",
+                                        id: "newpassword",
+                                        placeholder: "New password"
+                                      },
+                                      domProps: {
+                                        value: _vm.security.new_password
+                                      },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.security,
+                                            "new_password",
+                                            $event.target.value
+                                          )
+                                        }
                                       }
-                                      _vm.$set(
-                                        _vm.security,
-                                        "new_password_confirmation",
-                                        $event.target.value
-                                      )
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(
+                                    _vm.security_errors.new_password,
+                                    function(error) {
+                                      return _vm.security_errors.new_password
+                                        ? _c(
+                                            "p",
+                                            { staticClass: "text-danger" },
+                                            [_vm._v(_vm._s(error))]
+                                          )
+                                        : _vm._e()
                                     }
-                                  }
-                                })
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _vm._m(0)
-                          ]
-                        )
-                      ])
-                    : _vm._e()
-                ])
-              : _vm._e(),
+                                  )
+                                ],
+                                2
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "col-sm-2 control-label",
+                                    attrs: { for: "newpassword_confirmation" }
+                                  },
+                                  [_vm._v("Confirm new password")]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-sm-10" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value:
+                                          _vm.security
+                                            .new_password_confirmation,
+                                        expression:
+                                          "security.new_password_confirmation"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "password",
+                                      id: "newpassword_confirmation",
+                                      placeholder: "Confirm new password"
+                                    },
+                                    domProps: {
+                                      value:
+                                        _vm.security.new_password_confirmation
+                                    },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.security,
+                                          "new_password_confirmation",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(0)
+                            ]
+                          )
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e()
+            ]),
             _vm._v(" "),
             !_vm.editable
               ? _c(
@@ -31387,16 +31513,37 @@ var render = function() {
                   _vm._v(" "),
                   _vm.status.returned
                     ? _c("div", [
-                        _vm._v("\n                Complete\n            ")
+                        _c(
+                          "kbd",
+                          { staticStyle: { "background-color": "#5cb85c" } },
+                          [
+                            _vm._v(
+                              "\n                Complete\n                "
+                            )
+                          ]
+                        )
                       ])
                     : _c("div", [
-                        _vm._v("\n                In progress\n            ")
+                        _c(
+                          "kbd",
+                          { staticStyle: { "background-color": "#f0ad4e" } },
+                          [
+                            _vm._v(
+                              "\n                In progress\n                "
+                            )
+                          ]
+                        )
                       ]),
                   _vm._v(" "),
-                  _c("b", [_vm._v("Comment from teacher: ")]),
-                  _vm._v(_vm._s(_vm.status.comment) + "\n            "),
-                  _c("b", [_vm._v("Score: ")]),
-                  _vm._v(_vm._s(_vm.status.score) + "\n        ")
+                  _c("div", [
+                    _c("b", [_vm._v("Comment from teacher: ")]),
+                    _vm._v(_vm._s(_vm.status.comment) + "\n            ")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("b", [_vm._v("Score: ")]),
+                    _vm._v(_vm._s(_vm.status.score) + "\n            ")
+                  ])
                 ])
               : _vm._e(),
             _vm._v(" "),
