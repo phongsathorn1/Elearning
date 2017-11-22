@@ -5,17 +5,36 @@
         </div>
         <div class="class-post-item card">
             <div class="class-meta">
+                <div class="class-meta-right">
+                    <div class="post-tag meta-right-item">
+                        <span class="glyphicon glyphicon-list-alt"></span> Assignment
+                    </div>
+                    <div class="btn-group post-options 
+                    meta-right-item" role="group">
+                        <button v-if="getRole != 'is_student'" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right post-dropdown" aria-labelledby="dropdownMenu1" v-if="getRole != 'is_student'">
+                            <li>
+                            <router-link
+                                :to="`/classroom/${classroom_id}/assignment/${assignment_post.id}/edit`"
+                                class=""
+                            >Edit</router-link>
+                            </li>
+                            <li>
+                            <a href="javascript:void(0)" 
+                                @click="removePost(post.assignment.id)"
+                            >Delete</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="class-post-user class-meta-item" v-if="assignment_post.user.name">
                     {{ assignment_post.user.name }}
                 </div>
                 <div class="class-post-time class-meta-item" v-bind:title="parseTime(assignment_post.created_at)">
                     {{ postTimeFromNow(assignment_post.created_at) }}
                 </div>
-                <router-link
-                    :to="`/classroom/${classroom_id}/assignment/${assignment_post.id}/edit`"
-                    class="btn btn-default"
-                    v-if="getRole != 'is_student'"
-                >Edit</router-link>
                 <div class="clearfix"></div>
             </div>
             <div class="row">
@@ -119,7 +138,22 @@
             parseShortTime(dateTime){
                 var displayTime = moment(dateTime, "YYYY-MM-DD HH-mm-ss").format('llll');
                 return displayTime
-            }
+            },
+            removePost(post_id){
+                var self = this
+                swal(this.swal_config).then(() => {
+                    axios.delete(`api/post/${post_id}`, {
+                        headers:{
+                            Authorization: 'Bearer ' + self.token
+                        }
+                    }).then(response => {
+                        var index = self.posts.findIndex(x => x.id == post_id && x.type == "post")
+                        self.posts.splice(index, 1)
+
+                        console.log('remove success')
+                    })
+                })
+            },
         }
     }
 </script>

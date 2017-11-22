@@ -15,12 +15,13 @@
 
 <script>
     export default {
-        props: ['imgSrc'],
+        props: ['callback'],
         data() {
             return {
                 options: {
-                    url: '/api/me/avatar/upload',
+                    url: this.callback,
                     paramName: 'file',
+                    required: ['image/*'],
                     headers: {
                         Authorization: 'Bearer ' + this.$auth.getToken()
                     }
