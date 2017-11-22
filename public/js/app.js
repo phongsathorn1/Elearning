@@ -32208,7 +32208,7 @@ var render = function() {
             [
               _c("kbd", [_vm._v(_vm._s(done.user.name))]),
               _vm._v(
-                ", score " +
+                " score " +
                   _vm._s(done.score) +
                   ", " +
                   _vm._s(done.files.length) +
