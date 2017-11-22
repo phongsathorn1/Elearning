@@ -1,5 +1,5 @@
 <template>
-    <footer>
+    <footer v-if="!hide">
         <div class="container giraffe">
             <div class="footer-mountain">
             </div>
@@ -24,10 +24,28 @@
 <script>
     import { mapGetters } from 'vuex'
     export default {
+        data(){
+            return {
+                hide: false
+            }
+        },
+        created(){
+            this.setStyle(this.$route)
+            this.$watch('$route', this.setStyle)
+        },
         computed:{
             ...mapGetters([
                 'baseUrl'
             ])
+        },
+        methods:{
+            setStyle(route){
+                this.transparent = false
+                this.hide = false
+                if(route.meta.footerstyle.hide){
+                    this.hide = route.meta.footerstyle.hide
+                }
+            }
         }
     }
 </script>
