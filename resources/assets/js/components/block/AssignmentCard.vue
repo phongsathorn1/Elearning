@@ -41,7 +41,10 @@
             <p v-html="renderHTML(post.assignment.detail)"></p>
         </div>
         <div class="col-md-3">
-            <div class="assignment-time" v-if="timeCheck(post.assignment.due_time)">
+            <div class="assignment-time" v-if="!post.assignment.due_time">
+                <div class="assignment-timeup"><span class="glyphicon glyphicon-leaf"></span> No expiration</div>
+            </div>
+            <div class="assignment-time" v-else-if="timeCheck(post.assignment.due_time)">
                 <div class="assignment-timeup"><span class="glyphicon glyphicon-exclamation-sign"></span> Time up!</div>
             </div>
             <div class="assignment-time" v-else>
