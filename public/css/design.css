@@ -4,6 +4,10 @@ body {
   max-height: 100vh;
 }
 
+p {
+  word-wrap: break-word;
+}
+
 a {
   color: #7051de;
 }
