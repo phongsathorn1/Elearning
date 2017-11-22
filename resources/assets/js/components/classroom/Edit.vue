@@ -1,5 +1,7 @@
 <template>
-    <div class="margin-container container">
+    <div class="container">
+        <button type="button" class="btn btn-default btn-back" @click="back">Back</button>
+        <div class="card">
         <div class="form-group">
             <label for="name">Classroom name</label>
             <input type="text" class="form-control" id="name" placeholder="Classroom name" v-model="classroom.name">
@@ -8,7 +10,9 @@
             <label for="description">description</label>
             <textarea class="form-control" id="description" rows="3" v-model="classroom.description"></textarea>
         </div>
-        <button type="submit" class="btn btn-default" @click="update">Update</button>
+        <button type="submit" class="btn btn-yel pull-right" @click="update">Update</button>
+        <div class="clearfix"></div>
+    </div>
     </div>
 </template>
 
@@ -43,6 +47,9 @@
                 }).then(response => {
                     this.$router.push(`/classroom/${this.classroom.id}`)
                 })
+            },
+            back(){
+                this.$router.go(-1)
             }
         }
     }

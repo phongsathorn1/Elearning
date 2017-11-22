@@ -1099,6 +1099,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -1507,6 +1508,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -1543,6 +1548,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (response) {
                 _this2.$router.push('/classroom/' + _this2.classroom.id);
             });
+        },
+        back: function back() {
+            this.$router.go(-1);
         }
     }
 });
@@ -28935,68 +28943,82 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "margin-container container" }, [
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "name" } }, [_vm._v("Classroom name")]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.classroom.name,
-            expression: "classroom.name"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { type: "text", id: "name", placeholder: "Classroom name" },
-        domProps: { value: _vm.classroom.name },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.classroom, "name", $event.target.value)
-          }
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "description" } }, [_vm._v("description")]),
-      _vm._v(" "),
-      _c("textarea", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.classroom.description,
-            expression: "classroom.description"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { id: "description", rows: "3" },
-        domProps: { value: _vm.classroom.description },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.classroom, "description", $event.target.value)
-          }
-        }
-      })
-    ]),
-    _vm._v(" "),
+  return _c("div", { staticClass: "container" }, [
     _c(
       "button",
       {
-        staticClass: "btn btn-default",
-        attrs: { type: "submit" },
-        on: { click: _vm.update }
+        staticClass: "btn btn-default btn-back",
+        attrs: { type: "button" },
+        on: { click: _vm.back }
       },
-      [_vm._v("Update")]
-    )
+      [_vm._v("Back")]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "name" } }, [_vm._v("Classroom name")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.classroom.name,
+              expression: "classroom.name"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", id: "name", placeholder: "Classroom name" },
+          domProps: { value: _vm.classroom.name },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.classroom, "name", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "description" } }, [_vm._v("description")]),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.classroom.description,
+              expression: "classroom.description"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "description", rows: "3" },
+          domProps: { value: _vm.classroom.description },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.classroom, "description", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-yel pull-right",
+          attrs: { type: "submit" },
+          on: { click: _vm.update }
+        },
+        [_vm._v("Update")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" })
+    ])
   ])
 }
 var staticRenderFns = []
@@ -29039,7 +29061,7 @@ var render = function() {
                       [_vm._v("Add member")]
                     ),
                     _vm._v(" "),
-                    _c("span", [
+                    _c("span", { staticStyle: { padding: "15px" } }, [
                       _vm._v("Join code: "),
                       _c(
                         "span",
@@ -32468,7 +32490,7 @@ var render = function() {
     _c(
       "button",
       {
-        staticClass: "btn btn-default",
+        staticClass: "btn btn-yel",
         attrs: { type: "submit" },
         on: { click: _vm.post }
       },
@@ -33086,12 +33108,14 @@ var render = function() {
     _c(
       "button",
       {
-        staticClass: "btn btn-default",
+        staticClass: "btn btn-yel pull-right",
         attrs: { type: "submit" },
         on: { click: _vm.submit }
       },
       [_vm._v("Add assignment")]
-    )
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "clearfix" })
   ])
 }
 var staticRenderFns = []
