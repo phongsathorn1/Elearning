@@ -2715,6 +2715,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -29495,6 +29496,7 @@ var render = function() {
     _c(
       "form",
       {
+        staticClass: "card",
         on: {
           submit: function($event) {
             $event.preventDefault()
@@ -29769,9 +29771,11 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("input", {
-          staticClass: "btn btn-default",
+          staticClass: "btn btn-info pull-right",
           attrs: { type: "submit", value: "Submit" }
-        })
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "clearfix" })
       ]
     )
   ])
