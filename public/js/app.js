@@ -29552,6 +29552,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
+        { staticClass: "upload-container" },
         [
           _vm.uploaded_files.length
             ? _c("strong", [_vm._v("Uploaded files")])
@@ -32507,32 +32508,17 @@ var render = function() {
                 { staticClass: "assignment-done-files" },
                 [
                   _c("table", { staticClass: "table" }, [
-                    _c(
-                      "tbody",
-                      { staticClass: "table-striped" },
-                      _vm._l(done.files, function(file) {
-                        return _c(
-                          "tr",
-                          {
-                            staticClass: "assignment-done-item",
-                            on: {
-                              click: function($event) {
-                                _vm.download(file)
-                              }
-                            }
-                          },
-                          [
-                            _c("td", [
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(file.name) +
-                                  "\n                        "
-                              )
-                            ])
-                          ]
-                        )
-                      })
-                    )
+                    _c("tbody", { staticClass: "table-striped" }, [
+                      _c("tr", { staticClass: "assignment-done-item" }, [
+                        _c("td", [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.file.name) +
+                              "\n                        "
+                          )
+                        ])
+                      ])
+                    ])
                   ]),
                   _vm._v(" "),
                   _c("row", [
@@ -33356,101 +33342,91 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
-    _vm.loaded
-      ? _c(
-          "div",
-          { staticClass: "assignment-upload-box container" },
-          [
-            _vm.status
-              ? _c("div", [
-                  _c("h4", [_vm._v(" Status")]),
-                  _vm._v(" "),
-                  _vm.status.returned
-                    ? _c("div", [
-                        _c(
-                          "kbd",
-                          { staticStyle: { "background-color": "#5cb85c" } },
-                          [
-                            _vm._v(
-                              "\n                Complete\n                "
-                            )
-                          ]
-                        )
-                      ])
-                    : _c("div", [
-                        _c(
-                          "kbd",
-                          { staticStyle: { "background-color": "#f0ad4e" } },
-                          [
-                            _vm._v(
-                              "\n                In progress\n                "
-                            )
-                          ]
-                        )
-                      ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("b", [_vm._v("Comment from teacher: ")]),
-                    _vm._v(_vm._s(_vm.status.comment) + "\n            ")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("b", [_vm._v("Score: ")]),
-                    _vm._v(_vm._s(_vm.status.score) + "\n            ")
-                  ])
+  return _vm.loaded
+    ? _c(
+        "div",
+        { staticClass: "assignment-upload-box " },
+        [
+          _vm.status
+            ? _c("div", [
+                _c("h4", [_vm._v(" Status")]),
+                _vm._v(" "),
+                _vm.status.returned
+                  ? _c("div", [
+                      _c(
+                        "kbd",
+                        { staticStyle: { "background-color": "#5cb85c" } },
+                        [_vm._v("\n            Complete\n            ")]
+                      )
+                    ])
+                  : _c("div", [
+                      _c(
+                        "kbd",
+                        { staticStyle: { "background-color": "#f0ad4e" } },
+                        [_vm._v("\n            In progress\n            ")]
+                      )
+                    ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("b", [_vm._v("Comment from teacher: ")]),
+                  _vm._v(_vm._s(_vm.status.comment) + "\n        ")
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("b", [_vm._v("Score: ")]),
+                  _vm._v(_vm._s(_vm.status.score) + "\n        ")
                 ])
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.is_done
-              ? _c("upload", {
-                  attrs: {
-                    callback:
-                      "/api/classroom/" +
-                      _vm.classroomId +
-                      "/assignment/" +
-                      _vm.assignmentId +
-                      "/upload",
-                    uploadFiles: _vm.uploaded_files
-                  },
-                  on: { complete: _vm.uploadedFile, remove: _vm.removeFile }
-                })
-              : _vm._e(),
-            _vm._v(" "),
-            _vm._l(_vm.uploaded_files, function(file) {
-              return _c("div", [
-                _c(
-                  "div",
-                  {
-                    staticClass: "assignment-status-list",
-                    attrs: { alt: "Click to download" },
-                    on: {
-                      click: function($event) {
-                        _vm.download(file)
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(file.name))]
-                )
               ])
-            }),
-            _vm._v(" "),
-            !_vm.is_done
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-success",
-                    attrs: { type: "button" },
-                    on: { click: _vm.confirm }
-                  },
-                  [_vm._v("Send")]
-                )
-              : _vm._e()
-          ],
-          2
-        )
-      : _vm._e()
-  ])
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.is_done
+            ? _c("upload", {
+                attrs: {
+                  callback:
+                    "/api/classroom/" +
+                    _vm.classroomId +
+                    "/assignment/" +
+                    _vm.assignmentId +
+                    "/upload",
+                  uploadFiles: _vm.uploaded_files
+                },
+                on: { complete: _vm.uploadedFile, remove: _vm.removeFile }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._l(_vm.uploaded_files, function(file) {
+            return _c("div", [
+              _c(
+                "div",
+                {
+                  staticClass: "assignment-status-list",
+                  attrs: { alt: "Click to download" },
+                  on: {
+                    click: function($event) {
+                      _vm.download(file)
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(file.name))]
+              )
+            ])
+          }),
+          _vm._v(" "),
+          !_vm.is_done
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-yel pull-right",
+                  attrs: { type: "button" },
+                  on: { click: _vm.confirm }
+                },
+                [_vm._v("Send")]
+              )
+            : _vm._e()
+        ],
+        2
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
