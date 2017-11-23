@@ -344,6 +344,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['classroomId', 'assignmentId', 'maxScore'],
@@ -429,9 +436,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_upload_vue__ = __webpack_require__("./resources/assets/js/components/block/upload.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_upload_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__block_upload_vue__);
-//
-//
-//
 //
 //
 //
@@ -32509,27 +32513,40 @@ var render = function() {
           ),
           _vm._v(" "),
           done.id == _vm.active_id
-            ? _c(
-                "div",
-                { staticClass: "assignment-done-files" },
-                [
-                  _c("table", { staticClass: "table" }, [
-                    _c("tbody", { staticClass: "table-striped" }, [
-                      _c("tr", { staticClass: "assignment-done-item" }, [
-                        _c("td", [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(_vm.file.name) +
-                              "\n                        "
-                          )
-                        ])
-                      ])
-                    ])
-                  ]),
+            ? _c("div", { staticClass: "assignment-done-files" }, [
+                _c("table", { staticClass: "table" }, [
+                  _c(
+                    "tbody",
+                    { staticClass: "table-striped" },
+                    _vm._l(done.files, function(file) {
+                      return _c(
+                        "tr",
+                        {
+                          staticClass: "assignment-done-item",
+                          on: {
+                            click: function($event) {
+                              _vm.download(file)
+                            }
+                          }
+                        },
+                        [
+                          _c("td", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(file.name) +
+                                "\n                        "
+                            )
+                          ])
+                        ]
+                      )
+                    })
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "score" } }, [_vm._v("Score")]),
                   _vm._v(" "),
-                  _c("row", [
-                    _c("h4", [_vm._v("Score")]),
-                    _vm._v(" "),
+                  _c("div", { staticClass: "input-group" }, [
                     _c("input", {
                       directives: [
                         {
@@ -32539,6 +32556,7 @@ var render = function() {
                           expression: "done.score"
                         }
                       ],
+                      staticClass: "form-control",
                       attrs: { type: "text", name: "score" },
                       domProps: { value: done.score },
                       on: {
@@ -32553,7 +32571,16 @@ var render = function() {
                         }
                       }
                     }),
-                    _vm._v(" / " + _vm._s(_vm.maxScore) + "\n            ")
+                    _vm._v(" "),
+                    _c("span", { staticClass: "input-group-addon" }, [
+                      _vm._v(" /" + _vm._s(_vm.maxScore))
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "score" } }, [
+                    _vm._v("Comment to Student:")
                   ]),
                   _vm._v(" "),
                   _c("textarea", {
@@ -32576,42 +32603,43 @@ var render = function() {
                         _vm.$set(done, "comment", $event.target.value)
                       }
                     }
-                  }),
-                  _vm._v(" "),
-                  !done.returned
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              _vm.returnWork(done.id)
-                            }
+                  })
+                ]),
+                _vm._v(" "),
+                !done.returned
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-yel pull-right",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.returnWork(done.id)
                           }
-                        },
-                        [_vm._v("Return")]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  done.returned
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-success",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              _vm.returnWork(done.id)
-                            }
+                        }
+                      },
+                      [_vm._v("Return")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                done.returned
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-yel pull-right",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.returnWork(done.id)
                           }
-                        },
-                        [_vm._v("Update")]
-                      )
-                    : _vm._e()
-                ],
-                1
-              )
+                        }
+                      },
+                      [_vm._v("Update")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" })
+              ])
             : _vm._e()
         ])
       })
@@ -33402,24 +33430,6 @@ var render = function() {
               })
             : _vm._e(),
           _vm._v(" "),
-          _vm._l(_vm.uploaded_files, function(file) {
-            return _c("div", [
-              _c(
-                "div",
-                {
-                  staticClass: "assignment-status-list",
-                  attrs: { alt: "Click to download" },
-                  on: {
-                    click: function($event) {
-                      _vm.download(file)
-                    }
-                  }
-                },
-                [_vm._v(_vm._s(file.name))]
-              )
-            ])
-          }),
-          _vm._v(" "),
           !_vm.is_done
             ? _c(
                 "button",
@@ -33432,7 +33442,7 @@ var render = function() {
               )
             : _vm._e()
         ],
-        2
+        1
       )
     : _vm._e()
 }
