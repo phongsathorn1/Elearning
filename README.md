@@ -1,4 +1,6 @@
-<img src="https://i.imgur.com/eza693Z.png" height="50px" style="margin:auto">
+<p align="center">
+<img src="https://i.imgur.com/eza693Z.png" height="50px">
+</p>
 
 ![Login page](https://i.imgur.com/w0WAcip.png)
 
