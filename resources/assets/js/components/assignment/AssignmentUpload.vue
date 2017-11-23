@@ -27,9 +27,6 @@
                 v-on:remove="removeFile"
                 :uploadFiles="uploaded_files"
             ></upload>
-            <div v-for="file in uploaded_files">
-                <div alt="Click to download"@click="download(file)" class="assignment-status-list">{{ file.name }}</div>
-            </div>
             <button type="button" class="btn btn-yel pull-right" @click="confirm" v-if="!is_done">Send</button>
         </div>
     

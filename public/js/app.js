@@ -463,9 +463,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -32509,109 +32506,104 @@ var render = function() {
           ),
           _vm._v(" "),
           done.id == _vm.active_id
-            ? _c(
-                "div",
-                { staticClass: "assignment-done-files" },
-                [
-                  _c("table", { staticClass: "table" }, [
-                    _c("tbody", { staticClass: "table-striped" }, [
-                      _c("tr", { staticClass: "assignment-done-item" }, [
-                        _c("td", [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(_vm.file.name) +
-                              "\n                        "
-                          )
-                        ])
+            ? _c("div", { staticClass: "assignment-done-files" }, [
+                _c("table", { staticClass: "table" }, [
+                  _c("tbody", { staticClass: "table-striped" }, [
+                    _c("tr", { staticClass: "assignment-done-item" }, [
+                      _c("td", [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(_vm.file.name) +
+                            "\n                        "
+                        )
                       ])
                     ])
-                  ]),
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("h4", [_vm._v("Score")]),
                   _vm._v(" "),
-                  _c("row", [
-                    _c("h4", [_vm._v("Score")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: done.score,
-                          expression: "done.score"
-                        }
-                      ],
-                      attrs: { type: "text", name: "score" },
-                      domProps: { value: done.score },
-                      on: {
-                        blur: function($event) {
-                          _vm.scoreCheck(done.id)
-                        },
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(done, "score", $event.target.value)
-                        }
-                      }
-                    }),
-                    _vm._v(" / " + _vm._s(_vm.maxScore) + "\n            ")
-                  ]),
-                  _vm._v(" "),
-                  _c("textarea", {
+                  _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: done.comment,
-                        expression: "done.comment"
+                        value: done.score,
+                        expression: "done.score"
                       }
                     ],
-                    staticClass: "form-control",
-                    attrs: { rows: "3" },
-                    domProps: { value: done.comment },
+                    attrs: { type: "text", name: "score" },
+                    domProps: { value: done.score },
                     on: {
+                      blur: function($event) {
+                        _vm.scoreCheck(done.id)
+                      },
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(done, "comment", $event.target.value)
+                        _vm.$set(done, "score", $event.target.value)
                       }
                     }
                   }),
-                  _vm._v(" "),
-                  !done.returned
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              _vm.returnWork(done.id)
-                            }
+                  _vm._v(" / " + _vm._s(_vm.maxScore) + "\n            ")
+                ]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: done.comment,
+                      expression: "done.comment"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { rows: "3" },
+                  domProps: { value: done.comment },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(done, "comment", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                !done.returned
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.returnWork(done.id)
                           }
-                        },
-                        [_vm._v("Return")]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  done.returned
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-success",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              _vm.returnWork(done.id)
-                            }
+                        }
+                      },
+                      [_vm._v("Return")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                done.returned
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.returnWork(done.id)
                           }
-                        },
-                        [_vm._v("Update")]
-                      )
-                    : _vm._e()
-                ],
-                1
-              )
+                        }
+                      },
+                      [_vm._v("Update")]
+                    )
+                  : _vm._e()
+              ])
             : _vm._e()
         ])
       })
@@ -33402,24 +33394,6 @@ var render = function() {
               })
             : _vm._e(),
           _vm._v(" "),
-          _vm._l(_vm.uploaded_files, function(file) {
-            return _c("div", [
-              _c(
-                "div",
-                {
-                  staticClass: "assignment-status-list",
-                  attrs: { alt: "Click to download" },
-                  on: {
-                    click: function($event) {
-                      _vm.download(file)
-                    }
-                  }
-                },
-                [_vm._v(_vm._s(file.name))]
-              )
-            ])
-          }),
-          _vm._v(" "),
           !_vm.is_done
             ? _c(
                 "button",
@@ -33432,7 +33406,7 @@ var render = function() {
               )
             : _vm._e()
         ],
-        2
+        1
       )
     : _vm._e()
 }

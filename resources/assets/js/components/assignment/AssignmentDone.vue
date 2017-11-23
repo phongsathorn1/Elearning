@@ -15,10 +15,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <row>
+                <div class="form-group">
                     <h4>Score</h4>
                     <input type="text" name="score" @blur="scoreCheck(done.id)" v-model="done.score"> / {{ maxScore }}
-                </row>
+                </div>
                 <textarea class="form-control" rows="3" v-model="done.comment"></textarea>
                 <button type="button" class="btn btn-primary"@click="returnWork(done.id)" v-if="!done.returned">Return</button>
                 <button type="button" class="btn btn-success" @click="returnWork(done.id)" v-if="done.returned">Update</button>
