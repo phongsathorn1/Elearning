@@ -30545,31 +30545,35 @@ var render = function() {
               },
               [
                 _c("ul", { staticClass: "nav navbar-nav" }, [
-                  _c("li", { staticClass: "dropdown" }, [
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c("ul", { staticClass: "dropdown-menu" }, [
-                      _c(
-                        "li",
-                        [
-                          _c("router-link", { attrs: { to: "/user" } }, [
-                            _vm._v("View all User")
-                          ])
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "li",
-                        [
-                          _c("router-link", { attrs: { to: "/user/create" } }, [
-                            _vm._v("Create User")
-                          ])
-                        ],
-                        1
-                      )
-                    ])
-                  ])
+                  _vm.isTeacher
+                    ? _c("li", { staticClass: "dropdown" }, [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("ul", { staticClass: "dropdown-menu" }, [
+                          _c(
+                            "li",
+                            [
+                              _c("router-link", { attrs: { to: "/user" } }, [
+                                _vm._v("View all User")
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "li",
+                            [
+                              _c(
+                                "router-link",
+                                { attrs: { to: "/user/create" } },
+                                [_vm._v("Create User")]
+                              )
+                            ],
+                            1
+                          )
+                        ])
+                      ])
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _vm.isLoggedIn
@@ -31990,7 +31994,9 @@ var render = function() {
                           {
                             staticStyle: {
                               padding: "10px",
-                              border: "1px solid #e0e0e0"
+                              border: "1px solid rgb(224, 224, 224)",
+                              background: "#FFFFFF",
+                              "font-size": "20px"
                             }
                           },
                           [_vm._v(_vm._s(_vm.classroom.join_code))]
@@ -32695,7 +32701,9 @@ var render = function() {
             attrs: { src: _vm.baseUrl + "/images/about-us/hunu.jpg" }
           }),
           _vm._v(" "),
-          _c("p", { staticClass: "about-us-name" }, [_vm._v("Hunu")]),
+          _c("p", { staticClass: "about-us-name" }, [
+            _vm._v("Rattanawich Sinborvonphichai")
+          ]),
           _vm._v(" "),
           _c("p", [
             _c("a", { attrs: { href: "https://www.facebook.com/Hnunkungs" } }, [

@@ -44,7 +44,7 @@ class FileController extends Controller
     {
         if(Storage::exists('public/'.$filepath))
         {
-            return response()->file(storage_path('app/public/'.$filepath))->deleteFileAfterSend(true);
+            return response()->file(storage_path('app/public/'.$filepath));
         }
         else {
             return abort(404);
@@ -67,7 +67,7 @@ class FileController extends Controller
         $filename = AssignmentFile::findOrFail($assignment_id)->name;
         if(Storage::exists('public/'.$filepath))
         {
-            return response()->download(storage_path('app/public/'.$filepath), e($filename))->deleteFileAfterSend(true);
+            return response()->download(storage_path('app/public/'.$filepath), e($filename));
         }
         else {
             return response()->json(['error' => 'File not found.'], 404);
@@ -79,7 +79,7 @@ class FileController extends Controller
         $filename = FilesAttachment::findOrFail($attachment_id)->name;
         if(Storage::exists('public/'.$filepath))
         {
-            return response()->file(storage_path('app/public/'.$filepath))->deleteFileAfterSend(true);
+            return response()->download(storage_path('app/public/'.$filepath));
         }
         else {
             return response()->json(['error' => 'File not found.'], 404);

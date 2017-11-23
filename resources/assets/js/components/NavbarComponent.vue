@@ -18,7 +18,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="navbar-dropdown-menu-small">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
+        <li class="dropdown" v-if="isTeacher">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Management<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><router-link to="/user">View all User</router-link></li>

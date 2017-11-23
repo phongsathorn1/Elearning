@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-md-4 about-us-item">
                     <img v-bind:src="`${baseUrl}/images/about-us/hunu.jpg`" class="about-us-thumbnail img-responsive">
-                    <p class="about-us-name">Hunu</p>
+                    <p class="about-us-name">Rattanawich Sinborvonphichai</p>
                     <p><a href="https://www.facebook.com/Hnunkungs"><img v-bind:src="`${baseUrl}/images/facebook.svg`" height="25px"> Facebook</a></p>
                 </div>
                 <div class="col-md-4 about-us-item">

@@ -6,7 +6,7 @@
                     <h1>{{ classroom.name }}</h1>
                     <div class="control-area" v-if="isTeacher">
                         <router-link :to="'members/add'" class="btn btn-default">Add member</router-link>
-                        <span style="padding: 15px;">Join code: <span style="padding:10px;border:1px solid #e0e0e0">{{ classroom.join_code }}</span></span>
+                        <span style="padding: 15px;">Join code: <span style="padding: 10px;border: 1px solid rgb(224, 224, 224);background: #FFFFFF;font-size: 20px;">{{ classroom.join_code }}</span></span>
                     </div>
                     </div>
                 </div>
