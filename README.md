@@ -1,11 +1,11 @@
-![Logo](https://imgur.com/eza693Z)
+<img src="https://i.imgur.com/eza693Z.png" height="50px" style="margin:auto">
 
-![Login page](https://imgur.com/w0WAcip)
+![Login page](https://i.imgur.com/w0WAcip.png)
 
 # Elearning - ITF@KMITL Project 2017
 ระบบ elearning ตัวนี้เป็นส่วนหนึ่งของรายวิชา Introduction Technology Fundamental คณะเทคโนโนยีสารสนเทศสถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง สร้างโดยใช้ Laravel Framework และ Vue.js 
 
-
+![First page](https://i.imgur.com/NNXk1kJ.png)
 
 ### ::: การติดตั้ง :::
 ทำการ clone project
