@@ -344,6 +344,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['classroomId', 'assignmentId', 'maxScore'],
@@ -32508,75 +32515,102 @@ var render = function() {
           done.id == _vm.active_id
             ? _c("div", { staticClass: "assignment-done-files" }, [
                 _c("table", { staticClass: "table" }, [
-                  _c("tbody", { staticClass: "table-striped" }, [
-                    _c("tr", { staticClass: "assignment-done-item" }, [
-                      _c("td", [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(_vm.file.name) +
-                            "\n                        "
-                        )
-                      ])
+                  _c(
+                    "tbody",
+                    { staticClass: "table-striped" },
+                    _vm._l(done.files, function(file) {
+                      return _c(
+                        "tr",
+                        {
+                          staticClass: "assignment-done-item",
+                          on: {
+                            click: function($event) {
+                              _vm.download(file)
+                            }
+                          }
+                        },
+                        [
+                          _c("td", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(file.name) +
+                                "\n                        "
+                            )
+                          ])
+                        ]
+                      )
+                    })
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "score" } }, [_vm._v("Score")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: done.score,
+                          expression: "done.score"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", name: "score" },
+                      domProps: { value: done.score },
+                      on: {
+                        blur: function($event) {
+                          _vm.scoreCheck(done.id)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(done, "score", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "input-group-addon" }, [
+                      _vm._v(" /" + _vm._s(_vm.maxScore))
                     ])
                   ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c("h4", [_vm._v("Score")]),
+                  _c("label", { attrs: { for: "score" } }, [
+                    _vm._v("Comment to Student:")
+                  ]),
                   _vm._v(" "),
-                  _c("input", {
+                  _c("textarea", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: done.score,
-                        expression: "done.score"
+                        value: done.comment,
+                        expression: "done.comment"
                       }
                     ],
-                    attrs: { type: "text", name: "score" },
-                    domProps: { value: done.score },
+                    staticClass: "form-control",
+                    attrs: { rows: "3" },
+                    domProps: { value: done.comment },
                     on: {
-                      blur: function($event) {
-                        _vm.scoreCheck(done.id)
-                      },
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(done, "score", $event.target.value)
+                        _vm.$set(done, "comment", $event.target.value)
                       }
                     }
-                  }),
-                  _vm._v(" / " + _vm._s(_vm.maxScore) + "\n            ")
+                  })
                 ]),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: done.comment,
-                      expression: "done.comment"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { rows: "3" },
-                  domProps: { value: done.comment },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(done, "comment", $event.target.value)
-                    }
-                  }
-                }),
                 _vm._v(" "),
                 !done.returned
                   ? _c(
                       "button",
                       {
-                        staticClass: "btn btn-primary",
+                        staticClass: "btn btn-yel pull-right",
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
@@ -32592,7 +32626,7 @@ var render = function() {
                   ? _c(
                       "button",
                       {
-                        staticClass: "btn btn-success",
+                        staticClass: "btn btn-yel pull-right",
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
@@ -32602,7 +32636,9 @@ var render = function() {
                       },
                       [_vm._v("Update")]
                     )
-                  : _vm._e()
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" })
               ])
             : _vm._e()
         ])

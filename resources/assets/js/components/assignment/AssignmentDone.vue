@@ -8,20 +8,27 @@
             <div class="assignment-done-files" v-if="done.id == active_id">
                 <table class="table">
                     <tbody class="table-striped">
-                        <tr class="assignment-done-item" >
-                            <td >
+                        <tr class="assignment-done-item" v-for="file in done.files" @click="download(file)">
+                            <td>
                                 {{ file.name }}
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <div class="form-group">
-                    <h4>Score</h4>
-                    <input type="text" name="score" @blur="scoreCheck(done.id)" v-model="done.score"> / {{ maxScore }}
+                 <div class="form-group">
+                    <label for="score">Score</label>
+                    <div class="input-group">
+                        <input class="form-control" type="text" name="score" @blur="scoreCheck(done.id)" v-model="done.score">
+                        <span class="input-group-addon"> /{{ maxScore }}</span>
+                    </div>
                 </div>
-                <textarea class="form-control" rows="3" v-model="done.comment"></textarea>
-                <button type="button" class="btn btn-primary"@click="returnWork(done.id)" v-if="!done.returned">Return</button>
-                <button type="button" class="btn btn-success" @click="returnWork(done.id)" v-if="done.returned">Update</button>
+                <div class="form-group">
+                    <label for="score">Comment to Student:</label>
+                    <textarea class="form-control" rows="3" v-model="done.comment"></textarea>
+                </div>
+                <button type="button" class="btn btn-yel pull-right"@click="returnWork(done.id)" v-if="!done.returned">Return</button>
+                <button type="button" class="btn btn-yel pull-right" @click="returnWork(done.id)" v-if="done.returned">Update</button>
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>
