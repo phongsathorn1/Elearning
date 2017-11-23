@@ -23,14 +23,14 @@
                             <th>#</th>
                             <th>Name</th>
                             <th>Role</th>
-                            <th>Action</th>
+                            <th v-if="isTeacher">Action</th>
                         </tr>
                     </thead>
                     <tr v-for="(member, key) in members">
                         <th scope="row">{{ key + 1 }}</th>
                         <td>{{ member.name }}</td>
                         <td>{{ member.role.name }}</td>
-                        <td><button class="btn btn-danger" style="margin: 4px 15px;" @click="remove(member.id)">X</button></td>
+                        <td v-if="isTeacher"><button class="btn btn-danger" style="margin: 4px 15px;" @click="remove(member.id)">X</button></td>
                     </tr>
                  </table>
                 </div>
