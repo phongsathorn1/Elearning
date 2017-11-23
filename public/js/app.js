@@ -33557,7 +33557,7 @@ var render = function() {
                   _c("router-link", { attrs: { to: "/" } }, [
                     _c("img", {
                       attrs: {
-                        src: _vm.baseUrl + "/images/Med_logo.png",
+                        src: _vm.baseUrl + "/images/Med_logo-w.png",
                         height: "50px;"
                       }
                     })
