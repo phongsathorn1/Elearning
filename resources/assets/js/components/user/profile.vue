@@ -112,6 +112,8 @@
 </template>
 
 <script>
+    import swal from 'sweetalert2'
+    import 'sweetalert2/dist/sweetalert2.min.css';
     import uploadAvatar from '../block/uploadAvatar.vue'
     import { mapGetters } from 'vuex'
 
@@ -128,7 +130,13 @@
                 security_errors: {},
                 profile_errors: {},
                 editable: false,
-                changePass: false
+                changePass: false,
+                swal_config: {
+                    title: 'Complete',
+                    text: "Update complete!",
+                    type: 'success',
+                    confirmButtonColor: '#3085d6'
+                }
             }
         },
         components: {
@@ -173,7 +181,14 @@
                         Authorization: 'Bearer ' + this.$auth.getToken()
                     }
                 }).then(response => {
-                    console.log('change password successful')
+                    swal(this.swal_config).then(() => {
+                        this.changePass = false
+                        this.security = {
+                            password: '',
+                            new_password: '',
+                            new_password_confirmation: ''
+                        }
+                    })
                 }).catch(error => {
                     this.security_errors = error.response.data.errors
                 })

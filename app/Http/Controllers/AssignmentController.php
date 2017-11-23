@@ -85,10 +85,12 @@ class AssignmentController extends Controller
         }
 
         $assignment = Assignment::findOrFail($id);
-        $now = Carbon::now();
-        $due = Carbon::createFromFormat("Y-m-d H:i:s", $assignment->due_time);
-        if($due->lte($now)){
-            return response()->json(['error' => 'This assignment time up!'], 403);
+        if($assignment->due_time){
+            $now = Carbon::now();
+            $due = Carbon::createFromFormat("Y-m-d H:i:s", $assignment->due_time);
+            if($due->lte($now)){
+                return response()->json(['error' => 'This assignment time up!'], 403);
+            }
         }
 
         $original_name = $request->file->getClientOriginalName();
@@ -138,10 +140,12 @@ class AssignmentController extends Controller
         }
 
         $assignment = Assignment::findOrFail($id);
-        $now = Carbon::now();
-        $due = Carbon::createFromFormat("Y-m-d H:i:s", $assignment->due_time);
-        if($due->lte($now)){
-            return response()->json(['error' => 'This assignment time up!'], 403);
+        if($assignment->due_time){
+            $now = Carbon::now();
+            $due = Carbon::createFromFormat("Y-m-d H:i:s", $assignment->due_time);
+            if($due->lte($now)){
+                return response()->json(['error' => 'This assignment time up!'], 403);
+            }
         }
 
         if(AssignmentCheck::where([
@@ -165,7 +169,14 @@ class AssignmentController extends Controller
     public function alldone($classroom_id, $id)
     {
         Classroom::findOrFail($classroom_id);
-        $all = AssignmentCheck::where('assignment_id', $id)->get()->load('files', 'user');
+        $all = AssignmentCheck::where('assignment_id', $id)->get()->load('user');
+        // $all = AssignmentCheck::where('assignment_id', $id)->get()->load('files', 'user');
+        foreach ($all as $assignment) {
+            $assignment->files = AssignmentFile::where([
+                ['assignment_id', $assignment->assignment_id],
+                ['user_id', $assignment->user_id]
+            ])->get();
+        }
 
         return response()->json($all);
     }

@@ -13,7 +13,7 @@ class FileController extends Controller
     public function assignment($file_id)
     {
         $file = AssignmentFile::findOrFail($file_id);
-        if($file->user_id !== Auth::id())
+        if($file->user_id !== Auth::id() && Auth::user()->role->actions != 'is_teacher')
         {
             return response()->json(['successful' => false], 403);
         }
