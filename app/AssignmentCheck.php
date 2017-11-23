@@ -12,7 +12,7 @@ class AssignmentCheck extends Model
 
     public function files()
     {
-        return $this->hasMany('App\AssignmentFile', 'assignment_id', 'assignment_id');
+        return $this->hasMany('App\AssignmentFile', 'user_id', 'user_id');
     }
 
     public function user()

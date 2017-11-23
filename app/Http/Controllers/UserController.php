@@ -157,7 +157,7 @@ class UserController extends Controller
         }
 
         $me = Auth::user();
-        $me->password = bcrypt($request->newpassword);
+        $me->password = bcrypt($request->new_password);
         $me->save();
 
         return response()->json(['success' => true]);
