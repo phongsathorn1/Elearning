@@ -23,7 +23,7 @@
                 </div>
             </template>
         </vue-clip>
-        <div>
+        <div class="upload-container">
             <strong v-if="uploaded_files.length">Uploaded files</strong>
             <table class="table upload-list" v-for="file in uploaded_files">
                 <tbody>

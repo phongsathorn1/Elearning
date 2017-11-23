@@ -1,6 +1,6 @@
 <template>
-    <div class="card">
-        <div class="assignment-upload-box container" v-if="loaded">
+    
+        <div class="assignment-upload-box " v-if="loaded">
             <div v-if="status">
                 <h4> Status</h4>
                 <div v-if="status.returned">
@@ -30,9 +30,9 @@
             <div v-for="file in uploaded_files">
                 <div alt="Click to download"@click="download(file)" class="assignment-status-list">{{ file.name }}</div>
             </div>
-            <button type="button" class="btn btn-success" @click="confirm" v-if="!is_done">Send</button>
+            <button type="button" class="btn btn-yel pull-right" @click="confirm" v-if="!is_done">Send</button>
         </div>
-    </div>
+    
 </template>
 
 <script>

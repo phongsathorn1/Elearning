@@ -8,8 +8,8 @@
             <div class="assignment-done-files" v-if="done.id == active_id">
                 <table class="table">
                     <tbody class="table-striped">
-                        <tr class="assignment-done-item" v-for="file in done.files" @click="download(file)">
-                            <td>
+                        <tr class="assignment-done-item" >
+                            <td >
                                 {{ file.name }}
                             </td>
                         </tr>
