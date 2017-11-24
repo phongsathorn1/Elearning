@@ -5,11 +5,17 @@
 ![Login page](https://i.imgur.com/Y2GwUip.png)
 
 # Elearning - ITF@KMITL Project 2017
-ระบบ elearning ตัวนี้เป็นส่วนหนึ่งของรายวิชา Introduction Technology Fundamental คณะเทคโนโนยีสารสนเทศสถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง สร้างโดยใช้ Laravel Framework และ Vue.js 
+ระบบ Elearning ตัวนี้เป็นส่วนหนึ่งของรายวิชา Introduction Technology Fundamental คณะเทคโนโนยีสารสนเทศสถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง สร้างโดยใช้ [Laravel 5.5](https://laravel.com), [Vue.js V.2](vuejs.org) และ [Bootstrap 3.3](https://getbootstrap.com/docs/3.3)
+
+### Screenshots
 <p align="center">
 <img src="https://i.imgur.com/Ly4sW5o.png" width="50%">
 <img src="https://i.imgur.com/TMCGLQd.png" width="50%">
 </p>
+
+### ความต้องการของระบบ
+* PHP 7.0 และ MySql 5.0
+* [Composer](https://getcomposer.org/)
 
 ### ::: การติดตั้ง :::
 ทำการ clone project
