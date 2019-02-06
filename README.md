@@ -73,15 +73,3 @@ npm run production
 ```bash
 php artisan serv
 ```
-
-## Demo
-
-Here is a working live demo : http://52.77.253.20/
-
-## Team
-
-[![Phonsathorn ](https://avatars2.githubusercontent.com/u/26630756?s=460&v=4)](https://github.com/Phongsathron)
-
-## [License]
-
-MIT © [Phongsathron ](https://github.com/Phongsathron)
