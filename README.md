@@ -1,3 +1,6 @@
+elarning project for beinner student
+ and semiter project for 3 year and 2 year project
+ 
 <p align="center">
 <img src="https://i.imgur.com/eza693Z.png" height="50px">
 </p>
@@ -27,19 +30,16 @@
 ```bash
 git clone https://github.com/Phongsathron/elearning.git
 ```
-
-ติดตั้ง Composer [Instruction Link](https://getcomposer.org/download/)
+Composer [Instruction Link](https://getcomposer.org/download/)
 
 ```php
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 php composer-setup.php
 php -r "unlink('composer-setup.php');"
-```
-
-ติดตั้ง Node.js [Instruction Link](https://nodejs.org/en/)
-
-ทำการลง library ของ laravel
+`
+ Node.js [Instruction Link](https://nodejs.org/en/)
+ vist this link intracation 
 
 ```bash
 composer install
